@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on CastOff</title>
+    <link>https://christophe1997.github.io/tags/</link>
+    <description>Recent content in Tags on CastOff</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy;Christophe</copyright>
+    <lastBuildDate>Sat, 06 Apr 2019 20:26:43 +0000</lastBuildDate>
+    
+	<atom:link href="https://christophe1997.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Haskell</title>
+      <link>https://christophe1997.github.io/tags/haskell/</link>
+      <pubDate>Sat, 06 Apr 2019 20:26:43 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/haskell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>programming languages</title>
+      <link>https://christophe1997.github.io/tags/programming-languages/</link>
+      <pubDate>Sat, 08 Dec 2018 16:48:49 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/programming-languages/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>system</title>
+      <link>https://christophe1997.github.io/tags/system/</link>
+      <pubDate>Fri, 03 Aug 2018 13:10:58 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/system/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>FP</title>
+      <link>https://christophe1997.github.io/tags/fp/</link>
+      <pubDate>Tue, 24 Jul 2018 15:54:24 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/fp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OCaml</title>
+      <link>https://christophe1997.github.io/tags/ocaml/</link>
+      <pubDate>Tue, 24 Jul 2018 15:54:24 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/ocaml/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java</title>
+      <link>https://christophe1997.github.io/tags/java/</link>
+      <pubDate>Mon, 07 May 2018 21:18:59 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GRUB</title>
+      <link>https://christophe1997.github.io/tags/grub/</link>
+      <pubDate>Sat, 28 Apr 2018 21:11:36 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/grub/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ubuntu</title>
+      <link>https://christophe1997.github.io/tags/ubuntu/</link>
+      <pubDate>Sat, 28 Apr 2018 21:11:36 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/ubuntu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cheat sheet</title>
+      <link>https://christophe1997.github.io/tags/cheat-sheet/</link>
+      <pubDate>Sun, 11 Mar 2018 13:07:40 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/cheat-sheet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Git</title>
+      <link>https://christophe1997.github.io/tags/git/</link>
+      <pubDate>Sun, 11 Mar 2018 13:07:40 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/git/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

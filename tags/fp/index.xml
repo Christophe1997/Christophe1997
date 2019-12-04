@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FP on CastOff</title>
+    <link>https://christophe1997.github.io/tags/fp/</link>
+    <description>Recent content in FP on CastOff</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy;Christophe</copyright>
+    <lastBuildDate>Tue, 24 Jul 2018 15:54:24 +0000</lastBuildDate>
+    
+	<atom:link href="https://christophe1997.github.io/tags/fp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>functional data structure 2</title>
+      <link>https://christophe1997.github.io/posts/functional-data-structure-2/</link>
+      <pubDate>Tue, 24 Jul 2018 15:54:24 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/functional-data-structure-2/</guid>
+      <description>amortization Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about the running time of any individual operation.
+For instance, given a sequence of n operations, we may wish to bound the total running time of the sequence by O(n) without insisting than every individual operation run in O(1) time.</description>
+    </item>
+    
+    <item>
+      <title>functional data structure 1</title>
+      <link>https://christophe1997.github.io/posts/functional-data-structure-1/</link>
+      <pubDate>Thu, 19 Jul 2018 17:00:11 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/functional-data-structure-1/</guid>
+      <description>introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&#39;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&#39;s knives.
+Imperative data structures often rely on assignments in crucial ways, and so different solutions must be found for functional programs. The second difficulty is that functional data strcutures are expected to be more flexible than their imperative counterparts.</description>
+    </item>
+    
+  </channel>
+</rss>

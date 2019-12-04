@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'U-12345678-0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  address space &ndash; CastOff
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="The address space The address space is the abstraction that OS is providing to the running program. The address space of a process contains all of the memory state of the running program. For example, the code of the program, the stack and the heap. In the sight of the program, it loaded into at a particular address and has a potentially very large address space, thus, we say that the OS is virtualizing memory.|">
+    
+
+    <meta name="apple-mobile-web-app-title" content="CastOff">
+    
+    
+    <link rel="icon" href="/favicon-64.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" size="any" href="/pinned-icon.svg">
+    
+    
+    
+
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="https://christophe1997.github.io">
+    CastOff
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/posts/">
+      
+      <span>Blogs</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="/">
+      
+      <span>About</span>
+    </a>
+    
+    
+  </div>
+  
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">address space</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+<a href='/categories/notes' class="muted-link">
+  <span class="Label Label--gray-darker">notes</span>
+</a>
+
+
+
+<a href='/tags/system' class="muted-link">
+  <span class="Label Label--gray">system</span>
+</a>
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2019-12-04. Published at: 2018-06-24.">
+        
+          Lastmod: 2019-12-04
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <h2 id="the-address-space">The address space</h2>
+<p>The address space is the abstraction that OS is providing to the running program. The address space of a process contains
+all of the memory state of the running program. For example, the code of the program, the stack and the heap. In the sight
+of the program, it loaded into at a particular address and has a potentially very large address space, thus, we say that
+the OS is <em>virtualizing memory</em>.</p>
+<!-- raw HTML omitted -->
+<p>The major goal of a virtual memory(VM) system is transparency. The OS should implement virtual memory in a way that is
+invisible to the running program. Another goal of VM is efficiency, the OS should strive to make the virtualization as
+efficient as possible, both in terms of time and space. Finally, a third VM goal is protection.</p>
+<p>In running a C program, there are two types of memory that are allocated. The first is called stack memory, and allocations
+and deallocations of it are managed implicitly by the compiler, for this reason it is sometimes called <em>automatic</em> memory.
+The second type of memory, called heap memory, where all allocations and deallocations are explicitly handled by the programmer.</p>
+<h2 id="address-translation">address translation</h2>
+<p>With address translation, the hardware transforms each memory access, changing the virtual address provided by the instruction
+to a physical address where the desired information is actually located. Thus, on each and every memory reference, an
+address translation is performed by the hardware to redirect application memory reference to their actual locations in
+memory. Of cause, the hardware alone cannot virtualize memory, as it jsut provides the low-level mechanism for doing so
+efficiently. The OS must get involved at key points to set up the hardware so that the correct translations take place,
+it must thus manage memory, keeping track of which locations are free and which are in use. Once again, the goal of all
+of this work is to create a beautiful illusion: that the program has its own private memory, where its own code and data
+reside. While behind the virtual reality lies the ugly physical truth: that many programs are actually sharing memory at
+the same time, as the CPU switchs between running one program and the next.</p>
+<h3 id="segmentation">segmentation</h3>
+<p>The first hardware-based address translation is a simple idea referred to as base and bounds. Specifically, we'll need
+two hardware registers within each CPU: one is called the <strong>base</strong> register, and the other the <strong>bounds</strong>(sometimes called
+a <strong>limit</strong> register). When a program starts running, the OS decides where in physical memory it should be loaded and sets
+the base register to that value. Thus, when any memory reference is generated by the process, it is translated by the
+processor in the following manner:</p>
+<pre><code>physical address = virtual address + base
+</code></pre><p>And the bounds register is there to help with protection, specifically, the processor will first check that the memory
+reference is within bounds to make sure it is legal.</p>
+<p>It's clear to see that the simple approach of using a base and bounds register pair to virtualize memory is wasteful,
+because there may have a lot of free space between the stack and the heap. To solve this problem, the idea of segmentation
+was born, instead of having just one base and bounds pair in our MMU(<em>memory manage unit</em>), we just have a base and bounds
+pair per logical segment of the address space. A segment is just a contiguous portion of the address space of a particular
+length. To refer which which segment is used, one common approach is adding explicit bit to the address bits to refer which
+segment is used. For example, if we have the address 1011010101, the top two bit 10 refers to the third segment and the
+rest refers to the offset. And if we want to spoort backwards-growed memory reference, such as stack, we could add an extra
+support, the hardware need to know which way the segment grows. And to support sharing, we need to add more information
+about which segment can be read and write or execute.</p>
+<p>However, segmentation raises a number of new issues. The first is what should the OS do on a context switch, the OS must
+make sure to set up the base and bounds registers correctly before letting the process run again. The second and more
+important issue is managing free space in physical memory, called <em>external fragmentation</em>, the problem grows when many
+segments was allocated and each segment might be a different size. Thus the physical memory quickly becomes full of little
+holes of free space, making it difficult to allocate new segment or to grow existing ones.</p>
+<h3 id="paging">paging</h3>
+<p>The segmentation chops things up into <em>variabled-sized</em> pieces, unfortunately, the space itselt can become fragmented under
+this solution. Thus the second approach chopping things into <em>fixed-sized</em> pieces may be worth considering, which is called
+paging. In this view, the physical memory like an array of fixed-sized slots called page frames. With a full-developed
+paging approach, the system will be able to support the abstraction of an address space effectively, regardless of how a
+process uses the address space. Also, paging simplifies free-space management, the OS only need to know which page are free.</p>
+<p>To record where each virtual page of the address space is placed in physical memory, the OS usually keeps a per-process
+data structure known as a page table. The major role of the page table is to store address translations for each of the
+virtual pages of the address space. It is important that the page table is a <strong>per-process</strong> structures, this means that
+different processes have different page table.</p>
+
+  </section>
+
+  <section>
+    
+      
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>address space</b><nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-address-space">The address space</a></li>
+    <li><a href="#address-translation">address translation</a>
+      <ul>
+        <li><a href="#segmentation">segmentation</a></li>
+        <li><a href="#paging">paging</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    ©Christophe &middot; 
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
+    
+  </body>
+</html>

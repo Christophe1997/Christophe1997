@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'U-12345678-0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  monad and transformers &ndash; CastOff
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="Monad是Haskell中讨论最多的结构, 需要更详细的探讨其相关内容, 即使它对于Haskell而言不是必须的:(. 参考: All about Monads Monad Support 除了之前|">
+    
+
+    <meta name="apple-mobile-web-app-title" content="CastOff">
+    
+    
+    <link rel="icon" href="/favicon-64.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" size="any" href="/pinned-icon.svg">
+    
+    
+    
+
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="https://christophe1997.github.io">
+    CastOff
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/posts/">
+      
+      <span>Blogs</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="/">
+      
+      <span>About</span>
+    </a>
+    
+    
+  </div>
+  
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">monad and transformers</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+<a href='/categories/language-concept' class="muted-link">
+  <span class="Label Label--gray-darker">language concept</span>
+</a>
+
+
+
+<a href='/tags/haskell' class="muted-link">
+  <span class="Label Label--gray">Haskell</span>
+</a>
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2019-12-04. Published at: 2019-04-06.">
+        
+          Lastmod: 2019-12-04
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <p>Monad是Haskell中讨论最多的结构, 需要更详细的探讨其相关内容, 即使它对于Haskell而言不是必须的:(.</p>
+<!-- raw HTML omitted -->
+<p>参考: <a href="https://wiki.haskell.org/All_About_Monads">All about Monads</a></p>
+<h2 id="monad-support">Monad Support</h2>
+<p>除了之前介绍过的一些基本函数, Haskell本身定义了一些辅助函数配合Monad一起使用:</p>
+<ul>
+<li>
+<p><code>sequence</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="c1">-- 任意一个fail会导致整个fail</span>
+<span class="nf">sequence</span> <span class="ow">::</span> <span class="kt">Monad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="p">[</span><span class="n">m</span> <span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+<span class="nf">sequence</span> <span class="ow">=</span> <span class="n">foldr</span> <span class="n">mcons</span> <span class="p">(</span><span class="n">return</span> <span class="kt">[]</span><span class="p">)</span>
+                      <span class="kr">where</span> <span class="n">mcons</span> <span class="n">p</span> <span class="n">q</span> <span class="ow">=</span> <span class="n">p</span> <span class="o">&gt;&gt;=</span> <span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">q</span> <span class="o">&gt;&gt;=</span> <span class="nf">\</span><span class="n">y</span> <span class="ow">-&gt;</span> <span class="n">return</span> <span class="p">(</span><span class="n">x</span> <span class="kt">:</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>sequence_</code>和<code>sequence</code>类似但其不返回值, 在只关心序列的副作用时其非常有用.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">sequence_</span> <span class="ow">::</span> <span class="kt">Monad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="p">[</span><span class="n">m</span> <span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span>
+<span class="nf">sequence_</span> <span class="ow">=</span> <span class="n">flodr</span> <span class="p">(</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="p">(</span><span class="n">return</span> <span class="nb">()</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>mapM</code>其由<code>sequence</code>和<code>map</code>定义</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">mapM</span> <span class="ow">::</span> <span class="kt">Monad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span>
+<span class="nf">mapM</span> <span class="n">f</span> <span class="n">as</span> <span class="ow">=</span> <span class="n">sequence</span> <span class="o">$</span> <span class="n">map</span> <span class="n">f</span> <span class="n">as</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>mapM_</code>, 类似的使用<code>sequence_</code>定义</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">mapM_</span> <span class="ow">::</span> <span class="kt">Monad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span>
+<span class="nf">mapM_</span> <span class="n">f</span> <span class="n">as</span> <span class="ow">=</span> <span class="n">sequence_</span> <span class="o">$</span> <span class="n">map</span> <span class="n">f</span> <span class="n">as</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>=&lt;&lt;</code>是<code>&gt;&gt;=</code>调换参数位置的版本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="p">(</span><span class="o">=&lt;&lt;</span><span class="p">)</span> <span class="ow">::</span> <span class="kt">Monad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">b</span>
+<span class="nf">f</span> <span class="o">=&lt;&lt;</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">x</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>上面提到的函数都是standard prelude中定义的, Haskell在Control.Monad模块中定义了更多函数.</p>
+<p>下面是一些列表函数的Monad版本:</p>
+<ul>
+<li>
+<p><code>foldM</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">foldM</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span>
+<span class="nf">foldM</span> <span class="n">f</span> <span class="n">a</span> <span class="kt">[]</span> <span class="ow">=</span> <span class="n">return</span> <span class="n">a</span>
+<span class="nf">foldM</span> <span class="n">f</span> <span class="n">a</span> <span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">a</span> <span class="n">x</span> <span class="o">&gt;&gt;=</span> <span class="nf">\</span><span class="n">y</span> <span class="ow">-&gt;</span> <span class="n">foldM</span> <span class="n">f</span> <span class="n">y</span> <span class="n">xs</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>filterM</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">filterM</span> <span class="ow">::</span> <span class="kt">Monad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="kt">Bool</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+<span class="nf">filterM</span> <span class="n">p</span> <span class="kt">[]</span> <span class="ow">=</span> <span class="n">return</span> <span class="kt">[]</span>
+<span class="nf">filterM</span> <span class="n">p</span> <span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">=</span> <span class="kr">do</span> <span class="n">b</span>  <span class="ow">&lt;-</span> <span class="n">p</span> <span class="n">x</span>
+                                       <span class="n">ys</span> <span class="ow">&lt;-</span> <span class="n">filterM</span> <span class="n">p</span> <span class="n">xs</span>
+                      <span class="n">return</span> <span class="p">(</span><span class="kr">if</span> <span class="n">b</span> <span class="kr">then</span> <span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="n">ys</span><span class="p">)</span> <span class="kr">else</span> <span class="n">ys</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>zipWithM</code>和<code>zipWithM_</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">zipWithM</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">c</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="p">[</span><span class="n">c</span><span class="p">]</span>
+<span class="nf">zipWithM</span> <span class="n">f</span> <span class="n">xs</span> <span class="n">ys</span> <span class="ow">=</span> <span class="n">sequence</span> <span class="p">(</span><span class="n">zipWith</span> <span class="n">f</span> <span class="n">xs</span> <span class="n">ys</span><span class="p">)</span>
+  
+<span class="nf">zipWithM_</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">c</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span>
+<span class="nf">zipWithM_</span> <span class="n">f</span> <span class="n">xs</span> <span class="n">ys</span> <span class="ow">=</span> <span class="n">sequence_</span> <span class="p">(</span><span class="n">zipWith</span> <span class="n">f</span> <span class="n">xs</span> <span class="n">ys</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>Monad模块中还包含了一些流程控制函数, <code>when</code>和<code>unless</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">when</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">Bool</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span>
+<span class="nf">when</span> <span class="n">p</span> <span class="n">s</span> <span class="ow">=</span> <span class="kr">if</span> <span class="n">p</span> <span class="kr">then</span> <span class="n">s</span> <span class="kr">else</span> <span class="n">return</span> <span class="nb">()</span>
+
+<span class="nf">unless</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">Bool</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span>
+<span class="nf">unless</span> <span class="n">p</span> <span class="n">s</span> <span class="ow">=</span> <span class="n">when</span> <span class="p">(</span><span class="n">not</span> <span class="n">p</span><span class="p">)</span> <span class="n">s</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>_Lifting_将一个non-monadic函数转换为在Monad上操作的等价函数. 最简单的lift函数是<code>liftM</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">liftM</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">m</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">b</span><span class="p">)</span>
+<span class="nf">liftM</span> <span class="n">f</span> <span class="ow">=</span> <span class="nf">\</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="kr">do</span> <span class="p">{</span><span class="n">a&#39;</span> <span class="ow">&lt;-</span> <span class="n">a</span><span class="p">;</span> <span class="n">return</span> <span class="p">(</span><span class="n">f</span> <span class="n">a&#39;</span><span class="p">)</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Control.Monad模块中定义了<code>liftM</code>, <code>liftM2</code>到<code>liftM5</code>分别将不同参数个数的函数lift成monadic. 另外还定义了<code>$</code>的monadic版本:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">ap</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="n">m</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">b</span>
+<span class="nf">ap</span> <span class="ow">=</span> <span class="n">liftM2</span> <span class="p">(</span><span class="o">$</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="monads">Monads</h2>
+<h3 id="the-identity-monad">The Identity Monad</h3>
+<p>Identity Monad(Data.Functor.Identity)不包含任何计算:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">newtype</span> <span class="kt">Identity</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Identity</span> <span class="p">{</span><span class="n">runIdentity</span> <span class="ow">::</span> <span class="n">a</span><span class="p">}</span>
+
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="kt">Identity</span> <span class="kr">where</span>
+  <span class="n">return</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Identity</span> <span class="n">a</span>
+  <span class="p">(</span><span class="kt">Identity</span> <span class="n">x</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">x</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Identity Monad是Monad转换的基石, 任意一个Monad transformer作用在Identity Monad上返回一个非转换器版本的Monad.</p>
+<h3 id="the-maybe-monad">The Maybe Monad</h3>
+<p>Maybe Monad表示有可能不返回值(<code>Nothing</code>)的计算:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">data</span> <span class="kt">Maybe</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Nothing</span> <span class="o">|</span> <span class="kt">Just</span> <span class="n">a</span>
+
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="kt">Maybe</span> <span class="kr">where</span>
+  <span class="n">return</span> <span class="ow">=</span> <span class="kt">Just</span>
+  <span class="n">fail</span> <span class="ow">=</span> <span class="kt">Nothing</span>
+  <span class="kt">Nothing</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">Nothing</span>
+  <span class="p">(</span><span class="kt">Just</span> <span class="n">x</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">x</span>
+  
+<span class="kr">instance</span> <span class="kt">MonadPlus</span> <span class="kt">Maybe</span> <span class="kr">where</span>
+  <span class="n">mzero</span> <span class="ow">=</span> <span class="kt">Nothing</span>
+  <span class="kt">Nothing</span> <span class="p">`</span><span class="n">mplus</span><span class="p">`</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">x</span>
+  <span class="n">x</span> <span class="p">`</span><span class="n">mplus</span><span class="p">`</span> <span class="kr">_</span> <span class="ow">=</span> <span class="n">x</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="the-error-monad">The Error Monad</h3>
+<p>Error Monad(或Exception Monad)表示可能出错或抛出异常的计算, 例如Either Monad. Haskell中的<code>MonadError</code>是由错误的类型和相应Monad构造器参数化的:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">class</span> <span class="kt">Error</span> <span class="n">a</span> <span class="kr">where</span>
+  <span class="n">noMsg</span> <span class="ow">::</span> <span class="n">a</span>
+  <span class="n">strMsg</span> <span class="ow">::</span> <span class="kt">String</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+  
+<span class="kr">class</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">MonadError</span> <span class="n">e</span> <span class="n">m</span> <span class="o">|</span> <span class="n">m</span> <span class="ow">-&gt;</span> <span class="n">e</span> <span class="kr">where</span>
+  <span class="n">throwError</span> <span class="ow">::</span> <span class="n">e</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span>
+  <span class="n">catchError</span> <span class="ow">::</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">e</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>catchError</code>一种常见的使用是<code>do {action1; action2; action3} `catchError` handler </code>, 其中action可以调用<code>throwError</code>, 且<code>handler</code>和do-block必须有相同的返回类型. <code>Either e</code>则实例化了<code>MonadError</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">instance</span> <span class="kt">MonadError</span> <span class="p">(</span><span class="kt">Either</span> <span class="n">e</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">throwError</span> <span class="ow">=</span> <span class="kt">Left</span>
+  <span class="p">(</span><span class="kt">Left</span> <span class="n">e</span><span class="p">)</span> <span class="p">`</span><span class="n">catchError</span><span class="p">`</span> <span class="n">handler</span> <span class="ow">=</span> <span class="n">handler</span> <span class="n">e</span>
+  <span class="n">a</span> <span class="p">`</span><span class="n">catchError</span><span class="p">`</span> <span class="kr">_</span> <span class="ow">=</span> <span class="n">a</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="the-list-monad">The List Monad</h3>
+<p>List monad表示可能返回0, 1, 或多个值的计算:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">data</span> <span class="kt">[]</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">[]</span> <span class="o">|</span> <span class="n">a</span> <span class="kt">:</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="kt">[]</span> <span class="kr">where</span>
+  <span class="n">m</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="n">concatMap</span> <span class="n">f</span> <span class="n">m</span>
+  <span class="n">return</span> <span class="n">x</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+  <span class="n">fail</span> <span class="n">s</span> <span class="ow">=</span> <span class="kt">[]</span>
+  
+ <span class="kr">instance</span> <span class="kt">MonadPlus</span> <span class="kt">[]</span> <span class="kr">where</span>
+   <span class="n">mzero</span> <span class="ow">=</span> <span class="kt">[]</span>
+   <span class="n">mplus</span> <span class="ow">=</span> <span class="p">(</span><span class="o">++</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="the-io-monad">The IO Monad</h3>
+<blockquote>
+<p>The IO Monad is just an instance of the ST monad, where
+the state is the real world.</p>
+<p>The wonderful feature of a one-way monad is that it can support side-effects in its monadic operations but prevent them from destroying the functional properties of the non-monadic portions of the program.*</p>
+</blockquote>
+<p>需要注意的是, IO Monad并不是IO, 而仅仅是IO类型的Monad实例.GHC经常会为了提升性能而优化代码, 诸如调整运算顺序, 共享变量, 内联函数. IO类型的最主要工作就是禁止其中的大部分工作. 显然调整运算顺序就在IO(以及ST)中被禁止, IO操作被包含在嵌套的lambdas中以保证运算顺序的不变. 之所以需要IO Monad是因为这是一种将嵌套lambdas的噪声剥离的抽象. IO Monad是一种One-way Monad, One-way Monad意味着你无法设计一个函数在IO Monad中完成计算并返回一个没有IO Monad类型的值. IO monad的定义是平台相关的, 且没有任何构造器可以使用, 也没有任何函数能够从IO Monad中获得值.</p>
+<h3 id="the-state-monad">The State Monad</h3>
+<p>State Monad表示带有状态的计算:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">newtype</span> <span class="kt">State</span> <span class="n">s</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">State</span> <span class="p">{</span><span class="n">runState</span> <span class="ow">::</span> <span class="n">s</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span><span class="p">}</span>
+
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="p">(</span><span class="kt">State</span> <span class="n">s</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">return</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">State</span> <span class="o">$</span> <span class="nf">\</span><span class="n">s</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+  <span class="p">(</span><span class="kt">State</span> <span class="n">x</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">State</span> <span class="o">$</span> <span class="nf">\</span><span class="n">s</span> <span class="ow">-&gt;</span> <span class="kr">let</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">s&#39;</span><span class="p">)</span> <span class="ow">=</span> <span class="n">x</span> <span class="n">s</span> <span class="kr">in</span> <span class="n">runState</span> <span class="p">(</span><span class="n">f</span> <span class="n">v</span><span class="p">)</span> <span class="n">s&#39;</span>
+  
+<span class="c1">-- 提供了State Monad的一些接口</span>
+<span class="kr">class</span> <span class="kt">MonadState</span> <span class="n">m</span> <span class="n">s</span> <span class="o">|</span> <span class="n">m</span> <span class="ow">-&gt;</span> <span class="n">s</span> <span class="kr">where</span>
+  <span class="n">get</span> <span class="ow">::</span> <span class="n">m</span> <span class="n">s</span>
+  <span class="n">put</span> <span class="ow">::</span> <span class="n">s</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span>
+  
+<span class="kr">instance</span> <span class="kt">MonadState</span> <span class="p">(</span><span class="kt">State</span> <span class="n">s</span><span class="p">)</span> <span class="n">s</span> <span class="kr">where</span>
+  <span class="n">get</span> <span class="ow">=</span> <span class="kt">State</span> <span class="o">$</span> <span class="nf">\</span><span class="n">s</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>  <span class="c1">-- 通过将值设置为状态来获取状态</span>
+  <span class="n">put</span> <span class="n">s</span> <span class="ow">=</span> <span class="kt">State</span> <span class="o">$</span> <span class="nf">\</span><span class="kr">_</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="nb">()</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>  <span class="c1">-- 设置状态且没有值</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="the-reader-monad">The Reader Monad</h3>
+<p>Reader Monad表示从共享环境中读取值的计算:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="c1">-- Monad instance of `(-&gt;) r`</span>
+<span class="kr">newtype</span> <span class="kt">Reader</span> <span class="n">e</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Reader</span> <span class="p">{</span><span class="n">runReader</span> <span class="ow">::</span> <span class="p">(</span><span class="n">e</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span><span class="p">}</span>
+
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="p">(</span><span class="kt">Reader</span> <span class="n">e</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">return</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Reader</span> <span class="o">$</span> <span class="nf">\</span><span class="n">e</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+  <span class="p">(</span><span class="kt">Reader</span> <span class="n">r</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">Reader</span> <span class="o">$</span> <span class="nf">\</span><span class="n">e</span> <span class="ow">-&gt;</span> <span class="n">runReader</span> <span class="p">(</span><span class="n">f</span> <span class="o">$</span> <span class="n">r</span> <span class="n">e</span><span class="p">)</span> <span class="n">e</span>
+  
+<span class="kr">class</span> <span class="kt">MonadReader</span> <span class="n">e</span> <span class="n">m</span> <span class="o">|</span> <span class="n">m</span> <span class="ow">-&gt;</span> <span class="n">e</span> <span class="kr">where</span>
+  <span class="n">ask</span> <span class="ow">::</span> <span class="n">m</span> <span class="n">e</span>
+  <span class="n">local</span> <span class="ow">::</span> <span class="p">(</span><span class="n">e</span> <span class="ow">-&gt;</span> <span class="n">e</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span>
+  
+<span class="kr">instance</span> <span class="kt">MonadReader</span> <span class="p">(</span><span class="kt">Reader</span> <span class="n">e</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">ask</span> <span class="ow">=</span> <span class="kt">Reader</span> <span class="n">id</span>
+  <span class="n">local</span> <span class="n">f</span> <span class="n">c</span> <span class="ow">=</span> <span class="kt">Reader</span> <span class="o">$</span> <span class="nf">\</span><span class="n">e</span> <span class="ow">-&gt;</span> <span class="n">runReader</span> <span class="n">c</span> <span class="p">(</span><span class="n">f</span> <span class="n">e</span><span class="p">)</span>
+  
+<span class="nf">asks</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">MonadReader</span> <span class="n">e</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">e</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">m</span>
+<span class="nf">asks</span> <span class="n">sel</span> <span class="ow">=</span> <span class="n">ask</span> <span class="o">&gt;&gt;=</span> <span class="n">return</span> <span class="o">.</span> <span class="n">sel</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="the-writer-monad">The Writer Monad</h3>
+<p>Write Monad表示除了计算值以外还产生数据流的计算:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">newtype</span> <span class="kt">Writer</span> <span class="n">w</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Writer</span> <span class="p">{</span> <span class="n">runWriter</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">w</span><span class="p">)</span> <span class="p">}</span> 
+ 
+<span class="kr">instance</span> <span class="p">(</span><span class="kt">Monoid</span> <span class="n">w</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">Monad</span> <span class="p">(</span><span class="kt">Writer</span> <span class="n">w</span><span class="p">)</span> <span class="kr">where</span> 
+    <span class="n">return</span> <span class="n">a</span>             <span class="ow">=</span> <span class="kt">Writer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">mempty</span><span class="p">)</span> 
+    <span class="p">(</span><span class="kt">Writer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">w</span><span class="p">)</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="kr">let</span> <span class="p">(</span><span class="n">a&#39;</span><span class="p">,</span><span class="n">w&#39;</span><span class="p">)</span> <span class="ow">=</span> <span class="n">runWriter</span> <span class="o">$</span> <span class="n">f</span> <span class="n">a</span> <span class="kr">in</span> <span class="kt">Writer</span> <span class="p">(</span><span class="n">a&#39;</span><span class="p">,</span><span class="n">w</span> <span class="p">`</span><span class="n">mappend</span><span class="p">`</span> <span class="n">w&#39;</span><span class="p">)</span>
+    
+<span class="kr">class</span> <span class="p">(</span><span class="kt">Monoid</span> <span class="n">w</span><span class="p">,</span> <span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">MonadWriter</span> <span class="n">w</span> <span class="n">m</span> <span class="o">|</span> <span class="n">m</span> <span class="ow">-&gt;</span> <span class="n">w</span> <span class="kr">where</span> 
+    <span class="n">pass</span>   <span class="ow">::</span> <span class="n">m</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">w</span> <span class="ow">-&gt;</span> <span class="n">w</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span> 
+    <span class="n">listen</span> <span class="ow">::</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">w</span><span class="p">)</span> 
+    <span class="n">tell</span>   <span class="ow">::</span> <span class="n">w</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span> 
+ 
+<span class="kr">instance</span> <span class="p">(</span><span class="kt">Monoid</span> <span class="n">w</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">MonadWriter</span> <span class="n">w</span> <span class="p">(</span><span class="kt">Writer</span> <span class="n">w</span><span class="p">)</span> <span class="kr">where</span> 
+    <span class="n">pass</span>   <span class="p">(</span><span class="kt">Writer</span> <span class="p">(</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">f</span><span class="p">)</span><span class="p">,</span><span class="n">w</span><span class="p">)</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">Writer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">f</span> <span class="n">w</span><span class="p">)</span> 
+    <span class="n">listen</span> <span class="p">(</span><span class="kt">Writer</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">w</span><span class="p">)</span><span class="p">)</span>     <span class="ow">=</span> <span class="kt">Writer</span> <span class="p">(</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">w</span><span class="p">)</span><span class="p">,</span><span class="n">w</span><span class="p">)</span> 
+    <span class="n">tell</span>   <span class="n">s</span>                  <span class="ow">=</span> <span class="kt">Writer</span> <span class="p">(</span><span class="nb">()</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> 
+ 
+<span class="nf">listens</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">MonadWriter</span> <span class="n">w</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">w</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="nf">listens</span> <span class="n">f</span> <span class="n">m</span> <span class="ow">=</span> <span class="kr">do</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">w</span><span class="p">)</span> <span class="ow">&lt;-</span> <span class="n">listen</span> <span class="n">m</span><span class="p">;</span> <span class="n">return</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">f</span> <span class="n">w</span><span class="p">)</span>
+ 
+<span class="nf">censor</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">MonadWriter</span> <span class="n">w</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">w</span> <span class="ow">-&gt;</span> <span class="n">w</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span> 
+<span class="nf">censor</span> <span class="n">f</span> <span class="n">m</span> <span class="ow">=</span> <span class="n">pass</span> <span class="o">$</span> <span class="kr">do</span> <span class="n">a</span> <span class="ow">&lt;-</span> <span class="n">m</span><span class="p">;</span> <span class="n">return</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="the-continuation-monad">The Continuation monad</h3>
+<p>Continuation Monad表示可以被打断和恢复的计算(没错, 就是continuation):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="c1">-- r is the final result type of the whole computation</span>
+<span class="kr">newtype</span> <span class="kt">Cont</span> <span class="n">r</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Cont</span> <span class="p">{</span> <span class="n">runCont</span> <span class="ow">::</span> <span class="p">(</span><span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">}</span>
+  
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="p">(</span><span class="kt">Cont</span> <span class="n">r</span><span class="p">)</span> <span class="kr">where</span> 
+    <span class="n">return</span> <span class="n">a</span>       <span class="ow">=</span> <span class="kt">Cont</span> <span class="o">$</span> <span class="nf">\</span><span class="n">k</span> <span class="ow">-&gt;</span> <span class="n">k</span> <span class="n">a</span>
+    <span class="p">(</span><span class="kt">Cont</span> <span class="n">c</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">Cont</span> <span class="o">$</span> <span class="nf">\</span><span class="n">k</span> <span class="ow">-&gt;</span> <span class="n">c</span> <span class="p">(</span><span class="nf">\</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">runCont</span> <span class="p">(</span><span class="n">f</span> <span class="n">a</span><span class="p">)</span> <span class="n">k</span><span class="p">)</span>
+    
+<span class="kr">class</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">MonadCont</span> <span class="n">m</span> <span class="kr">where</span> 
+    <span class="n">callCC</span> <span class="ow">::</span> <span class="p">(</span><span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span> 
+ 
+<span class="kr">instance</span> <span class="kt">MonadCont</span> <span class="p">(</span><span class="kt">Cont</span> <span class="n">r</span><span class="p">)</span> <span class="kr">where</span> 
+    <span class="n">callCC</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">Cont</span> <span class="o">$</span> <span class="nf">\</span><span class="n">k</span> <span class="ow">-&gt;</span> <span class="n">runCont</span> <span class="p">(</span><span class="n">f</span> <span class="p">(</span><span class="nf">\</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">Cont</span> <span class="o">$</span> <span class="nf">\</span><span class="kr">_</span> <span class="ow">-&gt;</span> <span class="n">k</span> <span class="n">a</span><span class="p">)</span><span class="p">)</span> <span class="n">k</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="combining-monads">Combining monads</h2>
+<p>Functors和applicatives对于composition都是封闭的, 但两个monad结合却不一定是另一个monad. 一个monad transformer是一个接受monad作为monad作为参数的类型构造器, 类似与一个wrapper(因此很多都是用newtype定义的).</p>
+<h3 id="compose">Compose</h3>
+<p>Compose类型代表着函数结合:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">newtype</span> <span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Compose</span> <span class="p">{</span><span class="n">getCompose</span> <span class="ow">::</span> <span class="n">f</span> <span class="p">(</span><span class="n">g</span> <span class="n">a</span><span class="p">)</span><span class="p">}</span> <span class="kr">deriving</span> <span class="p">(</span><span class="kt">Eq</span><span class="p">,</span> <span class="kt">Show</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里的f, g不在是普遍意义上的函数, 而是类型构造器. 我们很容易实现Compose的Functor实例:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">instance</span> <span class="p">(</span><span class="kt">Functor</span> <span class="n">f</span><span class="p">,</span> <span class="kt">Functor</span> <span class="n">g</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">Functor</span> <span class="p">(</span><span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">fmap</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Compose</span> <span class="n">fga</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">Compose</span> <span class="o">$</span> <span class="p">(</span><span class="n">fmap</span> <span class="o">.</span> <span class="n">fmap</span><span class="p">)</span> <span class="n">f</span> <span class="n">fga</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>容易看到两个Functor结合之后依然可以是一个Functor. 同样的, 我们也可以定义Applicative实例:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">instance</span> <span class="p">(</span><span class="kt">Applicative</span> <span class="n">f</span><span class="p">,</span> <span class="kt">Applicative</span> <span class="n">g</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">Applicative</span> <span class="p">(</span><span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span><span class="p">)</span> <span class="kr">where</span>
+	<span class="n">pure</span> <span class="ow">=</span> <span class="kt">Compose</span> <span class="o">.</span> <span class="n">pure</span> <span class="o">.</span> <span class="n">pure</span>
+	<span class="kt">Compose</span> <span class="n">fgf</span> <span class="o">&lt;*&gt;</span> <span class="kt">Compose</span> <span class="n">fga</span> <span class="ow">=</span> <span class="kt">Compose</span> <span class="o">$</span> <span class="p">(</span><span class="o">&lt;*&gt;</span><span class="p">)</span> <span class="o">&lt;$&gt;</span> <span class="n">fgf</span> <span class="o">&lt;*&gt;</span> <span class="n">fga</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果我们要定义Compose的Monad实例, 就需要实现<code>(&gt;&gt;=)</code>或:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="p">(</span><span class="o">&gt;&gt;=</span><span class="p">)</span> <span class="ow">::</span> <span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span> <span class="n">b</span>
+<span class="c1">-- 或者通过join来实现&gt;&gt;=</span>
+<span class="nf">join</span> <span class="ow">::</span> <span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span> <span class="p">(</span><span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span> <span class="n">a</span> 
+</code></pre></td></tr></table>
+</div>
+</div><p>我们总是可以忽略掉外层的Compose, 此时对于join而言, 我们就得打了<code>f g (f g a) -&gt; f g a</code>, 如果存在一个函数<code>aux :: (Monad f, Monad g) =&gt; f (g a) -&gt; g (f a)</code>, 那么我们就可以从<code>f g (f g a)</code>中获得<code>f g a</code>, 因为对于f和g而言都有各自的<code>join</code>, 使得 <code>f (f a) -&gt; f a</code>. 然而并不是对于每个monad都存在这样的<code>aux</code>, 例如<code>IO (Maybe a) -&gt; Maybe (IO a)</code>就不存在这样的<code>aux</code>. 因而&quot;Monad do not compose&rdquo;, 此时我们就需要monad transformer.</p>
+<h3 id="identityt">IdentityT</h3>
+<p>我们已经看到对于任意的两个monad的compose, <code>join</code>并不总是可以的. 因此我们需要限制其中一个monad, 希望它对于另外一个任意的monad的compose总是可行的. 我们从IdentityT开始介绍monad transformer:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">newtype</span> <span class="kt">Identity</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Identity</span> <span class="p">{</span><span class="n">runIdentity</span> <span class="ow">::</span> <span class="n">a</span><span class="p">}</span> <span class="kr">deriving</span> <span class="p">(</span><span class="kt">Eq</span><span class="p">,</span> <span class="kt">Show</span><span class="p">)</span>
+
+<span class="kr">instance</span> <span class="kt">Functor</span> <span class="kt">Identity</span> <span class="kr">where</span>
+  <span class="n">fmap</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Identity</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">Identity</span> <span class="o">$</span> <span class="n">f</span> <span class="n">a</span>
+
+<span class="kr">instance</span> <span class="kt">Applicative</span> <span class="kt">Identity</span> <span class="kr">where</span>
+  <span class="n">pure</span> <span class="ow">=</span> <span class="kt">Identity</span>
+  <span class="kt">Identity</span> <span class="n">f</span> <span class="o">&lt;*&gt;</span> <span class="kt">Identity</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Identity</span> <span class="o">$</span> <span class="n">f</span> <span class="n">a</span>
+  
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="kt">Identity</span> <span class="kr">where</span>
+  <span class="kt">Identity</span> <span class="n">a</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">a</span>
+
+<span class="kr">newtype</span> <span class="kt">IdentityT</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">IdentityT</span> <span class="p">{</span><span class="n">runIdentityT</span> <span class="ow">::</span> <span class="n">m</span> <span class="n">a</span><span class="p">}</span> <span class="kr">deriving</span> <span class="p">(</span><span class="kt">Eq</span><span class="p">,</span> <span class="kt">Show</span><span class="p">)</span>
+
+<span class="kr">instance</span> <span class="kt">Functor</span> <span class="p">(</span><span class="kt">IdentityT</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">fmap</span> <span class="n">f</span> <span class="p">(</span><span class="kt">IdentityT</span> <span class="n">ma</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">IdentityT</span> <span class="o">$</span> <span class="n">fmap</span> <span class="n">f</span> <span class="n">ma</span>
+
+<span class="kr">instance</span> <span class="kt">Applicative</span> <span class="p">(</span><span class="kt">IdentityT</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+	<span class="n">pure</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">IdentityT</span> <span class="o">$</span> <span class="n">pure</span> <span class="n">a</span>
+	<span class="kt">IdentityT</span> <span class="n">mab</span> <span class="o">&lt;*&gt;</span> <span class="kt">IdentityT</span> <span class="n">ma</span> <span class="ow">=</span> <span class="kt">IdentityT</span> <span class="o">$</span> <span class="n">mab</span> <span class="o">&lt;*&gt;</span> <span class="n">fa</span>
+  
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="p">(</span><span class="kt">IdentityT</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+	<span class="kt">IdentityT</span> <span class="n">ma</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">IdentityT</span> <span class="o">$</span> <span class="n">ma</span> <span class="o">&gt;&gt;=</span> <span class="n">runIdentityT</span> <span class="o">.</span> <span class="n">f</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在这里我们限制了其中一个monad为Identity, 此时可以实现Monad实例, 因为我们有<code>runIdentityT</code>来获取额外的信息. 更一般的, 对于两个有Monad实例的类型f, g, 组合它们最终会止步与<code>f(g (f b))</code>, 而transformer的作用就是限制了g, 使得能够得到<code>f (f b)</code>.</p>
+<h3 id="maybet">MaybeT</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">newtype</span> <span class="kt">MaybeT</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">MaybeT</span> <span class="p">{</span><span class="n">runMaybeT</span> <span class="ow">::</span> <span class="n">m</span> <span class="p">(</span><span class="kt">Maybe</span> <span class="n">a</span><span class="p">)</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Functor实例和Applicative实例都可以直接从之前的Compose拿过来</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">instance</span> <span class="p">(</span><span class="kt">Functor</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">Functor</span> <span class="p">(</span><span class="kt">MaybeT</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">fmap</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Maybe</span> <span class="n">ma</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">MaybeT</span> <span class="o">$</span> <span class="p">(</span><span class="n">fmap</span> <span class="o">.</span> <span class="n">fmap</span><span class="p">)</span> <span class="n">f</span> <span class="n">ma</span>
+  
+<span class="kr">instance</span> <span class="p">(</span><span class="kt">Applicative</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">Applicative</span> <span class="p">(</span><span class="kt">MaybeT</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+	<span class="n">pure</span> <span class="ow">=</span> <span class="kt">MaybeT</span> <span class="o">.</span> <span class="n">pure</span> <span class="o">.</span> <span class="n">pure</span>
+	<span class="kt">MaybeT</span> <span class="n">fab</span> <span class="o">&lt;*&gt;</span> <span class="kt">MaybeT</span> <span class="n">mma</span> <span class="ow">=</span> <span class="kt">MaybeT</span> <span class="o">$</span> <span class="p">(</span><span class="o">&lt;*&gt;</span><span class="p">)</span> <span class="o">&lt;$&gt;</span> <span class="n">fab</span> <span class="o">&lt;*&gt;</span> <span class="n">mma</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>终于到了Monad实例:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">instance</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">Monad</span> <span class="p">(</span><span class="kt">MaybeT</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+	<span class="p">(</span><span class="kt">MaybeT</span> <span class="n">ma</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">MaybeT</span> <span class="o">$</span> <span class="kr">do</span>
+		<span class="n">v</span> <span class="ow">&lt;-</span> <span class="n">ma</span>
+		<span class="kr">case</span> <span class="n">v</span> <span class="kr">of</span>
+			<span class="kt">Nothing</span> <span class="ow">-&gt;</span> <span class="n">return</span> <span class="kt">Nothing</span>
+			<span class="kt">Just</span> <span class="n">y</span> <span class="ow">-&gt;</span> <span class="n">runMaybeT</span> <span class="p">(</span><span class="n">f</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="eithert">EitherT</h3>
+<p>EitherT和MaybeT的处理是类似的.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">newtype</span> <span class="kt">EitherT</span> <span class="n">e</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">EitherT</span> <span class="p">{</span><span class="n">runEitherT</span> <span class="ow">::</span> <span class="n">m</span> <span class="p">(</span><span class="kt">Either</span> <span class="n">e</span> <span class="n">a</span><span class="p">)</span><span class="p">}</span>
+
+<span class="kr">instance</span> <span class="kt">Functor</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">Functor</span> <span class="p">(</span><span class="kt">EitherT</span> <span class="n">e</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">fmap</span> <span class="n">f</span> <span class="p">(</span><span class="kt">EitherT</span> <span class="n">ema</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">EitherT</span> <span class="o">$</span> <span class="p">(</span><span class="n">fmap</span> <span class="o">.</span> <span class="n">fmap</span><span class="p">)</span> <span class="n">f</span> <span class="n">ema</span>
+
+<span class="kr">instance</span> <span class="kt">Applicative</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">Applicative</span> <span class="p">(</span><span class="kt">EitherT</span> <span class="n">e</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">pure</span> <span class="ow">=</span> <span class="kt">EitherT</span> <span class="o">.</span> <span class="n">pure</span> <span class="o">.</span> <span class="n">pure</span>
+  <span class="kt">EitherT</span> <span class="n">emab</span> <span class="o">&lt;*&gt;</span> <span class="kt">EitherT</span> <span class="n">ema</span> <span class="ow">=</span> <span class="kt">EitherT</span> <span class="o">$</span> <span class="p">(</span><span class="o">&lt;*&gt;</span><span class="p">)</span> <span class="o">&lt;$&gt;</span> <span class="n">emab</span> <span class="o">&lt;*&gt;</span> <span class="n">ema</span>
+
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">Monad</span> <span class="p">(</span><span class="kt">EitherT</span> <span class="n">e</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="kt">EitherT</span> <span class="n">ema</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">EitherT</span> <span class="o">$</span> <span class="kr">do</span>
+    <span class="n">v</span> <span class="ow">&lt;-</span> <span class="n">ema</span>
+    <span class="kr">case</span> <span class="n">v</span> <span class="kr">of</span>
+      <span class="kt">Right</span> <span class="n">y</span> <span class="ow">-&gt;</span> <span class="n">runEitherT</span> <span class="o">$</span> <span class="n">f</span> <span class="n">y</span>
+      <span class="kt">Left</span> <span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">return</span> <span class="o">$</span> <span class="kt">Left</span> <span class="n">x</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="readert">ReaderT</h3>
+<p>ReaderT是常规的Haskell应用中用到最多的transformer</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">newtype</span> <span class="kt">ReaderT</span> <span class="n">r</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">ReaderT</span> <span class="p">{</span><span class="n">runReaderT</span> <span class="ow">::</span> <span class="n">r</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>不过其处理和MaybeT以及EitherT处理依然是类似的, 注意ReaderT的参数是一个函数.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">instance</span> <span class="kt">Functor</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">Functor</span> <span class="p">(</span><span class="kt">ReaderT</span> <span class="n">r</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">fmap</span> <span class="n">f</span> <span class="p">(</span><span class="kt">ReaderT</span> <span class="n">rma</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">ReaderT</span> <span class="o">$</span> <span class="p">(</span><span class="n">fmap</span> <span class="o">.</span> <span class="n">fmap</span><span class="p">)</span> <span class="n">f</span> <span class="n">rma</span>
+
+<span class="kr">instance</span> <span class="kt">Applicative</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">Applicative</span> <span class="p">(</span><span class="kt">ReaderT</span> <span class="n">r</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">pure</span> <span class="ow">=</span> <span class="kt">ReaderT</span> <span class="o">.</span> <span class="n">pure</span> <span class="o">.</span> <span class="n">pure</span>
+  <span class="kt">ReaderT</span> <span class="n">fmab</span> <span class="o">&lt;*&gt;</span> <span class="kt">ReaderT</span> <span class="n">rma</span> <span class="ow">=</span> <span class="kt">ReaderT</span> <span class="o">$</span> <span class="p">(</span><span class="o">&lt;*&gt;</span><span class="p">)</span> <span class="o">&lt;$&gt;</span> <span class="n">fmab</span> <span class="o">&lt;*&gt;</span> <span class="n">rma</span>
+
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">Monad</span> <span class="p">(</span><span class="kt">ReaderT</span> <span class="n">r</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="kt">ReaderT</span> <span class="n">rma</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">ReaderT</span> <span class="o">$</span> <span class="nf">\</span><span class="n">r</span> <span class="ow">-&gt;</span> <span class="kr">do</span>
+    <span class="n">a</span> <span class="ow">&lt;-</span> <span class="n">rma</span> <span class="n">r</span>
+    <span class="n">runReaderT</span> <span class="p">(</span><span class="n">f</span> <span class="n">a</span><span class="p">)</span> <span class="n">r</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="statet">StateT</h3>
+<p>StateT和ReaderT是类似的不过StateT还需要额外处理状态</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">newtype</span> <span class="kt">StateT</span> <span class="n">s</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">StateT</span> <span class="p">{</span><span class="n">runStateT</span> <span class="ow">::</span> <span class="n">s</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span><span class="p">}</span>
+
+<span class="kr">instance</span> <span class="kt">Functor</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">Functor</span> <span class="p">(</span><span class="kt">StateT</span> <span class="n">s</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">fmap</span> <span class="n">f</span> <span class="p">(</span><span class="kt">StateT</span> <span class="n">sma</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">StateT</span> <span class="o">$</span> <span class="n">fmap</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s1</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">f</span> <span class="n">a</span><span class="p">,</span> <span class="n">s1</span><span class="p">)</span><span class="p">)</span> <span class="o">.</span> <span class="n">sma</span>
+
+<span class="c1">-- http://stackoverflow.com/questions/18673525/</span>
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">Applicative</span> <span class="p">(</span><span class="kt">StateT</span> <span class="n">s</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="n">pure</span> <span class="n">x</span> <span class="ow">=</span> <span class="kt">StateT</span> <span class="o">$</span> <span class="nf">\</span><span class="n">s</span> <span class="ow">-&gt;</span> <span class="n">return</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+  <span class="kt">StateT</span> <span class="n">smab</span> <span class="o">&lt;*&gt;</span> <span class="kt">StateT</span> <span class="n">sma</span> <span class="ow">=</span> <span class="kt">StateT</span> <span class="o">$</span> <span class="nf">\</span><span class="n">s</span> <span class="ow">-&gt;</span> <span class="kr">do</span>
+    <span class="p">(</span><span class="n">fab</span><span class="p">,</span> <span class="n">s1</span><span class="p">)</span> <span class="ow">&lt;-</span> <span class="n">smab</span> <span class="n">s</span>
+    <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span> <span class="ow">&lt;-</span> <span class="n">sma</span> <span class="n">s1</span>
+    <span class="n">return</span> <span class="p">(</span><span class="n">fab</span> <span class="n">a</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+
+<span class="kr">instance</span> <span class="kt">Monad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">Monad</span> <span class="p">(</span><span class="kt">StateT</span> <span class="n">s</span> <span class="n">m</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="kt">StateT</span> <span class="n">sma</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">StateT</span> <span class="o">$</span> <span class="nf">\</span><span class="n">s</span> <span class="ow">-&gt;</span> <span class="kr">do</span>
+    <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s1</span><span class="p">)</span> <span class="ow">&lt;-</span> <span class="n">sma</span> <span class="n">s</span>
+    <span class="n">runStateT</span> <span class="p">(</span><span class="n">f</span> <span class="n">a</span><span class="p">)</span> <span class="n">s1</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="writertlistt">WriterT和ListT</h3>
+<p>关于WriterT, 由于State总是能够代替Writer(State既能读又能写), 因此我们并不总是需要Writer. 实际上还有一个RWST将Reader, Writer, State结合起来的更大的类型.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">newtype</span> <span class="kt">RWST</span> <span class="n">r</span> <span class="n">w</span> <span class="n">s</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">RWST</span> <span class="p">{</span><span class="n">runRWST</span> <span class="ow">::</span> <span class="n">r</span> <span class="ow">-&gt;</span> <span class="n">s</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>It’s a bit too easy to get into a situation where Writer is either too
+lazy or too strict for the problem you’re solving, and then it’ll use
+more memory than you’d like. Writer can accumulate unevaluated thunks, causing memory leaks. It’s also inappropriate for logging long-running or ongoing programs due to the fact that you can’t retrieve any of the logged values until the computation is complete.</p>
+</blockquote>
+<p>ListT也并不是总需要的, 其实现并不是很快. 而且Streaming库中的<code>pipes</code>和<code>conduit</code>总是能够很好的胜任大部分情况.</p>
+<p>对于任何一个transformer, 我们总是能够从中恢复对应的monad类型, 只需要传入一个<code>Identity</code>类型,例如<code>type Maybe a = MaybeT Indentity a</code></p>
+<h3 id="lifting">Lifting</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">fmap</span> <span class="ow">::</span> <span class="kt">Functor</span> <span class="n">f</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">b</span>
+<span class="nf">liftA</span> <span class="ow">::</span> <span class="kt">Applicative</span> <span class="n">f</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">b</span>
+<span class="nf">liftM</span> <span class="ow">::</span> <span class="kt">Monad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">b</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Monad transformer也同样有lift, 其将一个monadic计算放到一个combined monad中.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">class</span> <span class="kt">MonadTrans</span> <span class="n">t</span> <span class="kr">where</span>
+	<span class="n">lift</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="n">m</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">t</span> <span class="n">m</span> <span class="n">a</span>
+	
+<span class="kr">class</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">MonadIO</span> <span class="n">m</span> <span class="kr">where</span>
+	<span class="n">liftIO</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+  </section>
+
+  <section>
+    
+      
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>monad and transformers</b><nav id="TableOfContents">
+  <ul>
+    <li><a href="#monad-support">Monad Support</a></li>
+    <li><a href="#monads">Monads</a>
+      <ul>
+        <li><a href="#the-identity-monad">The Identity Monad</a></li>
+        <li><a href="#the-maybe-monad">The Maybe Monad</a></li>
+        <li><a href="#the-error-monad">The Error Monad</a></li>
+        <li><a href="#the-list-monad">The List Monad</a></li>
+        <li><a href="#the-io-monad">The IO Monad</a></li>
+        <li><a href="#the-state-monad">The State Monad</a></li>
+        <li><a href="#the-reader-monad">The Reader Monad</a></li>
+        <li><a href="#the-writer-monad">The Writer Monad</a></li>
+        <li><a href="#the-continuation-monad">The Continuation monad</a></li>
+      </ul>
+    </li>
+    <li><a href="#combining-monads">Combining monads</a>
+      <ul>
+        <li><a href="#compose">Compose</a></li>
+        <li><a href="#identityt">IdentityT</a></li>
+        <li><a href="#maybet">MaybeT</a></li>
+        <li><a href="#eithert">EitherT</a></li>
+        <li><a href="#readert">ReaderT</a></li>
+        <li><a href="#statet">StateT</a></li>
+        <li><a href="#writertlistt">WriterT和ListT</a></li>
+        <li><a href="#lifting">Lifting</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    ©Christophe &middot; 
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
+    
+  </body>
+</html>

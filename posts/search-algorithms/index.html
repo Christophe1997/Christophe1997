@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'U-12345678-0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  search algorithms &ndash; CastOff
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="符号表是一种存储键值对的数据结构, 支持插入和查找操作. 要确定一个给定的键是否存在于符号表中, 首先要建立对象等价性的概念. 为了保证一致性, 最好|">
+    
+
+    <meta name="apple-mobile-web-app-title" content="CastOff">
+    
+    
+    <link rel="icon" href="/favicon-64.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" size="any" href="/pinned-icon.svg">
+    
+    
+    
+
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="https://christophe1997.github.io">
+    CastOff
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/posts/">
+      
+      <span>Blogs</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="/">
+      
+      <span>About</span>
+    </a>
+    
+    
+  </div>
+  
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">search algorithms</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+<a href='/categories/algorithm' class="muted-link">
+  <span class="Label Label--gray-darker">algorithm</span>
+</a>
+
+
+
+<a href='/tags/java' class="muted-link">
+  <span class="Label Label--gray">Java</span>
+</a>
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2019-12-04. Published at: 2018-04-05.">
+        
+          Lastmod: 2019-12-04
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <p>符号表是一种存储键值对的数据结构, 支持插入和查找操作. 要确定一个给定的键是否存在于符号表中, 首先要建立对象等价性的概念. 为了保证一致性, 最好选择不
+可变的数据类型作为键. 成本模型: 统计比较的次数, 在内循环不进行比较的情况下, 转为统计数组的访问次数.</p>
+<!-- raw HTML omitted -->
+<h2 id="heading">二叉查找树</h2>
+<p>每个结点的键都大于其左子树的任意结点的键而小于右子树的任一结点的键. 一棵二叉查找树代表了一组键(及其相应的值)的集合, 同一个集合可以用多棵不同的二叉树
+表示, 如果将所有键都投影到一条直线上, 则可以保证得到一个有序的键列.</p>
+<p>查找的惯用做法是: 如果含有该键的结点存在于表中, 则返回相应的值或者返回null. 我们将采用Java 8的Optional类型使得查找的结果总是返回Optional, 将
+显示的调用交给使用者.</p>
+<p>使用二叉查找树的算法的运行时间取决于树的形状. 在最好的情况下, 一棵含有N个结点的树是完全平衡的, 每条空链接和根结点的距离都为~lgN; 而在最坏的情况下
+树的高度为N. 当键的分布是随机的情况下, 二叉查找树一般具有较好的平衡性, 此时查找或者插入操作平均所需的次数为~2lnN(1.39lgN). 虽然二叉查找树的查找
+成本比二分查找高约39%, 但插入操作是对数级别的.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BST</span><span class="o">&lt;</span><span class="n">Key</span> <span class="kd">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span><span class="o">,</span> <span class="n">Value</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Node</span> <span class="n">root</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">Node</span> <span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="n">Key</span> <span class="n">key</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="n">Value</span> <span class="n">val</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kt">int</span> <span class="n">N</span><span class="o">;</span>
+
+        <span class="n">Node</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">val</span><span class="o">,</span> <span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span> <span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span> <span class="k">this</span><span class="o">.</span><span class="na">N</span> <span class="o">=</span> <span class="n">N</span><span class="o">;</span>
+        <span class="o">}</span>       
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">size</span><span class="o">(</span><span class="n">root</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">=</span><span class="o">=</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="na">N</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="nf">get</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">get</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">key</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">Value</span> <span class="nf">get</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">=</span><span class="o">=</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">get</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">key</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">get</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">key</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="na">val</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">put</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">put</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">val</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">Node</span> <span class="nf">put</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">=</span><span class="o">=</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">val</span><span class="o">,</span> <span class="n">1</span><span class="o">)</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">put</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">val</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">put</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">val</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">else</span> <span class="n">node</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">N</span> <span class="o">=</span> <span class="n">size</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">+</span> <span class="n">size</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">)</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="heading1">平衡查找树</h2>
+<h3 id="23">2-3查找树</h3>
+<p>一棵2-3查找树或为一棵空树, 或者由以下结点组成:</p>
+<ul>
+<li>2-结点, 含有一个键和两条链接.</li>
+<li>3-结点, 含有两个键和三条链接.</li>
+</ul>
+<p>一棵完美平衡的2-3查找树中所有空链接到根结点的距离都应该是相同的.</p>
+<h3 id="heading2">红黑二叉查找树</h3>
+<p>红黑二叉查找树是用标准的二叉查找树和一些额外的信息来表示2-3树, 树中的链接分为两者情形:</p>
+<ul>
+<li>红链接将两个2-结点连接起来构成一个3-结点.</li>
+<li>黑链接是2-3树中普通的链接.</li>
+</ul>
+<p>另一种定义是含有红黑链接并满足下列条件的二叉查找树:</p>
+<ul>
+<li>红链接均为左链接.</li>
+<li>没有任何一个结点同时和两条红链接相连.</li>
+<li>该树是完美黑色平衡的, 即任意空链接到根结点的路径上的黑链接数量相同.</li>
+</ul>
+<p>满足这样定义的红黑树和相应的2-3树是一一对应的. (注: 标准的红黑树是允许红链接为右链接的).
+一种标准红黑树的实现(具体删除插入调整细节网上很多):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RBST</span><span class="o">&lt;</span><span class="n">Key</span> <span class="kd">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span><span class="o">,</span> <span class="n">Value</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Node</span> <span class="n">nil</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="n">BLACK</span><span class="o">)</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Node</span> <span class="n">root</span> <span class="o">=</span> <span class="n">nil</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">RED</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">BLACK</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">Node</span> <span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">,</span> <span class="n">parent</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="n">Key</span> <span class="n">key</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="n">Value</span> <span class="n">val</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">color</span><span class="o">;</span>
+<span class="c1">//        private int N;
+</span><span class="c1"></span>
+        <span class="n">Node</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">val</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">color</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+<span class="c1">//            this.N = N;
+</span><span class="c1"></span>            <span class="k">this</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">color</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kt">boolean</span> <span class="nf">nonLeft</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">=</span><span class="o">=</span> <span class="n">nil</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kt">boolean</span> <span class="nf">nonRight</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">right</span> <span class="o">=</span><span class="o">=</span> <span class="n">nil</span><span class="o">;</span> <span class="o">}</span>
+
+        <span class="kt">boolean</span> <span class="nf">isNil</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span> <span class="o">=</span><span class="o">=</span> <span class="n">nil</span><span class="o">;</span> <span class="o">}</span>
+
+        <span class="kt">void</span> <span class="nf">flipColors</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="n">color</span> <span class="o">=</span> <span class="o">!</span><span class="n">color</span><span class="o">;</span> <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">StringBuilder</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+            <span class="n">result</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&#34;&lt;key: &#34;</span><span class="o">)</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">key</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">parent</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">result</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&#34;, parent: &#34;</span><span class="o">)</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">parent</span><span class="o">.</span><span class="na">key</span><span class="o">)</span><span class="o">;</span>
+            <span class="n">result</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&#34;&gt;&#34;</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="nf">keys</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">keys</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">queue</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">queue</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">keys</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">isNil</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+        <span class="n">keys</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">queue</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">queue</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">keys</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">queue</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isRed</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">=</span><span class="o">=</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="n">BLACK</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span><span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">rotateLeft</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Node</span> <span class="n">newNode</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">newNode</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">isNil</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="n">newNode</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+        <span class="n">newNode</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">parent</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">isNil</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">=</span><span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="n">node</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+        <span class="k">else</span> <span class="n">node</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+        <span class="n">newNode</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">rotateRight</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Node</span> <span class="n">newNode</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">newNode</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">isNil</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="n">newNode</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+        <span class="n">newNode</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">parent</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">isNil</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">=</span><span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="n">node</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+        <span class="k">else</span> <span class="n">node</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+        <span class="n">newNode</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">flipColors</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">flipColors</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">flipColors</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">flipColors</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Node</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">nil</span><span class="o">;</span>
+        <span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">root</span><span class="o">;</span>
+        <span class="n">Node</span> <span class="n">insertNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">val</span><span class="o">,</span> <span class="n">RED</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="o">!</span><span class="n">current</span><span class="o">.</span><span class="na">isNil</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">current</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">key</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="k">else</span> <span class="o">{</span>
+                <span class="n">current</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+                <span class="k">return</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">insertNode</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">parent</span><span class="o">.</span><span class="na">isNil</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="n">insertNode</span><span class="o">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">parent</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">parent</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">insertNode</span><span class="o">;</span>
+        <span class="k">else</span> <span class="n">parent</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">insertNode</span><span class="o">;</span>
+
+        <span class="n">insertNode</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">nil</span><span class="o">;</span>
+        <span class="n">insertNode</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">nil</span><span class="o">;</span>
+
+        <span class="n">insertFixUp</span><span class="o">(</span><span class="n">insertNode</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">insertFixUp</span><span class="o">(</span><span class="n">Node</span> <span class="n">current</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Node</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">;</span>
+        <span class="n">Node</span> <span class="n">grandparent</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">isRed</span><span class="o">(</span><span class="n">parent</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">;</span>
+            <span class="n">grandparent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="na">parent</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">parent</span> <span class="o">=</span><span class="o">=</span> <span class="n">grandparent</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Node</span> <span class="n">uncle</span> <span class="o">=</span> <span class="n">grandparent</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">isRed</span><span class="o">(</span><span class="n">uncle</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">flipColors</span><span class="o">(</span><span class="n">grandparent</span><span class="o">)</span><span class="o">;</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">grandparent</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">current</span> <span class="o">=</span><span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="na">right</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">current</span> <span class="o">=</span> <span class="n">parent</span><span class="o">;</span>
+                        <span class="n">rotateLeft</span><span class="o">(</span><span class="n">current</span><span class="o">)</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="n">parent</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+                    <span class="n">grandparent</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+                    <span class="n">rotateRight</span><span class="o">(</span><span class="n">grandparent</span><span class="o">)</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">Node</span> <span class="n">uncle</span> <span class="o">=</span> <span class="n">grandparent</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">isRed</span><span class="o">(</span><span class="n">uncle</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">flipColors</span><span class="o">(</span><span class="n">grandparent</span><span class="o">)</span><span class="o">;</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">grandparent</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">current</span> <span class="o">=</span><span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">current</span> <span class="o">=</span> <span class="n">parent</span><span class="o">;</span>
+                        <span class="n">rotateRight</span><span class="o">(</span><span class="n">current</span><span class="o">)</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="n">parent</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+                    <span class="n">grandparent</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+                    <span class="n">rotateLeft</span><span class="o">(</span><span class="n">grandparent</span><span class="o">)</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">root</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="nf">get</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">get</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">key</span><span class="o">)</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">x</span> <span class="o">-</span><span class="o">&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">val</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="nf">get</span><span class="o">(</span><span class="n">Node</span> <span class="n">root</span><span class="o">,</span> <span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">root</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">cmp</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="o">!</span><span class="n">current</span><span class="o">.</span><span class="na">isNil</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">cmp</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">key</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+            <span class="k">else</span><span class="o">{</span>
+<span class="c1">//                System.out.println(&#34;hit&#34;);
+</span><span class="c1"></span>                <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">current</span><span class="o">)</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">empty</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="nf">min</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">isNil</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">empty</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">min</span><span class="o">(</span><span class="n">root</span><span class="o">)</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">x</span> <span class="o">-</span><span class="o">&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">key</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="nf">min</span><span class="o">(</span><span class="n">Node</span> <span class="n">root</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">root</span> <span class="o">=</span><span class="o">=</span> <span class="n">nil</span><span class="o">)</span> <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">empty</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">root</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="o">!</span><span class="n">current</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">isNil</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">current</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span> <span class="nf">deleteMin</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">deleteMin</span><span class="o">(</span><span class="n">root</span><span class="o">)</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">x</span> <span class="o">-</span><span class="o">&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">key</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="nf">deleteMin</span><span class="o">(</span><span class="n">Node</span> <span class="n">root</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">optionalNode</span> <span class="o">=</span> <span class="n">min</span><span class="o">(</span><span class="n">root</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">optionalNode</span><span class="o">.</span><span class="na">isPresent</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Node</span> <span class="n">minNode</span> <span class="o">=</span> <span class="n">optionalNode</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+            <span class="n">Node</span> <span class="n">current</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">minNode</span><span class="o">.</span><span class="na">nonRight</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="n">current</span> <span class="o">=</span> <span class="n">nil</span><span class="o">;</span>
+            <span class="k">else</span> <span class="n">current</span> <span class="o">=</span> <span class="n">minNode</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+            <span class="n">current</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">minNode</span><span class="o">.</span><span class="na">parent</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">minNode</span> <span class="o">=</span><span class="o">=</span> <span class="n">minNode</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">{</span> <span class="n">minNode</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">current</span><span class="o">;</span> <span class="o">}</span>
+            <span class="k">else</span> <span class="o">{</span> <span class="n">minNode</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">current</span><span class="o">;</span> <span class="o">}</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span><span class="o">=</span> <span class="n">minNode</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="n">current</span><span class="o">;</span> <span class="o">}</span>
+            <span class="n">deleteFixUp</span><span class="o">(</span><span class="n">current</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">minNode</span><span class="o">)</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">optionalNode</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">deleteFixUp</span><span class="o">(</span><span class="n">Node</span> <span class="n">current</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">current</span> <span class="o">!</span><span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="o">!</span><span class="n">isRed</span><span class="o">(</span><span class="n">current</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">current</span> <span class="o">=</span><span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Node</span> <span class="n">sibling</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">isRed</span><span class="o">(</span><span class="n">sibling</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">sibling</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+                    <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+                    <span class="n">rotateLeft</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">)</span><span class="o">;</span>
+                    <span class="n">sibling</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">isRed</span><span class="o">(</span><span class="n">sibling</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="o">!</span><span class="n">isRed</span><span class="o">(</span><span class="n">sibling</span><span class="o">.</span><span class="na">right</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">sibling</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">isRed</span><span class="o">(</span><span class="n">sibling</span><span class="o">.</span><span class="na">right</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">sibling</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+                        <span class="n">sibling</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+                        <span class="n">rotateRight</span><span class="o">(</span><span class="n">sibling</span><span class="o">)</span><span class="o">;</span>
+                        <span class="n">sibling</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="n">sibling</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">color</span><span class="o">;</span>
+                    <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+                    <span class="n">sibling</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+                    <span class="n">rotateLeft</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">)</span><span class="o">;</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">Node</span> <span class="n">sibling</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">isRed</span><span class="o">(</span><span class="n">sibling</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">sibling</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+                    <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+                    <span class="n">rotateRight</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">)</span><span class="o">;</span>
+                    <span class="n">sibling</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">isRed</span><span class="o">(</span><span class="n">sibling</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="o">!</span><span class="n">isRed</span><span class="o">(</span><span class="n">sibling</span><span class="o">.</span><span class="na">right</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">sibling</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">isRed</span><span class="o">(</span><span class="n">sibling</span><span class="o">.</span><span class="na">left</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">sibling</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+                        <span class="n">sibling</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">RED</span><span class="o">;</span>
+                        <span class="n">rotateLeft</span><span class="o">(</span><span class="n">sibling</span><span class="o">)</span><span class="o">;</span>
+                        <span class="n">sibling</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="n">sibling</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">color</span><span class="o">;</span>
+                    <span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+                    <span class="n">sibling</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+                    <span class="n">rotateRight</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">parent</span><span class="o">)</span><span class="o">;</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">current</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">BLACK</span><span class="o">;</span>
+        <span class="n">nil</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">optionalNode</span> <span class="o">=</span> <span class="n">get</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">key</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">optionalNode</span><span class="o">.</span><span class="na">isPresent</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Node</span> <span class="n">deleteNode</span> <span class="o">=</span> <span class="n">optionalNode</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+            <span class="n">Node</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">deleteNode</span><span class="o">.</span><span class="na">parent</span><span class="o">;</span>
+            <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">optionalTempNode</span> <span class="o">=</span> <span class="n">min</span><span class="o">(</span><span class="n">deleteNode</span><span class="o">.</span><span class="na">right</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">optionalTempNode</span><span class="o">.</span><span class="na">isPresent</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Node</span> <span class="n">tempNode</span> <span class="o">=</span> <span class="n">optionalTempNode</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span><span class="o">=</span> <span class="n">deleteNode</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="n">tempNode</span><span class="o">;</span> <span class="o">}</span>
+                <span class="n">flipNode</span><span class="o">(</span><span class="n">deleteNode</span><span class="o">,</span> <span class="n">tempNode</span><span class="o">)</span><span class="o">;</span>
+                <span class="n">deleteMin</span><span class="o">(</span><span class="n">tempNode</span><span class="o">.</span><span class="na">right</span><span class="o">)</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">deleteNode</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span><span class="o">=</span> <span class="n">deleteNode</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="n">current</span><span class="o">;</span> <span class="o">}</span>
+                <span class="n">current</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">deleteNode</span> <span class="o">=</span><span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="n">parent</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">current</span><span class="o">;</span>
+                <span class="k">else</span> <span class="n">parent</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">current</span><span class="o">;</span>
+                <span class="n">deleteFixUp</span><span class="o">(</span><span class="n">current</span><span class="o">)</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">resetNil</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">nil</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">nil</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">nil</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">flipNode</span><span class="o">(</span><span class="n">Node</span> <span class="n">lnode</span><span class="o">,</span> <span class="n">Node</span> <span class="n">rnode</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Node</span> <span class="n">tep</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">lnode</span> <span class="o">=</span><span class="o">=</span> <span class="n">lnode</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">{</span> <span class="n">lnode</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">rnode</span><span class="o">;</span> <span class="o">}</span>
+        <span class="k">else</span> <span class="o">{</span> <span class="n">lnode</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">rnode</span><span class="o">;</span> <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">rnode</span> <span class="o">=</span><span class="o">=</span> <span class="n">rnode</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span><span class="o">)</span> <span class="o">{</span> <span class="n">rnode</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">lnode</span><span class="o">;</span> <span class="o">}</span>
+        <span class="k">else</span> <span class="o">{</span> <span class="n">rnode</span><span class="o">.</span><span class="na">parent</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">lnode</span><span class="o">;</span> <span class="o">}</span>
+        <span class="n">tep</span> <span class="o">=</span> <span class="n">lnode</span><span class="o">.</span><span class="na">parent</span><span class="o">;</span>
+        <span class="n">lnode</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">rnode</span><span class="o">.</span><span class="na">parent</span><span class="o">;</span>
+        <span class="n">rnode</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">tep</span><span class="o">;</span>
+
+        <span class="n">tep</span> <span class="o">=</span> <span class="n">lnode</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="n">lnode</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">rnode</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+        <span class="n">rnode</span><span class="o">.</span><span class="na">left</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">lnode</span><span class="o">;</span>
+        <span class="n">rnode</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">tep</span><span class="o">;</span>
+        <span class="n">tep</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">rnode</span><span class="o">;</span>
+
+        <span class="n">tep</span> <span class="o">=</span> <span class="n">lnode</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+        <span class="n">lnode</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">rnode</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+        <span class="n">rnode</span><span class="o">.</span><span class="na">right</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">lnode</span><span class="o">;</span>
+        <span class="n">rnode</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">tep</span><span class="o">;</span>
+        <span class="n">tep</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">rnode</span><span class="o">;</span>
+
+        <span class="n">resetNil</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>红黑树可以看成是一种折中的平衡策略, 很多操作和二叉查找树一致, 但因为更好的平衡性而具有更好的性能.</p>
+<h2 id="heading3">散列表</h2>
+<p>散列最主要的目的在于均匀地将键散布开来, 因此在散列之后会丢失键的顺序信息. 散列表实现的重点在于散列函数的选择以及处理碰撞冲突的策略.
+我们假设所使用的散列函数能够均匀并独立地将所有的键散布于0到M-1之间.</p>
+<h3 id="heading4">散列函数</h3>
+<p>一个散列函数应该易于计算并且能够均匀分布所有键. 一个优秀的散列方法需要满足以下条件:</p>
+<ul>
+<li>一致性, 等价的键必须产生相等的散列值.</li>
+<li>高效性, 计算简便.</li>
+<li>均匀性, 均匀的散列所有值而避免大量的碰撞.</li>
+</ul>
+<h3 id="heading5">拉链法</h3>
+<p>一种处理碰撞的方法是拉链法, 该方法将大小为M的数组中的每个元素指向一条链表, 链表中的每个结点都存储了散列值为该元素的索引的键值对. 这种方法需要选择
+足够大的M, 使所有链表都尽可能短以保证高效的查找.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java">
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SequentialSearchST</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">,</span> <span class="n">Value</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Node</span> <span class="n">first</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
+        <span class="n">Key</span> <span class="n">key</span><span class="o">;</span>
+        <span class="n">Value</span> <span class="n">val</span><span class="o">;</span>
+        <span class="n">Node</span> <span class="n">next</span><span class="o">;</span>
+
+        <span class="n">Node</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">val</span><span class="o">,</span> <span class="n">Node</span> <span class="n">next</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="nf">get</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">first</span><span class="o">;</span> <span class="n">current</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">next</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">key</span><span class="o">)</span><span class="o">)</span> <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">val</span><span class="o">)</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">empty</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">put</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">first</span><span class="o">;</span> <span class="n">current</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">next</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">key</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">current</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+                <span class="k">return</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">val</span><span class="o">,</span> <span class="n">first</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Node</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">first</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">first</span><span class="o">;</span> <span class="n">current</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">next</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">key</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">current</span> <span class="o">=</span><span class="o">=</span> <span class="n">first</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">first</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">parent</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="k">return</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">current</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SeparateChainingHashST</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">,</span> <span class="n">Value</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">N</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">M</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">SequentialSearchST</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">,</span> <span class="n">Value</span><span class="o">&gt;</span> <span class="o">[</span><span class="o">]</span> <span class="n">st</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">SeparateChainingHashST</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">(</span><span class="n">996</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">&#34;unchecked&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nf">SeparateChainingHashST</span><span class="o">(</span><span class="kt">int</span> <span class="n">M</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">M</span> <span class="o">=</span> <span class="n">M</span><span class="o">;</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="o">(</span><span class="n">SequentialSearchST</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">,</span> <span class="n">Value</span><span class="o">&gt;</span><span class="o">[</span><span class="o">]</span><span class="o">)</span> <span class="k">new</span> <span class="n">SequentialSearchST</span><span class="o">[</span><span class="n">M</span><span class="o">]</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">M</span><span class="o">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">st</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SequentialSearchST</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">hash</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">key</span><span class="o">.</span><span class="na">hashCode</span><span class="o">(</span><span class="o">)</span> <span class="o">&amp;</span> <span class="n">0x7fffffff</span> <span class="o">%</span> <span class="n">M</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="nf">get</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">st</span><span class="o">[</span><span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">)</span><span class="o">]</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">SeparateChainingHashST</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">,</span> <span class="n">Value</span><span class="o">&gt;</span> <span class="nf">put</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">st</span><span class="o">[</span><span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">)</span><span class="o">]</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">val</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">st</span><span class="o">[</span><span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">)</span><span class="o">]</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">key</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="heading6">基于线性探测法的散列表</h3>
+<p>实现散列表的另一种方式就是用大小为M的数组保存N个键值对(M &gt; N), 依靠数组中的空位解决碰撞冲突. 这类方法统称为开放地址散列表, 其中最简单的方法是
+线性探测法: 当碰撞发生时, 我们检查散列表中的下一个位置:</p>
+<ul>
+<li>命中, 该位置的键和被查找的键相同,</li>
+<li>为命中, 该位置没有键, 以及</li>
+<li>继续查找, 该位置的键和被查找的键不同.</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LinearProbingHashST</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">,</span> <span class="n">Value</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">N</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">M</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Key</span><span class="o">[</span><span class="o">]</span> <span class="n">keys</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Value</span><span class="o">[</span><span class="o">]</span> <span class="n">vals</span><span class="o">;</span>
+
+    <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">&#34;unchecked&#34;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nf">LinearProbingHashST</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">size</span><span class="o">;</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="o">(</span><span class="n">Key</span><span class="o">[</span><span class="o">]</span><span class="o">)</span> <span class="k">new</span> <span class="n">Object</span><span class="o">[</span><span class="n">M</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="o">(</span><span class="n">Value</span><span class="o">[</span><span class="o">]</span><span class="o">)</span> <span class="k">new</span> <span class="n">Object</span><span class="o">[</span><span class="n">M</span><span class="o">]</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">moduloPlusOne</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span><span class="k">return</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span> <span class="o">%</span> <span class="n">M</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">vals</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">N</span><span class="o">-</span><span class="o">-</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">hash</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">hashCode</span><span class="o">(</span><span class="o">)</span> <span class="o">&amp;</span> <span class="n">0x7fffffff</span><span class="o">)</span> <span class="o">%</span> <span class="n">M</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">resize</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">LinearProbingHashST</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">,</span> <span class="n">Value</span><span class="o">&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinearProbingHashST</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="n">size</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">M</span><span class="o">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">t</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">,</span> <span class="n">vals</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">)</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="na">keys</span><span class="o">;</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="na">vals</span><span class="o">;</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="na">M</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">put</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="n">Value</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">N</span> <span class="o">&gt;</span> <span class="n">M</span><span class="o">/</span><span class="n">2</span><span class="o">)</span> <span class="o">{</span> <span class="n">resize</span><span class="o">(</span><span class="n">2</span> <span class="o">*</span> <span class="n">M</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">)</span><span class="o">;</span> <span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">moduloPlusOne</span><span class="o">(</span><span class="n">i</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">vals</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+                <span class="k">return</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
+        <span class="n">vals</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+        <span class="n">N</span><span class="o">+</span><span class="o">+</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="nf">get</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">)</span><span class="o">;</span> <span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">moduloPlusOne</span><span class="o">(</span><span class="n">i</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">vals</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">)</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">empty</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">get</span><span class="o">(</span><span class="n">key</span><span class="o">)</span><span class="o">.</span><span class="na">ifPresent</span><span class="o">(</span><span class="n">value</span> <span class="o">-</span><span class="o">&gt;</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="o">!</span><span class="n">key</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span> <span class="n">i</span> <span class="o">=</span> <span class="n">moduloPlusOne</span><span class="o">(</span><span class="n">i</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+            <span class="n">remove</span><span class="o">(</span><span class="n">i</span><span class="o">)</span><span class="o">;</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">moduloPlusOne</span><span class="o">(</span><span class="n">i</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Key</span> <span class="n">keyRedo</span> <span class="o">=</span> <span class="n">keys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">;</span>
+                <span class="n">Value</span> <span class="n">valRedo</span> <span class="o">=</span> <span class="n">vals</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">;</span>
+                <span class="n">remove</span><span class="o">(</span><span class="n">i</span><span class="o">)</span><span class="o">;</span>
+                <span class="n">put</span><span class="o">(</span><span class="n">keyRedo</span><span class="o">,</span> <span class="n">valRedo</span><span class="o">)</span><span class="o">;</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="n">moduloPlusOne</span><span class="o">(</span><span class="n">i</span><span class="o">)</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">N</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">N</span> <span class="o">&lt;</span> <span class="n">M</span><span class="o">/</span><span class="n">8</span><span class="o">)</span> <span class="n">resize</span><span class="o">(</span><span class="n">M</span> <span class="o">/</span> <span class="n">2</span><span class="o">)</span><span class="o">;</span>
+        <span class="o">}</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>线性探测的平均水平取决于元素在插入数组后聚集成的一组连续的条目, 也叫键簇. 显然, 插入的效率依赖于键簇的长度. 在一张大小为M并含有$ N=\alpha M $个
+键的基于线性探测的散列表中, 在均匀散列假设的条件下, 命中和未命中查找所需的次数分别为:
+$$ \sim \frac{1}{2}(1 + \frac{1}{1 - \alpha}) 以及 \sim \frac{1}{2}(1 + \frac{1}{(1 - \alpha)^2}) $$</p>
+<p>可见当散列表在快满的时候查找所需的探测次数非常多, 因此需要动态调整数组以保证使用率不超过1/2(或其他值).</p>
+<p>注: 关于Java的散列函数:</p>
+<ul>
+<li>Integer类型会直接返回该整数的32位值, Double和Long会返回机器表示的前32位和后32位异或的结果.</li>
+<li>String的hash函数为:
+$$ h(s) = \sum_{i=0}^{n-1} s[i] \times 31^{n-1-i} $$
+&ldquo;polygenelubricants&quot;的散列值为$ -2^{31} $</li>
+</ul>
+<p>相对于二叉查找树, 散列表的实现简单, 且查找时间最优. 红黑树能够保证最差情况的性能且支持更多操作.</p>
+
+  </section>
+
+  <section>
+    
+      
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>search algorithms</b><nav id="TableOfContents">
+  <ul>
+    <li><a href="#heading">二叉查找树</a></li>
+    <li><a href="#heading1">平衡查找树</a>
+      <ul>
+        <li><a href="#23">2-3查找树</a></li>
+        <li><a href="#heading2">红黑二叉查找树</a></li>
+      </ul>
+    </li>
+    <li><a href="#heading3">散列表</a>
+      <ul>
+        <li><a href="#heading4">散列函数</a></li>
+        <li><a href="#heading5">拉链法</a></li>
+        <li><a href="#heading6">基于线性探测法的散列表</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    ©Christophe &middot; 
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
+    
+  </body>
+</html>

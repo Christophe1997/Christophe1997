@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'U-12345678-0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  graph algorithms &ndash; CastOff
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="采用哪种数据结构来表示图, 主要考虑以下两个方面: 必须为可能在应用中碰到的各种类型的图预留出足够的空间, 以及 Graph的实例方法一定要高效. 常|">
+    
+
+    <meta name="apple-mobile-web-app-title" content="CastOff">
+    
+    
+    <link rel="icon" href="/favicon-64.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" size="any" href="/pinned-icon.svg">
+    
+    
+    
+
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="https://christophe1997.github.io">
+    CastOff
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/posts/">
+      
+      <span>Blogs</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="/">
+      
+      <span>About</span>
+    </a>
+    
+    
+  </div>
+  
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">graph algorithms</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+<a href='/categories/algorithm' class="muted-link">
+  <span class="Label Label--gray-darker">algorithm</span>
+</a>
+
+
+
+<a href='/tags/java' class="muted-link">
+  <span class="Label Label--gray">Java</span>
+</a>
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2019-12-04. Published at: 2018-04-20.">
+        
+          Lastmod: 2019-12-04
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <p>采用哪种数据结构来表示图, 主要考虑以下两个方面:</p>
+<ul>
+<li>必须为可能在应用中碰到的各种类型的图预留出足够的空间, 以及</li>
+<li>Graph的实例方法一定要高效.</li>
+</ul>
+<!-- raw HTML omitted -->
+<p>常见的表示方法有以下几种:</p>
+<ul>
+<li>邻接矩阵, 对于有N个顶点的图而言, 邻接矩阵需要$ N^2 $的空间.</li>
+<li>边的数组, 通过定义边来定义图, 这种方法在寻找相邻的点时需要遍历整个数组.</li>
+<li>邻接表数组, 使用一个顶点为索引的列表数组, 其中每个元素都是和该顶点相邻的顶点列表. 这种结构能够满足上述的两个条件.</li>
+</ul>
+<p>常见实现的性能比较(V表示结点数, E表示边数):</p>
+<table>
+<thead>
+<tr>
+<th align="center">数据结构</th>
+<th align="center">所需空间</th>
+<th align="center">添加边</th>
+<th align="center">检查顶点是否相邻</th>
+<th align="center">遍历所有相邻顶点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">边的列表</td>
+<td align="center">E</td>
+<td align="center">1</td>
+<td align="center">E</td>
+<td align="center">E</td>
+</tr>
+<tr>
+<td align="center">邻接矩阵</td>
+<td align="center">$ V^2 $</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">V</td>
+</tr>
+<tr>
+<td align="center">邻接表</td>
+<td align="center">E+V</td>
+<td align="center">1</td>
+<td align="center">degree(V)</td>
+<td align="center">degree(V)</td>
+</tr>
+</tbody>
+</table>
+<p>非稠密图的标准表示是邻接表, 这种表示具有以下特性:</p>
+<ul>
+<li>使用的空间和V+E成正比,</li>
+<li>添加一条边所需要的时间为常数, 以及</li>
+<li>遍历顶点v的所有相邻顶点所需要的时间和v的度数成正比.</li>
+</ul>
+<h2 id="heading">无向图</h2>
+<p>无向图只定义了顶点以及顶点之间的关系.</p>
+<h3 id="heading1">深度优先搜索</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DepthFirstSearch</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">boolean</span><span class="o">[</span><span class="o">]</span> <span class="n">marked</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">DepthFirstSearch</span><span class="o">(</span><span class="n">Graph</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">marked</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">dfs</span><span class="o">(</span><span class="n">G</span><span class="o">,</span> <span class="n">s</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">dfs</span><span class="o">(</span><span class="n">Graph</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">marked</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="n">count</span><span class="o">+</span><span class="o">+</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">w</span> <span class="o">:</span> <span class="n">G</span><span class="o">.</span><span class="na">adj</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">marked</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span> <span class="n">dfs</span><span class="o">(</span><span class="n">G</span><span class="o">,</span> <span class="n">w</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">marked</span><span class="o">(</span><span class="kt">int</span> <span class="n">w</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">marked</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">count</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">count</span><span class="o">;</span> <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>深度优先搜索能够所有与起点相连的顶点, 且所需时间和所有连通顶点的度数之和成正比.</p>
+<h3 id="heading2">广度优先搜索</h3>
+<p>深度优先搜索得到的路径不仅取决于图的结构, 还取决于图的表示和递归调用的性质.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BreadthFirthSearch</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">boolean</span><span class="o">[</span><span class="o">]</span> <span class="n">marked</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">BreadthFirthSearch</span><span class="o">(</span><span class="n">Graph</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">marked</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">bfs</span><span class="o">(</span><span class="n">G</span><span class="o">,</span> <span class="n">s</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">bfs</span><span class="o">(</span><span class="n">Graph</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">marked</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="n">queue</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="o">!</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">dequeue</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">w</span> <span class="o">:</span> <span class="n">G</span><span class="o">.</span><span class="na">adj</span><span class="o">(</span><span class="n">x</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">marked</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">w</span><span class="o">)</span><span class="o">;</span>
+                    <span class="n">marked</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                    <span class="n">count</span><span class="o">+</span><span class="o">+</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">marked</span><span class="o">(</span><span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">marked</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">count</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">count</span><span class="o">;</span> <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>深度优先搜索与广度优先搜索的差别在于数据结构的不同, 前者使用栈而后者使用队列, 我们在搜索的时候都会将起点加入数据结构, 然后重复以下步骤直到数据结构被
+清空:</p>
+<ul>
+<li>取其中的下一个顶点并标记它</li>
+<li>将v的所有相邻而又为被标记的顶点加入数据结构
+两者的差别只在于数据结构如何获取下一个顶点, 而这种差异导致了图的两者不同视图, 但最终所有与顶点相连的点都会被检查到</li>
+</ul>
+<h2 id="heading3">有向图</h2>
+<h3 id="heading4">环的检测</h3>
+<p>有向图常常需要检测是否存在环.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * only for one cycle
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DirectedCycle</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span><span class="o">[</span><span class="o">]</span> <span class="n">marked</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[</span><span class="o">]</span> <span class="n">edgeTo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">cycle</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span><span class="o">[</span><span class="o">]</span> <span class="n">onStack</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">DirectedCycle</span><span class="o">(</span><span class="n">Digraph</span> <span class="n">G</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">onStack</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">edgeTo</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">marked</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">;</span> <span class="n">v</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span> <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">marked</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span> <span class="n">dfs</span><span class="o">(</span><span class="n">G</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span> <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">dfs</span><span class="o">(</span><span class="n">Digraph</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">onStack</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="n">marked</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">w</span> <span class="o">:</span> <span class="n">G</span><span class="o">.</span><span class="na">adj</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">hasCycle</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">marked</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">edgeTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">;</span>
+                <span class="n">dfs</span><span class="o">(</span><span class="n">G</span><span class="o">,</span> <span class="n">w</span><span class="o">)</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">onStack</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">cycle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">v</span><span class="o">;</span> <span class="n">x</span> <span class="o">!</span><span class="o">=</span> <span class="n">w</span><span class="o">;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">edgeTo</span><span class="o">[</span><span class="n">x</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span> <span class="n">cycle</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">x</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+                <span class="n">cycle</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">w</span><span class="o">)</span><span class="o">;</span>
+                <span class="n">cycle</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">onStack</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasCycle</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">cycle</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">cycle</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">cycle</span><span class="o">;</span> <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="heading5">拓扑排序</h3>
+<p>拓扑排序是解决优先级限制下任务调度的常见算法, 能否进行拓扑排序的先决条件是是否是有向无环图. 进而问题变为有向无环图中基于深度优先遍历的顶点排序问题,
+常见的排序方式有以下三种:</p>
+<ul>
+<li>前序, 在递归调用前将顶点加入队列</li>
+<li>后序, 在递归调用之后将顶点加入队列</li>
+<li>逆后序, 在递归调用之后将顶点加入栈</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DepthFirthOrder</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">boolean</span><span class="o">[</span><span class="o">]</span> <span class="n">marked</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">pre</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">post</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">reverstPost</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">DepthFirthOrder</span><span class="o">(</span><span class="n">Digraph</span> <span class="n">G</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">marked</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">pre</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">post</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">reverstPost</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">;</span> <span class="n">v</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span> <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">marked</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span> <span class="n">dfs</span><span class="o">(</span><span class="n">G</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span> <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">dfs</span><span class="o">(</span><span class="n">Digraph</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">marked</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="n">pre</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">w</span> <span class="o">:</span> <span class="n">G</span><span class="o">.</span><span class="na">adj</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span> <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">marked</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span> <span class="n">dfs</span><span class="o">(</span><span class="n">G</span><span class="o">,</span> <span class="n">w</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span> <span class="o">}</span>
+        <span class="n">post</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">reverstPost</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">pre</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">pre</span><span class="o">;</span> <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">post</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">post</span><span class="o">;</span> <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">reverstPost</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">reverstPost</span><span class="o">;</span> <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>进而拓扑排序可以有如下实现:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Topological</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">order</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Topological</span><span class="o">(</span><span class="n">Digraph</span> <span class="n">G</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">DirectedCycle</span> <span class="n">cycle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DirectedCycle</span><span class="o">(</span><span class="n">G</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">cycle</span><span class="o">.</span><span class="na">hasCycle</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">DepthFirthOrder</span> <span class="n">dfs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DepthFirthOrder</span><span class="o">(</span><span class="n">G</span><span class="o">)</span><span class="o">;</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="n">dfs</span><span class="o">.</span><span class="na">reverstPost</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">order</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">order</span><span class="o">;</span> <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isDAG</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">order</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[</span><span class="o">]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">FileNotFoundException</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">args</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">sp</span> <span class="o">=</span> <span class="n">args</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">SymbolDigraph</span> <span class="n">sg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SymbolDigraph</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">filename</span><span class="o">)</span><span class="o">,</span> <span class="n">sp</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">Topological</span> <span class="n">top</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Topological</span><span class="o">(</span><span class="n">sg</span><span class="o">.</span><span class="na">G</span><span class="o">(</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">top</span><span class="o">.</span><span class="na">order</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">v</span> <span class="o">-</span><span class="o">&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sg</span><span class="o">.</span><span class="na">name</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这种实现非常简单, 但它被忽略了很多年, 比它更流行的是一种使用队列存储顶点的直观算法:</p>
+<ol>
+<li>初始化一条含有所有起点的队列Q</li>
+<li>如果Q为空, 停止, 否则从队列Q中删除一个起点并将其标记;</li>
+<li>遍历由被删除顶点指出的所有边, 将被指向的顶点的入度减1;</li>
+<li>如果顶点的入度变为0, 将其加入Q;</li>
+<li>跳转至2.</li>
+</ol>
+<h2 id="heading6">加权无向图</h2>
+<p>加权无向图的一个典型问题是如何寻找最小生成树.</p>
+<h3 id="prim">prim算法</h3>
+<ol>
+<li>设N&lt;V, {E}&gt;是连通网, 记U={ $u_0$ }, TE={}</li>
+<li>在所有$ u \in U, v \in V-U $的边$ (u, v) \in E $中找到一条代价最小的边$ (u_0, v_0)并加入TE $</li>
+<li>将$ v_0 $加入U</li>
+<li>若U=V, 停止否则继续2
+我们将使用优先队列来进行添加最小边的操作. 并且我们需要在添加新顶点之后检查队列中边的有效性. Prim的一种延时实现:</li>
+</ol>
+<pre><code>public class LazyPrimMST {
+    private boolean[] marked;
+    private Queue&lt;Edge&gt; mst;
+    private MinPQ&lt;Edge&gt; pq;
+
+    public LazyPrimMST(EdgeWeightedGraph G) {
+        pq = new MinPQ&lt;&gt;();
+        marked = new boolean[G.V()];
+        mst = new Queue&lt;&gt;();
+        visit(G, 0);
+        while (!pq.isEmpty()) {
+            Edge e = pq.delMin();
+            int v = e.either();
+            int w = e.other(v);
+            if (!marked[v] || !marked[w]) {
+                mst.enqueue(e);
+                if (!marked[v]) { visit(G, v); }
+                if (!marked[w]) { visit(G, w); }
+            }
+        }
+    }
+
+    private void visit(EdgeWeightedGraph G, int v) {
+        marked[v] = true;
+        for (Edge e : G.adj(v)) {
+            if (!marked[e.other(v)]) { pq.insert(e); }
+        }
+    }
+
+    public Iterable&lt;Edge&gt; edges() { return mst; }
+
+    public double weight() {
+        double weight = 0;
+        for (Edge e : edges()) {
+            weight += e.weight();
+        }
+        return weight;
+    }
+}
+</code></pre><p>延时实现会将所有边都将入优先队列中, 并且不会删除失效的边, 而是在删除的时候检查边的有效性. 所需时间与ElgE成正比, 所需空间与E成正比.</p>
+<p>一种即时实现是总是删除优先队列中失效的边. 我们感兴趣的其实只是连接树顶点和非树顶点中权重最小的边. 当我们将一个顶点v将入到树中时, 对与一个非树中的
+顶点w, 只可能使得w到最小生成树的距离更小. 换言之, 我们只会在优先队列中保存每个非树顶点的一条边: 使它与树中顶点连接起来权重最小的一条边.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PrimMST</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Edge</span><span class="o">[</span><span class="o">]</span> <span class="n">edgeTo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">double</span><span class="o">[</span><span class="o">]</span> <span class="n">distTo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span><span class="o">[</span><span class="o">]</span> <span class="n">marked</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">IndexMinPQ</span><span class="o">&lt;</span><span class="n">Double</span><span class="o">&gt;</span> <span class="n">pq</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">PrimMST</span><span class="o">(</span><span class="n">EdgeWeightedGraph</span> <span class="n">G</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">edgeTo</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Edge</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">distTo</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">double</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">marked</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">;</span> <span class="n">v</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span> <span class="n">distTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="n">Double</span><span class="o">.</span><span class="na">POSITIVE_INFINITY</span><span class="o">;</span> <span class="o">}</span>
+        <span class="n">pq</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IndexMinPQ</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+
+        <span class="n">distTo</span><span class="o">[</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">0</span><span class="o">.</span><span class="na">0</span><span class="o">;</span>
+        <span class="n">pq</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">0</span><span class="o">.</span><span class="na">0</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="o">!</span><span class="n">pq</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span> <span class="n">visit</span><span class="o">(</span><span class="n">G</span><span class="o">,</span> <span class="n">pq</span><span class="o">.</span><span class="na">delMin</span><span class="o">(</span><span class="o">)</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">visit</span><span class="o">(</span><span class="n">EdgeWeightedGraph</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">marked</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Edge</span> <span class="n">e</span> <span class="o">:</span> <span class="n">G</span><span class="o">.</span><span class="na">adj</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">other</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">marked</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">e</span><span class="o">.</span><span class="na">weight</span><span class="o">(</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">distTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">edgeTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
+                <span class="n">distTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">weight</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">pq</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">w</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span> <span class="n">pq</span><span class="o">.</span><span class="na">change</span><span class="o">(</span><span class="n">w</span><span class="o">,</span> <span class="n">distTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+                <span class="k">else</span> <span class="o">{</span> <span class="n">pq</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">w</span><span class="o">,</span> <span class="n">distTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;</span> <span class="nf">edges</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Bag</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;</span> <span class="n">edges</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bag</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">edgeTo</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">v</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span> <span class="n">edges</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">edgeTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+        <span class="k">return</span> <span class="n">edges</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">weight</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">weight</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Edge</span> <span class="n">e</span> <span class="o">:</span> <span class="n">edges</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span> <span class="n">weight</span> <span class="o">+</span><span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">weight</span><span class="o">(</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+        <span class="k">return</span> <span class="n">weight</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>即时的版本所需时间与ElgV成正比, 空间和V成正比.</p>
+<p>对于常见的稀疏图而言, 两者在时间上限上没有明显的区别(对于稀疏图而言, lgE~lgV), 但空间占用上显然即时的版本更优秀.</p>
+<h3 id="kruskal-">Kruskal 算法</h3>
+<p>相较于Prim算法根据顶点构成树, Kruskal则算法根据边来构成树. 该算法不断地将最小边加入到树中并确保不会构成环. 可以使用最小队列来保存边, 并用
+union-find来判断是否有环:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">KruskalMST</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;</span> <span class="n">mst</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">KruskalMST</span><span class="o">(</span><span class="n">EdgeWeightedGraph</span> <span class="n">G</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mst</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">MinPQ</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;</span> <span class="n">pq</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MinPQ</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Edge</span> <span class="n">e</span> <span class="o">:</span> <span class="n">G</span><span class="o">.</span><span class="na">edges</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span> <span class="n">pq</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">e</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+        <span class="n">WeightedQuickUnionUF</span> <span class="n">uf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WeightedQuickUnionUF</span><span class="o">(</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+
+        <span class="k">while</span> <span class="o">(</span><span class="o">!</span><span class="n">pq</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="o">)</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">mst</span><span class="o">.</span><span class="na">size</span><span class="o">(</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Edge</span> <span class="n">e</span> <span class="o">=</span> <span class="n">pq</span><span class="o">.</span><span class="na">delMin</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">either</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">other</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">uf</span><span class="o">.</span><span class="na">connected</span><span class="o">(</span><span class="n">v</span><span class="o">,</span> <span class="n">w</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">uf</span><span class="o">.</span><span class="na">union</span><span class="o">(</span><span class="n">w</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span><span class="o">;</span>
+                <span class="n">mst</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">e</span><span class="o">)</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;</span> <span class="nf">edges</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">mst</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">weight</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">weight</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Edge</span> <span class="n">e</span> <span class="o">:</span> <span class="n">edges</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span> <span class="n">weight</span> <span class="o">+</span><span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">weight</span><span class="o">(</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+        <span class="k">return</span> <span class="n">weight</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Kruskal算法一般情况下会比Prim算法慢, 因为union-find还需要进行一次connect操作.</p>
+<p>最小生成树各算法比较(设V个顶点, E条边):</p>
+<table>
+<thead>
+<tr>
+<th align="center">算法</th>
+<th align="center">空间</th>
+<th align="center">时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">延时的Prim算法</td>
+<td align="center">E</td>
+<td align="center">ElgE</td>
+</tr>
+<tr>
+<td align="center">即时的Prim算法</td>
+<td align="center">V</td>
+<td align="center">ElgV</td>
+</tr>
+<tr>
+<td align="center">Kruskal</td>
+<td align="center">E</td>
+<td align="center">ElgE</td>
+</tr>
+<tr>
+<td align="center">Fredman-Tarjan</td>
+<td align="center">V</td>
+<td align="center">E+VlgV</td>
+</tr>
+<tr>
+<td align="center">Chazelle</td>
+<td align="center">V</td>
+<td align="center">非常接近E</td>
+</tr>
+</tbody>
+</table>
+<h2 id="heading7">加权有向图</h2>
+<p>加权有向图的一个典型的问题是如何寻找最短路径. 我们的重点是单点最短路径问题, 对于给定的起点s得到一颗包含s到所有可达顶点的最短路径树(SPT).</p>
+<h3 id="dijkstra">Dijkstra算法</h3>
+<p>Dijkstra算法按广度优先来寻找最短路径</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DijkstraSP</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">DirectedEdge</span><span class="o">[</span><span class="o">]</span> <span class="n">edgeTo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">double</span><span class="o">[</span><span class="o">]</span> <span class="n">distTo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">IndexMinPQ</span><span class="o">&lt;</span><span class="n">Double</span><span class="o">&gt;</span> <span class="n">pq</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">DijkstraSP</span><span class="o">(</span><span class="n">EdgeWeightedDigraph</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">edgeTo</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DirectedEdge</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">distTo</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">double</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">pq</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IndexMinPQ</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">;</span> <span class="n">v</span> <span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">distTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="n">Double</span><span class="o">.</span><span class="na">POSITIVE_INFINITY</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">distTo</span><span class="o">[</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">0</span><span class="o">.</span><span class="na">0</span><span class="o">;</span>
+        <span class="n">pq</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">0</span><span class="o">.</span><span class="na">0</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="o">!</span><span class="n">pq</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">relax</span><span class="o">(</span><span class="n">G</span><span class="o">,</span> <span class="n">pq</span><span class="o">.</span><span class="na">delMin</span><span class="o">(</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">relax</span><span class="o">(</span><span class="n">EdgeWeightedDigraph</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">DirectedEdge</span> <span class="n">e</span> <span class="o">:</span> <span class="n">G</span><span class="o">.</span><span class="na">adj</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">to</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+            <span class="kt">double</span> <span class="n">newWeight</span> <span class="o">=</span> <span class="n">distTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">weight</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">distTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">newWeight</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">distTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">=</span> <span class="n">newWeight</span><span class="o">;</span>
+                <span class="n">edgeTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">pq</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">w</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span> <span class="n">pq</span><span class="o">.</span><span class="na">change</span><span class="o">(</span><span class="n">w</span><span class="o">,</span> <span class="n">distTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+                <span class="k">else</span> <span class="o">{</span> <span class="n">pq</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">w</span><span class="o">,</span> <span class="n">distTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">distTo</span><span class="o">(</span><span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">distTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasPathTo</span><span class="o">(</span><span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">distTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">Double</span><span class="o">.</span><span class="na">POSITIVE_INFINITY</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">DirectedEdge</span><span class="o">&gt;</span> <span class="nf">pathTo</span><span class="o">(</span><span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">hasPathTo</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span> <span class="o">}</span>
+        <span class="k">else</span> <span class="o">{</span>
+            <span class="n">Stack</span><span class="o">&lt;</span><span class="n">DirectedEdge</span><span class="o">&gt;</span> <span class="n">path</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">DirectedEdge</span> <span class="n">e</span> <span class="o">=</span> <span class="n">edgeTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="o">;</span> <span class="n">e</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">edgeTo</span><span class="o">[</span><span class="n">e</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span> <span class="n">path</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">e</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+            <span class="k">return</span> <span class="n">path</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到, Dijkstra算法和Prim算法两者之间非常类似. 某种程度上可以把Dijkstra看成是Prim算法的有向图版本. 类似的, Dijkstra算法所需的空间与V成正比
+时间与ElgV成正比. 但是Dijkstra算法不适用于存在权重为负的有向图(因为在允许负权重的有向图中, 绕路经过更多的负权重边可能会使得权重之和更小, 而这在
+Dijkstra算法中是不被允许的).</p>
+<h3 id="heading8">无环加权有向图的最短路径算法</h3>
+<p>无环加权有向图可以利用拓扑排序来获得一个线性时间的最短路径算法, 并且能够处理负权重的边.</p>
+<pre><code>public class AcyclicSP {
+    private DirectedEdge[] edgeTo;
+    private double[] distTo;
+
+    public AcyclicSP(EdgeWeightedDigraph G, int s) {
+        edgeTo = new DirectedEdge[G.V()];
+        distTo = new double[G.V()];
+        for (int v = 0; v &lt; G.V(); v++) { distTo[v] = Double.POSITIVE_INFINITY; }
+        distTo[s] = 0;
+        EdgeweightedTopological top = new EdgeweightedTopological(G);
+        for (int v: top.order()) {
+            relax(G, v);
+        }
+    }
+
+    private void relax(EdgeWeightedDigraph G, int v) {
+        for (DirectedEdge e : G.adj(v)) {
+            int w = e.to();
+            double newWeight = distTo[v] + e.weight();
+            if (distTo[w] &gt; newWeight) {
+                distTo[w] = newWeight;
+                edgeTo[w] = e;
+            }
+        }
+    }
+
+    public double distTo(int v) { return distTo[v]; }
+
+    public boolean hasPathTo(int v) { return distTo[v] &lt; Double.POSITIVE_INFINITY; }
+    public Iterable&lt;DirectedEdge&gt; pathTo(int v) {
+        Stack&lt;DirectedEdge&gt; path = new Stack&lt;&gt;();
+        for (DirectedEdge e = edgeTo[v]; e != null; e = edgeTo[e.from()]) { path.push(e); }
+        return path;
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        File file = new File(args[0]);
+        EdgeWeightedDigraph G = new EdgeWeightedDigraph(file);
+        int s = Integer.parseInt(args[1]);
+        AcyclicSP sp = new AcyclicSP(G, s);
+
+        for (int t = 0; t &lt; G.V(); t++) {
+            System.out.print(s + &quot; to &quot; + t);
+            System.out.printf(&quot; (%4.2f): &quot;, sp.distTo(t));
+            if (sp.hasPathTo(t)) {
+                for (DirectedEdge e : sp.pathTo(t)) { System.out.print(e + &quot;   &quot;); }
+            }
+            System.out.println();
+        }
+    }
+}
+</code></pre><blockquote>
+<p>按照拓扑顺序来遍历并<code>relax</code>顶点, 就能够在和E+V成正比的时间内解决单点最短路径问题
+按照拓扑顺序可以保证每条边都被<code>relax</code>一次, 任意一个顶点在<code>relax</code>后, 算法便不在处理任何指向该顶点的边. 而每次<code>relax</code>操作只会减少
+路径长, 因此在所有从s可达的顶点都被加入到树中后, 最短路径的最优条件成立. 而拓扑排序的时间复杂度是线性的, 因此总时间复杂度也是线性的.</p>
+</blockquote>
+<p>因为该算法依赖于拓扑排序, 所以任何有环的图都将无法使用该算法. 另外一点是, 该算法可以解决负权重的边. 值得一提的是, 简单的修改上述算法可以在
+线性时间复杂度内解决无环加权有向图的单点最长路径, 将<code>Double.POSITIVE_INFINITY</code>改为<code>Double.NEGATIVE_INFINITY</code>, 并修改<code>relax</code>的
+不等号方向. 但是在一般的加权有向图中寻找最长简单路径的已知最好算法是指数级别的.</p>
+<h3 id="heading9">关键路径</h3>
+<p>一种和无环加权有向图的最长路径等价的问题是优先级限制下的并行任务调度问题, 即关键路径问题. 将并行调度任务转换为无环有向图的步骤如下:</p>
+<ol>
+<li>创建一个包含起点s和终点t且每个任务都对应两个顶点(一个起始顶点和结束顶点);</li>
+<li>对于每个任务, 都添加一条从起始顶点指向结束顶点且权重为任务所需时间的边. 对于每个优先级限制v -&gt; w, 添加一条从v结束顶点指向w起始顶点且
+权重为0的边.</li>
+<li>为每个任务添加一条从起点指向该任务起始顶点且权重为0的边, 以及一条从该任务结束顶点指向终点且权重为0的边.
+例如, 有如下测试数据</li>
+</ol>
+<pre><code>10
+41.0  1 7 9 // 必须在1 7 9之前完成
+51.0  2
+50.0
+36.0
+38.0
+45.0
+21.0  3 8
+32.0  3 8
+32.0  2
+29.0  4 6
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CMP</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[</span><span class="o">]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Scanner</span> <span class="n">stdIn</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">)</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">stdIn</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">stdIn</span><span class="o">.</span><span class="na">nextLine</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">EdgeWeightedDigraph</span> <span class="n">G</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EdgeWeightedDigraph</span><span class="o">(</span><span class="n">2</span> <span class="o">*</span> <span class="n">N</span> <span class="o">+</span> <span class="n">2</span><span class="o">)</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">2</span> <span class="o">*</span> <span class="n">N</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="n">2</span> <span class="o">*</span> <span class="n">N</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span><span class="o">[</span><span class="o">]</span> <span class="n">line</span> <span class="o">=</span> <span class="n">stdIn</span><span class="o">.</span><span class="na">nextLine</span><span class="o">(</span><span class="o">)</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">&#34;\\s+&#34;</span><span class="o">)</span><span class="o">;</span>
+            <span class="kt">double</span> <span class="n">duration</span> <span class="o">=</span> <span class="n">Double</span><span class="o">.</span><span class="na">parseDouble</span><span class="o">(</span><span class="n">line</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="o">)</span><span class="o">;</span>
+            <span class="n">G</span><span class="o">.</span><span class="na">addEdge</span><span class="o">(</span><span class="k">new</span> <span class="n">DirectedEdge</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">N</span><span class="o">,</span> <span class="n">duration</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+            <span class="n">G</span><span class="o">.</span><span class="na">addEdge</span><span class="o">(</span><span class="k">new</span> <span class="n">DirectedEdge</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">0</span><span class="o">.</span><span class="na">0</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+            <span class="n">G</span><span class="o">.</span><span class="na">addEdge</span><span class="o">(</span><span class="k">new</span> <span class="n">DirectedEdge</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">N</span><span class="o">,</span> <span class="n">t</span><span class="o">,</span> <span class="n">0</span><span class="o">.</span><span class="na">0</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">line</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">successor</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">line</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="o">)</span><span class="o">;</span>
+                <span class="n">G</span><span class="o">.</span><span class="na">addEdge</span><span class="o">(</span><span class="k">new</span> <span class="n">DirectedEdge</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">N</span><span class="o">,</span> <span class="n">successor</span><span class="o">,</span> <span class="n">0</span><span class="o">.</span><span class="na">0</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">AcyclicLP</span> <span class="n">lp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AcyclicLP</span><span class="o">(</span><span class="n">G</span><span class="o">,</span> <span class="n">s</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Start times:&#34;</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%4d: %5.1f\n&#34;</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">lp</span><span class="o">.</span><span class="na">distTo</span><span class="o">(</span><span class="n">i</span><span class="o">)</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;Finish time: %5.1f\n&#34;</span><span class="o">,</span> <span class="n">lp</span><span class="o">.</span><span class="na">distTo</span><span class="o">(</span><span class="n">t</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以得到如下结果:</p>
+<pre><code>Start times:
+   0:   0.0
+   1:  41.0
+   2: 123.0
+   3:  91.0
+   4:  70.0
+   5:   0.0
+   6:  70.0
+   7:  41.0
+   8:  91.0
+   9:  41.0
+Finish time: 173.0
+</code></pre><p>之所以最长路径路径能够解决并行任务调度问题在于s到t的最长路径是所有任务完成所需的最短时间.</p>
+<h3 id="heading10">一般加权有向图的最短路径算法</h3>
+<p>考虑包含deadline限制的相对最后期限限制下的并行任务调度问题, 一般的deadline限制都是相对与第一个的任务的开始时间而言, 即在任务调度的问题中加入某个任
+务必须在指定的时间点之前开始. 该问题等价于加权有向图中最短路径问题(可以有环和负权重).
+构造一个加权有向图与关键路径类似, 但需要为每条deadline限制添加一条边: 如果任务v必须在任务w启动后的d个单位时间内开始, 则添加一条从v指向w且权重为负的
+边. 将所有边的权重取反即可得到一个加权有向图的最短路径问题.</p>
+<blockquote>
+<p>当且仅当加权有向图中至少存在一条从s到v的有向路径且其上的任意顶点都不存在与负权重环中时, 最短路径才存在.
+对于任意一个负权重的环(权重之和为负数), 重复该环即可得到权重任意小的路径, 而这是无意义的.</p>
+</blockquote>
+<p>因此该算法要求能够:</p>
+<ul>
+<li>对于从起点不可达的顶点, 最短路径是$ +\infty $</li>
+<li>对于从起点可达但存在与一个负权重环的顶点, 最短路径为$ -\infty $</li>
+<li>对于其他顶点, 能够计算最短路径的权重</li>
+</ul>
+<p>Bellman-Ford算法可以解决这样的问题, 基本思想是按节点依次构建最短路径, 于是该算法的时间与VE成正比, 空间和V成正比. 该方法非常通用, 因为其没有规定
+边的放松顺序, 且总是放松VE条边. 我不会着力于这个版本, 而是介绍另外一个改进的版本.</p>
+<p><strong>基于队列的Bellman-Ford算法</strong></p>
+<p>我们很容易发现, 原始的版本在每一轮中有很多<code>relax</code>操作都不会成功, 只有在上一轮中起点到该点路径长度改变的点指出的边才能够改变起点到其他顶点的路径长.
+为了记录这样的顶点, 可以使用一个FIFO的队列来记录这些点.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BellmanFordSP</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">double</span><span class="o">[</span><span class="o">]</span> <span class="n">distTo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">DirectedEdge</span><span class="o">[</span><span class="o">]</span> <span class="n">edgeTo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span><span class="o">[</span><span class="o">]</span> <span class="n">onQ</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">cost</span><span class="o">;</span>  <span class="c1">// relax调用的次数
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">cycle</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">BellmanFordSP</span><span class="o">(</span><span class="n">EdgeWeightedDigraph</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">distTo</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">double</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">edgeTo</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DirectedEdge</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">onQ</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span><span class="o">;</span> <span class="n">v</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span> <span class="n">distTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="n">Double</span><span class="o">.</span><span class="na">POSITIVE_INFINITY</span><span class="o">;</span> <span class="o">}</span>
+        <span class="n">distTo</span><span class="o">[</span><span class="n">s</span><span class="o">]</span> <span class="o">=</span> <span class="n">0</span><span class="o">.</span><span class="na">0</span><span class="o">;</span>
+        <span class="n">queue</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">s</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">onQ</span><span class="o">[</span><span class="n">s</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="o">!</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="o">)</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="o">!</span><span class="n">hasNegativeCycle</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">dequeue</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+            <span class="n">onQ</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="n">relax</span><span class="o">(</span><span class="n">G</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">relax</span><span class="o">(</span><span class="n">EdgeWeightedDigraph</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">DirectedEdge</span> <span class="n">e</span> <span class="o">:</span> <span class="n">G</span><span class="o">.</span><span class="na">adj</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">to</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">distTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">distTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">weight</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">distTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">=</span> <span class="n">distTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">weight</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+                <span class="n">edgeTo</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">onQ</span><span class="o">[</span><span class="n">w</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">w</span><span class="o">)</span><span class="o">;</span>
+                    <span class="n">onQ</span><span class="o">[</span><span class="n">w</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="n">cost</span> <span class="o">+</span><span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">cost</span> <span class="o">%</span> <span class="n">G</span><span class="o">.</span><span class="na">V</span><span class="o">(</span><span class="o">)</span> <span class="o">=</span><span class="o">=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span> <span class="n">findNegativeCycle</span><span class="o">(</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">findNegativeCycle</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">V</span> <span class="o">=</span> <span class="n">edgeTo</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+        <span class="n">EdgeWeightedDigraph</span> <span class="n">spt</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EdgeWeightedDigraph</span><span class="o">(</span><span class="n">V</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">V</span><span class="o">;</span> <span class="n">v</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">edgeTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> <span class="n">spt</span><span class="o">.</span><span class="na">addEdge</span><span class="o">(</span><span class="n">edgeTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">EdgeWeightedCycleFinder</span> <span class="n">cf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EdgeWeightedCycleFinder</span><span class="o">(</span><span class="n">spt</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">cycle</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="na">cycle</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasNegativeCycle</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">cycle</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">negativeCycle</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">cycle</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">distTO</span><span class="o">(</span><span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">distTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasPathTo</span><span class="o">(</span><span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">distTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">Double</span><span class="o">.</span><span class="na">POSITIVE_INFINITY</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">DirectedEdge</span><span class="o">&gt;</span> <span class="nf">pathTo</span><span class="o">(</span><span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Stack</span><span class="o">&lt;</span><span class="n">DirectedEdge</span><span class="o">&gt;</span> <span class="n">path</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">DirectedEdge</span> <span class="n">e</span> <span class="o">=</span> <span class="n">edgeTo</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="o">;</span> <span class="n">e</span> <span class="o">!</span><span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">edgeTo</span><span class="o">[</span><span class="n">e</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="o">)</span><span class="o">]</span><span class="o">)</span> <span class="o">{</span> <span class="n">path</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">e</span><span class="o">)</span><span class="o">;</span> <span class="o">}</span>
+        <span class="k">return</span> <span class="n">path</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>为了避免负权重出现, 我们需要在每轮进行负权重环的检测.</p>
+<h3 id="heading11">加权有向图最短路径算法比较</h3>
+<table>
+<thead>
+<tr>
+<th align="center">算法</th>
+<th align="center">限制</th>
+<th align="center">时间复杂度</th>
+<th align="center">空间复杂度</th>
+<th align="center">优势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Dijkstra算法</td>
+<td align="center">权重需要为正</td>
+<td align="center">ElgV</td>
+<td align="center">V</td>
+<td align="center">最坏情况下仍有较好性能</td>
+</tr>
+<tr>
+<td align="center">利用拓扑排序的最短路径算法</td>
+<td align="center">只适用于无环加权有向图</td>
+<td align="center">E + V</td>
+<td align="center">V</td>
+<td align="center">是无环图中的最优算法</td>
+</tr>
+<tr>
+<td align="center">Bellman-Ford算法</td>
+<td align="center">不能存在负权重环</td>
+<td align="center">E + V(最坏EV)</td>
+<td align="center">V</td>
+<td align="center">适用性高</td>
+</tr>
+</tbody>
+</table>
+
+  </section>
+
+  <section>
+    
+      
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>graph algorithms</b><nav id="TableOfContents">
+  <ul>
+    <li><a href="#heading">无向图</a>
+      <ul>
+        <li><a href="#heading1">深度优先搜索</a></li>
+        <li><a href="#heading2">广度优先搜索</a></li>
+      </ul>
+    </li>
+    <li><a href="#heading3">有向图</a>
+      <ul>
+        <li><a href="#heading4">环的检测</a></li>
+        <li><a href="#heading5">拓扑排序</a></li>
+      </ul>
+    </li>
+    <li><a href="#heading6">加权无向图</a>
+      <ul>
+        <li><a href="#prim">prim算法</a></li>
+        <li><a href="#kruskal-">Kruskal 算法</a></li>
+      </ul>
+    </li>
+    <li><a href="#heading7">加权有向图</a>
+      <ul>
+        <li><a href="#dijkstra">Dijkstra算法</a></li>
+        <li><a href="#heading8">无环加权有向图的最短路径算法</a></li>
+        <li><a href="#heading9">关键路径</a></li>
+        <li><a href="#heading10">一般加权有向图的最短路径算法</a></li>
+        <li><a href="#heading11">加权有向图最短路径算法比较</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    ©Christophe &middot; 
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
+    
+  </body>
+</html>

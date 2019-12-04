@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on CastOff</title>
+    <link>https://christophe1997.github.io/posts/</link>
+    <description>Recent content in Blogs on CastOff</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy;Christophe</copyright>
+    
+	<atom:link href="https://christophe1997.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>monad and transformers</title>
+      <link>https://christophe1997.github.io/posts/monad-and-transformers/</link>
+      <pubDate>Sat, 06 Apr 2019 20:26:43 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/monad-and-transformers/</guid>
+      <description>Monad是Haskell中讨论最多的结构, 需要更详细的探讨其相关内容, 即使它对于Haskell而言不是必须的:(. 参考: All about Monads Monad Support 除了之前</description>
+    </item>
+    
+    <item>
+      <title>Haskell algebra</title>
+      <link>https://christophe1997.github.io/posts/haskell-algebra/</link>
+      <pubDate>Sun, 24 Mar 2019 14:32:05 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/haskell-algebra/</guid>
+      <description>Semigroup 半群即一个集合以及在之上定义的一个满足结合律的二元运算, 在Haskell中定义为(部分): 1 2 3 class Semigroup where (&amp;lt;&amp;gt;) :: a -&amp;gt; a -&amp;gt; a {-# MINIMAL (&amp;lt;&amp;gt;) #-} Laws 1 2 -- associativity a &amp;lt;&amp;gt;</description>
+    </item>
+    
+    <item>
+      <title>杂记</title>
+      <link>https://christophe1997.github.io/posts/%E6%9D%82%E8%AE%B0/</link>
+      <pubDate>Mon, 04 Mar 2019 17:12:00 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/%E6%9D%82%E8%AE%B0/</guid>
+      <description>多态(polymorphic)最早从19世纪希腊语中引入, 其中poly代表很多(many), morph代表形式(form), 而-ic的后缀表</description>
+    </item>
+    
+    <item>
+      <title>object lifetime and storage management</title>
+      <link>https://christophe1997.github.io/posts/object-lifetime-and-storage-management/</link>
+      <pubDate>Sat, 08 Dec 2018 16:48:49 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/object-lifetime-and-storage-management/</guid>
+      <description>在考虑标识符和绑定(bindings)的时候, 关键在于区分标识符和它们所引用的对象, 以及以下事件: 对象的创建 绑定的创建 所有使用绑定的情况, 诸</description>
+    </item>
+    
+    <item>
+      <title>process</title>
+      <link>https://christophe1997.github.io/posts/process/</link>
+      <pubDate>Fri, 03 Aug 2018 13:10:58 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/process/</guid>
+      <description>The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system:
+ create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process.  The first thing that the OS must do to run a program is to load its code and any static data into memory, into the address space of the process.</description>
+    </item>
+    
+    <item>
+      <title>functional data structure 2</title>
+      <link>https://christophe1997.github.io/posts/functional-data-structure-2/</link>
+      <pubDate>Tue, 24 Jul 2018 15:54:24 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/functional-data-structure-2/</guid>
+      <description>amortization Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about the running time of any individual operation.
+For instance, given a sequence of n operations, we may wish to bound the total running time of the sequence by O(n) without insisting than every individual operation run in O(1) time.</description>
+    </item>
+    
+    <item>
+      <title>functional data structure 1</title>
+      <link>https://christophe1997.github.io/posts/functional-data-structure-1/</link>
+      <pubDate>Thu, 19 Jul 2018 17:00:11 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/functional-data-structure-1/</guid>
+      <description>introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&#39;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&#39;s knives.
+Imperative data structures often rely on assignments in crucial ways, and so different solutions must be found for functional programs. The second difficulty is that functional data strcutures are expected to be more flexible than their imperative counterparts.</description>
+    </item>
+    
+    <item>
+      <title>address space</title>
+      <link>https://christophe1997.github.io/posts/address-space/</link>
+      <pubDate>Sun, 24 Jun 2018 23:54:04 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/address-space/</guid>
+      <description>The address space The address space is the abstraction that OS is providing to the running program. The address space of a process contains all of the memory state of the running program. For example, the code of the program, the stack and the heap. In the sight of the program, it loaded into at a particular address and has a potentially very large address space, thus, we say that the OS is virtualizing memory.</description>
+    </item>
+    
+    <item>
+      <title>computer system 4</title>
+      <link>https://christophe1997.github.io/posts/computer-system-4/</link>
+      <pubDate>Sun, 10 Jun 2018 19:14:22 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/computer-system-4/</guid>
+      <description>Linking Linking is the process of collecting and combining various pieces of code and data into a single file that can be loaded (copied) into memory and executed. Linking can be performed at compile time, when the source code is translated into machine code; at load time, when the program is loaded into memory and executed by the loader; and even at run time, by application programs. On modern systems, linking is performed automatically by programs called linkers.</description>
+    </item>
+    
+    <item>
+      <title>computer system 3</title>
+      <link>https://christophe1997.github.io/posts/computer-system-3/</link>
+      <pubDate>Fri, 01 Jun 2018 23:23:16 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/computer-system-3/</guid>
+      <description>Optimization Writing an efficient program requires several type of activities. First, we must select an appropriate set of algorithms and data structures. Second, we must write source code that the compiler can effectively optimize to turn into efficient executable code. A third technique for dealing with especially demanding computations is to divide a task into portions that can be computed in parallel, on some combination of multiple cores and multiple processors.</description>
+    </item>
+    
+    <item>
+      <title>computer system 2</title>
+      <link>https://christophe1997.github.io/posts/computer-system-2/</link>
+      <pubDate>Mon, 28 May 2018 17:20:36 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/computer-system-2/</guid>
+      <description>Assembler Computer execute machine code, sequences of bytes encoding the low-level operations that manipulate data manage memory, read and write data on storage devices, and communicate over networks.
+We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it&#39;s widely used in supercomputer and lager data center.
+the x86-64 machine code is much different with the corresponding C code, the processor states below are everywhere:</description>
+    </item>
+    
+    <item>
+      <title>computer system 1</title>
+      <link>https://christophe1997.github.io/posts/computer-system-1/</link>
+      <pubDate>Wed, 23 May 2018 23:54:04 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/computer-system-1/</guid>
+      <description>hardware organization of a system A typical system has those hadrware below:
+  Buses: Running throughout the system is a collection of electrical conduits called buses that carry bytes of ingormation back and forth betweent the components. Buses are typically designed to transfer fiexed sized chunks of bytes know as words. The number of bytes in a word is a fundamental system parameter that varies across systems. Most have word sizes of 8 bytes (64 bits)today</description>
+    </item>
+    
+    <item>
+      <title>string algorithms</title>
+      <link>https://christophe1997.github.io/posts/string-algorithms/</link>
+      <pubDate>Mon, 07 May 2018 21:18:59 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/string-algorithms/</guid>
+      <description>字符串处理算法具有很高的重要性以及应用领域的多样性. 以下讨论默认的是扩展的ASCII字符集(R=256). 字符串排序算法 对于许多排序应用而言</description>
+    </item>
+    
+    <item>
+      <title>some ubuntu installing problems</title>
+      <link>https://christophe1997.github.io/posts/some-ubuntu-install-problem/</link>
+      <pubDate>Sat, 28 Apr 2018 21:11:36 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/some-ubuntu-install-problem/</guid>
+      <description>One day ago, I started upgrading my Ubuntu 16.04 to 18.04, after I see the update from website. The most diffrience betwen 16.04 and 18.04 is that the 18.04 use GNOME desktop rather than Unity. I had heard that the GNOME desktop is better than Unity, so I tried 18.04 for the new desktop. Unfortunately, after I upgraded my OS, I found that the GNOME desktop wasjust so uncomfortable. And</description>
+    </item>
+    
+    <item>
+      <title>graph algorithms</title>
+      <link>https://christophe1997.github.io/posts/graph-algorithms/</link>
+      <pubDate>Fri, 20 Apr 2018 19:21:30 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/graph-algorithms/</guid>
+      <description>采用哪种数据结构来表示图, 主要考虑以下两个方面: 必须为可能在应用中碰到的各种类型的图预留出足够的空间, 以及 Graph的实例方法一定要高效. 常</description>
+    </item>
+    
+    <item>
+      <title>search algorithms</title>
+      <link>https://christophe1997.github.io/posts/search-algorithms/</link>
+      <pubDate>Thu, 05 Apr 2018 15:21:41 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/search-algorithms/</guid>
+      <description>符号表是一种存储键值对的数据结构, 支持插入和查找操作. 要确定一个给定的键是否存在于符号表中, 首先要建立对象等价性的概念. 为了保证一致性, 最好</description>
+    </item>
+    
+    <item>
+      <title>priority queue</title>
+      <link>https://christophe1997.github.io/posts/priority-queue/</link>
+      <pubDate>Wed, 04 Apr 2018 16:18:50 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/priority-queue/</guid>
+      <description>优先队列 当一颗二叉树的每个节点都大于等于它的两个子结点时, 它被称为堆有序, 于是从任一结点向上都能够得到一列非递减的元素. 二叉堆(以下简称堆)</description>
+    </item>
+    
+    <item>
+      <title>sorting algorithms</title>
+      <link>https://christophe1997.github.io/posts/sorting-algorithms/</link>
+      <pubDate>Fri, 30 Mar 2018 12:07:09 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/sorting-algorithms/</guid>
+      <description>排序算法的目标就是将所有元素的主键按照某种方式排列. 成本模型: 计算比较和交换的次数, 对于不交换元素的算法, 计算访问数组的次数. 排序算法的额外</description>
+    </item>
+    
+    <item>
+      <title>union-find algorithm</title>
+      <link>https://christophe1997.github.io/posts/union-find-algorithm/</link>
+      <pubDate>Wed, 14 Mar 2018 22:54:16 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/union-find-algorithm/</guid>
+      <description>union-find算法是一个解决动态连通性的经典算法, 具有广泛性的应用. 简单起见, 我们将对象称为触点, 将整数对称为连接, 将等价类称为连通分</description>
+    </item>
+    
+    <item>
+      <title>git cheat sheet</title>
+      <link>https://christophe1997.github.io/posts/git-cheat-sheet/</link>
+      <pubDate>Sun, 11 Mar 2018 13:07:40 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/git-cheat-sheet/</guid>
+      <description>本地操作 状态检览 1 2 $ git status -s XY PATH1 -&amp;gt; PATH2 PATH2只有在PATH1关联到不同的路径时才会显示(例如, 文件重命名). XY是两个状态码, 在合并冲突的</description>
+    </item>
+    
+  </channel>
+</rss>

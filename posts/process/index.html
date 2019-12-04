@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'U-12345678-0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  process &ndash; CastOff
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system:
+ create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process.  The first thing that the OS must do to run a program is to load its code and any static data into memory, into the address space of the process.|">
+    
+
+    <meta name="apple-mobile-web-app-title" content="CastOff">
+    
+    
+    <link rel="icon" href="/favicon-64.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" size="any" href="/pinned-icon.svg">
+    
+    
+    
+
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="https://christophe1997.github.io">
+    CastOff
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/posts/">
+      
+      <span>Blogs</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="/">
+      
+      <span>About</span>
+    </a>
+    
+    
+  </div>
+  
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">process</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+<a href='/categories/notes' class="muted-link">
+  <span class="Label Label--gray-darker">notes</span>
+</a>
+
+
+
+<a href='/tags/system' class="muted-link">
+  <span class="Label Label--gray">system</span>
+</a>
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2019-12-04. Published at: 2018-08-03.">
+        
+          Lastmod: 2019-12-04
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <p>The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be
+included in any interface of an operating system:</p>
+<!-- raw HTML omitted -->
+<ol>
+<li>create</li>
+<li>destroy</li>
+<li>wait</li>
+<li>miscellaneous control, most OS provide some kind of method to suspend a process and resume it.</li>
+<li>status, there are usually interfaces to get some status information about a process.</li>
+</ol>
+<p>The first thing that the OS must do to run a program is to load its code and any static data into memory, into the address
+space of the process. Once the code and static data are loaded into memory, there are a few other things the OS needs to
+do before running the process. Some memory must be allocated for the program's <em>run-time stack</em>, and the OS may also
+allocate smoe memory for the program's heap. Also, the os will do some other intialization tasks, particularly as related
+to I/O, i.e. in Unix systems each process by default has three open file descriptors, for standard input, output and error.</p>
+<p>At any time a process may be <em>running</em>, <em>ready</em> or <em>blocked</em>. Being moved from ready to running means the process has been
+<em>scheduled</em> and <em>descheduled</em> in contrast. Once a process has become blocked, the OS will keep it as such until some event
+occurs; at that point, the process moves to the ready state again.</p>
+<p>The OS is a program, and like any program, it has some key data structures that track various relevant pieces of information.
+For example, the tracked information about each process in xv6 kernel is shown below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="c1">// the registers xv6 will save and restore to stop and subsequently restart a process
+</span><span class="c1"></span><span class="k">struct</span> <span class="n">context</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">eip</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">esp</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ebx</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ecx</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">edx</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">esi</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">edi</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ebp</span><span class="p">;</span>
+<span class="p">}</span><span class="p">;</span>
+
+<span class="c1">// the different states a process can be in
+</span><span class="c1"></span><span class="k">enum</span> <span class="n">proc_state</span> <span class="p">{</span> <span class="n">UNUSED</span><span class="p">,</span> <span class="n">EMBRYO</span><span class="p">,</span> <span class="n">SLEEPING</span><span class="p">,</span> <span class="n">RUNNABLE</span><span class="p">,</span> <span class="n">RUNNING</span><span class="p">,</span> <span class="n">ZOMBIE</span> <span class="p">}</span><span class="p">;</span>
+
+<span class="c1">// the information xv6 tracks about each process including its register context and state
+</span><span class="c1"></span><span class="k">struct</span> <span class="n">proc</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">mem</span><span class="p">;</span>                   <span class="c1">// Start of process memory
+</span><span class="c1"></span>    <span class="n">uint</span> <span class="n">sz</span><span class="p">;</span>                     <span class="c1">// Size of process memory
+</span><span class="c1"></span>    <span class="kt">char</span> <span class="o">*</span><span class="n">kstack</span><span class="p">;</span>                <span class="c1">// Bottom of kernel stack for this process
+</span><span class="c1"></span>    <span class="k">enum</span> <span class="n">proc_state</span> <span class="n">state</span><span class="p">;</span>       <span class="c1">// Process state
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">pid</span><span class="p">;</span>                     <span class="c1">// Process ID
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="n">proc</span> <span class="o">*</span><span class="n">parent</span><span class="p">;</span>         <span class="c1">// Parent process
+</span><span class="c1"></span>    <span class="kt">void</span> <span class="o">*</span><span class="n">chan</span><span class="p">;</span>                  <span class="c1">// If non-zero, sleeping on chan
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">killed</span><span class="p">;</span>                  <span class="c1">// If non-zero, have been killed
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">ofile</span><span class="p">[</span><span class="n">NOFILE</span><span class="p">]</span><span class="p">;</span>  <span class="c1">// Open files
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="n">inode</span> <span class="o">*</span><span class="n">cwd</span><span class="p">;</span>           <span class="c1">// Current directory
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="n">context</span> <span class="n">context</span><span class="p">;</span>      <span class="c1">// Switch here to run process
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="n">trapframe</span> <span class="o">*</span><span class="n">tf</span><span class="p">;</span>        <span class="c1">// Trap frame for the current interrupt
+</span><span class="c1"></span><span class="p">}</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="process-api">process API</h2>
+<p>Unix presents one of the most intriguing ways to create a new process with a pair of system calls: <code>fork()</code> and <code>exec()</code>.
+<code>wait()</code> can be used by a process wishing to wait for a process it has created to complete.</p>
+<p>The <code>fork()</code> creates a process as an(almost) <em>exact copy of the calling process</em>, that means that to the OS, it now looks
+like there are two copies of the program(the caller) running, and both are about to return from the <code>fork()</code> system call.
+The newly-created process doesn't run the <code>main()</code> again, instead it just comes into life as if it had called <code>fork()</code>
+itself. To distinguish parent and child, the <code>fork()</code> return non-negative PID in parent process, and return 0 in child
+process, and if it return a negative number, that means it failed. Now there are now two active processes in the system
+after calling fork, and it's non-determinism to know which runs first.</p>
+<p>Sometimes, it's useful for a parent to wait a child process to finish what it has been doing, this is accomplished with
+the <code>wait()</code> system call. the process calls <code>wait()</code> to delay its execution, most until the child has run and exited. When
+<code>wait()</code> return into parent, returns the PID of child.</p>
+<p>By giving a name of an executable to <code>exec()</code>(i.e. <code>execvp</code>), it loads code from that executable and overwrites its current
+code segment with it. The heap and stack and other parts of the memory space of the program are re-initialized. Then the
+OS simply runs that program, passing in any arguments as the <code>argv</code> of that process. Thus it does not create a new process,
+rather, it transforms the currently running program into a different running program. A successful call to <code>exec</code> never
+returns.</p>
+<p>The spearation of <code>fork()</code> and <code>exec()</code> is essential in building a Unix shell, because it lets the shell run code after
+the call to <code>fork()</code> but before the call to <code>exec()</code>. For example, shell can redirect the output from stdout to a new file.
+The way the shell accomplishes this task is quite simple: when the child is created, before calling <code>exec()</code>, the shell
+closes standard output and open the file, thus any output from the soon-to-be-running program are sent to the file instead
+of the screen. This works because Unix system start looking for free file descriptors at zero, in this case, <code>STDOUT_FILENO</code>
+will be the first available one and thus get assigned when open() is called. Subsequent writes by the child process to
+the standard output file descriptor(i.e. printf) will then be routed transparently to the newly-opened file.</p>
+<h2 id="limited-direct-execution">limited direct execution</h2>
+<p>In order to virtualize the CPU, the operating system needs to somehow share the physical CPU among many jobs running
+seemingly at the same time. The basic idea is simple: run one process for a little while, then run another one, and so
+forth.</p>
+<p>To make a program run as fast as one might expect, not surprisingly OS developers came up with a technique, which we
+call <em>limited direct execution</em>. The direct execution means run the program directly on the CPU, but only &ldquo;direct execution&rdquo;
+is not enough, the OS need to prevent what we don't want it to do, thus we need &ldquo;limited&rdquo;.</p>
+<p>There are two phases in the limited direct execution protocol. In the first(at boot time), the kernel initializes the
+trap table, and the CPU remembers its location for subsequent use. The kernel does so via a privileged instruction. In
+the second(when running a process), the kernel sets up a few things before using a return-from-trap instruction to start
+the execution of the process; this switches the CPU to user mode and begins running the process. When the process wishes
+to issue a system call, it traps back into the OS, which handles it and once again returns control via a return-from-trap
+to the process. The process then completes its work, and returns from <code>main()</code>; this usually will return into some stub
+code which will properly exit the program. At this point, the OS cleans up and we are done.</p>
+<p>If a process is running on the CPU, this means the OS is not running. So there is a problem that how can OS regain control
+of the CPU so that it can switch between processes. One old way is waiting system call but the OS can not do much at all if
+the process refuses to make system call. Another way is to add a <em>timer interrupt</em>, a timer device can be programmed to
+raise an interrupt every so many milliseconds; when the interrupt is raised, the currently running process is halted, and
+a pre-configured interrupt handler in the OS runs. At this point, the OS has regained control of the CPU.</p>
+<h2 id="scheduling-policies">scheduling policies</h2>
+<p>There are many scheduling algorithms, such as FIFO(first in first out), STCF(shortest time-to-completion first). Choosing
+which algorithm dependent on which metrics are used. One most well-known approaches to scheduling, known as the <em>Multi-level
+feedback queue</em>. The MLFQ has a number of distinct queues, each assigned a different priority level. At any given time,
+a job that is ready to run is on a single queue. And a job with higher priority is chosen to run first. If two jobs have
+the same priority, we can use round-robin scheduling. The key to MLFQ scheduling therefore lies in how scheduler sets
+priorities. Rather than giving a fixed priority to each job, MLFQ varies the priority of a job based on its observed
+behavior. If, for example, a job repeatedly relinquishes the CPU while waiting for input from the keyboard, MLFQ will
+keep its priority high, as this is how an interactive process might behave.</p>
+<p>MLFQ first assumes the arrived job as a short job, thus giving the job high priority. If it actually is a short job, then
+it runs quickly and complete, if not, MLFQ slowly move down its priority. And a simple MLFQ rules may be:</p>
+<ol>
+<li>If Priority(A) &gt; Priority(B), A runs.</li>
+<li>If Priority(A) = Priority(B), A&amp;B run in round-robin.</li>
+<li>when a job enters the system, it is placed at the highest priority.</li>
+<li>Once a job uses up its time allotment at a given level, its priority is reduced.</li>
+<li>after some time period S, move all the jobs in the system to the topmost queue.</li>
+</ol>
+<p>Another scheduling policy is <em>lottery scheduling</em> as a proporitional-share scheduling, the basic idea is simple: every so
+often, hold a lottery to determine which process should get to run next; process that should run more often should be
+given more chances to win the lottery(to be continued).</p>
+
+  </section>
+
+  <section>
+    
+      
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>process</b><nav id="TableOfContents">
+  <ul>
+    <li><a href="#process-api">process API</a></li>
+    <li><a href="#limited-direct-execution">limited direct execution</a></li>
+    <li><a href="#scheduling-policies">scheduling policies</a></li>
+  </ul>
+</nav></div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    ©Christophe &middot; 
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
+    
+  </body>
+</html>

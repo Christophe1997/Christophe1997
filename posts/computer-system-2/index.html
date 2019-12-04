@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'U-12345678-0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  computer system 2 &ndash; CastOff
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="Assembler Computer execute machine code, sequences of bytes encoding the low-level operations that manipulate data manage memory, read and write data on storage devices, and communicate over networks.
+We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it&#39;s widely used in supercomputer and lager data center.
+the x86-64 machine code is much different with the corresponding C code, the processor states below are everywhere:|">
+    
+
+    <meta name="apple-mobile-web-app-title" content="CastOff">
+    
+    
+    <link rel="icon" href="/favicon-64.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" size="any" href="/pinned-icon.svg">
+    
+    
+    
+
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="https://christophe1997.github.io">
+    CastOff
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/posts/">
+      
+      <span>Blogs</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="/">
+      
+      <span>About</span>
+    </a>
+    
+    
+  </div>
+  
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">computer system 2</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+<a href='/categories/notes' class="muted-link">
+  <span class="Label Label--gray-darker">notes</span>
+</a>
+
+
+
+<a href='/tags/system' class="muted-link">
+  <span class="Label Label--gray">system</span>
+</a>
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2019-12-04. Published at: 2018-05-28.">
+        
+          Lastmod: 2019-12-04
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <h2 id="assembler">Assembler</h2>
+<p>Computer execute machine code, sequences of bytes encoding the low-level operations that manipulate data manage memory,
+read and write data on storage devices, and communicate over networks.</p>
+<!-- raw HTML omitted -->
+<p>We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it's widely used in
+supercomputer and lager data center.</p>
+<p>the x86-64 machine code is much different with the corresponding C code, the processor states below are everywhere:</p>
+<ul>
+<li><em>program counter</em>: called &ldquo;%rip&rdquo;, indicates the address in memory of the next instruction to be executed.</li>
+<li>the integer register file contains 16 named location storing 64-bit values.</li>
+<li>the condition code register hold status information about the most recently executed arithmetic or logical instruction.</li>
+<li>a set of vector registers store one or more integer and floating-point data.
+for example, the below C code:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="c1">//mstore.c
+</span><span class="c1"></span><span class="kt">long</span> <span class="nf">mult2</span><span class="p">(</span><span class="kt">long</span><span class="p">,</span> <span class="kt">long</span><span class="p">)</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">multstore</span><span class="p">(</span><span class="kt">long</span> <span class="n">x</span><span class="p">,</span> <span class="kt">long</span> <span class="n">y</span><span class="p">,</span> <span class="kt">long</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">long</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mult2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>could have the assembly code used by <code>gcc -Og -S mstore.c</code> command:</p>
+<pre><code>//mstore.s
+	.file	&quot;mstore.c&quot;
+	.text
+	.globl	multstore
+	.type	multstore, @function
+multstore:
+.LFB0:
+	.cfi_startproc
+	pushq	%rbx
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	movq	%rdx, %rbx
+	call	mult2
+	movq	%rax, (%rbx)
+	popq	%rbx
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE0:
+	.size	multstore, .-multstore
+	.ident	&quot;GCC: (Ubuntu 5.4.0-6ubuntu1~16.04.9) 5.4.0 20160609&quot;
+	.section	.note.GNU-stack,&quot;&quot;,@progbits
+</code></pre><p>where the lines beginning with ‘.’ are directives to guide the assembler and linker, we can generally ignore these, thus
+we obtain(in ATT format distinguish with Intel format):</p>
+<pre><code>multstore:
+	pushq	%rbx
+	movq	%rdx, %rbx
+	call	mult2
+	movq	%rax, (%rbx)
+	popq	%rbx
+	ret
+</code></pre><p>Intel use term <em>word</em> to represent 16-bit data types, so it calls 32-bit as <em>double words</em>, and 64-bit as <em>quad words</em>.
+The table below illsulates the default C data types and its x86-64 representation.</p>
+<table>
+<thead>
+<tr>
+<th align="center">C declartive</th>
+<th align="center">Intel data type</th>
+<th align="center">assembly suffix</th>
+<th align="center">size(byte)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">char</td>
+<td align="center">byte</td>
+<td align="center">b</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">short</td>
+<td align="center">word</td>
+<td align="center">w</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="center">double words</td>
+<td align="center">l</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">quad words</td>
+<td align="center">q</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">char*</td>
+<td align="center">quad words</td>
+<td align="center">q</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">single-precision</td>
+<td align="center">s</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">double-precision</td>
+<td align="center">l</td>
+<td align="center">8</td>
+</tr>
+</tbody>
+</table>
+<p>A x86-64 CPU contains a set of 16 universal destination registers storing 64-bit values. They are: %rax, %rbx, %rcx, %rdx,
+%rsi, %rdi, %rbp, %rsp(in 32-bit those begin with e, e.g. %eax), %r8 to %r15(in 32-bit those ends with d, e.g. %r9d).
+It's worth noting that the stack point %rsp, which indicates the address of program finished stack.</p>
+<h3 id="data-movement-instructions">data movement instructions</h3>
+<p>Among the most heavily used instructions are those that copy data from one location to another. The most simplest instructions
+is the MOV class, cosists of four instructions: <code>movb</code>, <code>movw</code>, <code>movl</code>, <code>movq</code>; they differ only in that they operate on data
+of size 1, 2, 4 and 8 bytes. In most casees, MOV only update the register and memory address indicated by the operands,
+but <code>movl</code> will fill the left bit with 0 in a register with a 32-bit data, which is the convention in x86-64. The MOVZ class
+will always fill the other bit with zero, while the MOVS class fill by sign expansion. MOVS and MOVZ always ends with
+two characters indicates the size of size, e.g. <code>movzbw</code> moves byte to word with zero expansion. but there no movzlq
+because it could replaced by <code>movl</code> as we mentioned above. The <code>cltq</code> always moves from %eax to %rax with sign expansion,
+so it is the same as <code>movslq %eax, %rax</code>.</p>
+<p>The final two data movement instructions are used to push data onto and pop data from the program stack: pushq and popq.
+For example to push a quad words onto a stack, first we subtract %rsp(the stack point) with 8(the stack grows from high
+address to low address) and write the data to the new address of %rsp. Since the stack is contained in the same memory as
+the program code and other forms of program data, programs can access arbitrary positions within the stack using the
+standard memory addressing methods.</p>
+<h3 id="arithmetic-and-logical-operations">arithmetic and logical operations</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Instruction</th>
+<th align="center">Effect</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">leal    S, D</td>
+<td align="center">D := &amp;S</td>
+<td align="center">Load effective address</td>
+</tr>
+<tr>
+<td align="center">INC    D</td>
+<td align="center">D := D + 1</td>
+<td align="center">Increment</td>
+</tr>
+<tr>
+<td align="center">DEC    D</td>
+<td align="center">D := D - 1</td>
+<td align="center">Decrement</td>
+</tr>
+<tr>
+<td align="center">NEG    D</td>
+<td align="center">D := -D</td>
+<td align="center">Negate</td>
+</tr>
+<tr>
+<td align="center">NOT    D</td>
+<td align="center">D := ~D</td>
+<td align="center">Complement</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">ADD    S, D</td>
+<td align="center">D := D + S</td>
+<td align="center">Add</td>
+</tr>
+<tr>
+<td align="center">SUB    S, D</td>
+<td align="center">D := D - S</td>
+<td align="center">Subtract</td>
+</tr>
+<tr>
+<td align="center">IMUL   S, D</td>
+<td align="center">D := D * S</td>
+<td align="center">Multiply</td>
+</tr>
+<tr>
+<td align="center">XOR    S, D</td>
+<td align="center">D := D ^ S</td>
+<td align="center">Exclusive-or</td>
+</tr>
+<tr>
+<td align="center">OR     S, D</td>
+<td align="center">D := D | S</td>
+<td align="center">Or</td>
+</tr>
+<tr>
+<td align="center">AND    S, D</td>
+<td align="center">D := D &amp; S</td>
+<td align="center">And</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">SAL    k, D</td>
+<td align="center">D := D &laquo; k</td>
+<td align="center">Left shift</td>
+</tr>
+<tr>
+<td align="center">SHL    k, D</td>
+<td align="center">D := D &laquo; k</td>
+<td align="center">the same as SAL</td>
+</tr>
+<tr>
+<td align="center">SAR    k, D</td>
+<td align="center">D := D &raquo; k</td>
+<td align="center">Arithmetic right shift(with sign expansion)</td>
+</tr>
+<tr>
+<td align="center">SHR    k, D</td>
+<td align="center">D := D &raquo; k</td>
+<td align="center">Logical right shift(with zero expansion)</td>
+</tr>
+</tbody>
+</table>
+<p>The <em>load effective address</em> instruction leal is actually a variant of the movl instruction. It just works as the <code>&amp;</code> in C.
+In addition, it can be used co compactly describe common arithmetic operations, e.g. if register %edx contains value x,
+then the instruction <code>leal 7(%edx, &amp;edx, 4), %eax</code> will set register %eax to 5x+7. But the destination operand must be a
+register.</p>
+<p>For shift operations, the shift amount is given either as an immediate or in the single-byte register element %c1(in %rcx),</p>
+<h3 id="control">control</h3>
+<p>Machine code provides two basic low-level mechanisms for implementing coditional behavior: it tests data values and then
+either alters the control flow or the data flow based on the result of these test. Data-dependent control flow is the
+more general and more common approach for implementing coditional behavior. The execution order of a set of machine-code
+instructions can be altered with <em>jump</em> instruction, indicating that control should pass to some other part of the program,
+possibly contingent on the result of some test.</p>
+<p>In addition to the integer register, the CPU maintains a set of single-bit <em>condition code</em> register describing attributes
+of the most rescent arthmetic or logical operation. These register can then be tested to perform conditional branches.
+The most useful cndition codes are:</p>
+<ul>
+<li>CF: Carry Flag. The most recent operation generated a carry out of the most significant bit. Used to detect overflow
+for unsigned operations</li>
+<li>ZF: Zero Flag. The most recent operation yielded zero.</li>
+<li>SF: Sign Flag. The most recent operation yielded negative value.</li>
+<li>OF: Overflow Flag. The most recent operation caused a two's-complement overflow, either negative or positive.</li>
+</ul>
+<p>For example, suppose we used one of the ADD instructions to perform the equivalent of the C assignment <code>t=a+b</code>, where
+variables a, b, and t are integers. Then the condition codes would be set according to the following C expressions:</p>
+<ul>
+<li>CF: <code>(unsigned) t &lt; (unsigned) a</code>    Unsigned overflow</li>
+<li>ZF: <code>t == 0</code>     Zero</li>
+<li>SF: <code>t &lt; 0</code>      Negative</li>
+<li>OF: <code>(a &lt; 0 == b &lt; 0) &amp;&amp; (t &lt; 0 != a &lt; 0)</code>    Signed overflow</li>
+</ul>
+<p>There are two instruction classes that set condition codes without altering any other registers, the CMP class and TEST
+class. The CMP instructions behave in the same manner as the SUB instructions except that they don't update their destinations.
+The TEST instructions behave in the same manner as the And instructions except that they don't update their destinations,
+too.</p>
+<p>Rather than reading the condition codes directly, there are three common ways of using the codition code:</p>
+<ol>
+<li>we can set a single byte to 0 or 1 depending on somecombination of the condition codes</li>
+<li>we can coditionally jump to some other part og the program, or</li>
+<li>we can conditionally transfer data.</li>
+</ol>
+<p>For the first case, there are SET class instructions to set a single byte to 0 or 1 depending on some combination of the
+condition codes. e.g. <code>setl</code> and <code>setb</code> denote &ldquo;set less&rdquo; and &ldquo;set below&rdquo;</p>
+<p>A <em>jump</em> instruction can cause the execution to switch to a completely new position in the program. These jump destinations
+are negerally indicated in assembly code by a <em>label</em></p>
+<h2 id="translating-conditional-branches">Translating Conditional Branches</h2>
+<p>The most general way to translate conditional expressions and statement from C into machine code is to use combinations
+of conditional and unconditional jumps.</p>
+<p>The general form of an if-else statement in C is given by the template</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">if</span> <span class="p">(</span><span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span>
+    <span class="n">then</span><span class="o">-</span><span class="n">statement</span>
+<span class="k">else</span>
+    <span class="k">else</span><span class="o">-</span><span class="n">statement</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>for this general form the assmebly implementation typically adheres to the following form, where we use C syntax(use goto)
+to describe the control flow.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="n">t</span> <span class="o">=</span> <span class="n">test</span><span class="o">-</span><span class="n">expr</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">goto</span> <span class="nb">false</span><span class="p">;</span>
+<span class="n">then</span><span class="o">-</span><span class="n">statement</span>
+<span class="k">goto</span> <span class="n">done</span><span class="p">;</span>
+<span class="nb">false</span><span class="o">:</span>
+    <span class="k">else</span><span class="o">-</span><span class="n">statement</span>
+<span class="nl">done</span><span class="p">:</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Translating conditional branches by control is simple and in common use. But in modern processor, it sometimes may be
+much inefficient. A substitution strategy is using data to translate conditional branches, this strategy compute both
+branches&rsquo; result and choose one according to the condition. It could only be feasible in some constraint situation, but
+if feasible, then we can use one conditional transfer instruction to implement.</p>
+<p>To explain why using conditional transfer is faster than using control(jump), we need to know how instructions are executed
+in processor. Moder processor gains high performance by using pipelining. In pipelining, it takes many phases to process
+a instruction, such like read instruction from memory, determine the class of instruction, etc. This method obtains high
+performace by coinciding sequential those phases of instructions, e.g. the processor could execute the arithmetic of the
+previous instruction while reading the current instruction. To do this, the processor need to know the order of instructions
+sequence before, to ensure that there are enough instruction to execute. Then we stand on the conditional branch, the
+processor need to compute what branch to go. Though moder processor using very accurate branch prediction logic to predict
+which jump instructions will be execute(the accuracy &gt; 90%) to assure there are enough instruction in the pipelining, it
+have to deprecate the work done for the wrong jump instruction, which takes 15~30 clock cycle. On the other hand, it would
+always takes 8 clock cycle by data transfer, it not depending what the data like, thus it would be easy to fill the piplining
+with instructions.</p>
+<p>The CMOVE class implaments for conditional move(e.g. cmovene S R, move data from S to R while). Consider the expression
+<code>v = test-expr : then-expr : else-expr</code>, using control to compile it could be below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span>
+    <span class="k">goto</span> <span class="nb">false</span><span class="p">;</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">then</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span>
+<span class="k">goto</span> <span class="n">done</span><span class="p">;</span>
+<span class="nb">false</span><span class="o">:</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="k">else</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span>
+<span class="nl">done</span><span class="p">:</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>either then-expr or else-expr would be execute, while using conditional transfer it would execute both of them:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="n">v</span> <span class="o">=</span> <span class="n">then</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span>
+<span class="n">ve</span> <span class="o">=</span> <span class="k">else</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">)</span> <span class="n">v</span> <span class="o">=</span> <span class="n">ve</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>So, it's easy to see that it could be much slow if the cost if <code>then-expr</code> and <code>else-expr</code> is too expensive.</p>
+<h2 id="loop">Loop</h2>
+<h3 id="dowhile-loop">do-while loop</h3>
+<p>do-while have the form below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">do</span>
+    <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>it can be translate into conditionals and goto statements as follow:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="nl">loop</span><span class="p">:</span>
+    <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">loop</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="while-loop">while loop</h3>
+<p>while loop have the form below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">while</span> <span class="p">(</span><span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span>
+    <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>There multiple ways to translate it, the GCC uses two of them, the first is called <em>jump to middle</em>, in goto form that is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">goto</span> <span class="n">test</span><span class="p">;</span>
+<span class="nl">loop</span><span class="p">:</span>
+    <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+<span class="nl">test</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">loop</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>the second method is called guarded-do, it first translate to the do-while form:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="n">t</span> <span class="o">=</span> <span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">goto</span> <span class="n">done</span><span class="p">;</span>
+<span class="k">do</span>
+    <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span><span class="p">;</span>
+<span class="nl">done</span><span class="p">:</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>futher more, it can be translated below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="n">t</span> <span class="o">=</span> <span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">goto</span> <span class="n">done</span><span class="p">;</span>
+<span class="nl">loop</span><span class="p">:</span>
+    <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">loop</span><span class="p">;</span>
+<span class="nl">done</span><span class="p">:</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>GCC would translate while loop in guarded-do form with <code>-O1</code> option.</p>
+<h3 id="for-loop">for loop</h3>
+<p>for loop has the form below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">for</span> <span class="p">(</span><span class="n">init</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span> <span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span> <span class="n">update</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span>
+    <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>C standard indicate that it is the same as the while loop below(except one situation):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="n">init</span><span class="o">-</span><span class="n">expr</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span>
+    <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
+    <span class="n">update</span><span class="o">-</span><span class="n">expr</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>So GCC translate the for loop as same as the while loop above, choosing which form depending to the optimization degree.</p>
+<h3 id="switch-statement">switch statement</h3>
+<p>A switch statement provides a multi way branching capability vased on the value of an integer index. They are particularly
+useful when dealing with tests where there can be a large number of possible outcomes. Not only do they make the C code
+more readable, they also allow an efficiant implementation using a data structure called <em>jump table</em>. JUmp tables are
+used when there are a number of cases(e.g. four or more) and they span a small range of values. For example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="kt">void</span> <span class="nf">switch_eg</span><span class="p">(</span><span class="kt">long</span> <span class="n">x</span><span class="p">,</span> <span class="kt">long</span> <span class="n">n</span><span class="p">,</span> <span class="kt">long</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">long</span> <span class="n">val</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="mi">100</span><span class="o">:</span>
+            <span class="n">val</span> <span class="o">*</span><span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="mi">102</span><span class="o">:</span>
+            <span class="n">val</span> <span class="o">+</span><span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+        <span class="k">case</span> <span class="mi">103</span><span class="o">:</span>
+            <span class="n">val</span> <span class="o">+</span><span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="mi">104</span><span class="o">:</span>
+        <span class="k">case</span> <span class="mi">106</span><span class="o">:</span>
+            <span class="n">val</span> <span class="o">*</span><span class="o">=</span> <span class="n">val</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>the code above would be translated below by a jump table:</p>
+<pre><code>switch_eg:
+.LFB0:
+	.cfi_startproc
+	subq	$100, %rsi
+	cmpq	$6, %rsi
+	ja	.L8
+	jmp	*.L4(,%rsi,8)               the jump table
+	.section	.rodata
+	.align 8
+	.align 4
+.L4:
+	.quad	.L3
+	.quad	.L8
+	.quad	.L5
+	.quad	.L6
+	.quad	.L7
+	.quad	.L8
+	.quad	.L7
+	.text
+.L3:
+	leaq	(%rdi,%rdi,2), %rax
+	leaq	(%rdi,%rax,4), %rdi
+	jmp	.L2
+.L5:
+	addq	$10, %rdi
+.L6:
+	addq	$11, %rdi
+	jmp	.L2
+.L7:
+	imulq	%rdi, %rdi
+	jmp	.L2
+.L8:
+	movl	$0, %edi
+.L2:
+	movq	%rdi, (%rdx)
+	ret
+	.cfi_endproc
+</code></pre><h2 id="procedures">Procedures</h2>
+<p>A procedure call involves passing both data and control form one part of program to another, it could have different form
+in different language: function, method, subroutine, handler. To supprot procedures, machine must have the abilities:</p>
+<ul>
+<li>transfer control</li>
+<li>transfer data</li>
+<li>allocate and deallocate memory sapce.</li>
+</ul>
+<h3 id="runtime-stack">runtime stack</h3>
+<p>While the x86-64 procedure need more spaces than register have, then it would allocate space on stack, which called a
+stack frame of the procedure. If all local variables could be stored in register, the procedure don't need the stack frame.</p>
+<h3 id="transfer-control">transfer control</h3>
+<p>To transfer control from procedure P to Q, it just simply set the PC with the start of Q, x86-64 uses <code>call Q</code> to push
+address A and then set the PC with the start of Q, the corresponding instruction <code>ret</code> would pop the address A, and set
+the PC with A.</p>
+<h3 id="transfer-data">transfer data</h3>
+<p>In x86-64, it can store 6 parameters in register at most, for 64-bit size data, they stored in the order: %rdi, %rsi, %rdx
+%rcx, %r8, %r9. So the parameters beyond should transfer by stack.</p>
+<h3 id="register-local-space">register local space</h3>
+<p>Register is the only resource shared by all procedures. Conventionally, register %rbx, %rbp and %r12 ~ %r15 are called
+<em>callee-saved</em> registers, this means when procedure Q is called by P, then Q must save the values of any of these registers
+on the stack before overwriting them and restore them before returning. Any other registers except the stack point %rsp
+are called <em>caller-saved</em> registers, this means any procedure can overwriting this registers without restoring. The prefix
+of &ldquo;saved&rdquo; means who should store the data before pass the control to another procedure.</p>
+<h2 id="outofbounds-memory-references-and-buffer-overflow">Out-of-Bounds Memory References and Buffer Overflow</h2>
+<p>We have see that C does not perform any bounds checking for array references, and that local variables are stored on the
+stack along with state information such as saved register values and return addresses. This combination can lead to serious
+program errors, where the state stored on the stack gets corrupted by a write to an out-of-bounds array element. When the
+program then tries to reload the register or execute a <code>ret</code> instruction with this corrupted state, things can go seriously
+wrong.</p>
+
+  </section>
+
+  <section>
+    
+      
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>computer system 2</b><nav id="TableOfContents">
+  <ul>
+    <li><a href="#assembler">Assembler</a>
+      <ul>
+        <li><a href="#data-movement-instructions">data movement instructions</a></li>
+        <li><a href="#arithmetic-and-logical-operations">arithmetic and logical operations</a></li>
+        <li><a href="#control">control</a></li>
+      </ul>
+    </li>
+    <li><a href="#translating-conditional-branches">Translating Conditional Branches</a></li>
+    <li><a href="#loop">Loop</a>
+      <ul>
+        <li><a href="#dowhile-loop">do-while loop</a></li>
+        <li><a href="#while-loop">while loop</a></li>
+        <li><a href="#for-loop">for loop</a></li>
+        <li><a href="#switch-statement">switch statement</a></li>
+      </ul>
+    </li>
+    <li><a href="#procedures">Procedures</a>
+      <ul>
+        <li><a href="#runtime-stack">runtime stack</a></li>
+        <li><a href="#transfer-control">transfer control</a></li>
+        <li><a href="#transfer-data">transfer data</a></li>
+        <li><a href="#register-local-space">register local space</a></li>
+      </ul>
+    </li>
+    <li><a href="#outofbounds-memory-references-and-buffer-overflow">Out-of-Bounds Memory References and Buffer Overflow</a></li>
+  </ul>
+</nav></div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    ©Christophe &middot; 
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
+    
+  </body>
+</html>
