@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  使用hugo生成博客                                               :Hugo:Org-mode: &ndash; CastOff
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="之前一直有使用Hexo来生成静态博客，如今将博客迁移到了Hugo下。两种工具总体而言各有优势，个人此次转移到hugo的主要原因大概是希望能够|">
+    
+
+    <meta name="apple-mobile-web-app-title" content="CastOff">
+    
+    
+    <link rel="icon" href="/favicon-64.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" size="any" href="/pinned-icon.svg">
+    
+    
+    
+
+
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="https://christophe1997.github.io">
+    CastOff
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/posts/">
+      
+      <span>Blogs</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="/">
+      
+      <span>About</span>
+    </a>
+    
+    
+  </div>
+  
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">使用hugo生成博客                                               :Hugo:Org-mode:</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+<a href='/categories/%E6%9D%82%E9%A1%B9' class="muted-link">
+  <span class="Label Label--gray-darker">杂项</span>
+</a>
+
+
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2019-12-05. Published at: 2019-12-05.">
+        
+          Lastmod: 2019-12-05
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <p>之前一直有使用<a href="https://hexo.io/zh-cn/index.html">Hexo</a>来生成静态博客，如今将博客迁移到了<a href="https://gohugo.io/">Hugo</a>下。两种工具总体而言各有优势，个人此次转移到hugo的主要原因大概是希望能够重拾写博客的习惯，本文主要介绍了使用Hugo的大致流程。首先给出个人博客的文件结构：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">Root               # blog根目录
+|
++-- archetypes
++-- content
+ |-- posts         # 博客目录
+ |-- _index.md     # 主页
++-- data
++-- layouts
++-- ox-hugo        # org文件位置
+ |-- messy.org     # category为杂项的org文件
++-- public         # submodule
++-- resource
++-- static
++-- themes
+ |-- xxx           # 主题文件夹, submodule
++-- .git
++-- config.toml
++-- .dir-locals.el # 自动将org文件转为markdown配置文件
++-- .gitmodules
+</code></pre></td></tr></table>
+</div>
+</div><p>其中只有 <code>ox-hugo</code> 为自定义文件夹, <code>.dir-locals</code> 为ox-hugo自动转换的配置文件，其他都是自动生成的。接下来个人就hugo生成博客关键部分展开介绍下。</p>
+<h2 id="主题的选择">主题的选择</h2>
+<p>首先搭建博客面对的问题就是主题，如果你非常擅长网页设计可以自己DIY一款主题。大多数还是会选择<a href="https://themes.gohugo.io/">已有的主题</a>，我们在选择主题时，除了最重要的UI外，还应当考虑以下的因素：</p>
+<ul>
+<li>是否支持写作的基本功能，如公式的显示（通常是MathJax）；</li>
+<li>是否支持博客网站的基本功能，如分类，标签，分享，评论等。</li>
+</ul>
+<p>尤其是评论这块，个人之前用的disqus, 但好像在国内的访问存在一些问题，目前比较推荐的方案是使用git issues来实现评论功能，如gitment。像我这样的懒人当然是选择不支持评论功能啦：）</p>
+<h2 id="博客的托管">博客的托管</h2>
+<p>比较推荐的方案是将整个blog作为一个git项目，并且将 <code>public</code> 和 <code>themes/xxx</code> 作为该项目的submodule。其中 <code>public</code> 对应于你的要作为<a href="https://help.github.com/articles/user-organization-and-project-pages/#user--organization-pages">Github pages</a>的
+git项目地址，通常建议是 <code>&lt;username&gt;.github.io</code> 这个项目，这样Github会自动将该项目作为 <code>http://&lt;username&gt;.github.io</code> 页面的文件，完整的将博客自动托管到Github的流程可以参考hugo上的<a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/">教程</a>；而 <code>themes/xxx</code> 则是对应于主题的项目地址。这样使用submodule的一个好处是可以保证主题的同步以及public的自动托管与发布。</p>
+<h2 id="使用org-mode写作">使用org-mode写作</h2>
+<p>如果你对于emacs的<a href="https://orgmode.org/">org-mode</a>向往已久并且希望使用其来写博客的话，一个推荐的方案是使用<a href="https://ox-hugo.scripter.co/">ox-hugo</a>自动地将你用org-mode写的内容转为markdown，虽然hugo本身也有org-mode
+的引擎，但好像支持的不是很好。在这样的工作模式下建议的方案是将所有相同category的且不是很长的博客都集中到一个org文件中，文件的开头配置大致如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">#+STARTUP: content
+#+hugo_base_dir: ../       # blog根目录
+#+hugo_section: ../content/posts    # ox-hugo生成md文件的目录
+#+filetags: @&lt;category&gt;    # 该org文件中所有文章的分类
+#+hugo_auto_set_lastmod: t
+#+hugo_locale: zh-cn
+</code></pre></td></tr></table>
+</div>
+</div><p>每次新建一个博客时就在该文件中加入一个todo事项，如本博客的开头为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">** TODO 使用hugo生成博客
+ :PROPERTIES:
+ :EXPORT_FILE_NAME: 使用hugo生成博客
+ :END:
+</code></pre></td></tr></table>
+</div>
+</div><p>这些可以利用<a href="https://orgmode.org/manual/Capture.html">org-capture</a>自动生成的，具体可以参考ox-hugo上的<a href="https://ox-hugo.scripter.co/doc/org-capture-setup/">文档</a>。另外建议将文件加入到<a href="https://orgmode.org/manual/Agenda-views.html">org-agenda</a>文件列表中，这样可以快速定位未完成的博客（即TODO状态下的博客）。完成一篇博客时只需要将博客标记为DOWN即可。ox-hugo还会将org的tag转为相应的分类和标签，其中 <code>@</code> 开头的为分类, ox-hugo的自动生成可以参考相应的<a href="https://ox-hugo.scripter.co/doc/auto-export-on-saving/">文档</a>。</p>
+<p>以上就是我在使用hugo生成博客时遇到的一些主要问题。如果你有什么问题，欢迎<a href="mailto:hey%5Fchristophe@outlook.com">邮件</a>我。</p>
+
+  </section>
+
+  <section>
+    
+      
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>使用hugo生成博客                                               :Hugo:Org-mode:</b><nav id="TableOfContents">
+  <ul>
+    <li><a href="#主题的选择">主题的选择</a></li>
+    <li><a href="#博客的托管">博客的托管</a></li>
+    <li><a href="#使用org-mode写作">使用org-mode写作</a></li>
+  </ul>
+</nav></div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    ©Christophe &middot; 
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
+    
+  </body>
+</html>
