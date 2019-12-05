@@ -18,6 +18,21 @@
   </url>
   
   <url>
+    <loc>https://christophe1997.github.io/tags/hugo/</loc>
+    <lastmod>2019-12-05T20:31:52+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/tags/org-mode/</loc>
+    <lastmod>2019-12-05T20:31:52+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/tags/</loc>
+    <lastmod>2019-12-05T20:31:52+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://christophe1997.github.io/posts/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2019-12-05T20:31:52+08:00</lastmod>
   </url>
@@ -40,11 +55,6 @@
   <url>
     <loc>https://christophe1997.github.io/posts/monad-and-transformers/</loc>
     <lastmod>2019-12-04T14:57:16+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://christophe1997.github.io/tags/</loc>
-    <lastmod>2019-12-04T14:58:37+08:00</lastmod>
   </url>
   
   <url>
