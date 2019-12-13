@@ -19,13 +19,12 @@ if (!doNotTrack) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       
-  process &ndash; CastOff
+  进程 &ndash; CastOff
 
     </title>
     
     
-    <meta name="description" property="og:description" content="The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system:
- create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process.  The first thing that the OS must do to run a program is to load its code and any static data into memory, into the address space of the process.|">
+    <meta name="description" property="og:description" content="The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system: create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process. The first thing that the OS must|">
     
 
     <meta name="apple-mobile-web-app-title" content="CastOff">
@@ -85,29 +84,29 @@ if (!doNotTrack) {
 
 <div class="Subhead">
   <div class="Subhead-heading">
-    <div class="h1 mt-3 mb-1">process</div>
+    <div class="h1 mt-3 mb-1">进程</div>
   </div>
   <div class="Subhead-description">
     
 
 
 <a href='/categories/notes' class="muted-link">
-  <span class="Label Label--gray-darker">notes</span>
+  <span class="Label Label--gray-darker">Notes</span>
 </a>
 
 
 
 <a href='/tags/system' class="muted-link">
-  <span class="Label Label--gray">system</span>
+  <span class="Label Label--gray">System</span>
 </a>
 
 
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2019-12-04. Published at: 2018-08-03.">
+      <span title="Lastmod: 2019-12-13. Published at: 2018-08-03.">
         
-          Lastmod: 2019-12-04
+          Lastmod: 2019-12-13
         
       </span>
     </div>
@@ -203,7 +202,7 @@ For example, the tracked information about each process in xv6 kernel is shown b
 </span><span class="c1"></span><span class="p">}</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="process-api">process API</h2>
+</div><h2 id="process-api">Process API</h2>
 <p>Unix presents one of the most intriguing ways to create a new process with a pair of system calls: <code>fork()</code> and <code>exec()</code>.
 <code>wait()</code> can be used by a process wishing to wait for a process it has created to complete.</p>
 <p>The <code>fork()</code> creates a process as an(almost) <em>exact copy of the calling process</em>, that means that to the OS, it now looks
@@ -227,7 +226,7 @@ closes standard output and open the file, thus any output from the soon-to-be-ru
 of the screen. This works because Unix system start looking for free file descriptors at zero, in this case, <code>STDOUT_FILENO</code>
 will be the first available one and thus get assigned when open() is called. Subsequent writes by the child process to
 the standard output file descriptor(i.e. printf) will then be routed transparently to the newly-opened file.</p>
-<h2 id="limited-direct-execution">limited direct execution</h2>
+<h2 id="limited-direct-execution">Limited Direct Execution</h2>
 <p>In order to virtualize the CPU, the operating system needs to somehow share the physical CPU among many jobs running
 seemingly at the same time. The basic idea is simple: run one process for a little while, then run another one, and so
 forth.</p>
@@ -246,7 +245,7 @@ of the CPU so that it can switch between processes. One old way is waiting syste
 the process refuses to make system call. Another way is to add a <em>timer interrupt</em>, a timer device can be programmed to
 raise an interrupt every so many milliseconds; when the interrupt is raised, the currently running process is halted, and
 a pre-configured interrupt handler in the OS runs. At this point, the OS has regained control of the CPU.</p>
-<h2 id="scheduling-policies">scheduling policies</h2>
+<h2 id="scheduling-policies">Scheduling Policies</h2>
 <p>There are many scheduling algorithms, such as FIFO(first in first out), STCF(shortest time-to-completion first). Choosing
 which algorithm dependent on which metrics are used. One most well-known approaches to scheduling, known as the <em>Multi-level
 feedback queue</em>. The MLFQ has a number of distinct queues, each assigned a different priority level. At any given time,
@@ -284,11 +283,11 @@ given more chances to win the lottery(to be continued).</p>
           
   
     <div id="toc" class="Box Box--blue mb-3">
-      <b>process</b><nav id="TableOfContents">
+      <b>进程</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#process-api">process API</a></li>
-    <li><a href="#limited-direct-execution">limited direct execution</a></li>
-    <li><a href="#scheduling-policies">scheduling policies</a></li>
+    <li><a href="#process-api">Process API</a></li>
+    <li><a href="#limited-direct-execution">Limited Direct Execution</a></li>
+    <li><a href="#scheduling-policies">Scheduling Policies</a></li>
   </ul>
 </nav></div>
   

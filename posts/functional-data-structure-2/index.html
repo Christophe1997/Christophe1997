@@ -19,12 +19,12 @@ if (!doNotTrack) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       
-  functional data structure 2 &ndash; CastOff
+  Functional Data Structure 2 &ndash; CastOff
 
     </title>
     
     
-    <meta name="description" property="og:description" content="amortization Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about the running time of any individual operation.
+    <meta name="description" property="og:description" content="Amortization Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about the running time of any individual operation.
 For instance, given a sequence of n operations, we may wish to bound the total running time of the sequence by O(n) without insisting than every individual operation run in O(1) time.|">
     
 
@@ -85,14 +85,14 @@ For instance, given a sequence of n operations, we may wish to bound the total r
 
 <div class="Subhead">
   <div class="Subhead-heading">
-    <div class="h1 mt-3 mb-1">functional data structure 2</div>
+    <div class="h1 mt-3 mb-1">Functional Data Structure 2</div>
   </div>
   <div class="Subhead-description">
     
 
 
 <a href='/categories/notes' class="muted-link">
-  <span class="Label Label--gray-darker">notes</span>
+  <span class="Label Label--gray-darker">Notes</span>
 </a>
 
 
@@ -121,7 +121,7 @@ For instance, given a sequence of n operations, we may wish to bound the total r
 <article>
   
   <section class="pb-6 mb-3 border-bottom">
-    <h2 id="amortization">amortization</h2>
+    <h2 id="amortization">Amortization</h2>
 <p>Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case
 bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about
 the running time of any individual operation.</p>
@@ -167,7 +167,7 @@ so, the accumulated actual costs of the sequence of operations are:
 $$ \sum_{i=1}^j t_i = \sum_{i=1}^j a_i + \Phi(d_0) - \Phi(d_j) $$
 Provided $\Phi$ is chosen in such a way that $\Phi(d_0)$ is zero and $\Phi(d_j)$ is non-negative, then we conclude that
 the accumulated amoritized costs are an upper bound on the accumulated actual costs.</p>
-<h3 id="queue">queue</h3>
+<h3 id="queue">Queue</h3>
 <p>We illustrate the banker's and physicist's methods by analyzing a simple functional implementation of the FIFO queue
 abstraction as:</p>
 <div class="highlight"><div class="chroma">
@@ -259,7 +259,7 @@ into a non-empty queue takes one actual step and increases the potential by one,
 that does not reverse the rear list takes one actual step and leaves the potential unchanged, for an amortized cost of
 one. Finally, every tail that does reverse the rear list takes $m + 1$ actual steps and sets the new rear list to [],
 decreasing the potential by m, for an amortized cost of $ m+1-m = 1 $</p>
-<h3 id="splay-heaps">splay heaps</h3>
+<h3 id="splay-heaps">Splay heaps</h3>
 <p>Splay trees are perhaps the most famous and successful of all amortized data structure. Splay trees are a close relative
 of balanced binary search trees, but they maintain no explicit balance information. Instead, every operation blindly
 restructures the tree using some simple transformations that tend to increase balance. Although any individual operation
@@ -532,7 +532,7 @@ reduce the depth of every node in the path by about half.</p>
 the input data. For example, using splay heaps to sort an already sorted list takes only O(n) time rather than O(nlog n)
 time. Leftist heaps also share this property, but only for decreasing sequences. Splay heaps excel on both increasing and
 decreasing sequences, as well as on sequence that are only partially sorted.</p>
-<h3 id="pairing-heaps">pairing heaps</h3>
+<h3 id="pairing-heaps">Pairing heaps</h3>
 <p>Pairing heaps are simple to implement and perform extremely well in parctice, but they have resisted analysis for over
 ten years. Pairing heaps are heap-ordered multiway trees, as defined:</p>
 <div class="highlight"><div class="chroma">
@@ -694,7 +694,7 @@ bad in persistence. Let q be the result of inserting n elements into an initiall
 of q contains only a single element and the rear list contains n - 1 elements. So if we use q persistently by taking
 tail n times, each call takes n actual steps. And the total actual cost, including the time to build q, is $ n^2 + n $,
 Thus the operation can not take O(1) amortized time, and this can be solved via lazy evaluation.</p>
-<h2 id="numerical-representations">numerical representations</h2>
+<h2 id="numerical-representations">Numerical Representations</h2>
 <p>Consider the usual representations of lists and natural numbers, along with several typical functions on each type:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -756,7 +756,7 @@ representation would contain three trees, of size 1, 8 and 64. Trees in numerica
 very regular structure, for example, in binary numerical representations, all trees have size that are powers of 2. And
 there are three common kinds of trees that exhibit this structure are <em>complete binary leaf trees</em>, <em>binomial trees</em>, and
 <em>pennants</em>. Each tree with rank r has $ 2^r $ element.</p>
-<h3 id="binary-randomaccess-lists">binary random-access lists</h3>
+<h3 id="binary-randomaccess-lists">Binary random-access lists</h3>
 <p>A random-access list, also called a one-sided flexible array, is a data structure that supports array-like lookup and
 update functions:</p>
 <div class="highlight"><div class="chroma">
@@ -1061,7 +1061,7 @@ sum up we have:</p>
 </div>
 </div><p>All operations run in O(logn) worst-case time. But <code>cons</code>, <code>head</code> and <code>tail</code> run in O(logn) not O(1) is one disappointing
 aspect.</p>
-<h3 id="zeroless-representation">zeroless representation</h3>
+<h3 id="zeroless-representation">Zeroless representation</h3>
 <p>Currently, <code>head</code> is implemented via a call to <code>unconsTree</code>, this approach yields compact code <code>unconsTree</code> supports both
 <code>head</code> and <code>tail</code>, but wastes time building lists that are immediately discard by <code>head</code>. For greater efficiency, we should
 implement <code>head</code> directly. As a special case, <code>head</code> can easily be made to run in O(1) time whenever the first digit is
@@ -1255,13 +1255,13 @@ representation, in which binary numbers are constructed from ones and twos inste
 </code></pre></td></tr></table>
 </div>
 </div><p>Now the <code>head</code> and <code>tail</code> take O(1) time.</p>
-<h2 id="datastructural-bootstrapping">data-structural bootstrapping</h2>
+<h2 id="datastructural-bootstrapping">Data-structural bootstrapping</h2>
 <p>The term &ldquo;bootstrapping&rdquo; refers to solving problems via solving simple instance of the same problem. And there are three
 algorithmic design techniques of data-structural bootstrapping. The first, <em>structural decomposition</em>, involves bootstrapping
 complete data structures from incomplete data structures. The second, <em>structural abstraction</em>, involves bootstrapping
 efficient data structures from inefficient data structures. The last bootstrapping data structures with aggregate elements
 from data structures with atomic elements.</p>
-<h3 id="structural-decomposition">structural decomposition</h3>
+<h3 id="structural-decomposition">Structural decomposition</h3>
 <p>Typically <em>structural decomposition</em> involves taking an implementation can handle objects only up to some bound size, and
 extending it to handle objects of unbounded size. Consider typical recursive datatypes such as lists and binary leaf trees:</p>
 <div class="highlight"><div class="chroma">
@@ -1331,7 +1331,7 @@ constructor of the type:</p>
 </div><p>Now we can represent the sequence 0&hellip;10 as <code>One(0, One((1, 2), Zero(One((((3, 4), (5, 6)), ((7, 8), (9, 10))), Nil))))</code>,
 which has 11 elements, written 1101 in binary. The pairs in this type are always balanced. In fact, another way to think
 of pairs of elements is as complete binary leaf trees. And then we can replement binary random-access lists use this type.</p>
-<h3 id="tries">tries</h3>
+<h3 id="tries">Tries</h3>
 <p>Binary search trees work well when comparisons on the key or element type are cheap. This is true for simple types like
 integers or characters, but may not be true for aggregate types like strings. A better solution for aggregate types such
 as string is to choose a representation that takes advantage of the structure of that type. One such representation is
@@ -1445,25 +1445,25 @@ from edges labels to tries. So we can use a given structure Map implementing fin
           
   
     <div id="toc" class="Box Box--blue mb-3">
-      <b>functional data structure 2</b><nav id="TableOfContents">
+      <b>Functional Data Structure 2</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#amortization">amortization</a>
+    <li><a href="#amortization">Amortization</a>
       <ul>
-        <li><a href="#queue">queue</a></li>
-        <li><a href="#splay-heaps">splay heaps</a></li>
-        <li><a href="#pairing-heaps">pairing heaps</a></li>
+        <li><a href="#queue">Queue</a></li>
+        <li><a href="#splay-heaps">Splay heaps</a></li>
+        <li><a href="#pairing-heaps">Pairing heaps</a></li>
       </ul>
     </li>
-    <li><a href="#numerical-representations">numerical representations</a>
+    <li><a href="#numerical-representations">Numerical Representations</a>
       <ul>
-        <li><a href="#binary-randomaccess-lists">binary random-access lists</a></li>
-        <li><a href="#zeroless-representation">zeroless representation</a></li>
+        <li><a href="#binary-randomaccess-lists">Binary random-access lists</a></li>
+        <li><a href="#zeroless-representation">Zeroless representation</a></li>
       </ul>
     </li>
-    <li><a href="#datastructural-bootstrapping">data-structural bootstrapping</a>
+    <li><a href="#datastructural-bootstrapping">Data-structural bootstrapping</a>
       <ul>
-        <li><a href="#structural-decomposition">structural decomposition</a></li>
-        <li><a href="#tries">tries</a></li>
+        <li><a href="#structural-decomposition">Structural decomposition</a></li>
+        <li><a href="#tries">Tries</a></li>
       </ul>
     </li>
   </ul>

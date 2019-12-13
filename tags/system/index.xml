@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>system on CastOff</title>
+    <title>System on CastOff</title>
     <link>https://christophe1997.github.io/tags/system/</link>
-    <description>Recent content in system on CastOff</description>
+    <description>Recent content in System on CastOff</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy;Christophe</copyright>
@@ -13,26 +13,25 @@
     
     
     <item>
-      <title>process</title>
+      <title>进程</title>
       <link>https://christophe1997.github.io/posts/process/</link>
       <pubDate>Fri, 03 Aug 2018 13:10:58 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/process/</guid>
-      <description>The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system:
- create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process.  The first thing that the OS must do to run a program is to load its code and any static data into memory, into the address space of the process.</description>
+      <description>The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system: create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process. The first thing that the OS must</description>
     </item>
     
     <item>
-      <title>address space</title>
+      <title>Address Space</title>
       <link>https://christophe1997.github.io/posts/address-space/</link>
       <pubDate>Sun, 24 Jun 2018 23:54:04 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/address-space/</guid>
-      <description>The address space The address space is the abstraction that OS is providing to the running program. The address space of a process contains all of the memory state of the running program. For example, the code of the program, the stack and the heap. In the sight of the program, it loaded into at a particular address and has a potentially very large address space, thus, we say that the OS is virtualizing memory.</description>
+      <description>The Address Space The address space is the abstraction that OS is providing to the running program. The address space of a process contains all of the memory state of the running program. For example, the code of the program, the stack and the heap. In the sight of the program, it loaded into at a particular address and has a potentially very large address space, thus, we say that the OS is virtualizing memory.</description>
     </item>
     
     <item>
-      <title>computer system 4</title>
+      <title>Computer System 4</title>
       <link>https://christophe1997.github.io/posts/computer-system-4/</link>
       <pubDate>Sun, 10 Jun 2018 19:14:22 +0000</pubDate>
       
@@ -41,7 +40,7 @@
     </item>
     
     <item>
-      <title>computer system 3</title>
+      <title>Computer System 3</title>
       <link>https://christophe1997.github.io/posts/computer-system-3/</link>
       <pubDate>Fri, 01 Jun 2018 23:23:16 +0000</pubDate>
       
@@ -50,7 +49,7 @@
     </item>
     
     <item>
-      <title>computer system 2</title>
+      <title>Computer System 2</title>
       <link>https://christophe1997.github.io/posts/computer-system-2/</link>
       <pubDate>Mon, 28 May 2018 17:20:36 +0000</pubDate>
       
@@ -61,12 +60,12 @@ the x86-64 machine code is much different with the corresponding C code, the pro
     </item>
     
     <item>
-      <title>computer system 1</title>
+      <title>Computer System 1</title>
       <link>https://christophe1997.github.io/posts/computer-system-1/</link>
       <pubDate>Wed, 23 May 2018 23:54:04 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/computer-system-1/</guid>
-      <description>hardware organization of a system A typical system has those hadrware below:
+      <description>Hardware Organization of A System A typical system has those hadrware below:
   Buses: Running throughout the system is a collection of electrical conduits called buses that carry bytes of ingormation back and forth betweent the components. Buses are typically designed to transfer fiexed sized chunks of bytes know as words. The number of bytes in a word is a fundamental system parameter that varies across systems. Most have word sizes of 8 bytes (64 bits)today</description>
     </item>
     

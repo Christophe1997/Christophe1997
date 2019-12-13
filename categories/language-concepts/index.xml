@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>language concepts on CastOff</title>
+    <title>Language concepts on CastOff</title>
     <link>https://christophe1997.github.io/categories/language-concepts/</link>
-    <description>Recent content in language concepts on CastOff</description>
+    <description>Recent content in Language concepts on CastOff</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy;Christophe</copyright>
@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>monad and transformers</title>
+      <title>Monad and Transformers</title>
       <link>https://christophe1997.github.io/posts/monad-and-transformers/</link>
       <pubDate>Sat, 06 Apr 2019 20:26:43 +0000</pubDate>
       
@@ -22,7 +22,7 @@
     </item>
     
     <item>
-      <title>Haskell algebra</title>
+      <title>Haskell Algebra</title>
       <link>https://christophe1997.github.io/posts/haskell-algebra/</link>
       <pubDate>Sun, 24 Mar 2019 14:32:05 +0000</pubDate>
       

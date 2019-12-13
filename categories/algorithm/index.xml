@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>algorithm on CastOff</title>
+    <title>Algorithm on CastOff</title>
     <link>https://christophe1997.github.io/categories/algorithm/</link>
-    <description>Recent content in algorithm on CastOff</description>
+    <description>Recent content in Algorithm on CastOff</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy;Christophe</copyright>
@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>string algorithms</title>
+      <title>字符串处理算法</title>
       <link>https://christophe1997.github.io/posts/string-algorithms/</link>
       <pubDate>Mon, 07 May 2018 21:18:59 +0000</pubDate>
       
@@ -22,7 +22,7 @@
     </item>
     
     <item>
-      <title>graph algorithms</title>
+      <title>图算法</title>
       <link>https://christophe1997.github.io/posts/graph-algorithms/</link>
       <pubDate>Fri, 20 Apr 2018 19:21:30 +0000</pubDate>
       
@@ -31,7 +31,7 @@
     </item>
     
     <item>
-      <title>search algorithms</title>
+      <title>查找算法</title>
       <link>https://christophe1997.github.io/posts/search-algorithms/</link>
       <pubDate>Thu, 05 Apr 2018 15:21:41 +0000</pubDate>
       
@@ -40,7 +40,7 @@
     </item>
     
     <item>
-      <title>priority queue</title>
+      <title>优先队列</title>
       <link>https://christophe1997.github.io/posts/priority-queue/</link>
       <pubDate>Wed, 04 Apr 2018 16:18:50 +0000</pubDate>
       
@@ -49,7 +49,7 @@
     </item>
     
     <item>
-      <title>sorting algorithms</title>
+      <title>排序算法</title>
       <link>https://christophe1997.github.io/posts/sorting-algorithms/</link>
       <pubDate>Fri, 30 Mar 2018 12:07:09 +0000</pubDate>
       
@@ -58,7 +58,7 @@
     </item>
     
     <item>
-      <title>union-find algorithm</title>
+      <title>union-find算法</title>
       <link>https://christophe1997.github.io/posts/union-find-algorithm/</link>
       <pubDate>Wed, 14 Mar 2018 22:54:16 +0000</pubDate>
       

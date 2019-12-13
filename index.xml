@@ -21,7 +21,7 @@
     </item>
     
     <item>
-      <title>monad and transformers</title>
+      <title>Monad and Transformers</title>
       <link>https://christophe1997.github.io/posts/monad-and-transformers/</link>
       <pubDate>Sat, 06 Apr 2019 20:26:43 +0000</pubDate>
       
@@ -30,7 +30,7 @@
     </item>
     
     <item>
-      <title>Haskell algebra</title>
+      <title>Haskell Algebra</title>
       <link>https://christophe1997.github.io/posts/haskell-algebra/</link>
       <pubDate>Sun, 24 Mar 2019 14:32:05 +0000</pubDate>
       
@@ -48,7 +48,7 @@
     </item>
     
     <item>
-      <title>object lifetime and storage management</title>
+      <title>Object Lifetime and Storage Management</title>
       <link>https://christophe1997.github.io/posts/object-lifetime-and-storage-management/</link>
       <pubDate>Sat, 08 Dec 2018 16:48:49 +0000</pubDate>
       
@@ -57,46 +57,45 @@
     </item>
     
     <item>
-      <title>process</title>
+      <title>进程</title>
       <link>https://christophe1997.github.io/posts/process/</link>
       <pubDate>Fri, 03 Aug 2018 13:10:58 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/process/</guid>
-      <description>The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system:
- create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process.  The first thing that the OS must do to run a program is to load its code and any static data into memory, into the address space of the process.</description>
+      <description>The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system: create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process. The first thing that the OS must</description>
     </item>
     
     <item>
-      <title>functional data structure 2</title>
+      <title>Functional Data Structure 2</title>
       <link>https://christophe1997.github.io/posts/functional-data-structure-2/</link>
       <pubDate>Tue, 24 Jul 2018 15:54:24 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/functional-data-structure-2/</guid>
-      <description>amortization Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about the running time of any individual operation.
+      <description>Amortization Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about the running time of any individual operation.
 For instance, given a sequence of n operations, we may wish to bound the total running time of the sequence by O(n) without insisting than every individual operation run in O(1) time.</description>
     </item>
     
     <item>
-      <title>functional data structure 1</title>
+      <title>Functional Data Structure 1</title>
       <link>https://christophe1997.github.io/posts/functional-data-structure-1/</link>
       <pubDate>Thu, 19 Jul 2018 17:00:11 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/functional-data-structure-1/</guid>
-      <description>introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&#39;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&#39;s knives.
+      <description>Introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&#39;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&#39;s knives.
 Imperative data structures often rely on assignments in crucial ways, and so different solutions must be found for functional programs. The second difficulty is that functional data strcutures are expected to be more flexible than their imperative counterparts.</description>
     </item>
     
     <item>
-      <title>address space</title>
+      <title>Address Space</title>
       <link>https://christophe1997.github.io/posts/address-space/</link>
       <pubDate>Sun, 24 Jun 2018 23:54:04 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/address-space/</guid>
-      <description>The address space The address space is the abstraction that OS is providing to the running program. The address space of a process contains all of the memory state of the running program. For example, the code of the program, the stack and the heap. In the sight of the program, it loaded into at a particular address and has a potentially very large address space, thus, we say that the OS is virtualizing memory.</description>
+      <description>The Address Space The address space is the abstraction that OS is providing to the running program. The address space of a process contains all of the memory state of the running program. For example, the code of the program, the stack and the heap. In the sight of the program, it loaded into at a particular address and has a potentially very large address space, thus, we say that the OS is virtualizing memory.</description>
     </item>
     
     <item>
-      <title>computer system 4</title>
+      <title>Computer System 4</title>
       <link>https://christophe1997.github.io/posts/computer-system-4/</link>
       <pubDate>Sun, 10 Jun 2018 19:14:22 +0000</pubDate>
       
@@ -105,7 +104,7 @@ Imperative data structures often rely on assignments in crucial ways, and so dif
     </item>
     
     <item>
-      <title>computer system 3</title>
+      <title>Computer System 3</title>
       <link>https://christophe1997.github.io/posts/computer-system-3/</link>
       <pubDate>Fri, 01 Jun 2018 23:23:16 +0000</pubDate>
       
@@ -114,7 +113,7 @@ Imperative data structures often rely on assignments in crucial ways, and so dif
     </item>
     
     <item>
-      <title>computer system 2</title>
+      <title>Computer System 2</title>
       <link>https://christophe1997.github.io/posts/computer-system-2/</link>
       <pubDate>Mon, 28 May 2018 17:20:36 +0000</pubDate>
       
@@ -125,17 +124,17 @@ the x86-64 machine code is much different with the corresponding C code, the pro
     </item>
     
     <item>
-      <title>computer system 1</title>
+      <title>Computer System 1</title>
       <link>https://christophe1997.github.io/posts/computer-system-1/</link>
       <pubDate>Wed, 23 May 2018 23:54:04 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/computer-system-1/</guid>
-      <description>hardware organization of a system A typical system has those hadrware below:
+      <description>Hardware Organization of A System A typical system has those hadrware below:
   Buses: Running throughout the system is a collection of electrical conduits called buses that carry bytes of ingormation back and forth betweent the components. Buses are typically designed to transfer fiexed sized chunks of bytes know as words. The number of bytes in a word is a fundamental system parameter that varies across systems. Most have word sizes of 8 bytes (64 bits)today</description>
     </item>
     
     <item>
-      <title>string algorithms</title>
+      <title>字符串处理算法</title>
       <link>https://christophe1997.github.io/posts/string-algorithms/</link>
       <pubDate>Mon, 07 May 2018 21:18:59 +0000</pubDate>
       
@@ -144,7 +143,7 @@ the x86-64 machine code is much different with the corresponding C code, the pro
     </item>
     
     <item>
-      <title>some ubuntu installing problems</title>
+      <title>一些Ubuntu安装问题</title>
       <link>https://christophe1997.github.io/posts/some-ubuntu-install-problem/</link>
       <pubDate>Sat, 28 Apr 2018 21:11:36 +0000</pubDate>
       
@@ -153,7 +152,7 @@ the x86-64 machine code is much different with the corresponding C code, the pro
     </item>
     
     <item>
-      <title>graph algorithms</title>
+      <title>图算法</title>
       <link>https://christophe1997.github.io/posts/graph-algorithms/</link>
       <pubDate>Fri, 20 Apr 2018 19:21:30 +0000</pubDate>
       
@@ -162,7 +161,7 @@ the x86-64 machine code is much different with the corresponding C code, the pro
     </item>
     
     <item>
-      <title>search algorithms</title>
+      <title>查找算法</title>
       <link>https://christophe1997.github.io/posts/search-algorithms/</link>
       <pubDate>Thu, 05 Apr 2018 15:21:41 +0000</pubDate>
       
@@ -171,7 +170,7 @@ the x86-64 machine code is much different with the corresponding C code, the pro
     </item>
     
     <item>
-      <title>priority queue</title>
+      <title>优先队列</title>
       <link>https://christophe1997.github.io/posts/priority-queue/</link>
       <pubDate>Wed, 04 Apr 2018 16:18:50 +0000</pubDate>
       
@@ -180,7 +179,7 @@ the x86-64 machine code is much different with the corresponding C code, the pro
     </item>
     
     <item>
-      <title>sorting algorithms</title>
+      <title>排序算法</title>
       <link>https://christophe1997.github.io/posts/sorting-algorithms/</link>
       <pubDate>Fri, 30 Mar 2018 12:07:09 +0000</pubDate>
       
@@ -189,7 +188,7 @@ the x86-64 machine code is much different with the corresponding C code, the pro
     </item>
     
     <item>
-      <title>union-find algorithm</title>
+      <title>union-find算法</title>
       <link>https://christophe1997.github.io/posts/union-find-algorithm/</link>
       <pubDate>Wed, 14 Mar 2018 22:54:16 +0000</pubDate>
       
@@ -198,7 +197,7 @@ the x86-64 machine code is much different with the corresponding C code, the pro
     </item>
     
     <item>
-      <title>git cheat sheet</title>
+      <title>Git Cheat Sheet</title>
       <link>https://christophe1997.github.io/posts/git-cheat-sheet/</link>
       <pubDate>Sun, 11 Mar 2018 13:07:40 +0000</pubDate>
       

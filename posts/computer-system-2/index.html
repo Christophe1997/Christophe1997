@@ -19,7 +19,7 @@ if (!doNotTrack) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       
-  computer system 2 &ndash; CastOff
+  Computer System 2 &ndash; CastOff
 
     </title>
     
@@ -86,29 +86,29 @@ the x86-64 machine code is much different with the corresponding C code, the pro
 
 <div class="Subhead">
   <div class="Subhead-heading">
-    <div class="h1 mt-3 mb-1">computer system 2</div>
+    <div class="h1 mt-3 mb-1">Computer System 2</div>
   </div>
   <div class="Subhead-description">
     
 
 
 <a href='/categories/notes' class="muted-link">
-  <span class="Label Label--gray-darker">notes</span>
+  <span class="Label Label--gray-darker">Notes</span>
 </a>
 
 
 
 <a href='/tags/system' class="muted-link">
-  <span class="Label Label--gray">system</span>
+  <span class="Label Label--gray">System</span>
 </a>
 
 
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2019-12-04. Published at: 2018-05-28.">
+      <span title="Lastmod: 2019-12-13. Published at: 2018-05-28.">
         
-          Lastmod: 2019-12-04
+          Lastmod: 2019-12-13
         
       </span>
     </div>
@@ -243,7 +243,7 @@ The table below illsulates the default C data types and its x86-64 representatio
 <p>A x86-64 CPU contains a set of 16 universal destination registers storing 64-bit values. They are: %rax, %rbx, %rcx, %rdx,
 %rsi, %rdi, %rbp, %rsp(in 32-bit those begin with e, e.g. %eax), %r8 to %r15(in 32-bit those ends with d, e.g. %r9d).
 It's worth noting that the stack point %rsp, which indicates the address of program finished stack.</p>
-<h3 id="data-movement-instructions">data movement instructions</h3>
+<h3 id="data-movement-instructions">Data movement instructions</h3>
 <p>Among the most heavily used instructions are those that copy data from one location to another. The most simplest instructions
 is the MOV class, cosists of four instructions: <code>movb</code>, <code>movw</code>, <code>movl</code>, <code>movq</code>; they differ only in that they operate on data
 of size 1, 2, 4 and 8 bytes. In most casees, MOV only update the register and memory address indicated by the operands,
@@ -257,7 +257,7 @@ For example to push a quad words onto a stack, first we subtract %rsp(the stack 
 address to low address) and write the data to the new address of %rsp. Since the stack is contained in the same memory as
 the program code and other forms of program data, programs can access arbitrary positions within the stack using the
 standard memory addressing methods.</p>
-<h3 id="arithmetic-and-logical-operations">arithmetic and logical operations</h3>
+<h3 id="arithmetic-and-logical-operations">Arithmetic and logical operations</h3>
 <table>
 <thead>
 <tr>
@@ -359,7 +359,7 @@ In addition, it can be used co compactly describe common arithmetic operations, 
 then the instruction <code>leal 7(%edx, &amp;edx, 4), %eax</code> will set register %eax to 5x+7. But the destination operand must be a
 register.</p>
 <p>For shift operations, the shift amount is given either as an immediate or in the single-byte register element %c1(in %rcx),</p>
-<h3 id="control">control</h3>
+<h3 id="control">Control</h3>
 <p>Machine code provides two basic low-level mechanisms for implementing coditional behavior: it tests data values and then
 either alters the control flow or the data flow based on the result of these test. Data-dependent control flow is the
 more general and more common approach for implementing coditional behavior. The execution order of a set of machine-code
@@ -493,7 +493,7 @@ with instructions.</p>
 </div>
 </div><p>So, it's easy to see that it could be much slow if the cost if <code>then-expr</code> and <code>else-expr</code> is too expensive.</p>
 <h2 id="loop">Loop</h2>
-<h3 id="dowhile-loop">do-while loop</h3>
+<h3 id="dowhile-loop">Do-while loop</h3>
 <p>do-while have the form below:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -524,7 +524,7 @@ with instructions.</p>
         <span class="k">goto</span> <span class="n">loop</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="while-loop">while loop</h3>
+</div><h3 id="while-loop">While loop</h3>
 <p>while loop have the form below:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -604,7 +604,7 @@ with instructions.</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>GCC would translate while loop in guarded-do form with <code>-O1</code> option.</p>
-<h3 id="for-loop">for loop</h3>
+<h3 id="for-loop">For loop</h3>
 <p>for loop has the form below:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -632,7 +632,7 @@ with instructions.</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>So GCC translate the for loop as same as the while loop above, choosing which form depending to the optimization degree.</p>
-<h3 id="switch-statement">switch statement</h3>
+<h3 id="switch-statement">Switch statement</h3>
 <p>A switch statement provides a multi way branching capability vased on the value of an integer index. They are particularly
 useful when dealing with tests where there can be a large number of possible outcomes. Not only do they make the C code
 more readable, they also allow an efficiant implementation using a data structure called <em>jump table</em>. JUmp tables are
@@ -729,17 +729,17 @@ in different language: function, method, subroutine, handler. To supprot procedu
 <li>transfer data</li>
 <li>allocate and deallocate memory sapce.</li>
 </ul>
-<h3 id="runtime-stack">runtime stack</h3>
+<h3 id="runtime-stack">Runtime stack</h3>
 <p>While the x86-64 procedure need more spaces than register have, then it would allocate space on stack, which called a
 stack frame of the procedure. If all local variables could be stored in register, the procedure don't need the stack frame.</p>
-<h3 id="transfer-control">transfer control</h3>
+<h3 id="transfer-control">Transfer control</h3>
 <p>To transfer control from procedure P to Q, it just simply set the PC with the start of Q, x86-64 uses <code>call Q</code> to push
 address A and then set the PC with the start of Q, the corresponding instruction <code>ret</code> would pop the address A, and set
 the PC with A.</p>
-<h3 id="transfer-data">transfer data</h3>
+<h3 id="transfer-data">Transfer data</h3>
 <p>In x86-64, it can store 6 parameters in register at most, for 64-bit size data, they stored in the order: %rdi, %rsi, %rdx
 %rcx, %r8, %r9. So the parameters beyond should transfer by stack.</p>
-<h3 id="register-local-space">register local space</h3>
+<h3 id="register-local-space">Register local space</h3>
 <p>Register is the only resource shared by all procedures. Conventionally, register %rbx, %rbp and %r12 ~ %r15 are called
 <em>callee-saved</em> registers, this means when procedure Q is called by P, then Q must save the values of any of these registers
 on the stack before overwriting them and restore them before returning. Any other registers except the stack point %rsp
@@ -768,30 +768,30 @@ wrong.</p>
           
   
     <div id="toc" class="Box Box--blue mb-3">
-      <b>computer system 2</b><nav id="TableOfContents">
+      <b>Computer System 2</b><nav id="TableOfContents">
   <ul>
     <li><a href="#assembler">Assembler</a>
       <ul>
-        <li><a href="#data-movement-instructions">data movement instructions</a></li>
-        <li><a href="#arithmetic-and-logical-operations">arithmetic and logical operations</a></li>
-        <li><a href="#control">control</a></li>
+        <li><a href="#data-movement-instructions">Data movement instructions</a></li>
+        <li><a href="#arithmetic-and-logical-operations">Arithmetic and logical operations</a></li>
+        <li><a href="#control">Control</a></li>
       </ul>
     </li>
     <li><a href="#translating-conditional-branches">Translating Conditional Branches</a></li>
     <li><a href="#loop">Loop</a>
       <ul>
-        <li><a href="#dowhile-loop">do-while loop</a></li>
-        <li><a href="#while-loop">while loop</a></li>
-        <li><a href="#for-loop">for loop</a></li>
-        <li><a href="#switch-statement">switch statement</a></li>
+        <li><a href="#dowhile-loop">Do-while loop</a></li>
+        <li><a href="#while-loop">While loop</a></li>
+        <li><a href="#for-loop">For loop</a></li>
+        <li><a href="#switch-statement">Switch statement</a></li>
       </ul>
     </li>
     <li><a href="#procedures">Procedures</a>
       <ul>
-        <li><a href="#runtime-stack">runtime stack</a></li>
-        <li><a href="#transfer-control">transfer control</a></li>
-        <li><a href="#transfer-data">transfer data</a></li>
-        <li><a href="#register-local-space">register local space</a></li>
+        <li><a href="#runtime-stack">Runtime stack</a></li>
+        <li><a href="#transfer-control">Transfer control</a></li>
+        <li><a href="#transfer-data">Transfer data</a></li>
+        <li><a href="#register-local-space">Register local space</a></li>
       </ul>
     </li>
     <li><a href="#outofbounds-memory-references-and-buffer-overflow">Out-of-Bounds Memory References and Buffer Overflow</a></li>

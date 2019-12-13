@@ -13,22 +13,22 @@
     
     
     <item>
-      <title>functional data structure 2</title>
+      <title>Functional Data Structure 2</title>
       <link>https://christophe1997.github.io/posts/functional-data-structure-2/</link>
       <pubDate>Tue, 24 Jul 2018 15:54:24 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/functional-data-structure-2/</guid>
-      <description>amortization Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about the running time of any individual operation.
+      <description>Amortization Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about the running time of any individual operation.
 For instance, given a sequence of n operations, we may wish to bound the total running time of the sequence by O(n) without insisting than every individual operation run in O(1) time.</description>
     </item>
     
     <item>
-      <title>functional data structure 1</title>
+      <title>Functional Data Structure 1</title>
       <link>https://christophe1997.github.io/posts/functional-data-structure-1/</link>
       <pubDate>Thu, 19 Jul 2018 17:00:11 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/functional-data-structure-1/</guid>
-      <description>introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&#39;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&#39;s knives.
+      <description>Introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&#39;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&#39;s knives.
 Imperative data structures often rely on assignments in crucial ways, and so different solutions must be found for functional programs. The second difficulty is that functional data strcutures are expected to be more flexible than their imperative counterparts.</description>
     </item>
     

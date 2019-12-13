@@ -19,7 +19,7 @@ if (!doNotTrack) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       
-  some ubuntu installing problems &ndash; CastOff
+  一些Ubuntu安装问题 &ndash; CastOff
 
     </title>
     
@@ -84,7 +84,7 @@ if (!doNotTrack) {
 
 <div class="Subhead">
   <div class="Subhead-heading">
-    <div class="h1 mt-3 mb-1">some ubuntu installing problems</div>
+    <div class="h1 mt-3 mb-1">一些Ubuntu安装问题</div>
   </div>
   <div class="Subhead-description">
     
@@ -108,9 +108,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2019-12-04. Published at: 2018-04-28.">
+      <span title="Lastmod: 2019-12-13. Published at: 2018-04-28.">
         
-          Lastmod: 2019-12-04
+          Lastmod: 2019-12-13
         
       </span>
     </div>
@@ -127,7 +127,7 @@ desktop wasjust so uncomfortable. And after one hour I gone back to 16.04:(, and
 problems I met while reinstalling the OS.</p>
 <!-- raw HTML omitted -->
 <p>I installed the 16.04 OS just the same as what I done before: burned the IOS to USB, started the computer, and do what the OS suggested to do.</p>
-<h2 id="soft-lockup">soft lockup</h2>
+<h2 id="soft-lockup">Soft Lockup</h2>
 <p>The first thing I met was what called soft lockup, like below</p>
 <pre><code> watchdog: BUG: soft lockup cpu#0 stuck for 23s.
 </code></pre><p>emmm, it was quite depressed, but fortunately I found the solutions on <em>ubuntu forums</em>. The
@@ -141,7 +141,7 @@ config. And remember it just work temporarily, you should configure the <code>/e
 file as same as what you do before, finally run <code>sudo update-grub</code> to permanently update
 GRUB's configuration.</p>
 <p>So in conclusion, what you need to do is add <code>nomodeset</code> to kernel boot configure.</p>
-<h2 id="pcie-bus-error">PCIe Bus error</h2>
+<h2 id="pcie-bus-error">PCIe Bus Error</h2>
 <p>After I solved the problem above, finally I was led to a <strong>NEW PROBLEM</strong>:( The PCIe Bus
 error actually appeared before the soft lockup, it was solved by <em>askubuntu</em>, just add
 <code>pci=noaer</code> to the kernel boot config, which I explained at soft lockup.</p>
@@ -168,7 +168,7 @@ permanet, just for one boot until you installed the nvidia drivers.</p>
 device behaviour.</p>
 </li>
 </ol>
-<h3 id="ubuntu-and-windows-time-difference">Ubuntu and Windows time difference</h3>
+<h3 id="ubuntu-and-windows-time-difference">Ubuntu and Windows Time Difference</h3>
 <p>Operating systems store and retrieve the time in the hardware clock located on your motherland so
 that it can keep track of the time even when the system does not have power. Most operating system(Linux,
 Unix, MacOS) store the time on the hardware clock as UTC by default, though some system(notably Microsoft
@@ -210,12 +210,12 @@ it to registry:</p>
           
   
     <div id="toc" class="Box Box--blue mb-3">
-      <b>some ubuntu installing problems</b><nav id="TableOfContents">
+      <b>一些Ubuntu安装问题</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#soft-lockup">soft lockup</a></li>
-    <li><a href="#pcie-bus-error">PCIe Bus error</a>
+    <li><a href="#soft-lockup">Soft Lockup</a></li>
+    <li><a href="#pcie-bus-error">PCIe Bus Error</a>
       <ul>
-        <li><a href="#ubuntu-and-windows-time-difference">Ubuntu and Windows time difference</a></li>
+        <li><a href="#ubuntu-and-windows-time-difference">Ubuntu and Windows Time Difference</a></li>
       </ul>
     </li>
   </ul>
