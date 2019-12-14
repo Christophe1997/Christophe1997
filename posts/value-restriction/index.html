@@ -121,54 +121,104 @@ if (!doNotTrack) {
   
   <section class="pb-6 mb-3 border-bottom">
     <h2 id="value-restriction">Value Restriction是什么？</h2>
-<p>Value restriction是用于控制类型推断能否对值声明进行多态泛化的规则（<a href="http://mlton.org/ValueRestriction">MLton原文</a>：“The value restriction is a rule that governs when type inference is allowed to polymorphically generalize a value declaration.”）。常出现在ML系的语言中，如<a href="https://www.smlnj.org/">SML</a>，<a href="https://ocaml.org/">OCaml</a>，<a href="https://fsharp.org/">F#</a>中，其实value restriction产生的本质原因是为了保证类型系统在结合参数多态与命令式特性（<em>imperative feature</em>，如<code>ref</code>）时候的可靠性（<em>soundness</em>）。一个典型的例子就是：</p>
-<pre><code class="language-F#" data-lang="F#">// 如果没有value restriction
-let x = ref None  // 'a option ref
-let y: int option ref = x // type checked
-let z: string option ref = x // type checked
-let () = y := Some 2  // type checked
-let  v: string = !z  // 破坏了类型安全
-</code></pre><h2 id="heading">限制了什么？</h2>
-<p>简单来讲，value restriction限制了类型泛化只能发生在表达式的右边是句法意义上的值。那么什么是句法意义上的值呢，SML的<a href="http://sml-family.org/sml97-defn.pdf">语言规范</a>上明确给出了什么样的表达式是句法意义上的值（准确来说是_non-expansive_）:</p>
+<p>Value restriction是用于控制类型推断能否对值声明进行多态泛化的规则（<a href="http://mlton.org/ValueRestriction">MLton原文</a>：“<em>The value restriction is a rule that governs when type inference is allowed to polymorphically generalize a value declaration.</em>”）。常出现在ML系的语言中，如<a href="https://www.smlnj.org/">SML</a>，<a href="https://ocaml.org/">OCaml</a>，<a href="https://fsharp.org/">F#</a>中，其实value restriction产生的本质原因是为了保证类型系统在结合参数多态与命令式特性（<em>imperative feature</em>，如<code>ref</code>）时候的可靠性（<em>soundness</em>）。一个典型的例子就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="c1">// 如果没有value restriction
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">x</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">None</span>  <span class="c1">// &#39;a option ref
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">y</span><span class="o">:</span> <span class="n">int</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">x</span> <span class="c1">// type checked
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">z</span><span class="o">:</span> <span class="kt">string</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">x</span> <span class="c1">// type checked
+</span><span class="c1"></span><span class="k">let</span> <span class="bp">()</span> <span class="o">=</span> <span class="n">y</span> <span class="o">:=</span> <span class="n">Some</span> <span class="n">2</span>  <span class="c1">// type checked
+</span><span class="c1"></span><span class="k">let</span>  <span class="nv">v</span><span class="o">:</span> <span class="kt">string</span> <span class="o">=</span> <span class="o">!</span><span class="n">z</span>  <span class="c1">// 破坏了类型安全
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="heading">限制了什么？</h2>
+<p>简单来讲，value restriction限制了类型泛化只能发生在表达式的右边是句法意义上的值。那么什么是句法意义上的值呢，SML的<a href="http://sml-family.org/sml97-defn.pdf">语言规范</a>上明确给出了什么样的表达式是句法意义上的值（准确来说是<em>non-expansive</em>）:</p>
 <ul>
 <li>常量，如<code>13，&quot;string&quot;</code></li>
 <li>变量，如<code>x,y</code></li>
 <li>函数，如<code>fn x =&gt; e</code></li>
 <li>除了<code>ref</code>以外的构造函数在值上的调用，如<code>Foo v</code></li>
 <li>类型上受约束的值，如<code>v: t</code></li>
-<li>每一个元素都是值的__tuple__, 如<code>(v1, v2, v3)</code></li>
-<li>每一个字段都是值的__record__, 如<code>{l1 = v1, l2 = v2}</code></li>
-<li>每一个元素都是值的__list__, 如<code>[v1, v2, v3]</code></li>
+<li>每一个元素都是值的<strong>tuple</strong>, 如<code>(v1, v2, v3)</code></li>
+<li>每一个字段都是值的<strong>record</strong>, 如<code>{l1 = v1, l2 = v2}</code></li>
+<li>每一个元素都是值的<strong>list</strong>, 如<code>[v1, v2, v3]</code></li>
 </ul>
-<p>确切的来讲，只要是协变（covariant）的类型并且不和可变的特性相结合，那么它总是可以类型安全的泛化（OCaml manual原文：“As a corollary, covariant variables will never denote mutable locations and can be safely generalized.”）。即：</p>
+<p>确切的来讲，只要是协变（covariant）的类型并且不和可变的特性相结合，那么它总是可以类型安全的泛化（<a href="https://caml.inria.fr/pub/docs/manual-ocaml/polymorphism.html">OCaml manual</a>原文：“<em>As a corollary, covariant variables will never denote mutable locations and can be safely generalized.</em>”）。即：</p>
 <ol>
 <li>是没有副作用的</li>
 <li>表达式的结果是一个不可变对象</li>
 </ol>
 <h2 id="heading1">在完备性上的问题</h2>
 <p>从上述规则来看，<code>let x = ref None</code>显然是非法的表达式，然而在引入value restriction的同时，类型系统损失了一定的完备性（<em>completeness</em>），因为以下代码同样违反了value restriction：</p>
-<pre><code class="language-F#" data-lang="F#">let id x = x  // 'a -&gt; 'a
-let listId = List.map id  // 违反了value restriction
-</code></pre><p>即使我们只使用不可变特性，上述代码依然无法通过类型检查。因为函数调用不是句法意义上的值(因为编译器无法判断函数调用是否是pure的)。当然上述问题可以通过<a href="http://mlton.org/EtaExpansion">eta-expansion</a>来避免，即：</p>
-<pre><code class="language-F#" data-lang="F#">let listId = fun x -&gt; List.map id x  // 'a list -&gt; 'a list
-</code></pre><p>lambda表达式是句法意义上的值，因此上述代码是可以通过类型检查的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">id</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span>  <span class="c1">// &#39;a -&gt; &#39;a
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">listId</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">id</span>  <span class="c1">// 违反了value restriction
+</span></code></pre></td></tr></table>
+</div>
+</div><p>即使我们只使用不可变特性，上述代码依然无法通过类型检查。因为函数调用不是句法意义上的值(因为编译器无法判断函数调用是否是pure的)。当然上述问题可以通过<a href="http://mlton.org/EtaExpansion">eta-expansion</a>来避免，即：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">listId</span> <span class="o">=</span> <span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">id</span> <span class="n">x</span>  <span class="c1">// &#39;a list -&gt; &#39;a list
+</span></code></pre></td></tr></table>
+</div>
+</div><p>lambda表达式是句法意义上的值，因此上述代码是可以通过类型检查的。</p>
 <h3 id="value-restriction1">如何避免value restriction</h3>
 <p>为了能够使得我们本身soundness的代码通过类型检查，在value restriction的限制下我们不得不做一些额外的工作。</p>
 <ol>
 <li>
 <p>eta-expansion</p>
 <p>向上一个例子那样，我们可以引入一个自由变量，使得函数调用变成了一个函数声明，从而通过了类型检查。</p>
-<pre><code class="language-F#" data-lang="F#">let lsitId = fun x -&gt; List.map id x
-</code></pre><p>在这种情况下，每一次<code>listId</code>被调用时，<code>List.map id</code>都会被调用。而不是像原来那样只在声明<code>listId</code>时调用一次，当然在有些情况下这可能会造成一个性能问题。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">lsitId</span> <span class="o">=</span> <span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">id</span> <span class="n">x</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在这种情况下，每一次<code>listId</code>被调用时，<code>List.map id</code>都会被调用。而不是像原来那样只在声明<code>listId</code>时调用一次，当然在有些情况下这可能会造成一个性能问题。</p>
 </li>
 <li>
 <p>引入局部变量，例如以下代码同样无法通过类型检查</p>
-<pre><code class="language-F#" data-lang="F#">type 'a T = A of string | B of 'a
-let a = A (if true then &quot;yes&quot; else &quot;no&quot;)  // failed
-</code></pre><p>但是可以修改为</p>
-<pre><code class="language-F#" data-lang="F#">let s = if true then &quot;yes&quot; else &quot;no&quot; in 
-let a = A s
-</code></pre><p>使得其符合value restriction的规则。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">T</span> <span class="o">=</span> <span class="n">A</span> <span class="k">of</span> <span class="kt">string</span> <span class="o">|</span> <span class="n">B</span> <span class="k">of</span> <span class="k">&#39;</span><span class="n">a</span>
+<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">A</span> <span class="o">(</span><span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;</span><span class="s">yes</span><span class="s">&#34;</span> <span class="k">else</span> <span class="s">&#34;</span><span class="s">no</span><span class="s">&#34;</span><span class="o">)</span>  <span class="c1">// failed
+</span></code></pre></td></tr></table>
+</div>
+</div><p>但是可以修改为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;</span><span class="s">yes</span><span class="s">&#34;</span> <span class="k">else</span> <span class="s">&#34;</span><span class="s">no</span><span class="s">&#34;</span> <span class="k">in</span> 
+<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">A</span> <span class="n">s</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>使得其符合value restriction的规则。</p>
 </li>
 </ol>
 <h2 id="ocamlfvalue-restriction">OCaml和F#中的value restriction</h2>
@@ -182,21 +232,33 @@ let a = A s
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
+</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">ref</span> <span class="nc">None</span><span class="o">;;</span>
 <span class="k">val</span> <span class="n">a</span> <span class="o">:</span> <span class="k">&#39;</span><span class="o">_</span><span class="n">a</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="o">{</span><span class="n">contents</span> <span class="o">=</span> <span class="nc">None</span><span class="o">}</span>
 <span class="o">#</span> <span class="k">let</span> <span class="bp">()</span> <span class="o">=</span> <span class="n">a</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">2</span><span class="o">;;</span>
-<span class="o">#</span> <span class="n">a</span><span class="o">;;</span>
+<span class="o">#</span> <span class="n">a</span><span class="o">;;</span><span class="k">let</span> <span class="n">v</span><span class="o">&lt;</span><span class="k">&#39;</span><span class="nc">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="k">&#39;</span><span class="nc">T</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">ref</span> <span class="nc">None</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">v</span><span class="o">&lt;</span><span class="k">&#39;</span><span class="nc">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="k">&#39;</span><span class="nc">T</span> <span class="n">option</span> <span class="n">ref</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="o">{</span><span class="n">contents</span> <span class="o">=</span> <span class="nc">Some</span> <span class="n">2</span><span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>这和我们第一个例子是类似的，同意违反了value restriction。但是OCaml将a的类型推断为<code>'_a option ref</code>，这里的弱类型变量<code>'_a</code>指代的是未知的类型变量，在<code>let () = a := Some 2</code>中，编译器将<code>'_a</code>推断为<code>int</code>并且将a的类型固定为<code>int option ref</code>，通过这样的处理解决了第一个例子所展示的类型不安全的问题。换一种角度来看，所谓的弱类型变量是推迟了推断的具体的变量，即具体变量的占位符。这样确实解决了原有value restriction的完备性的问题，但同样导致了某些程序不在足够的泛化。例如</p>
-<pre><code class="language-F#" data-lang="F#"># let id x = x;;
-val id : 'a -&gt; 'a = &lt;fun&gt;
-# let listId = List.map id;;
-val listId : '_a list -&gt; '_a list = &lt;fun&gt;
-</code></pre><p>和前面一样，这同样是一个违反了value restriction的例子，于是OCaml使用了弱类型变量来处理，这意味着一旦我们在<code>int list</code>类型上调用完<code>listId</code>，例如<code>listId [1; 2; 3]</code>，之后<code>listId</code>就被固定为<code>int list -&gt; int list</code>，这意味着我们无法再在<code>string list</code>上调用<code>listId</code>，而这同样不符合我们泛化的初衷，即<code>'a list -&gt; 'a list</code>。当然我觉得OCaml的relaxed value restriction算是处理的非常优雅，有兴趣的可以阅读相关论文[6]。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="o">#</span> <span class="k">let</span> <span class="n">id</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">id</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">a</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">fun</span><span class="o">&gt;</span>
+<span class="o">#</span> <span class="k">let</span> <span class="n">listId</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">id</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">listId</span> <span class="o">:</span> <span class="k">&#39;</span><span class="o">_</span><span class="n">a</span> <span class="kt">list</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="o">_</span><span class="n">a</span> <span class="kt">list</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">fun</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>和前面一样，这同样是一个违反了value restriction的例子，于是OCaml使用了弱类型变量来处理，这意味着一旦我们在<code>int list</code>类型上调用完<code>listId</code>，例如<code>listId [1; 2; 3]</code>，之后<code>listId</code>就被固定为<code>int list -&gt; int list</code>，这意味着我们无法再在<code>string list</code>上调用<code>listId</code>，而这同样不符合我们泛化的初衷，即<code>'a list -&gt; 'a list</code>。当然我觉得OCaml的relaxed value restriction算是处理的非常优雅，有兴趣的可以阅读相关论文[6]。</p>
 <h3 id="f">F#的处理</h3>
 <p>虽说F#参照了OCaml, 但还是存在着相当多的不同之处，在value restriction的处理上俩者也存在着区别。在F#中，上述违反了value restriction的例子依然是非法的。F#<a href="https://fsharp.org/specs/language-spec">语言规范</a>中同样明确给出了可以泛化的情况（<em>generalizable</em>）:</p>
 <ul>
@@ -214,22 +276,53 @@ val listId : '_a list -&gt; '_a list = &lt;fun&gt;
 <li>带有<code>GeneralizableValue</code>标签的类型函数的调用</li>
 </ul>
 <p>因此在F#中<code>listId</code>同样是非法的。但是F#允许你引入一个显示的泛型参数来解决这个问题，即：</p>
-<pre><code class="language-F#" data-lang="F#">&gt; let listId&lt;'T&gt; : 'T list -&gt; 'T list = List.map id;;
-val listId&lt;'T&gt; : ('T list -&gt; 'T list)
-</code></pre><p>这样的处理虽然不够优雅，但似乎是完美解决了这个问题，因为这里不会出现OCaml那样泛化不够的问题。但我们在看<code>ref</code>的问题：</p>
-<pre><code class="language-F#" data-lang="F#">&gt; let v&lt;'T&gt; : 'T option ref = ref None;;
-val v&lt;'T&gt; : 'T option ref
-&gt; v := Some 2;;
-val it : unit = ()
-&gt; let x: int option = !v;;
-val x : int option = None  // Oops
-</code></pre><p>我们看到，这里x的值居然是<code>None</code>，而不是预期的<code>Some 2</code>。实际上这里的<code>v</code>并不是一个<code>ref</code>对象，而是一个泛型类，其接收一个泛型参数，产生一个具体的类，当我们对<code>v</code>赋值时，真正调用的是<code>(v&lt;int&gt;) := Some 2</code>，而此时会生成一个新的<code>ref</code>对象。即使我们使用<code>let x: int option = !v&lt;int&gt;</code>得到的依然是<code>None</code>，因为此时又生成了一个新的<code>ref</code>对象，这个行为是由IL所决定的（有兴趣可以参考[4]）。因此我们不得不声明类型变量:</p>
-<pre><code class="language-F#" data-lang="F#">&gt; let v1 : int option ref = v&lt;int&gt;;;
-val v1 : int option ref = { contents = None }
-&gt; let () = v1 := Some 2;;
-&gt; let x = !v1;;
-val x : int option = Some 2
-</code></pre><p>而这就又回到了OCaml的relaxed value restriction，并且比F#更加优雅：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="o">&gt;</span> <span class="k">let</span> <span class="nv">listId</span><span class="o">&lt;</span><span class="k">&#39;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">T</span> <span class="kt">list</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">T</span> <span class="kt">list</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">id</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">listId</span><span class="o">&lt;</span><span class="k">&#39;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">T</span> <span class="kt">list</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">T</span> <span class="kt">list</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这样的处理虽然不够优雅，但似乎是完美解决了这个问题，因为这里不会出现OCaml那样泛化不够的问题。但我们在看<code>ref</code>的问题：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="o">&gt;</span> <span class="k">let</span> <span class="nv">v</span><span class="o">&lt;</span><span class="k">&#39;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">T</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">None</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">v</span><span class="o">&lt;</span><span class="k">&#39;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">T</span> <span class="n">option</span> <span class="n">ref</span>
+<span class="o">&gt;</span> <span class="n">v</span> <span class="o">:=</span> <span class="n">Some</span> <span class="n">2</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">it</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+<span class="o">&gt;</span> <span class="k">let</span> <span class="nv">x</span><span class="o">:</span> <span class="n">int</span> <span class="n">option</span> <span class="o">=</span> <span class="o">!</span><span class="n">v</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">x</span> <span class="o">:</span> <span class="n">int</span> <span class="n">option</span> <span class="o">=</span> <span class="n">None</span>  <span class="c1">// Oops
+</span></code></pre></td></tr></table>
+</div>
+</div><p>我们看到，这里x的值居然是<code>None</code>，而不是预期的<code>Some 2</code>。实际上这里的<code>v</code>并不是一个<code>ref</code>对象，而是一个泛型类，其接收一个泛型参数，产生一个具体的类，当我们对<code>v</code>赋值时，真正调用的是<code>(v&lt;int&gt;) := Some 2</code>，而此时会生成一个新的<code>ref</code>对象。即使我们使用<code>let x: int option = !v&lt;int&gt;</code>得到的依然是<code>None</code>，因为此时又生成了一个新的<code>ref</code>对象，这个行为是由IL所决定的（有兴趣可以参考[4]）。因此我们不得不声明类型变量:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="o">&gt;</span> <span class="k">let</span> <span class="nv">v1</span> <span class="o">:</span> <span class="n">int</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">v</span><span class="o">&lt;</span><span class="n">int</span><span class="o">&gt;</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">v1</span> <span class="o">:</span> <span class="n">int</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="o">{</span> <span class="n">contents</span> <span class="o">=</span> <span class="n">None</span> <span class="o">}</span>
+<span class="o">&gt;</span> <span class="k">let</span> <span class="bp">()</span> <span class="o">=</span> <span class="n">v1</span> <span class="o">:=</span> <span class="n">Some</span> <span class="n">2</span><span class="o">;;</span>
+<span class="o">&gt;</span> <span class="k">let</span> <span class="nv">x</span> <span class="o">=</span> <span class="o">!</span><span class="n">v1</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">x</span> <span class="o">:</span> <span class="n">int</span> <span class="n">option</span> <span class="o">=</span> <span class="n">Some</span> <span class="n">2</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>而这就又回到了OCaml的relaxed value restriction，并且比F#更加优雅：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -248,46 +341,109 @@ val x : int option = Some 2
 </div>
 </div><p>可见俩者在一定程度上是等价的。对于<code>lsitId</code>而言F#更有优势，因为泛型方法能够自动推断参数类型。而对于</p>
 <p><code>ref</code>对象而言，OCaml的处理更优雅，因为F#中，<code>v</code>变成了一个泛型类，而不是普通的值，而这是比较令人困惑的。在F#中，为了避免这样的问题，可以使用<code>[&lt;RequiresExplicitTypeArguments&gt;]</code>，即：</p>
-<pre><code class="language-F#" data-lang="F#">[&lt;RequiresExplicitTypeArguments&gt;]
-let v&lt;'T&gt; : 'T option ref = ref None
-</code></pre><p>在这样的情况下，你将无法使用<code>v := Some 2</code>，而必须使用<code>v&lt;int&gt; := Some 2</code>，这样就能清晰的表示<code>v</code>是一个泛型类而不再是一个普通的值。另外，值得一提的是F#还提供了<code>[&lt;GeneralizableValue&gt;]</code>（即上述可泛化对象的最后一条），来告诉编译器这是一个可泛化的值：</p>
-<pre><code class="language-F#" data-lang="F#">&gt; [&lt;GeneralizableValue&gt;]
-- let v&lt;'T&gt; : 'T option ref = ref None;;
-val v&lt;'T&gt; : 'T option ref
-&gt; let a = v;;
-val a : 'a option ref
-</code></pre><p>如果没有<code>[&lt;GeneralizableValue&gt;]</code>，<code>let a = v</code>将违反value restriction.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="o">[&lt;</span><span class="n">RequiresExplicitTypeArguments</span><span class="o">&gt;]</span>
+<span class="k">let</span> <span class="nv">v</span><span class="o">&lt;</span><span class="k">&#39;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">T</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">None</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在这样的情况下，你将无法使用<code>v := Some 2</code>，而必须使用<code>v&lt;int&gt; := Some 2</code>，这样就能清晰的表示<code>v</code>是一个泛型类而不再是一个普通的值。另外，值得一提的是F#还提供了<code>[&lt;GeneralizableValue&gt;]</code>（即上述可泛化对象的最后一条），来告诉编译器这是一个可泛化的值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="o">&gt;</span> <span class="o">[&lt;</span><span class="n">GeneralizableValue</span><span class="o">&gt;]</span>
+<span class="o">-</span> <span class="k">let</span> <span class="nv">v</span><span class="o">&lt;</span><span class="k">&#39;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">T</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">None</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">v</span><span class="o">&lt;</span><span class="k">&#39;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">T</span> <span class="n">option</span> <span class="n">ref</span>
+<span class="o">&gt;</span> <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">v</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">a</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">option</span> <span class="n">ref</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果没有<code>[&lt;GeneralizableValue&gt;]</code>，<code>let a = v</code>将违反value restriction.</p>
 <h2 id="heading2">结语</h2>
 <p>如果你看到了这里，我想你对value restriction应该有了一个清晰的认识，并且对OCaml和F#如何放宽value restriction有了充分的了解。而如果你使用F#编程，那么我的建议是除非你清楚的知道自己在做什么(即添加额外的泛型参数)，否则就按照MSDN的<a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/generics/automatic-generalization#value-restriction">建议</a>，我这边稍微扩展了一下：</p>
 <ol>
 <li>
 <p>添加一个显示的参数，使得其变为具体的类型</p>
-<pre><code class="language-F#" data-lang="F#">let counter = ref None
-// Adding a type annotation fixes the problem:
-let counter : int option ref = ref None
-</code></pre></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">counter</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">None</span>
+<span class="c1">// Adding a type annotation fixes the problem:
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">counter</span> <span class="o">:</span> <span class="n">int</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">None</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>使用eta-expansion将函数组合与部分调用展成一个lambda表达式或常规的函数</p>
-<pre><code class="language-F#" data-lang="F#">let maxhash = max &lt;&lt; hash
-// The following is acceptable because the argument for maxhash is explicit:
-let maxhash obj = (max &lt;&lt; hash) obj
-// or
-let maxhash = fun obj -&gt; (max &lt;&lt; hash) obj
-</code></pre></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">maxhash</span> <span class="o">=</span> <span class="n">max</span> <span class="o">&lt;</span><span class="o">&lt;</span> <span class="n">hash</span>
+<span class="c1">// The following is acceptable because the argument 
+</span><span class="c1"></span><span class="c1">// for maxhash is explicit:
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">maxhash</span> <span class="kt">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">max</span> <span class="o">&lt;</span><span class="o">&lt;</span> <span class="n">hash</span><span class="o">)</span> <span class="kt">obj</span>
+<span class="c1">// or
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">maxhash</span> <span class="o">=</span> <span class="k">fun</span> <span class="kt">obj</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">max</span> <span class="o">&lt;</span><span class="o">&lt;</span> <span class="n">hash</span><span class="o">)</span> <span class="kt">obj</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>引入局部变量来重写表达式</p>
-<pre><code class="language-F#" data-lang="F#">type 'a T = A of string | B of 'a
-let a = A (if true then &quot;yes&quot; else &quot;no&quot;)
-// introducing a local variable fixs the problem
-let s = if true then &quot;yes&quot; else &quot;no&quot; in 
-let a = A s
-</code></pre></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">T</span> <span class="o">=</span> <span class="n">A</span> <span class="k">of</span> <span class="kt">string</span> <span class="o">|</span> <span class="n">B</span> <span class="k">of</span> <span class="k">&#39;</span><span class="n">a</span>
+<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">A</span> <span class="o">(</span><span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;</span><span class="s">yes</span><span class="s">&#34;</span> <span class="k">else</span> <span class="s">&#34;</span><span class="s">no</span><span class="s">&#34;</span><span class="o">)</span>
+<span class="c1">// introducing a local variable fixs the problem
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;</span><span class="s">yes</span><span class="s">&#34;</span> <span class="k">else</span> <span class="s">&#34;</span><span class="s">no</span><span class="s">&#34;</span> <span class="k">in</span> 
+<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">A</span> <span class="n">s</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>通过添加一个额外的，无用的参数将表达式变成一个<a href="https://en.wikipedia.org/wiki/Thunk">thunk</a></p>
-<pre><code class="language-F#" data-lang="F#">let emptyList10 = Array.create 10 []
-// Adding an extra (unused) parameter makes it a function, which is generalizable.
-let emptyList10 () = Array.create 10 []
-</code></pre></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">emptyList10</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">create</span> <span class="n">10</span> <span class="bp">[]</span>
+<span class="c1">// Adding an extra (unused) parameter makes it a function,
+</span><span class="c1"></span><span class="c1">// which is generalizable.
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">emptyList10</span> <span class="bp">()</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">create</span> <span class="n">10</span> <span class="bp">[]</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <p>最后，如果你有任何问题或者关于该文章的任何建议，欢迎<a href="mailto:hey%5Fchristophe@outlook.com">邮件</a>我。</p>
 <h2 id="heading3">参考文献</h2>
