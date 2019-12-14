@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy;Christophe</copyright>
-    <lastBuildDate>Thu, 05 Dec 2019 20:29:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 13 Dec 2019 19:47:37 +0800</lastBuildDate>
     
 	<atom:link href="https://christophe1997.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Language concepts</title>
+      <link>https://christophe1997.github.io/categories/language-concepts/</link>
+      <pubDate>Fri, 13 Dec 2019 19:47:37 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/categories/language-concepts/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>杂项</title>
@@ -18,15 +27,6 @@
       <pubDate>Thu, 05 Dec 2019 20:29:00 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/categories/%E6%9D%82%E9%A1%B9/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Language concepts</title>
-      <link>https://christophe1997.github.io/categories/language-concepts/</link>
-      <pubDate>Sat, 06 Apr 2019 20:26:43 +0000</pubDate>
-      
-      <guid>https://christophe1997.github.io/categories/language-concepts/</guid>
       <description></description>
     </item>
     
