@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-112755173-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  Some Bit Tricks &ndash; CastOff
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="Bitwise tricks 近来翻到一本&amp;quot;Hackers Delight&amp;quot;的书, 其主要介绍基于二进制运算的算法. 初读来大感震撼, 其结果之巧妙,过程|">
+    
+
+    <meta name="apple-mobile-web-app-title" content="CastOff">
+    
+    
+    <link rel="icon" href="/favicon-64.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" size="any" href="/pinned-icon.svg">
+    
+    
+    
+
+    <meta name="msvalidate.01" content="A66009ECF32987EBBB7783F428A03342" />
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="https://christophe1997.github.io">
+    CastOff
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/posts/">
+      
+      <span>Blogs</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="/">
+      
+      <span>About</span>
+    </a>
+    
+    
+  </div>
+  
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">Some Bit Tricks</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+<a href='/categories/notes' class="muted-link">
+  <span class="Label Label--gray-darker">Notes</span>
+</a>
+
+
+
+<a href='/tags/bitwise' class="muted-link">
+  <span class="Label Label--gray">Bitwise</span>
+</a>
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2020-02-25. Published at: 2020-02-25.">
+        
+          Lastmod: 2020-02-25
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <h2 id="bitwise-tricks">Bitwise tricks</h2>
+<p>近来翻到一本&quot;Hackers Delight&quot;的书, 其主要介绍基于二进制运算的算法. 初读来大感震撼, 其结果之巧妙,过程之精简, 于仅仅是了解计算机数是用补码所表示, 并未深入了解过二进制运算的人而言不可谓不精美. 正如Dijkstra所言, 计算机程序是集逻辑美感与机械实现的矛盾体. 本文姑且将其中的一些皮毛摘录如下, 以便日后之使用, 目前倒是难以得到应用.</p>
+<ol>
+<li>
+<p>使最右位的1变成0</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 01011000 -&gt; 01010000
+</span><span class="c1">// if no one then return 0
+</span><span class="c1"></span><span class="n">x</span> <span class="p">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上式也可以用来判断一个无符号的整数是否是$ 2^n $的形式.</p>
+</li>
+<li>
+<p>使最右位的0变成1</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10100111 -&gt; 10101111
+</span><span class="c1">// if no zero then return -1
+</span><span class="c1"></span><span class="n">x</span> <span class="p">|</span> <span class="p">(</span><span class="n">x</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使尾部的1变成0</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10100111 -&gt; 10100000
+</span><span class="c1">// if no trailing 1s then identity
+</span><span class="c1"></span><span class="n">x</span> <span class="p">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上式也可以用来判断一个无符号的整数是否是$ 2^n - 1 $的形式.</p>
+</li>
+<li>
+<p>使尾部的0变成1</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10101000 -&gt; 10101111
+</span><span class="c1">// if no trailing 1s then identity
+</span><span class="c1"></span><span class="n">x</span> <span class="p">|</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使最右位的0变成1, 同时其余位变成0</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10100111 -&gt; 00001000
+</span><span class="c1">// if no rightmost 0 then return 0
+</span><span class="c1"></span><span class="p">~</span><span class="n">x</span> <span class="p">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使最右位的1变成0, 同时其余位变成1</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10101000 -&gt; 11110111
+</span><span class="c1">// if no rightmost 1 then return -1
+</span><span class="c1"></span><span class="p">~</span><span class="n">x</span> <span class="p">|</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使尾部的0变成1, 同时其余位变成0</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 01011000 -&gt; 00000111
+</span><span class="c1">// if no trailling 0s then return 0
+</span><span class="c1"></span><span class="p">~</span><span class="n">x</span> <span class="p">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使尾部的1变成0, 同时其余位变成1</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10100111 -&gt; 11111000
+</span><span class="c1">// if no trailing 1s then return -1
+</span><span class="c1"></span><span class="p">~</span><span class="n">x</span> <span class="p">|</span> <span class="p">(</span><span class="n">x</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>只保留最右位的1, 其余位变成0</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 01011000 -&gt; 00001000
+</span><span class="c1">// if no rightmost 1 then return 0
+</span><span class="c1"></span><span class="n">x</span> <span class="p">^</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使得从右往左到最右位的0都变成1, 其余位变成0</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 01010111 -&gt; 00001111
+</span><span class="c1">// if no rightmost 0 then return -1
+</span><span class="c1">// else if no trailing 1s then return 1
+</span><span class="c1"></span><span class="n">x</span> <span class="p">^</span> <span class="p">(</span><span class="n">x</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使得最右边连续的1变成0</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="p">((</span><span class="n">x</span> <span class="p">|</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">))</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span> <span class="p">&amp;</span> <span class="n">x</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上式也可以用来判断一个无符号的整数是否是$ 2 ^ n - 2 ^ m (n &gt; m) $的形式.</p>
+</li>
+</ol>
+
+  </section>
+
+  <section>
+    
+      
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>Some Bit Tricks</b><nav id="TableOfContents">
+  <ul>
+    <li><a href="#bitwise-tricks">Bitwise tricks</a></li>
+  </ul>
+</nav></div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    ©Christophe &middot; 
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
+    
+  </body>
+</html>

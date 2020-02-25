@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bitwise on CastOff</title>
+    <link>https://christophe1997.github.io/tags/bitwise/</link>
+    <description>Recent content in Bitwise on CastOff</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy;Christophe</copyright>
+    <lastBuildDate>Tue, 25 Feb 2020 11:50:04 +0800</lastBuildDate>
+    
+	<atom:link href="https://christophe1997.github.io/tags/bitwise/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Some Bit Tricks</title>
+      <link>https://christophe1997.github.io/posts/some-bitwise-tricks/</link>
+      <pubDate>Tue, 25 Feb 2020 11:50:04 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/some-bitwise-tricks/</guid>
+      <description>Bitwise tricks 近来翻到一本&amp;quot;Hackers Delight&amp;quot;的书, 其主要介绍基于二进制运算的算法. 初读来大感震撼, 其结果之巧妙,过程</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -104,9 +104,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2019-12-13. Published at: 2018-08-03.">
+      <span title="Lastmod: 2020-02-25. Published at: 2018-08-03.">
         
-          Lastmod: 2019-12-13
+          Lastmod: 2020-02-25
         
       </span>
     </div>
@@ -128,8 +128,8 @@ included in any interface of an operating system:</p>
 </ol>
 <p>The first thing that the OS must do to run a program is to load its code and any static data into memory, into the address
 space of the process. Once the code and static data are loaded into memory, there are a few other things the OS needs to
-do before running the process. Some memory must be allocated for the program's <em>run-time stack</em>, and the OS may also
-allocate smoe memory for the program's heap. Also, the os will do some other intialization tasks, particularly as related
+do before running the process. Some memory must be allocated for the program&rsquo;s <em>run-time stack</em>, and the OS may also
+allocate smoe memory for the program&rsquo;s heap. Also, the os will do some other intialization tasks, particularly as related
 to I/O, i.e. in Unix systems each process by default has three open file descriptors, for standard input, output and error.</p>
 <p>At any time a process may be <em>running</em>, <em>ready</em> or <em>blocked</em>. Being moved from ready to running means the process has been
 <em>scheduled</em> and <em>descheduled</em> in contrast. Once a process has become blocked, the OS will keep it as such until some event
@@ -180,10 +180,10 @@ For example, the tracked information about each process in xv6 kernel is shown b
     <span class="kt">int</span> <span class="n">esi</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">edi</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">ebp</span><span class="p">;</span>
-<span class="p">}</span><span class="p">;</span>
+<span class="p">};</span>
 
 <span class="c1">// the different states a process can be in
-</span><span class="c1"></span><span class="k">enum</span> <span class="n">proc_state</span> <span class="p">{</span> <span class="n">UNUSED</span><span class="p">,</span> <span class="n">EMBRYO</span><span class="p">,</span> <span class="n">SLEEPING</span><span class="p">,</span> <span class="n">RUNNABLE</span><span class="p">,</span> <span class="n">RUNNING</span><span class="p">,</span> <span class="n">ZOMBIE</span> <span class="p">}</span><span class="p">;</span>
+</span><span class="c1"></span><span class="k">enum</span> <span class="n">proc_state</span> <span class="p">{</span> <span class="n">UNUSED</span><span class="p">,</span> <span class="n">EMBRYO</span><span class="p">,</span> <span class="n">SLEEPING</span><span class="p">,</span> <span class="n">RUNNABLE</span><span class="p">,</span> <span class="n">RUNNING</span><span class="p">,</span> <span class="n">ZOMBIE</span> <span class="p">};</span>
 
 <span class="c1">// the information xv6 tracks about each process including its register context and state
 </span><span class="c1"></span><span class="k">struct</span> <span class="n">proc</span> <span class="p">{</span>
@@ -195,23 +195,23 @@ For example, the tracked information about each process in xv6 kernel is shown b
 </span><span class="c1"></span>    <span class="k">struct</span> <span class="n">proc</span> <span class="o">*</span><span class="n">parent</span><span class="p">;</span>         <span class="c1">// Parent process
 </span><span class="c1"></span>    <span class="kt">void</span> <span class="o">*</span><span class="n">chan</span><span class="p">;</span>                  <span class="c1">// If non-zero, sleeping on chan
 </span><span class="c1"></span>    <span class="kt">int</span> <span class="n">killed</span><span class="p">;</span>                  <span class="c1">// If non-zero, have been killed
-</span><span class="c1"></span>    <span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">ofile</span><span class="p">[</span><span class="n">NOFILE</span><span class="p">]</span><span class="p">;</span>  <span class="c1">// Open files
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">ofile</span><span class="p">[</span><span class="n">NOFILE</span><span class="p">];</span>  <span class="c1">// Open files
 </span><span class="c1"></span>    <span class="k">struct</span> <span class="n">inode</span> <span class="o">*</span><span class="n">cwd</span><span class="p">;</span>           <span class="c1">// Current directory
 </span><span class="c1"></span>    <span class="k">struct</span> <span class="n">context</span> <span class="n">context</span><span class="p">;</span>      <span class="c1">// Switch here to run process
 </span><span class="c1"></span>    <span class="k">struct</span> <span class="n">trapframe</span> <span class="o">*</span><span class="n">tf</span><span class="p">;</span>        <span class="c1">// Trap frame for the current interrupt
-</span><span class="c1"></span><span class="p">}</span><span class="p">;</span>
+</span><span class="c1"></span><span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="process-api">Process API</h2>
+</div><h2 id="process-api-">Process API</h2>
 <p>Unix presents one of the most intriguing ways to create a new process with a pair of system calls: <code>fork()</code> and <code>exec()</code>.
 <code>wait()</code> can be used by a process wishing to wait for a process it has created to complete.</p>
 <p>The <code>fork()</code> creates a process as an(almost) <em>exact copy of the calling process</em>, that means that to the OS, it now looks
 like there are two copies of the program(the caller) running, and both are about to return from the <code>fork()</code> system call.
-The newly-created process doesn't run the <code>main()</code> again, instead it just comes into life as if it had called <code>fork()</code>
+The newly-created process doesn&rsquo;t run the <code>main()</code> again, instead it just comes into life as if it had called <code>fork()</code>
 itself. To distinguish parent and child, the <code>fork()</code> return non-negative PID in parent process, and return 0 in child
 process, and if it return a negative number, that means it failed. Now there are now two active processes in the system
-after calling fork, and it's non-determinism to know which runs first.</p>
-<p>Sometimes, it's useful for a parent to wait a child process to finish what it has been doing, this is accomplished with
+after calling fork, and it&rsquo;s non-determinism to know which runs first.</p>
+<p>Sometimes, it&rsquo;s useful for a parent to wait a child process to finish what it has been doing, this is accomplished with
 the <code>wait()</code> system call. the process calls <code>wait()</code> to delay its execution, most until the child has run and exited. When
 <code>wait()</code> return into parent, returns the PID of child.</p>
 <p>By giving a name of an executable to <code>exec()</code>(i.e. <code>execvp</code>), it loads code from that executable and overwrites its current
@@ -226,13 +226,13 @@ closes standard output and open the file, thus any output from the soon-to-be-ru
 of the screen. This works because Unix system start looking for free file descriptors at zero, in this case, <code>STDOUT_FILENO</code>
 will be the first available one and thus get assigned when open() is called. Subsequent writes by the child process to
 the standard output file descriptor(i.e. printf) will then be routed transparently to the newly-opened file.</p>
-<h2 id="limited-direct-execution">Limited Direct Execution</h2>
+<h2 id="limited-direct-execution-">Limited Direct Execution</h2>
 <p>In order to virtualize the CPU, the operating system needs to somehow share the physical CPU among many jobs running
 seemingly at the same time. The basic idea is simple: run one process for a little while, then run another one, and so
 forth.</p>
 <p>To make a program run as fast as one might expect, not surprisingly OS developers came up with a technique, which we
 call <em>limited direct execution</em>. The direct execution means run the program directly on the CPU, but only &ldquo;direct execution&rdquo;
-is not enough, the OS need to prevent what we don't want it to do, thus we need &ldquo;limited&rdquo;.</p>
+is not enough, the OS need to prevent what we don&rsquo;t want it to do, thus we need &ldquo;limited&rdquo;.</p>
 <p>There are two phases in the limited direct execution protocol. In the first(at boot time), the kernel initializes the
 trap table, and the CPU remembers its location for subsequent use. The kernel does so via a privileged instruction. In
 the second(when running a process), the kernel sets up a few things before using a return-from-trap instruction to start
@@ -245,7 +245,7 @@ of the CPU so that it can switch between processes. One old way is waiting syste
 the process refuses to make system call. Another way is to add a <em>timer interrupt</em>, a timer device can be programmed to
 raise an interrupt every so many milliseconds; when the interrupt is raised, the currently running process is halted, and
 a pre-configured interrupt handler in the OS runs. At this point, the OS has regained control of the CPU.</p>
-<h2 id="scheduling-policies">Scheduling Policies</h2>
+<h2 id="scheduling-policies-">Scheduling Policies</h2>
 <p>There are many scheduling algorithms, such as FIFO(first in first out), STCF(shortest time-to-completion first). Choosing
 which algorithm dependent on which metrics are used. One most well-known approaches to scheduling, known as the <em>Multi-level
 feedback queue</em>. The MLFQ has a number of distinct queues, each assigned a different priority level. At any given time,
@@ -285,9 +285,9 @@ given more chances to win the lottery(to be continued).</p>
     <div id="toc" class="Box Box--blue mb-3">
       <b>进程</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#process-api">Process API</a></li>
-    <li><a href="#limited-direct-execution">Limited Direct Execution</a></li>
-    <li><a href="#scheduling-policies">Scheduling Policies</a></li>
+    <li><a href="#process-api-">Process API</a></li>
+    <li><a href="#limited-direct-execution-">Limited Direct Execution</a></li>
+    <li><a href="#scheduling-policies-">Scheduling Policies</a></li>
   </ul>
 </nav></div>
   

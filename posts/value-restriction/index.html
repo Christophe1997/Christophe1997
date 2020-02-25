@@ -120,7 +120,7 @@ if (!doNotTrack) {
 <article>
   
   <section class="pb-6 mb-3 border-bottom">
-    <h2 id="value-restriction">Value Restriction是什么？</h2>
+    <h2 id="value-restriction是什么">Value Restriction是什么？</h2>
 <p>Value restriction是用于控制类型推断能否对值声明进行多态泛化的规则（<a href="http://mlton.org/ValueRestriction">MLton原文</a>：“<em>The value restriction is a rule that governs when type inference is allowed to polymorphically generalize a value declaration.</em>”）。常出现在ML系的语言中，如<a href="https://www.smlnj.org/">SML</a>，<a href="https://ocaml.org/">OCaml</a>，<a href="https://fsharp.org/">F#</a>中，其实value restriction产生的本质原因是为了保证类型系统在结合参数多态与命令式特性（<em>imperative feature</em>，如<code>ref</code>）时候的可靠性（<em>soundness</em>）。一个典型的例子就是：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -140,7 +140,7 @@ if (!doNotTrack) {
 </span><span class="c1"></span><span class="k">let</span>  <span class="nv">v</span><span class="o">:</span> <span class="kt">string</span> <span class="o">=</span> <span class="o">!</span><span class="n">z</span>  <span class="c1">// 破坏了类型安全
 </span></code></pre></td></tr></table>
 </div>
-</div><h2 id="heading">限制了什么？</h2>
+</div><h2 id="限制了什么">限制了什么？</h2>
 <p>简单来讲，value restriction限制了类型泛化只能发生在表达式的右边是句法意义上的值。那么什么是句法意义上的值呢，SML的<a href="http://sml-family.org/sml97-defn.pdf">语言规范</a>上明确给出了什么样的表达式是句法意义上的值（准确来说是<em>non-expansive</em>）:</p>
 <ul>
 <li>常量，如<code>13，&quot;string&quot;</code></li>
@@ -157,7 +157,7 @@ if (!doNotTrack) {
 <li>是没有副作用的</li>
 <li>表达式的结果是一个不可变对象</li>
 </ol>
-<h2 id="heading1">在完备性上的问题</h2>
+<h2 id="在完备性上的问题">在完备性上的问题</h2>
 <p>从上述规则来看，<code>let x = ref None</code>显然是非法的表达式，然而在引入value restriction的同时，类型系统损失了一定的完备性（<em>completeness</em>），因为以下代码同样违反了value restriction：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -179,7 +179,7 @@ if (!doNotTrack) {
 </span></code></pre></td></tr></table>
 </div>
 </div><p>lambda表达式是句法意义上的值，因此上述代码是可以通过类型检查的。</p>
-<h3 id="value-restriction1">如何避免value restriction</h3>
+<h3 id="如何避免value-restriction">如何避免value restriction</h3>
 <p>为了能够使得我们本身soundness的代码通过类型检查，在value restriction的限制下我们不得不做一些额外的工作。</p>
 <ol>
 <li>
@@ -204,7 +204,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">T</span> <span class="o">=</span> <span class="n">A</span> <span class="k">of</span> <span class="kt">string</span> <span class="o">|</span> <span class="n">B</span> <span class="k">of</span> <span class="k">&#39;</span><span class="n">a</span>
-<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">A</span> <span class="o">(</span><span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;</span><span class="s">yes</span><span class="s">&#34;</span> <span class="k">else</span> <span class="s">&#34;</span><span class="s">no</span><span class="s">&#34;</span><span class="o">)</span>  <span class="c1">// failed
+<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">A</span> <span class="o">(</span><span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;yes&#34;</span> <span class="k">else</span> <span class="s">&#34;no&#34;</span><span class="o">)</span>  <span class="c1">// failed
 </span></code></pre></td></tr></table>
 </div>
 </div><p>但是可以修改为</p>
@@ -214,16 +214,16 @@ if (!doNotTrack) {
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;</span><span class="s">yes</span><span class="s">&#34;</span> <span class="k">else</span> <span class="s">&#34;</span><span class="s">no</span><span class="s">&#34;</span> <span class="k">in</span> 
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;yes&#34;</span> <span class="k">else</span> <span class="s">&#34;no&#34;</span> <span class="k">in</span> 
 <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">A</span> <span class="n">s</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>使得其符合value restriction的规则。</p>
 </li>
 </ol>
-<h2 id="ocamlfvalue-restriction">OCaml和F#中的value restriction</h2>
+<h2 id="ocaml和f中的value-restriction">OCaml和F#中的value restriction</h2>
 <p>OCaml和F#同样存在着value restriction的完备性的问题，俩者通过不同的方式对其进行了relax。</p>
-<h3 id="ocamlrelaxed-value-restriction">OCaml的relaxed value restriction</h3>
+<h3 id="ocaml的relaxed-value-restriction">OCaml的relaxed value restriction</h3>
 <p>OCaml通过引入一个弱类型变量来放宽value restriction. 所谓弱类型变量是指编译器未知的变量，而一旦这个弱类型变量被编译器推断为一个具体的变量时，该弱类型变量就被具体的变量所替代，并且不在可变。例如：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -259,7 +259,7 @@ if (!doNotTrack) {
 </code></pre></td></tr></table>
 </div>
 </div><p>和前面一样，这同样是一个违反了value restriction的例子，于是OCaml使用了弱类型变量来处理，这意味着一旦我们在<code>int list</code>类型上调用完<code>listId</code>，例如<code>listId [1; 2; 3]</code>，之后<code>listId</code>就被固定为<code>int list -&gt; int list</code>，这意味着我们无法再在<code>string list</code>上调用<code>listId</code>，而这同样不符合我们泛化的初衷，即<code>'a list -&gt; 'a list</code>。当然我觉得OCaml的relaxed value restriction算是处理的非常优雅，有兴趣的可以阅读相关论文[6]。</p>
-<h3 id="f">F#的处理</h3>
+<h3 id="f的处理">F#的处理</h3>
 <p>虽说F#参照了OCaml, 但还是存在着相当多的不同之处，在value restriction的处理上俩者也存在着区别。在F#中，上述违反了value restriction的例子依然是非法的。F#<a href="https://fsharp.org/specs/language-spec">语言规范</a>中同样明确给出了可以泛化的情况（<em>generalizable</em>）:</p>
 <ul>
 <li>函数表达式</li>
@@ -315,7 +315,7 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="o">&gt;</span> <span class="k">let</span> <span class="nv">v1</span> <span class="o">:</span> <span class="n">int</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">v</span><span class="o">&lt;</span><span class="n">int</span><span class="o">&gt;</span><span class="o">;;</span>
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="o">&gt;</span> <span class="k">let</span> <span class="nv">v1</span> <span class="o">:</span> <span class="n">int</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">v</span><span class="o">&lt;</span><span class="n">int</span><span class="o">&gt;;;</span>
 <span class="k">val</span> <span class="n">v1</span> <span class="o">:</span> <span class="n">int</span> <span class="n">option</span> <span class="n">ref</span> <span class="o">=</span> <span class="o">{</span> <span class="n">contents</span> <span class="o">=</span> <span class="n">None</span> <span class="o">}</span>
 <span class="o">&gt;</span> <span class="k">let</span> <span class="bp">()</span> <span class="o">=</span> <span class="n">v1</span> <span class="o">:=</span> <span class="n">Some</span> <span class="n">2</span><span class="o">;;</span>
 <span class="o">&gt;</span> <span class="k">let</span> <span class="nv">x</span> <span class="o">=</span> <span class="o">!</span><span class="n">v1</span><span class="o">;;</span>
@@ -369,7 +369,7 @@ if (!doNotTrack) {
 </code></pre></td></tr></table>
 </div>
 </div><p>如果没有<code>[&lt;GeneralizableValue&gt;]</code>，<code>let a = v</code>将违反value restriction.</p>
-<h2 id="heading2">结语</h2>
+<h2 id="结语">结语</h2>
 <p>如果你看到了这里，我想你对value restriction应该有了一个清晰的认识，并且对OCaml和F#如何放宽value restriction有了充分的了解。而如果你使用F#编程，那么我的建议是除非你清楚的知道自己在做什么(即添加额外的泛型参数)，否则就按照MSDN的<a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/generics/automatic-generalization#value-restriction">建议</a>，我这边稍微扩展了一下：</p>
 <ol>
 <li>
@@ -399,12 +399,12 @@ if (!doNotTrack) {
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">maxhash</span> <span class="o">=</span> <span class="n">max</span> <span class="o">&lt;</span><span class="o">&lt;</span> <span class="n">hash</span>
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">maxhash</span> <span class="o">=</span> <span class="n">max</span> <span class="o">&lt;&lt;</span> <span class="n">hash</span>
 <span class="c1">// The following is acceptable because the argument 
-</span><span class="c1"></span><span class="c1">// for maxhash is explicit:
-</span><span class="c1"></span><span class="k">let</span> <span class="nv">maxhash</span> <span class="kt">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">max</span> <span class="o">&lt;</span><span class="o">&lt;</span> <span class="n">hash</span><span class="o">)</span> <span class="kt">obj</span>
+</span><span class="c1">// for maxhash is explicit:
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">maxhash</span> <span class="kt">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">max</span> <span class="o">&lt;&lt;</span> <span class="n">hash</span><span class="o">)</span> <span class="kt">obj</span>
 <span class="c1">// or
-</span><span class="c1"></span><span class="k">let</span> <span class="nv">maxhash</span> <span class="o">=</span> <span class="k">fun</span> <span class="kt">obj</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">max</span> <span class="o">&lt;</span><span class="o">&lt;</span> <span class="n">hash</span><span class="o">)</span> <span class="kt">obj</span>
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">maxhash</span> <span class="o">=</span> <span class="k">fun</span> <span class="kt">obj</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">max</span> <span class="o">&lt;&lt;</span> <span class="n">hash</span><span class="o">)</span> <span class="kt">obj</span>
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -420,9 +420,9 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">T</span> <span class="o">=</span> <span class="n">A</span> <span class="k">of</span> <span class="kt">string</span> <span class="o">|</span> <span class="n">B</span> <span class="k">of</span> <span class="k">&#39;</span><span class="n">a</span>
-<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">A</span> <span class="o">(</span><span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;</span><span class="s">yes</span><span class="s">&#34;</span> <span class="k">else</span> <span class="s">&#34;</span><span class="s">no</span><span class="s">&#34;</span><span class="o">)</span>
+<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">A</span> <span class="o">(</span><span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;yes&#34;</span> <span class="k">else</span> <span class="s">&#34;no&#34;</span><span class="o">)</span>
 <span class="c1">// introducing a local variable fixs the problem
-</span><span class="c1"></span><span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;</span><span class="s">yes</span><span class="s">&#34;</span> <span class="k">else</span> <span class="s">&#34;</span><span class="s">no</span><span class="s">&#34;</span> <span class="k">in</span> 
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="k">if</span> <span class="k">true</span> <span class="k">then</span> <span class="s">&#34;yes&#34;</span> <span class="k">else</span> <span class="s">&#34;no&#34;</span> <span class="k">in</span> 
 <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">A</span> <span class="n">s</span>
 </code></pre></td></tr></table>
 </div>
@@ -439,14 +439,14 @@ if (!doNotTrack) {
 <td class="lntd">
 <pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">emptyList10</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">create</span> <span class="n">10</span> <span class="bp">[]</span>
 <span class="c1">// Adding an extra (unused) parameter makes it a function,
-</span><span class="c1"></span><span class="c1">// which is generalizable.
+</span><span class="c1">// which is generalizable.
 </span><span class="c1"></span><span class="k">let</span> <span class="nv">emptyList10</span> <span class="bp">()</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">create</span> <span class="n">10</span> <span class="bp">[]</span>
 </code></pre></td></tr></table>
 </div>
 </div></li>
 </ol>
 <p>最后，如果你有任何问题或者关于该文章的任何建议，欢迎<a href="mailto:hey%5Fchristophe@outlook.com">邮件</a>我。</p>
-<h2 id="heading3">参考文献</h2>
+<h2 id="参考文献">参考文献</h2>
 <p>[1] <a href="http://mlton.org/ValueRestriction">ValueRestriction</a></p>
 <p>[2] <a href="https://caml.inria.fr/pub/docs/manual-ocaml/polymorphism.html">Polymorphism and its limitations</a></p>
 <p>[3] <a href="https://ocamlverse.github.io/content/weak_type_variables.html#relaxed-value-restriction">Relaxed value restriction</a></p>
@@ -472,21 +472,21 @@ if (!doNotTrack) {
     <div id="toc" class="Box Box--blue mb-3">
       <b>Value restriction，从OCaml到F#</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#value-restriction">Value Restriction是什么？</a></li>
-    <li><a href="#heading">限制了什么？</a></li>
-    <li><a href="#heading1">在完备性上的问题</a>
+    <li><a href="#value-restriction是什么">Value Restriction是什么？</a></li>
+    <li><a href="#限制了什么">限制了什么？</a></li>
+    <li><a href="#在完备性上的问题">在完备性上的问题</a>
       <ul>
-        <li><a href="#value-restriction1">如何避免value restriction</a></li>
+        <li><a href="#如何避免value-restriction">如何避免value restriction</a></li>
       </ul>
     </li>
-    <li><a href="#ocamlfvalue-restriction">OCaml和F#中的value restriction</a>
+    <li><a href="#ocaml和f中的value-restriction">OCaml和F#中的value restriction</a>
       <ul>
-        <li><a href="#ocamlrelaxed-value-restriction">OCaml的relaxed value restriction</a></li>
-        <li><a href="#f">F#的处理</a></li>
+        <li><a href="#ocaml的relaxed-value-restriction">OCaml的relaxed value restriction</a></li>
+        <li><a href="#f的处理">F#的处理</a></li>
       </ul>
     </li>
-    <li><a href="#heading2">结语</a></li>
-    <li><a href="#heading3">参考文献</a></li>
+    <li><a href="#结语">结语</a></li>
+    <li><a href="#参考文献">参考文献</a></li>
   </ul>
 </nav></div>
   

@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Some Bit Tricks</title>
+      <link>https://christophe1997.github.io/posts/some-bitwise-tricks/</link>
+      <pubDate>Tue, 25 Feb 2020 11:50:04 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/some-bitwise-tricks/</guid>
+      <description>Bitwise tricks 近来翻到一本&amp;quot;Hackers Delight&amp;quot;的书, 其主要介绍基于二进制运算的算法. 初读来大感震撼, 其结果之巧妙,过程</description>
+    </item>
+    
+    <item>
       <title>Value restriction，从OCaml到F#</title>
       <link>https://christophe1997.github.io/posts/value-restriction/</link>
       <pubDate>Fri, 13 Dec 2019 19:47:37 +0800</pubDate>
@@ -90,7 +99,7 @@ For instance, given a sequence of n operations, we may wish to bound the total r
       <pubDate>Thu, 19 Jul 2018 17:00:11 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/functional-data-structure-1/</guid>
-      <description>Introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&#39;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&#39;s knives.
+      <description>Introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&amp;rsquo;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&amp;rsquo;s knives.
 Imperative data structures often rely on assignments in crucial ways, and so different solutions must be found for functional programs. The second difficulty is that functional data strcutures are expected to be more flexible than their imperative counterparts.</description>
     </item>
     
@@ -128,7 +137,7 @@ Imperative data structures often rely on assignments in crucial ways, and so dif
       
       <guid>https://christophe1997.github.io/posts/computer-system-2/</guid>
       <description>Assembler Computer execute machine code, sequences of bytes encoding the low-level operations that manipulate data manage memory, read and write data on storage devices, and communicate over networks.
-We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it&#39;s widely used in supercomputer and lager data center.
+We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it&amp;rsquo;s widely used in supercomputer and lager data center.
 the x86-64 machine code is much different with the corresponding C code, the processor states below are everywhere:</description>
     </item>
     

@@ -104,9 +104,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2019-12-13. Published at: 2018-06-01.">
+      <span title="Lastmod: 2020-02-25. Published at: 2018-06-01.">
         
-          Lastmod: 2019-12-13
+          Lastmod: 2020-02-25
         
       </span>
     </div>
@@ -116,7 +116,7 @@ if (!doNotTrack) {
 <article>
   
   <section class="pb-6 mb-3 border-bottom">
-    <h2 id="optimization">Optimization</h2>
+    <h2 id="optimization-">Optimization</h2>
 <p>Writing an efficient program requires several type of activities. First, we must select an appropriate set of algorithms
 and data structures. Second, we must write source code that the compiler can effectively optimize to turn into efficient
 executable code. A third technique for dealing with especially demanding computations is to divide a task into portions
@@ -130,7 +130,7 @@ the exact same behavior as would an unoptimized version for all possible cases t
 <p>The first problem is the <em>memory aliasing</em> that two pointers designate the same memory location, and in performing only
 safe optimizations, the compiler must assume that different pointers may be aliased. If a compiler cannot determine whether
 or not twopointers may be aliased, it must assume that either case is possible, limiting the set of possible optimizations</p>
-<p>A second optimization blocker is due to function calls. It's hard to optimize the function calls with side effect, which
+<p>A second optimization blocker is due to function calls. It&rsquo;s hard to optimize the function calls with side effect, which
 modifies some part of the global program state. Most compilers do not try to determine whether a function is free of side
 effects, instead the compiler assumes the worse case and leaves function calls intact. Among compilers, GCC is considered
 adequate, but not exceptional.</p>
@@ -164,40 +164,40 @@ and the period of the processor is 0.25 nanoseconds, which is the reciprocal of 
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C" data-lang="C"><span class="kt">void</span> <span class="nf">psum1</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">[</span><span class="p">]</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p</span><span class="p">[</span><span class="p">]</span><span class="p">,</span> <span class="kt">long</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="kt">void</span> <span class="nf">psum1</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">float</span> <span class="n">p</span><span class="p">[],</span> <span class="kt">long</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">long</span> <span class="n">i</span><span class="p">;</span>
-    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">;</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">;</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="nf">psum2</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">[</span><span class="p">]</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p</span><span class="p">[</span><span class="p">]</span><span class="p">,</span> <span class="kt">long</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="nf">psum2</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">float</span> <span class="n">p</span><span class="p">[],</span> <span class="kt">long</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">long</span> <span class="n">i</span><span class="p">;</span> 
-    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">;</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">+</span><span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">float</span> <span class="n">mid_val</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">;</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">float</span> <span class="n">mid_val</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
         <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">mid_val</span><span class="p">;</span>
-        <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">mid_val</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="p">;</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">mid_val</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">;</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>They takes 368 + 9.0n cycles and 368 + 6.0 cycles, for lagre N the run times will be dominated by the linear factors. We
-refer to the coefficients in these terms as the effective number of cycle per element, so the first one's CPE is 9.0 and
+refer to the coefficients in these terms as the effective number of cycle per element, so the first one&rsquo;s CPE is 9.0 and
 the second one is 6.0.</p>
-<h3 id="modern-processors">Modern processors</h3>
+<h3 id="modern-processors-">Modern processors</h3>
 <p>One of the remarkable feats of modern microprocessors is they employ complex and exotic microarchitectures, in which
 multiple instructions can be executed in parallel, while presenting an operational view of simple sequential instruction
 execution. There are two different lower bounds characterize the maximum performance of a program. The <em>latency bound</em>
 is encountered when a series of operations must performed in strict sequence, because the result of one operations is
 required before the next one can begin. This bound can limit program performance when the data dependencies in the code
 limit the ability of the processor to exploit instruction-level parallelism. The <em>throughput bound</em> characterizes the
-raw computing capacity of the processor's functional units. This bound becomes the ultimate limit on program performance.</p>
-<h3 id="trick">Trick</h3>
+raw computing capacity of the processor&rsquo;s functional units. This bound becomes the ultimate limit on program performance.</p>
+<h3 id="trick-">Trick</h3>
 <ul>
 <li><em>code motion</em>: Identify a computation that is performed multiple times but such that the result of the computation will
 not change, and therefor move the computation to an eailer section of the code that does not get evaluated as often.</li>
@@ -208,17 +208,17 @@ iteration. It can improve performance in two ways. First, it reduces the number 
 directly to the program result, such as loop indexing and conditional branching. Second, it expose ways in which we can
 futher transform the code to reduce the number of operations in the cirtical paths of the overall computation.</li>
 </ul>
-<h2 id="the-memory-hierarchy">The Memory Hierarchy</h2>
-<h3 id="randomaccess-memory">Random-access memory</h3>
+<h2 id="the-memory-hierarchy-">The Memory Hierarchy</h2>
+<h3 id="random-access-memory-">Random-access memory</h3>
 <p><em>Random-access memory</em>(RAM) comes in two varieties, static and dynamic. <em>Static RAM</em>(SRAM) is faster and significantly
 more expensive than <em>dynamic RAM</em>(DRAM). SRAM is used for cache memories, both on and off the CPU chip. DRAM is used for
 the amin memory plus the frame buffer of a graphics system.</p>
-<h3 id="readonly-memory">Read-only memory</h3>
+<h3 id="read-only-memory-">Read-only memory</h3>
 <p><em>Read-only memory</em> can retain their information even when they are powered off, while the RAM lose their information if
 the supply voltage is turned off. <em>flash memory</em> is a type of nonvolstile memory, based on EEPROM(<em>electrically erasable
 programmable ROM</em>), that has become an important storage rechnology. The <em>solid state disk</em>(SSD), that provides a faster,
 sturdier and less power-hungry alternative to conventional rotating disk is a new form of flash-based disk driver.</p>
-<h2 id="principle-of-locality">Principle of Locality</h2>
+<h2 id="principle-of-locality-">Principle of Locality</h2>
 <p>programs with good locality run faster than programs with poor locality. Locality is typically described as having two
 distinct forms: <em>temporal locality</em> and <em>spatial locality</em>. In a program with good temporal locality, a memory location
 that is referenced once is likely to be referenced again multiple times in the near future. In a program with good spatial
@@ -237,13 +237,13 @@ in the near future.</p>
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="p">)</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">;</span> <span class="n">j</span><span class="o">+</span><span class="o">+</span><span class="p">)</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">sum</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">;</span> <span class="n">k</span><span class="o">+</span><span class="o">+</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">sum</span> <span class="o">+</span><span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">sum</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
         <span class="p">}</span>
-        <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sum</span><span class="p">;</span>
+        <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sum</span><span class="p">;</span>
     <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -259,11 +259,11 @@ in the near future.</p>
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="p">)</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">;</span> <span class="n">j</span><span class="o">+</span><span class="o">+</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">;</span> <span class="n">k</span><span class="o">+</span><span class="o">+</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span><span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="p">;</span>
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
         <span class="p">}</span>
     <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -296,19 +296,19 @@ greater the number of loopiterations, the better the locality.</li>
     <div id="toc" class="Box Box--blue mb-3">
       <b>Computer System 3</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#optimization">Optimization</a>
+    <li><a href="#optimization-">Optimization</a>
       <ul>
-        <li><a href="#modern-processors">Modern processors</a></li>
-        <li><a href="#trick">Trick</a></li>
+        <li><a href="#modern-processors-">Modern processors</a></li>
+        <li><a href="#trick-">Trick</a></li>
       </ul>
     </li>
-    <li><a href="#the-memory-hierarchy">The Memory Hierarchy</a>
+    <li><a href="#the-memory-hierarchy-">The Memory Hierarchy</a>
       <ul>
-        <li><a href="#randomaccess-memory">Random-access memory</a></li>
-        <li><a href="#readonly-memory">Read-only memory</a></li>
+        <li><a href="#random-access-memory-">Random-access memory</a></li>
+        <li><a href="#read-only-memory-">Read-only memory</a></li>
       </ul>
     </li>
-    <li><a href="#principle-of-locality">Principle of Locality</a></li>
+    <li><a href="#principle-of-locality-">Principle of Locality</a></li>
   </ul>
 </nav></div>
   

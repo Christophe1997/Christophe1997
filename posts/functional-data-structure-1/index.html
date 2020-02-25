@@ -24,7 +24,7 @@ if (!doNotTrack) {
     </title>
     
     
-    <meta name="description" property="og:description" content="Introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&#39;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&#39;s knives.
+    <meta name="description" property="og:description" content="Introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&amp;rsquo;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&amp;rsquo;s knives.
 Imperative data structures often rely on assignments in crucial ways, and so different solutions must be found for functional programs. The second difficulty is that functional data strcutures are expected to be more flexible than their imperative counterparts.|">
     
 
@@ -109,9 +109,9 @@ Imperative data structures often rely on assignments in crucial ways, and so dif
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2019-12-13. Published at: 2018-07-19.">
+      <span title="Lastmod: 2020-02-25. Published at: 2018-07-19.">
         
-          Lastmod: 2019-12-13
+          Lastmod: 2020-02-25
         
       </span>
     </div>
@@ -121,10 +121,10 @@ Imperative data structures often rely on assignments in crucial ways, and so dif
 <article>
   
   <section class="pb-6 mb-3 border-bottom">
-    <h2 id="introduction">Introduction</h2>
+    <h2 id="introduction-">Introduction</h2>
 <p>To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing
-and implementing efficient data structures, functional programming's stricture against destructive updates(i.e. assignments)
-is a staggering handicap, tantamount to confiscating a master chef's knives.</p>
+and implementing efficient data structures, functional programming&rsquo;s stricture against destructive updates(i.e. assignments)
+is a staggering handicap, tantamount to confiscating a master chef&rsquo;s knives.</p>
 <!-- raw HTML omitted -->
 <p>Imperative data structures often rely on
 assignments in crucial ways, and so different solutions must be found for functional programs. The second difficulty is
@@ -145,14 +145,14 @@ to stack or queue objects as stacks or queues.</li>
 about &ldquo;the stack&rdquo; as if there were only one stack, rather than different versions at different times. We can refer to this
 identity as a <em>persistent identity</em>.</li>
 </ol>
-<h2 id="persistence">Persistence</h2>
+<h2 id="persistence-">Persistence</h2>
 <p>A distinctive property of functional data structures is that they are always persistent, updating a functional data
 structure does not destory the existing version, but rather creates a new version that coexists with the old one. Persistence
 is achieved by coping the affected nodes of a data structure and making all changes in the copy of rather than in the
 original. Because nodes are never modified directly, all nodes that are unaffected by an update can be shared between
 the old and new version of the data structure without worrying that a change in one version will inadvertently be visible
 to the other.</p>
-<h3 id="lists">Lists</h3>
+<h3 id="lists-">Lists</h3>
 <p>Linked lists are common in imperative programming and ubiquitous in functional programming. And we can define its abstraction
 as follow:</p>
 <div class="highlight"><div class="chroma">
@@ -170,13 +170,13 @@ as follow:</p>
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(*</span><span class="c">*</span><span class="c"> userList.mli </span><span class="c">*)</span>
+<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(** userList.mli *)</span>
 <span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">t</span>
 
 <span class="k">val</span> <span class="n">empty</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">t</span>
 <span class="k">val</span> <span class="n">isEmpty</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">bool</span>
 
-<span class="k">exception</span> <span class="nc">Empty</span> <span class="c">(*</span><span class="c"> the exception does not matter </span><span class="c">*)</span>
+<span class="k">exception</span> <span class="nc">Empty</span> <span class="c">(* the exception does not matter *)</span>
 
 <span class="k">val</span> <span class="n">cons</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">t</span>
 <span class="k">val</span> <span class="n">head</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">a</span>
@@ -210,7 +210,7 @@ as follow:</p>
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(*</span><span class="c">*</span><span class="c"> userList.ml </span><span class="c">*)</span>
+<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(** userList.ml *)</span>
 <span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">t</span> <span class="o">=</span> 
   <span class="o">|</span> <span class="nc">Nil</span> 
   <span class="o">|</span> <span class="nc">Cons</span> <span class="k">of</span> <span class="k">&#39;</span><span class="n">a</span> <span class="o">*</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">a</span> <span class="n">t</span><span class="o">)</span> 
@@ -234,7 +234,7 @@ as follow:</p>
   <span class="o">|</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">tl</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">tl</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>Another common function on the lists is append(<code>@</code> in ocaml), we denote it as <code>++</code>, and it's easy to implement it in a
+</div><p>Another common function on the lists is append(<code>@</code> in ocaml), we denote it as <code>++</code>, and it&rsquo;s easy to implement it in a
 O(n) way, while we can implement in a O(1) way in an imperative setting:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -243,9 +243,9 @@ O(n) way, while we can implement in a O(1) way in an imperative setting:</p>
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="k">rec</span> <span class="o">(</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">=</span> <span class="k">function</span>
+<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="k">rec</span> <span class="o">(++)</span> <span class="o">=</span> <span class="k">function</span>
   <span class="o">|</span> <span class="nc">Nil</span><span class="o">,</span> <span class="n">ys</span> <span class="o">-&gt;</span> <span class="n">ys</span>
-  <span class="o">|</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">tl</span><span class="o">)</span><span class="o">,</span> <span class="n">ys</span> <span class="o">-&gt;</span> <span class="n">tl</span> <span class="o">+</span><span class="o">+</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">ys</span><span class="o">)</span>
+  <span class="o">|</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">tl</span><span class="o">),</span> <span class="n">ys</span> <span class="o">-&gt;</span> <span class="n">tl</span> <span class="o">++</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">ys</span><span class="o">)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>In functional setting, we have to copy the entire list to keep the persistence so that we are free to continue using the
@@ -262,8 +262,8 @@ changes the value of a node at a given index in the list:</p>
 <td class="lntd">
 <pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="k">rec</span> <span class="n">update</span> <span class="n">xs</span> <span class="n">idx</span> <span class="n">x</span> <span class="o">=</span> <span class="k">match</span> <span class="o">(</span><span class="n">xs</span><span class="o">,</span> <span class="n">idx</span><span class="o">)</span> <span class="k">with</span>
 <span class="o">|</span> <span class="nc">Nil</span><span class="o">,</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="nc">Subscript</span>
-<span class="o">|</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">tl</span><span class="o">)</span><span class="o">,</span> <span class="n">0</span> <span class="o">-&gt;</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">tl</span><span class="o">)</span>
-<span class="o">|</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">tl</span><span class="o">)</span><span class="o">,</span> <span class="o">(</span><span class="o">_</span> <span class="k">as</span> <span class="n">n</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">update</span> <span class="n">tl</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="n">x</span><span class="o">)</span>
+<span class="o">|</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">tl</span><span class="o">),</span> <span class="n">0</span> <span class="o">-&gt;</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">tl</span><span class="o">)</span>
+<span class="o">|</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">tl</span><span class="o">),</span> <span class="o">(_</span> <span class="k">as</span> <span class="n">n</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">update</span> <span class="n">tl</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="n">x</span><span class="o">)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Notice that this version of update is not tail call, so we can transform it via CPS:</p>
@@ -281,14 +281,14 @@ changes the value of a node at a given index in the list:</p>
 <pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="k">rec</span> <span class="n">update</span> <span class="n">xs</span> <span class="n">idx</span> <span class="n">x</span> <span class="o">=</span> 
   <span class="k">let</span> <span class="k">rec</span> <span class="n">updateK</span> <span class="n">xs</span> <span class="n">idx</span> <span class="n">x</span> <span class="n">k</span> <span class="o">=</span> <span class="k">match</span> <span class="n">xs</span><span class="o">,</span> <span class="n">idx</span> <span class="k">with</span>
     <span class="o">|</span> <span class="nc">Nil</span><span class="o">,</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="nc">Subscript</span>
-    <span class="o">|</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">tl</span><span class="o">)</span><span class="o">,</span> <span class="n">0</span> <span class="o">-&gt;</span> <span class="n">k</span> <span class="o">(</span><span class="nc">Cons</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">tl</span><span class="o">)</span><span class="o">)</span>
-    <span class="o">|</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">tl</span><span class="o">)</span><span class="o">,</span> <span class="o">(</span><span class="o">_</span> <span class="k">as</span> <span class="n">n</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">updateK</span> <span class="n">tl</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="n">x</span> <span class="o">(</span><span class="k">fun</span> <span class="n">var1</span> <span class="o">-&gt;</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">var1</span><span class="o">)</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">tl</span><span class="o">),</span> <span class="n">0</span> <span class="o">-&gt;</span> <span class="n">k</span> <span class="o">(</span><span class="nc">Cons</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">tl</span><span class="o">))</span>
+    <span class="o">|</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">hd</span><span class="o">,</span> <span class="n">tl</span><span class="o">),</span> <span class="o">(_</span> <span class="k">as</span> <span class="n">n</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">updateK</span> <span class="n">tl</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="n">x</span> <span class="o">(</span><span class="k">fun</span> <span class="n">var1</span> <span class="o">-&gt;</span> <span class="nc">Cons</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">var1</span><span class="o">))</span>
   <span class="k">in</span>
   <span class="n">updateK</span> <span class="n">xs</span> <span class="n">idx</span> <span class="n">x</span> <span class="o">(</span><span class="k">fun</span> <span class="n">var1</span> <span class="o">-&gt;</span> <span class="n">var1</span><span class="o">)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>so that the tail optimization can be applied.</p>
-<h3 id="binary-search-trees">Binary search trees</h3>
+<h3 id="binary-search-trees-">Binary search trees</h3>
 <p>Binary search trees provide a good example of the kind of sharing the node with more than one pointer field. And a binary
 search tree can implement sets or finite maps, whose minimal interfaces as:</p>
 <div class="highlight"><div class="chroma">
@@ -424,10 +424,10 @@ the search value such that it take no more than <code>d + 1</code> comparisons, 
 way, we need <code>2d</code> comparisons in the worst case. And in the <code>insert</code> function, we introduce a <code>AlreadyInSet</code> exception
 so that it return the tree itself while inserting an existing value to the tree to avoid the extra copying in the situation.</p>
 <p>To sum up, we keep the persistence via sharing and copying.</p>
-<h2 id="some-familiar-data-structures-in-a-functional-setting">Some Familiar Data Structures in A Functional Setting</h2>
+<h2 id="some-familiar-data-structures-in-a-functional-setting-">Some Familiar Data Structures in A Functional Setting</h2>
 <p>Although many imperative data structures are difficult or impossible to adapt to a functional setting, some can be adapted
 quite easily.</p>
-<h3 id="leftist-heaps">Leftist heaps</h3>
+<h3 id="leftist-heaps-">Leftist heaps</h3>
 <p>Sometimes we need efficient access only to the minimum element, a data structure supporting this kind of access is called
 a <em>priority queue</em> or a <em>heap</em>:</p>
 <div class="highlight"><div class="chroma">
@@ -494,7 +494,7 @@ an empty node.</p>
     <span class="k">type</span> <span class="n">elem</span> <span class="o">=</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">t</span>
     <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> 
       <span class="o">|</span> <span class="nc">Leaf</span>
-      <span class="o">|</span> <span class="nc">Node</span> <span class="k">of</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">elem</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>  <span class="c">(*</span><span class="c"> rank </span><span class="c">*</span><span class="c"> value </span><span class="c">*</span><span class="c"> left </span><span class="c">*</span><span class="c"> right </span><span class="c">*)</span>
+      <span class="o">|</span> <span class="nc">Node</span> <span class="k">of</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">elem</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>  <span class="c">(* rank * value * left * right *)</span>
                 
     <span class="k">let</span> <span class="n">empty</span> <span class="o">=</span> <span class="nc">Leaf</span>
     <span class="k">let</span> <span class="n">isEmpty</span> <span class="o">=</span> <span class="k">function</span>
@@ -517,9 +517,9 @@ this can beimplemented as follow:</p>
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="k">rec</span> <span class="n">merge</span> <span class="n">h1</span> <span class="n">h2</span> <span class="o">=</span> <span class="k">match</span> <span class="n">h1</span><span class="o">,</span> <span class="n">h2</span> <span class="k">with</span>
-      <span class="o">|</span> <span class="o">(</span><span class="o">_</span> <span class="k">as</span> <span class="n">h</span><span class="o">)</span><span class="o">,</span> <span class="nc">Leaf</span> <span class="o">|</span> <span class="nc">Leaf</span><span class="o">,</span> <span class="o">(</span><span class="o">_</span> <span class="k">as</span> <span class="n">h</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">h</span>
-      <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">x1</span><span class="o">,</span> <span class="n">left1</span><span class="o">,</span> <span class="n">right1</span><span class="o">)</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">x2</span><span class="o">,</span> <span class="n">left2</span><span class="o">,</span> <span class="n">right2</span><span class="o">)</span> <span class="o">-&gt;</span>
-        <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="n">x1</span> <span class="n">x2</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">0</span>
+      <span class="o">|</span> <span class="o">(_</span> <span class="k">as</span> <span class="n">h</span><span class="o">),</span> <span class="nc">Leaf</span> <span class="o">|</span> <span class="nc">Leaf</span><span class="o">,</span> <span class="o">(_</span> <span class="k">as</span> <span class="n">h</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">h</span>
+      <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">x1</span><span class="o">,</span> <span class="n">left1</span><span class="o">,</span> <span class="n">right1</span><span class="o">),</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">x2</span><span class="o">,</span> <span class="n">left2</span><span class="o">,</span> <span class="n">right2</span><span class="o">)</span> <span class="o">-&gt;</span>
+        <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="n">x1</span> <span class="n">x2</span> <span class="o">&lt;=</span> <span class="n">0</span>
         <span class="k">then</span> <span class="n">makeTree</span> <span class="n">x1</span> <span class="n">left1</span> <span class="o">(</span><span class="n">merge</span> <span class="n">right1</span> <span class="n">h2</span><span class="o">)</span>
         <span class="k">else</span> <span class="n">makeTree</span> <span class="n">x2</span> <span class="n">left2</span> <span class="o">(</span><span class="n">merge</span> <span class="n">h1</span> <span class="n">right2</span><span class="o">)</span>
 </code></pre></td></tr></table>
@@ -539,10 +539,10 @@ this can beimplemented as follow:</p>
 <td class="lntd">
 <pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="n">rank</span> <span class="o">=</span> <span class="k">function</span>
   <span class="o">|</span> <span class="nc">Leaf</span> <span class="o">-&gt;</span> <span class="n">0</span>
-  <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="o">_</span><span class="o">,</span> <span class="o">_</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">r</span>
+  <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">r</span>
 
 <span class="k">let</span> <span class="n">makeTree</span> <span class="n">x</span> <span class="n">h1</span> <span class="n">h2</span> <span class="o">=</span> 
-  <span class="k">if</span> <span class="n">rank</span> <span class="n">left</span> <span class="o">&gt;</span><span class="o">=</span> <span class="n">rank</span> <span class="n">right</span>
+  <span class="k">if</span> <span class="n">rank</span> <span class="n">left</span> <span class="o">&gt;=</span> <span class="n">rank</span> <span class="n">right</span>
   <span class="k">then</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">rank</span> <span class="n">b</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">h1</span><span class="o">,</span> <span class="n">h2</span><span class="o">)</span>
   <span class="k">else</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">rank</span> <span class="n">a</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">h2</span><span class="o">,</span> <span class="n">h1</span><span class="o">)</span>
 </code></pre></td></tr></table>
@@ -614,7 +614,7 @@ trivial via <code>merge</code>. To sum up, we have:</p>
 </span><span class="lnt">61
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(*</span><span class="c">*</span><span class="c"> leftistHeap.ml </span><span class="c">*)</span>
+<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(** leftistHeap.ml *)</span>
 <span class="k">open</span> <span class="nc">Core</span>
 
 <span class="k">module</span> <span class="k">type</span> <span class="nc">Heap</span> <span class="o">=</span> <span class="k">sig</span>
@@ -638,7 +638,7 @@ trivial via <code>merge</code>. To sum up, we have:</p>
     <span class="k">type</span> <span class="n">elem</span> <span class="o">=</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">t</span>
     <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> 
       <span class="o">|</span> <span class="nc">Leaf</span>
-      <span class="o">|</span> <span class="nc">Node</span> <span class="k">of</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">elem</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>  <span class="c">(*</span><span class="c"> rank </span><span class="c">*</span><span class="c"> value </span><span class="c">*</span><span class="c"> left </span><span class="c">*</span><span class="c"> right </span><span class="c">*)</span>
+      <span class="o">|</span> <span class="nc">Node</span> <span class="k">of</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">elem</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>  <span class="c">(* rank * value * left * right *)</span>
                 
     <span class="k">let</span> <span class="n">empty</span> <span class="o">=</span> <span class="nc">Leaf</span>
 
@@ -648,36 +648,36 @@ trivial via <code>merge</code>. To sum up, we have:</p>
 
     <span class="k">let</span> <span class="n">rank</span> <span class="o">=</span> <span class="k">function</span>
       <span class="o">|</span> <span class="nc">Leaf</span> <span class="o">-&gt;</span> <span class="n">0</span>
-      <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="o">_</span><span class="o">,</span> <span class="o">_</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">r</span>
+      <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">r</span>
 
     <span class="k">let</span> <span class="n">makeTree</span> <span class="n">x</span> <span class="n">h1</span> <span class="n">h2</span> <span class="o">=</span> 
-      <span class="k">if</span> <span class="n">rank</span> <span class="n">h1</span> <span class="o">&gt;</span><span class="o">=</span> <span class="n">rank</span> <span class="n">h2</span>
+      <span class="k">if</span> <span class="n">rank</span> <span class="n">h1</span> <span class="o">&gt;=</span> <span class="n">rank</span> <span class="n">h2</span>
       <span class="k">then</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">rank</span> <span class="n">h2</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">h1</span><span class="o">,</span> <span class="n">h2</span><span class="o">)</span>
       <span class="k">else</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">rank</span> <span class="n">h1</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">h2</span><span class="o">,</span> <span class="n">h1</span><span class="o">)</span>
 
     <span class="k">let</span> <span class="k">rec</span> <span class="n">merge</span> <span class="n">h1</span> <span class="n">h2</span> <span class="o">=</span> <span class="k">match</span> <span class="n">h1</span><span class="o">,</span> <span class="n">h2</span> <span class="k">with</span>
-      <span class="o">|</span> <span class="o">(</span><span class="o">_</span> <span class="k">as</span> <span class="n">h</span><span class="o">)</span><span class="o">,</span> <span class="nc">Leaf</span> <span class="o">|</span> <span class="nc">Leaf</span><span class="o">,</span> <span class="o">(</span><span class="o">_</span> <span class="k">as</span> <span class="n">h</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">h</span>
-      <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">x1</span><span class="o">,</span> <span class="n">left1</span><span class="o">,</span> <span class="n">right1</span><span class="o">)</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">x2</span><span class="o">,</span> <span class="n">left2</span><span class="o">,</span> <span class="n">right2</span><span class="o">)</span> <span class="o">-&gt;</span>
-        <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="n">x1</span> <span class="n">x2</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">0</span>
+      <span class="o">|</span> <span class="o">(_</span> <span class="k">as</span> <span class="n">h</span><span class="o">),</span> <span class="nc">Leaf</span> <span class="o">|</span> <span class="nc">Leaf</span><span class="o">,</span> <span class="o">(_</span> <span class="k">as</span> <span class="n">h</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">h</span>
+      <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">x1</span><span class="o">,</span> <span class="n">left1</span><span class="o">,</span> <span class="n">right1</span><span class="o">),</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">x2</span><span class="o">,</span> <span class="n">left2</span><span class="o">,</span> <span class="n">right2</span><span class="o">)</span> <span class="o">-&gt;</span>
+        <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="n">x1</span> <span class="n">x2</span> <span class="o">&lt;=</span> <span class="n">0</span>
         <span class="k">then</span> <span class="n">makeTree</span> <span class="n">x1</span> <span class="n">left1</span> <span class="o">(</span><span class="n">merge</span> <span class="n">right1</span> <span class="n">h2</span><span class="o">)</span>
         <span class="k">else</span> <span class="n">makeTree</span> <span class="n">x2</span> <span class="n">left2</span> <span class="o">(</span><span class="n">merge</span> <span class="n">h1</span> <span class="n">right2</span><span class="o">)</span>
 
-    <span class="k">let</span> <span class="n">insert</span> <span class="n">x</span> <span class="n">h</span> <span class="o">=</span> <span class="n">merge</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="nc">Leaf</span><span class="o">,</span> <span class="nc">Leaf</span><span class="o">)</span><span class="o">)</span> <span class="n">h</span> 
+    <span class="k">let</span> <span class="n">insert</span> <span class="n">x</span> <span class="n">h</span> <span class="o">=</span> <span class="n">merge</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="nc">Leaf</span><span class="o">,</span> <span class="nc">Leaf</span><span class="o">))</span> <span class="n">h</span> 
     
     <span class="k">exception</span> <span class="nc">Empty</span>
     
     <span class="k">let</span> <span class="n">findMin</span> <span class="o">=</span> <span class="k">function</span>
-      <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="o">_</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">x</span>
+      <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">x</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">x</span>
       <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="nc">Empty</span>
 
     <span class="k">let</span> <span class="n">deleteMin</span> <span class="o">=</span> <span class="k">function</span> 
-      <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">merge</span> <span class="n">left</span> <span class="n">right</span>
+      <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">x</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">merge</span> <span class="n">left</span> <span class="n">right</span>
       <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="nc">Empty</span>
       
   <span class="k">end</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="binomial-heaps">Binomial heaps</h3>
+</div><h3 id="binomial-heaps-">Binomial heaps</h3>
 <p>Another common implementation of heaps is binomial queues, which we call <em>binomial heaps</em> to avoid confusion with FIFO
 queues. Binomial heaps are composed of more primitive objects known as binomial trees. Binomial trees are inductively
 defined as follows:</p>
@@ -730,7 +730,7 @@ trees in increasing order of rank until we find a missing rank, linking trees of
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="n">rank</span> <span class="o">=</span> <span class="k">function</span>
-  <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="o">_</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">r</span>
+  <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">r</span>
 
 <span class="k">let</span> <span class="k">rec</span> <span class="n">insertTree</span> <span class="n">t</span> <span class="o">=</span> <span class="k">function</span>
   <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="o">[</span><span class="n">t</span><span class="o">]</span>
@@ -739,7 +739,7 @@ trees in increasing order of rank until we find a missing rank, linking trees of
     <span class="k">then</span> <span class="n">t</span> <span class="o">::</span> <span class="n">h</span>
     <span class="k">else</span> <span class="n">insertTree</span> <span class="o">(</span><span class="n">link</span> <span class="n">t</span> <span class="n">hd</span><span class="o">)</span> <span class="n">tl</span>
 
-<span class="k">let</span> <span class="n">insert</span> <span class="n">x</span> <span class="n">h</span> <span class="o">=</span> <span class="n">insertTree</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span><span class="o">)</span> <span class="n">h</span>
+<span class="k">let</span> <span class="n">insert</span> <span class="n">x</span> <span class="n">h</span> <span class="o">=</span> <span class="n">insertTree</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="bp">[]</span><span class="o">))</span> <span class="n">h</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>The worst case is insertion into a heap of size $ n = 2^k - 1 $, requiring a total of k links and $ O(k)=O(log n) $. To
@@ -757,7 +757,7 @@ merge two heaps, we step through both lists of trees in increasing order of rank
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="k">rec</span> <span class="n">merge</span> <span class="n">ts1</span> <span class="n">ts2</span> <span class="o">=</span> <span class="k">match</span> <span class="n">ts1</span><span class="o">,</span> <span class="n">ts2</span> <span class="k">with</span>
-  <span class="o">|</span> <span class="bp">[]</span><span class="o">,</span> <span class="o">(</span><span class="o">_</span> <span class="k">as</span> <span class="n">ts</span><span class="o">)</span> <span class="o">|</span> <span class="o">(</span><span class="o">_</span> <span class="k">as</span> <span class="n">ts</span><span class="o">)</span><span class="o">,</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">ts</span>
+  <span class="o">|</span> <span class="bp">[]</span><span class="o">,</span> <span class="o">(_</span> <span class="k">as</span> <span class="n">ts</span><span class="o">)</span> <span class="o">|</span> <span class="o">(_</span> <span class="k">as</span> <span class="n">ts</span><span class="o">),</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">ts</span>
   <span class="o">|</span> <span class="n">hd1</span> <span class="o">::</span> <span class="n">tl1</span><span class="o">,</span> <span class="n">hd2</span> <span class="o">::</span> <span class="n">tl2</span> <span class="o">-&gt;</span> 
     <span class="k">if</span> <span class="n">rank</span> <span class="n">hd1</span> <span class="o">&lt;</span> <span class="n">rank</span> <span class="n">hd2</span>
     <span class="k">then</span> <span class="n">hd1</span> <span class="o">::</span> <span class="o">(</span><span class="n">merge</span> <span class="n">tl1</span> <span class="n">ts2</span><span class="o">)</span>
@@ -850,7 +850,7 @@ implementation as follow:</p>
 </span><span class="lnt">77
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(*</span><span class="c">*</span><span class="c"> binomialHeap.ml </span><span class="c">*)</span>
+<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(** binomialHeap.ml *)</span>
 <span class="k">open</span> <span class="nc">Core</span>
 
 <span class="k">module</span> <span class="k">type</span> <span class="nc">Heap</span> <span class="o">=</span> <span class="k">sig</span> 
@@ -882,16 +882,16 @@ implementation as follow:</p>
     <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">false</span>
     
   <span class="k">let</span> <span class="n">link</span> <span class="n">t1</span> <span class="n">t2</span> <span class="o">=</span> <span class="k">match</span> <span class="n">t1</span><span class="o">,</span> <span class="n">t2</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">v1</span><span class="o">,</span> <span class="n">ts1</span><span class="o">)</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">v2</span><span class="o">,</span> <span class="n">ts2</span><span class="o">)</span> <span class="o">-&gt;</span> 
-      <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="n">v1</span> <span class="n">v2</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">0</span>
+    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">v1</span><span class="o">,</span> <span class="n">ts1</span><span class="o">),</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">v2</span><span class="o">,</span> <span class="n">ts2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+      <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="n">v1</span> <span class="n">v2</span> <span class="o">&lt;=</span> <span class="n">0</span>
       <span class="k">then</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">v1</span><span class="o">,</span> <span class="n">t2</span> <span class="o">::</span> <span class="n">ts1</span><span class="o">)</span>
       <span class="k">else</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">v2</span><span class="o">,</span> <span class="n">t1</span> <span class="o">::</span> <span class="n">ts2</span><span class="o">)</span>
 
   <span class="k">let</span> <span class="n">rank</span> <span class="o">=</span> <span class="k">function</span>
-    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="o">_</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">r</span>
+    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">r</span>
 
   <span class="k">let</span> <span class="n">root</span> <span class="o">=</span> <span class="k">function</span>
-    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">v</span>
+    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">v</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">v</span>
 
   <span class="k">let</span> <span class="k">rec</span> <span class="n">insertTree</span> <span class="n">t</span> <span class="o">=</span> <span class="k">function</span>
     <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="o">[</span><span class="n">t</span><span class="o">]</span>
@@ -900,10 +900,10 @@ implementation as follow:</p>
       <span class="k">then</span> <span class="n">t</span> <span class="o">::</span> <span class="n">ts</span>
       <span class="k">else</span> <span class="n">insertTree</span> <span class="o">(</span><span class="n">link</span> <span class="n">t</span> <span class="n">hd</span><span class="o">)</span> <span class="n">tl</span>
 
-  <span class="k">let</span> <span class="n">insert</span> <span class="n">x</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">insertTree</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span><span class="o">)</span> <span class="n">ts</span>
+  <span class="k">let</span> <span class="n">insert</span> <span class="n">x</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">insertTree</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="bp">[]</span><span class="o">))</span> <span class="n">ts</span>
 
   <span class="k">let</span> <span class="k">rec</span> <span class="n">merge</span> <span class="n">ts1</span> <span class="n">ts2</span> <span class="o">=</span> <span class="k">match</span> <span class="n">ts1</span><span class="o">,</span> <span class="n">ts2</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="bp">[]</span><span class="o">,</span> <span class="o">(</span><span class="o">_</span> <span class="k">as</span> <span class="n">ts</span><span class="o">)</span> <span class="o">|</span> <span class="o">(</span><span class="o">_</span> <span class="k">as</span> <span class="n">ts</span><span class="o">)</span><span class="o">,</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">ts</span>
+    <span class="o">|</span> <span class="bp">[]</span><span class="o">,</span> <span class="o">(_</span> <span class="k">as</span> <span class="n">ts</span><span class="o">)</span> <span class="o">|</span> <span class="o">(_</span> <span class="k">as</span> <span class="n">ts</span><span class="o">),</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">ts</span>
     <span class="o">|</span> <span class="n">hd1</span> <span class="o">::</span> <span class="n">tl1</span><span class="o">,</span> <span class="n">hd2</span> <span class="o">::</span> <span class="n">tl2</span> <span class="o">-&gt;</span> 
       <span class="k">if</span> <span class="n">rank</span> <span class="n">hd1</span> <span class="o">&lt;</span> <span class="n">rank</span> <span class="n">hd2</span>
       <span class="k">then</span> <span class="n">hd1</span> <span class="o">::</span> <span class="o">(</span><span class="n">merge</span> <span class="n">tl1</span> <span class="n">ts2</span><span class="o">)</span>
@@ -916,7 +916,7 @@ implementation as follow:</p>
     <span class="o">|</span> <span class="o">[</span><span class="n">t</span><span class="o">]</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">,</span> <span class="bp">[]</span>
     <span class="o">|</span> <span class="n">hd</span> <span class="o">::</span> <span class="n">tl</span> <span class="o">-&gt;</span> <span class="k">match</span> <span class="o">(</span><span class="n">removeMinTree</span> <span class="n">tl</span><span class="o">)</span> <span class="k">with</span>
       <span class="o">|</span> <span class="n">t</span><span class="o">,</span> <span class="n">ts</span> <span class="o">-&gt;</span> 
-        <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="o">(</span><span class="n">root</span> <span class="n">hd</span><span class="o">)</span> <span class="o">(</span><span class="n">root</span> <span class="n">t</span><span class="o">)</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">0</span> 
+        <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="o">(</span><span class="n">root</span> <span class="n">hd</span><span class="o">)</span> <span class="o">(</span><span class="n">root</span> <span class="n">t</span><span class="o">)</span> <span class="o">&lt;=</span> <span class="n">0</span> 
         <span class="k">then</span> <span class="n">hd</span><span class="o">,</span> <span class="n">tl</span>
         <span class="k">else</span> <span class="n">t</span><span class="o">,</span> <span class="n">hd</span> <span class="o">::</span> <span class="n">ts</span>
 
@@ -924,13 +924,13 @@ implementation as follow:</p>
     <span class="o">|</span> <span class="n">t</span><span class="o">,</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="n">root</span> <span class="n">t</span>
 
   <span class="k">let</span> <span class="n">deleteMin</span> <span class="n">ts</span> <span class="o">=</span> <span class="k">match</span> <span class="o">(</span><span class="n">removeMinTree</span> <span class="n">ts</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="o">_</span><span class="o">,</span> <span class="n">ts1</span><span class="o">)</span><span class="o">,</span> <span class="n">ts2</span> <span class="o">-&gt;</span> <span class="n">merge</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">rev</span> <span class="n">ts1</span><span class="o">)</span> <span class="n">ts2</span>
+    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="o">_,</span> <span class="n">ts1</span><span class="o">),</span> <span class="n">ts2</span> <span class="o">-&gt;</span> <span class="n">merge</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">rev</span> <span class="n">ts1</span><span class="o">)</span> <span class="n">ts2</span>
  
 <span class="k">end</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>And each major operation require O(log n) time in the worst case.</p>
-<h3 id="red-black-tree">Red black tree</h3>
+<h3 id="red-black-tree-">Red black tree</h3>
 <p>As we know, a simply binary search tree perform very poorly on ordered data, for which any individual operation might
 take up to O(n) times. The solution to this problem is to keep each tree approximately balanced, which is knwon as
 balanced binary search tree, and red-black trees are one of the most popular families of balanced binary search tree. A
@@ -951,7 +951,7 @@ and red nodes, is no more than twice as long as the shortest possible path, one 
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">type</span> <span class="n">color</span> <span class="o">=</span> <span class="nc">Red</span> <span class="o">|</span> <span class="nc">Black</span>
-<span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="nc">Empty</span> <span class="o">|</span> <span class="nc">Node</span> <span class="k">of</span> <span class="o">(</span><span class="n">color</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">elem</span> <span class="o">*</span> <span class="n">t</span><span class="o">)</span>  <span class="c">(*</span><span class="c"> for some convenience </span><span class="c">*)</span>
+<span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="nc">Empty</span> <span class="o">|</span> <span class="nc">Node</span> <span class="k">of</span> <span class="o">(</span><span class="n">color</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">elem</span> <span class="o">*</span> <span class="n">t</span><span class="o">)</span>  <span class="c">(* for some convenience *)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>The member function is the same as the function in binary search tree, because it does not care the color of node:</p>
@@ -969,7 +969,7 @@ and red nodes, is no more than twice as long as the shortest possible path, one 
 <td class="lntd">
 <pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="k">rec</span> <span class="n">member</span> <span class="n">x</span> <span class="o">=</span> <span class="k">function</span>
   <span class="o">|</span> <span class="nc">Empty</span> <span class="o">-&gt;</span> <span class="bp">false</span>
-  <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
+  <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
     <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="n">x</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">0</span> 
     <span class="k">then</span> <span class="n">member</span> <span class="n">x</span> <span class="n">left</span>
     <span class="k">else</span> <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="n">x</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">0</span>
@@ -1004,8 +1004,8 @@ and red nodes, is no more than twice as long as the shortest possible path, one 
       <span class="k">then</span> <span class="n">balance</span> <span class="n">color</span> <span class="n">left</span> <span class="n">v</span> <span class="o">(</span><span class="n">aux</span> <span class="n">right</span><span class="o">)</span>
       <span class="k">else</span> <span class="n">tree</span>
   <span class="k">in</span> <span class="k">match</span> <span class="o">(</span><span class="n">aux</span> <span class="n">tree</span><span class="o">)</span> <span class="k">with</span>
-  <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span>
-  <span class="o">|</span> <span class="nc">Empty</span> <span class="o">-&gt;</span> <span class="nc">Empty</span>  <span class="c">(*</span><span class="c"> have no sense except avoid warning </span><span class="c">*)</span>
+  <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span>
+  <span class="o">|</span> <span class="nc">Empty</span> <span class="o">-&gt;</span> <span class="nc">Empty</span>  <span class="c">(* have no sense except avoid warning *)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>First, when we create a new node with <code>Empty</code>, we initially color it red. Second we force the final root to be black,
@@ -1029,15 +1029,15 @@ two black children:</p>
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="n">balance</span> <span class="n">color</span> <span class="n">left</span> <span class="n">v</span> <span class="n">right</span> <span class="o">=</span> <span class="k">match</span> <span class="n">color</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span> <span class="k">with</span>
-  <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">)</span><span class="o">)</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span>       <span class="c">(*</span><span class="c"> left-left case   </span><span class="c">*)</span>
-  <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">)</span><span class="o">)</span><span class="o">)</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span>       <span class="c">(*</span><span class="c"> left-right case  </span><span class="c">*)</span>
-  <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">)</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span><span class="o">)</span>       <span class="c">(*</span><span class="c"> right-left case  </span><span class="c">*)</span>
-  <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">c</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span><span class="o">)</span><span class="o">)</span> <span class="o">-&gt;</span>    <span class="c">(*</span><span class="c"> right-right case </span><span class="c">*)</span>
-    <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">c</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span><span class="o">)</span>
+  <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">b</span><span class="o">),</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">)),</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span>       <span class="c">(* left-left case   *)</span>
+  <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">))),</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span>       <span class="c">(* left-right case  *)</span>
+  <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">),</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">))</span>       <span class="c">(* right-left case  *)</span>
+  <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">c</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">)))</span> <span class="o">-&gt;</span>    <span class="c">(* right-right case *)</span>
+    <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">b</span><span class="o">),</span> <span class="n">y</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">c</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">))</span>
   <span class="o">|</span> <span class="o">_</span> <span class="k">as</span> <span class="n">tuple</span> <span class="o">-&gt;</span> <span class="nc">Node</span> <span class="n">tuple</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>And you can see it's much elegant than any version written in imperative setting. After balancing a given subtree, the
+</div><p>And you can see it&rsquo;s much elegant than any version written in imperative setting. After balancing a given subtree, the
 red root of that subtree might now be the child of another red node. Thus we continue balancing all the way to the top
 of the tree. At the very top of the tree, we might end up with a red node with a red child, but with no black parent, we
 handle this case by always recoloring the root to be black. Now we sum it all:</p>
@@ -1094,7 +1094,7 @@ handle this case by always recoloring the root to be black. Now we sum it all:</
 </span><span class="lnt">49
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(*</span><span class="c">*</span><span class="c"> redBlackSet.ml </span><span class="c">*)</span>
+<pre class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="c">(** redBlackSet.ml *)</span>
 <span class="k">open</span> <span class="nc">Core</span>
 
 <span class="k">module</span> <span class="k">type</span> <span class="nc">Set</span> <span class="o">=</span> <span class="k">sig</span>
@@ -1115,7 +1115,7 @@ handle this case by always recoloring the root to be black. Now we sum it all:</
 
   <span class="k">let</span> <span class="k">rec</span> <span class="n">member</span> <span class="n">x</span> <span class="o">=</span> <span class="k">function</span>
     <span class="o">|</span> <span class="nc">Empty</span> <span class="o">-&gt;</span> <span class="bp">false</span>
-    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
       <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="n">x</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">0</span> 
       <span class="k">then</span> <span class="n">member</span> <span class="n">x</span> <span class="n">left</span>
       <span class="k">else</span> <span class="k">if</span> <span class="nn">Elem</span><span class="p">.</span><span class="n">compare</span> <span class="n">x</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">0</span>
@@ -1123,11 +1123,11 @@ handle this case by always recoloring the root to be black. Now we sum it all:</
       <span class="k">else</span> <span class="bp">true</span>
 
   <span class="k">let</span> <span class="n">balance</span> <span class="n">color</span> <span class="n">left</span> <span class="n">v</span> <span class="n">right</span> <span class="o">=</span> <span class="k">match</span> <span class="n">color</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">)</span><span class="o">)</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span>       <span class="c">(*</span><span class="c"> left-left case   </span><span class="c">*)</span>
-    <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">)</span><span class="o">)</span><span class="o">)</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span>       <span class="c">(*</span><span class="c"> left-right case  </span><span class="c">*)</span>
-    <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">)</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span><span class="o">)</span>       <span class="c">(*</span><span class="c"> right-left case  </span><span class="c">*)</span>
-    <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">c</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span><span class="o">)</span><span class="o">)</span> <span class="o">-&gt;</span>    <span class="c">(*</span><span class="c"> right-right case </span><span class="c">*)</span>
-      <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">c</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">b</span><span class="o">),</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">)),</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span>       <span class="c">(* left-left case   *)</span>
+    <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">))),</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span>       <span class="c">(* left-right case  *)</span>
+    <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">c</span><span class="o">),</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">))</span>       <span class="c">(* right-left case  *)</span>
+    <span class="o">|</span> <span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="n">c</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">)))</span> <span class="o">-&gt;</span>    <span class="c">(* right-right case *)</span>
+      <span class="nc">Node</span> <span class="o">(</span><span class="nc">Red</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">b</span><span class="o">),</span> <span class="n">y</span><span class="o">,</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">c</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">d</span><span class="o">))</span>
     <span class="o">|</span> <span class="o">_</span> <span class="k">as</span> <span class="n">tuple</span> <span class="o">-&gt;</span> <span class="nc">Node</span> <span class="n">tuple</span>
 
   <span class="k">let</span> <span class="n">insert</span> <span class="n">x</span> <span class="n">tree</span> <span class="o">=</span> 
@@ -1140,8 +1140,8 @@ handle this case by always recoloring the root to be black. Now we sum it all:</
         <span class="k">then</span> <span class="n">balance</span> <span class="n">color</span> <span class="n">left</span> <span class="n">v</span> <span class="o">(</span><span class="n">aux</span> <span class="n">right</span><span class="o">)</span>
         <span class="k">else</span> <span class="n">tree</span>
     <span class="k">in</span> <span class="k">match</span> <span class="o">(</span><span class="n">aux</span> <span class="n">tree</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span>
-    <span class="o">|</span> <span class="nc">Empty</span> <span class="o">-&gt;</span> <span class="nc">Empty</span>  <span class="c">(*</span><span class="c"> have no sense except avoid warning </span><span class="c">*)</span>
+    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(_,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Node</span> <span class="o">(</span><span class="nc">Black</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">v</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Empty</span> <span class="o">-&gt;</span> <span class="nc">Empty</span>  <span class="c">(* have no sense except avoid warning *)</span>
 <span class="k">end</span>
 </code></pre></td></tr></table>
 </div>
@@ -1167,18 +1167,18 @@ on the left child their is no need for red-red violations involving the right ch
     <div id="toc" class="Box Box--blue mb-3">
       <b>Functional Data Structure 1</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#persistence">Persistence</a>
+    <li><a href="#introduction-">Introduction</a></li>
+    <li><a href="#persistence-">Persistence</a>
       <ul>
-        <li><a href="#lists">Lists</a></li>
-        <li><a href="#binary-search-trees">Binary search trees</a></li>
+        <li><a href="#lists-">Lists</a></li>
+        <li><a href="#binary-search-trees-">Binary search trees</a></li>
       </ul>
     </li>
-    <li><a href="#some-familiar-data-structures-in-a-functional-setting">Some Familiar Data Structures in A Functional Setting</a>
+    <li><a href="#some-familiar-data-structures-in-a-functional-setting-">Some Familiar Data Structures in A Functional Setting</a>
       <ul>
-        <li><a href="#leftist-heaps">Leftist heaps</a></li>
-        <li><a href="#binomial-heaps">Binomial heaps</a></li>
-        <li><a href="#red-black-tree">Red black tree</a></li>
+        <li><a href="#leftist-heaps-">Leftist heaps</a></li>
+        <li><a href="#binomial-heaps-">Binomial heaps</a></li>
+        <li><a href="#red-black-tree-">Red black tree</a></li>
       </ul>
     </li>
   </ul>

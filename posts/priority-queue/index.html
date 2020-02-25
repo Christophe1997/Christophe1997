@@ -104,9 +104,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2019-12-13. Published at: 2018-04-04.">
+      <span title="Lastmod: 2020-02-25. Published at: 2018-04-04.">
         
-          Lastmod: 2019-12-13
+          Lastmod: 2020-02-25
         
       </span>
     </div>
@@ -116,7 +116,7 @@ if (!doNotTrack) {
 <article>
   
   <section class="pb-6 mb-3 border-bottom">
-    <h2 id="heading">优先队列</h2>
+    <h2 id="优先队列-">优先队列</h2>
 <p>当一颗二叉树的每个节点都大于等于它的两个子结点时, 它被称为堆有序, 于是从任一结点向上都能够得到一列非递减的元素. 二叉堆(以下简称堆)是一组能够用堆有序
 的完全二叉树排序的元素, 并在数组中按照层级存储. 在一个堆中, 位置k的节点的父结点的位置为$ \lfloor k/2 \rfloor $, 而它的两个子节点的位置是2k和
 2k+1.</p>
@@ -206,89 +206,89 @@ if (!doNotTrack) {
 </span><span class="lnt">80
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MaxPQ</span><span class="o">&lt;</span><span class="n">Key</span> <span class="kd">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">Key</span><span class="o">[</span><span class="o">]</span> <span class="n">pq</span><span class="o">;</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MaxPQ</span><span class="o">&lt;</span><span class="n">Key</span> <span class="kd">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Key</span><span class="o">[]</span> <span class="n">pq</span><span class="o">;</span>
     <span class="kd">private</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
 
     <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">&#34;unchecked&#34;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Key</span><span class="o">[</span><span class="o">]</span> <span class="nf">cast</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="o">(</span><span class="n">Key</span><span class="o">[</span><span class="o">]</span><span class="o">)</span> <span class="n">obj</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Key</span><span class="o">[]</span> <span class="nf">cast</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">Key</span><span class="o">[])</span> <span class="n">obj</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">less</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">compareTo</span><span class="o">(</span><span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">])</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="kd">private</span> <span class="kt">void</span> <span class="nf">exch</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Key</span> <span class="n">t</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">;</span>
-        <span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">Key</span> <span class="n">t</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
         <span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">t</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="kd">private</span> <span class="kt">void</span> <span class="nf">swim</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">while</span> <span class="o">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="n">1</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">less</span><span class="o">(</span><span class="n">k</span> <span class="o">/</span> <span class="n">2</span><span class="o">,</span> <span class="n">k</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">exch</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">k</span> <span class="o">/</span> <span class="n">2</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="n">1</span> <span class="o">&amp;&amp;</span> <span class="n">less</span><span class="o">(</span><span class="n">k</span> <span class="o">/</span> <span class="n">2</span><span class="o">,</span> <span class="n">k</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">exch</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">k</span> <span class="o">/</span> <span class="n">2</span><span class="o">);</span>
             <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">/</span> <span class="n">2</span><span class="o">;</span>
         <span class="o">}</span>
     <span class="o">}</span>
 
     <span class="kd">private</span> <span class="kt">void</span> <span class="nf">sink</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">while</span> <span class="o">(</span><span class="n">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
             <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">2</span> <span class="o">*</span> <span class="n">k</span><span class="o">;</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">less</span><span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="n">j</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span><span class="o">)</span> <span class="n">j</span><span class="o">+</span><span class="o">+</span><span class="o">;</span>
-            <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">less</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">)</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
-            <span class="n">exch</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">&amp;&amp;</span> <span class="n">less</span><span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="n">j</span> <span class="o">+</span> <span class="n">1</span><span class="o">))</span> <span class="n">j</span><span class="o">++;</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">less</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">))</span> <span class="k">break</span><span class="o">;</span>
+            <span class="n">exch</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">);</span>
             <span class="n">k</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
         <span class="o">}</span>
     <span class="o">}</span>
 
     <span class="kd">private</span> <span class="kt">void</span> <span class="nf">resize</span><span class="o">(</span><span class="kt">int</span> <span class="n">newSize</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Key</span><span class="o">[</span><span class="o">]</span> <span class="n">t</span> <span class="o">=</span> <span class="n">cast</span><span class="o">(</span><span class="k">new</span> <span class="n">Comparable</span><span class="o">[</span><span class="n">newSize</span><span class="o">]</span><span class="o">)</span><span class="o">;</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">arraycopy</span><span class="o">(</span><span class="n">pq</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">t</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">N</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">Key</span><span class="o">[]</span> <span class="n">t</span> <span class="o">=</span> <span class="n">cast</span><span class="o">(</span><span class="k">new</span> <span class="n">Comparable</span><span class="o">[</span><span class="n">newSize</span><span class="o">]);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">arraycopy</span><span class="o">(</span><span class="n">pq</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">t</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">N</span><span class="o">);</span>
         <span class="n">pq</span> <span class="o">=</span> <span class="n">t</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="nf">MaxPQ</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">pq</span> <span class="o">=</span> <span class="n">cast</span><span class="o">(</span><span class="k">new</span> <span class="n">Comparable</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="o">)</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">MaxPQ</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">pq</span> <span class="o">=</span> <span class="n">cast</span><span class="o">(</span><span class="k">new</span> <span class="n">Comparable</span><span class="o">[</span><span class="n">1</span><span class="o">]);</span>
     <span class="o">}</span>
 
     <span class="kd">public</span> <span class="nf">MaxPQ</span><span class="o">(</span><span class="kt">int</span> <span class="n">max</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">pq</span> <span class="o">=</span> <span class="n">cast</span><span class="o">(</span><span class="k">new</span> <span class="n">Comparable</span><span class="o">[</span><span class="n">max</span> <span class="o">+</span> <span class="n">1</span><span class="o">]</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">pq</span> <span class="o">=</span> <span class="n">cast</span><span class="o">(</span><span class="k">new</span> <span class="n">Comparable</span><span class="o">[</span><span class="n">max</span> <span class="o">+</span> <span class="n">1</span><span class="o">]);</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="nf">MaxPQ</span><span class="o">(</span><span class="n">Key</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">MaxPQ</span><span class="o">(</span><span class="n">Key</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
     <span class="o">}</span>
 
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">(</span><span class="n">Key</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">N</span> <span class="o">&gt;</span><span class="o">=</span> <span class="n">pq</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="n">resize</span><span class="o">(</span><span class="n">pq</span><span class="o">.</span><span class="na">length</span> <span class="o">*</span> <span class="n">2</span><span class="o">)</span><span class="o">;</span>
-        <span class="n">pq</span><span class="o">[</span><span class="o">+</span><span class="o">+</span><span class="n">N</span><span class="o">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">;</span>
-        <span class="n">swim</span><span class="o">(</span><span class="n">N</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">N</span> <span class="o">&gt;=</span> <span class="n">pq</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="n">resize</span><span class="o">(</span><span class="n">pq</span><span class="o">.</span><span class="na">length</span> <span class="o">*</span> <span class="n">2</span><span class="o">);</span>
+        <span class="n">pq</span><span class="o">[++</span><span class="n">N</span><span class="o">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">;</span>
+        <span class="n">swim</span><span class="o">(</span><span class="n">N</span><span class="o">);</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="n">Key</span> <span class="nf">max</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">pq</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">Key</span> <span class="nf">max</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">pq</span><span class="o">[</span><span class="n">1</span><span class="o">];</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="n">Key</span> <span class="nf">delMax</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">N</span> <span class="o">&lt;</span> <span class="o">(</span><span class="n">pq</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">/</span> <span class="n">2</span><span class="o">)</span> <span class="n">resize</span><span class="o">(</span><span class="n">pq</span><span class="o">.</span><span class="na">length</span> <span class="o">/</span> <span class="n">2</span><span class="o">)</span><span class="o">;</span>
-        <span class="n">Key</span> <span class="n">max</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="o">;</span>
-        <span class="n">exch</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">N</span><span class="o">)</span><span class="o">;</span>
-        <span class="n">pq</span><span class="o">[</span><span class="n">N</span><span class="o">-</span><span class="o">-</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="n">sink</span><span class="o">(</span><span class="n">1</span><span class="o">)</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">Key</span> <span class="nf">delMax</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">N</span> <span class="o">&lt;</span> <span class="o">(</span><span class="n">pq</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">/</span> <span class="n">2</span><span class="o">)</span> <span class="n">resize</span><span class="o">(</span><span class="n">pq</span><span class="o">.</span><span class="na">length</span> <span class="o">/</span> <span class="n">2</span><span class="o">);</span>
+        <span class="n">Key</span> <span class="n">max</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">1</span><span class="o">];</span>
+        <span class="n">exch</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">N</span><span class="o">);</span>
+        <span class="n">pq</span><span class="o">[</span><span class="n">N</span><span class="o">--]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">sink</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
         <span class="k">return</span> <span class="n">max</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEmpty</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">N</span> <span class="o">=</span><span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEmpty</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">N</span> <span class="o">==</span> <span class="n">0</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">()</span> <span class="o">{</span>
         <span class="k">return</span> <span class="n">N</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="heading1">索引优先队列</h2>
+</div><h2 id="索引优先队列-">索引优先队列</h2>
 <p>索引优先队列可以看成一个能够快速访问其中最小元素的数组, 事实上, 它能够快速访问数组的一个特定子集中的最小元素.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -394,103 +394,103 @@ if (!doNotTrack) {
 </span><span class="lnt">100
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">IndexMinPQ</span><span class="o">&lt;</span><span class="n">Key</span> <span class="kd">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span><span class="o">&gt;</span> <span class="o">{</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">IndexMinPQ</span><span class="o">&lt;</span><span class="n">Key</span> <span class="kd">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
 
-    <span class="kd">private</span> <span class="kt">int</span><span class="o">[</span><span class="o">]</span> <span class="n">pq</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">int</span><span class="o">[</span><span class="o">]</span> <span class="n">qp</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">Key</span><span class="o">[</span><span class="o">]</span> <span class="n">keys</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">pq</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">qp</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Key</span><span class="o">[]</span> <span class="n">keys</span><span class="o">;</span>
     <span class="kd">private</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
 
     <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">&#34;unchecked&#34;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Key</span><span class="o">[</span><span class="o">]</span> <span class="nf">cast</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="o">(</span><span class="n">Key</span><span class="o">[</span><span class="o">]</span><span class="o">)</span> <span class="n">obj</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Key</span><span class="o">[]</span> <span class="nf">cast</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">Key</span><span class="o">[])</span> <span class="n">obj</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">greater</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">keys</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">]</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">keys</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="o">]</span><span class="o">)</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">keys</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">]].</span><span class="na">compareTo</span><span class="o">(</span><span class="n">keys</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">]])</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="kd">private</span> <span class="kt">void</span> <span class="nf">exch</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">;</span>
-        <span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
         <span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">t</span><span class="o">;</span>
-        <span class="n">qp</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
-        <span class="n">qp</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="o">]</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
+        <span class="n">qp</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+        <span class="n">qp</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">j</span><span class="o">]]</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="kd">private</span> <span class="kt">void</span> <span class="nf">swim</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">while</span> <span class="o">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="n">1</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">greater</span><span class="o">(</span><span class="n">k</span> <span class="o">/</span> <span class="n">2</span><span class="o">,</span> <span class="n">k</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">exch</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">k</span> <span class="o">/</span> <span class="n">2</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="n">1</span> <span class="o">&amp;&amp;</span> <span class="n">greater</span><span class="o">(</span><span class="n">k</span> <span class="o">/</span> <span class="n">2</span><span class="o">,</span> <span class="n">k</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">exch</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">k</span> <span class="o">/</span> <span class="n">2</span><span class="o">);</span>
             <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">/</span> <span class="n">2</span><span class="o">;</span>
         <span class="o">}</span>
     <span class="o">}</span>
 
     <span class="kd">private</span> <span class="kt">void</span> <span class="nf">sink</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">while</span> <span class="o">(</span><span class="n">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
             <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">2</span> <span class="o">*</span> <span class="n">k</span><span class="o">;</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">greater</span><span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="n">j</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span><span class="o">)</span> <span class="n">j</span><span class="o">+</span><span class="o">+</span><span class="o">;</span>
-            <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">greater</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">)</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
-            <span class="n">exch</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">)</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">&amp;&amp;</span> <span class="n">greater</span><span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="n">j</span> <span class="o">+</span> <span class="n">1</span><span class="o">))</span> <span class="n">j</span><span class="o">++;</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">greater</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">))</span> <span class="k">break</span><span class="o">;</span>
+            <span class="n">exch</span><span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">);</span>
             <span class="n">k</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
         <span class="o">}</span>
     <span class="o">}</span>
 
     <span class="kd">public</span> <span class="nf">IndexMinPQ</span><span class="o">(</span><span class="kt">int</span> <span class="n">max</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">pq</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">max</span> <span class="o">+</span> <span class="n">1</span><span class="o">]</span><span class="o">;</span>
-        <span class="n">qp</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">max</span> <span class="o">+</span> <span class="n">1</span><span class="o">]</span><span class="o">;</span>
-        <span class="n">keys</span> <span class="o">=</span> <span class="n">cast</span><span class="o">(</span><span class="k">new</span> <span class="n">Comparable</span><span class="o">[</span><span class="n">max</span> <span class="o">+</span> <span class="n">1</span><span class="o">]</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">pq</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">max</span> <span class="o">+</span> <span class="n">1</span><span class="o">];</span>
+        <span class="n">qp</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">max</span> <span class="o">+</span> <span class="n">1</span><span class="o">];</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">cast</span><span class="o">(</span><span class="k">new</span> <span class="n">Comparable</span><span class="o">[</span><span class="n">max</span> <span class="o">+</span> <span class="n">1</span><span class="o">]);</span>
         <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">elem</span> <span class="o">:</span> <span class="n">qp</span><span class="o">)</span> <span class="n">elem</span> <span class="o">=</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span><span class="o">,</span> <span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">N</span><span class="o">+</span><span class="o">+</span><span class="o">;</span>
+        <span class="n">N</span><span class="o">++;</span>
         <span class="n">qp</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">N</span><span class="o">;</span>
         <span class="n">pq</span><span class="o">[</span><span class="n">N</span><span class="o">]</span> <span class="o">=</span> <span class="n">k</span><span class="o">;</span>
         <span class="n">keys</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
-        <span class="n">swim</span><span class="o">(</span><span class="n">N</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">swim</span><span class="o">(</span><span class="n">N</span><span class="o">);</span>
     <span class="o">}</span>
 
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">change</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span><span class="o">,</span> <span class="n">Key</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">keys</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
-        <span class="n">swim</span><span class="o">(</span><span class="n">qp</span><span class="o">[</span><span class="n">k</span><span class="o">]</span><span class="o">)</span><span class="o">;</span>
-        <span class="n">sink</span><span class="o">(</span><span class="n">qp</span><span class="o">[</span><span class="n">k</span><span class="o">]</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">swim</span><span class="o">(</span><span class="n">qp</span><span class="o">[</span><span class="n">k</span><span class="o">]);</span>
+        <span class="n">sink</span><span class="o">(</span><span class="n">qp</span><span class="o">[</span><span class="n">k</span><span class="o">]);</span>
     <span class="o">}</span>
 
     <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">contains</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">qp</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">!</span><span class="o">=</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">qp</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">qp</span><span class="o">[</span><span class="n">k</span><span class="o">]</span><span class="o">;</span>
-        <span class="n">exch</span><span class="o">(</span><span class="n">index</span><span class="o">,</span> <span class="n">N</span><span class="o">-</span><span class="o">-</span><span class="o">)</span><span class="o">;</span>
-        <span class="n">swim</span><span class="o">(</span><span class="n">index</span><span class="o">)</span><span class="o">;</span>
-        <span class="n">sink</span><span class="o">(</span><span class="n">index</span><span class="o">)</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">qp</span><span class="o">[</span><span class="n">k</span><span class="o">];</span>
+        <span class="n">exch</span><span class="o">(</span><span class="n">index</span><span class="o">,</span> <span class="n">N</span><span class="o">--);</span>
+        <span class="n">swim</span><span class="o">(</span><span class="n">index</span><span class="o">);</span>
+        <span class="n">sink</span><span class="o">(</span><span class="n">index</span><span class="o">);</span>
         <span class="n">keys</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
         <span class="n">qp</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="n">Key</span> <span class="nf">min</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">keys</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="o">]</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">Key</span> <span class="nf">min</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">keys</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">1</span><span class="o">]];</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">minIndex</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">pq</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">minIndex</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">pq</span><span class="o">[</span><span class="n">1</span><span class="o">];</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">delMin</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">idxOfMin</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="o">;</span>
-        <span class="n">exch</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">N</span><span class="o">)</span><span class="o">;</span>
-        <span class="n">qp</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">N</span><span class="o">-</span><span class="o">-</span><span class="o">]</span><span class="o">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
-        <span class="n">sink</span><span class="o">(</span><span class="n">1</span><span class="o">)</span><span class="o">;</span>
-        <span class="n">keys</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">N</span><span class="o">]</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">delMin</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">idxOfMin</span> <span class="o">=</span> <span class="n">pq</span><span class="o">[</span><span class="n">1</span><span class="o">];</span>
+        <span class="n">exch</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">N</span><span class="o">);</span>
+        <span class="n">qp</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">N</span><span class="o">--]]</span> <span class="o">=</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+        <span class="n">sink</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+        <span class="n">keys</span><span class="o">[</span><span class="n">pq</span><span class="o">[</span><span class="n">N</span><span class="o">]]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
         <span class="k">return</span> <span class="n">idxOfMin</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEmpty</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">N</span> <span class="o">=</span><span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEmpty</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">N</span> <span class="o">==</span> <span class="n">0</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">()</span> <span class="o">{</span>
         <span class="k">return</span> <span class="n">N</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -515,8 +515,8 @@ if (!doNotTrack) {
     <div id="toc" class="Box Box--blue mb-3">
       <b>优先队列</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#heading">优先队列</a></li>
-    <li><a href="#heading1">索引优先队列</a></li>
+    <li><a href="#优先队列-">优先队列</a></li>
+    <li><a href="#索引优先队列-">索引优先队列</a></li>
   </ul>
 </nav></div>
   
