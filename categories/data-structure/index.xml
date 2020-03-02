@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data Structure on CastOff</title>
+    <link>https://christophe1997.github.io/categories/data-structure/</link>
+    <description>Recent content in Data Structure on CastOff</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy;Christophe</copyright>
+    <lastBuildDate>Thu, 27 Feb 2020 21:17:41 +0800</lastBuildDate>
+    
+	<atom:link href="https://christophe1997.github.io/categories/data-structure/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Zipper</title>
+      <link>https://christophe1997.github.io/posts/zipper/</link>
+      <pubDate>Thu, 27 Feb 2020 21:17:41 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/zipper/</guid>
+      <description>近来想于函数式编程中寻找类似与双向链表的数据结构, 结果找到了Zipper. Zipper中文为拉链, 泛指一类常在函数式编程中使用的聚合数据结构</description>
+    </item>
+    
+  </channel>
+</rss>

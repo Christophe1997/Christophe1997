@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy;Christophe</copyright>
-    <lastBuildDate>Tue, 25 Feb 2020 11:50:04 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 27 Feb 2020 21:17:41 +0800</lastBuildDate>
     
 	<atom:link href="https://christophe1997.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Functional</title>
+      <link>https://christophe1997.github.io/tags/functional/</link>
+      <pubDate>Thu, 27 Feb 2020 21:17:41 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/functional/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Zipper</title>
+      <link>https://christophe1997.github.io/tags/zipper/</link>
+      <pubDate>Thu, 27 Feb 2020 21:17:41 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/zipper/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Bitwise</title>
@@ -81,15 +99,6 @@
       <pubDate>Fri, 03 Aug 2018 13:10:58 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/tags/system/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Functional</title>
-      <link>https://christophe1997.github.io/tags/functional/</link>
-      <pubDate>Tue, 24 Jul 2018 15:54:24 +0000</pubDate>
-      
-      <guid>https://christophe1997.github.io/tags/functional/</guid>
       <description></description>
     </item>
     

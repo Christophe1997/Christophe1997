@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Zipper</title>
+      <link>https://christophe1997.github.io/posts/zipper/</link>
+      <pubDate>Thu, 27 Feb 2020 21:17:41 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/zipper/</guid>
+      <description>近来想于函数式编程中寻找类似与双向链表的数据结构, 结果找到了Zipper. Zipper中文为拉链, 泛指一类常在函数式编程中使用的聚合数据结构</description>
+    </item>
+    
+    <item>
       <title>Some Bitwise Tricks</title>
       <link>https://christophe1997.github.io/posts/some-bitwise-tricks/</link>
       <pubDate>Tue, 25 Feb 2020 11:50:04 +0800</pubDate>

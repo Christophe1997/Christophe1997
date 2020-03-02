@@ -9,16 +9,41 @@
   
   <url>
     <loc>https://christophe1997.github.io/</loc>
-    <lastmod>2020-03-01T21:28:13+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://christophe1997.github.io/tags/bitwise/</loc>
-    <lastmod>2020-02-25T19:55:00+08:00</lastmod>
+    <lastmod>2020-03-01T21:42:46+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://christophe1997.github.io/categories/</loc>
+    <lastmod>2020-03-02T21:40:55+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/categories/data-structure/</loc>
+    <lastmod>2020-03-02T21:40:55+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/tags/functional/</loc>
+    <lastmod>2020-03-02T21:40:55+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/tags/</loc>
+    <lastmod>2020-03-02T21:40:55+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/tags/zipper/</loc>
+    <lastmod>2020-03-02T21:40:55+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/posts/zipper/</loc>
+    <lastmod>2020-03-02T21:40:55+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/tags/bitwise/</loc>
     <lastmod>2020-02-25T19:55:00+08:00</lastmod>
   </url>
   
@@ -29,11 +54,6 @@
   
   <url>
     <loc>https://christophe1997.github.io/posts/some-bitwise-tricks/</loc>
-    <lastmod>2020-02-25T19:55:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://christophe1997.github.io/tags/</loc>
     <lastmod>2020-02-25T19:55:00+08:00</lastmod>
   </url>
   
@@ -114,11 +134,6 @@
   
   <url>
     <loc>https://christophe1997.github.io/posts/process/</loc>
-    <lastmod>2020-02-25T11:36:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://christophe1997.github.io/tags/functional/</loc>
     <lastmod>2020-02-25T11:36:28+08:00</lastmod>
   </url>
   
