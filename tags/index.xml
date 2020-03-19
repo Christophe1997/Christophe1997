@@ -7,15 +7,33 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy;Christophe</copyright>
-    <lastBuildDate>Thu, 27 Feb 2020 21:17:41 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 29 Feb 2020 21:40:07 +0800</lastBuildDate>
     
 	<atom:link href="https://christophe1997.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Continuation</title>
+      <link>https://christophe1997.github.io/tags/continuation/</link>
+      <pubDate>Sat, 29 Feb 2020 21:40:07 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/continuation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>F#</title>
+      <link>https://christophe1997.github.io/tags/f#/</link>
+      <pubDate>Sat, 29 Feb 2020 21:40:07 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/f#/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Functional</title>
       <link>https://christophe1997.github.io/tags/functional/</link>
-      <pubDate>Thu, 27 Feb 2020 21:17:41 +0800</pubDate>
+      <pubDate>Sat, 29 Feb 2020 21:40:07 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/tags/functional/</guid>
       <description></description>
@@ -36,15 +54,6 @@
       <pubDate>Tue, 25 Feb 2020 11:50:04 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/tags/bitwise/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>F#</title>
-      <link>https://christophe1997.github.io/tags/f#/</link>
-      <pubDate>Fri, 13 Dec 2019 19:47:37 +0800</pubDate>
-      
-      <guid>https://christophe1997.github.io/tags/f#/</guid>
       <description></description>
     </item>
     

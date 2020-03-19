@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-112755173-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  Continuation Passing Style and Tail Recursion &ndash; CastOff
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="之前在&amp;quot;Essentials of Programming Languages&amp;quot;中学习过CPS(Continuation Passing Style), 而笔记在blog改版后被|">
+    
+
+    <meta name="apple-mobile-web-app-title" content="CastOff">
+    
+    
+    <link rel="icon" href="/favicon-64.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" size="any" href="/pinned-icon.svg">
+    
+    
+    
+
+    <meta name="msvalidate.01" content="A66009ECF32987EBBB7783F428A03342" />
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="https://christophe1997.github.io">
+    CastOff
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/posts/">
+      
+      <span>Blogs</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="/">
+      
+      <span>About</span>
+    </a>
+    
+    
+  </div>
+  
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">Continuation Passing Style and Tail Recursion</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+<a href='/categories/language-concept' class="muted-link">
+  <span class="Label Label--gray-darker">Language concept</span>
+</a>
+
+
+
+<a href='/tags/functional' class="muted-link">
+  <span class="Label Label--gray">Functional</span>
+</a>
+
+<a href='/tags/continuation' class="muted-link">
+  <span class="Label Label--gray">Continuation</span>
+</a>
+
+<a href='/tags/f' class="muted-link">
+  <span class="Label Label--gray">F#</span>
+</a>
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2020-03-19. Published at: 2020-02-29.">
+        
+          Lastmod: 2020-03-19
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <p>之前在&quot;Essentials of Programming Languages&quot;中学习过CPS(<em>Continuation Passing Style</em>), 而笔记在blog改版后被丢弃, 故在这篇文章中重新详细的探讨下CPS以及尾递归, 且当是温故而知新.</p>
+<h2 id="continuation">Continuation</h2>
+<p>在理解什么是&quot;Continuation Passing Style&quot;之前, 我们首先需要定义<em>Continuation</em>(惭愧的是我都不知道中文叫啥, 查了下好像是&quot;续延&rdquo;). <em>Continuation</em>是计算机程序控制状态的抽象表示, 换言之, 其就是一种表示程序执行中间某一计算步骤的控制上下文的数据结构, 即表示某一计算的未来. 一个形象的例子是阶乘函数:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">rec</span> <span class="n">fact</span> <span class="n">n</span> <span class="o">=</span> 
+<span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="n">0</span>
+<span class="k">then</span> <span class="n">1</span>
+<span class="k">else</span> <span class="n">n</span> <span class="o">*</span> <span class="o">(</span><span class="n">fact</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当我们计算<code>(fact 4)</code>时, 其执行过程为(用lisp的形式是因为更加形象):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="nf">fact</span> <span class="mi">4</span><span class="p">)</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">1</span><span class="p">))))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="p">(</span><span class="nb">* </span><span class="mi">1</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">0</span><span class="p">)))))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="p">(</span><span class="nb">* </span><span class="mi">1</span> <span class="mi">1</span><span class="p">))))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="mi">6</span><span class="p">)</span>
+<span class="k">=&gt; </span><span class="mi">24</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这过程中, <code>(* 4 #)</code>就是一个<em>continuation</em>, 是<code>(fact 3)</code>的控制上下文, 等待着<code>(fact 3)</code>的计算结果传入我们的&rdquo;#&quot;, <code>(* 4 (* 3 #))</code>也是一个<em>continuation</em>. 容易看到的是在这样一个计算过程中, <em>continuation</em>在不断增长, 因为调用栈在不断增长, 程序不得不保存<code>*</code>的左操作数, 计算右操作数. 接下来, 我们来看<code>fact</code>的尾递归版本, 所谓的<strong>尾递归</strong>(<em>tail recursion</em>)指的是递归函数的递归调用部分只有函数调用, 即:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">fact</span> <span class="n">n</span> <span class="o">=</span> 
+  <span class="k">let</span> <span class="nv">rec</span> <span class="n">aux</span> <span class="n">n</span> <span class="n">acc</span> <span class="o">=</span> 
+    <span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="n">0</span>
+    <span class="k">then</span> <span class="n">acc</span>
+    <span class="k">else</span> <span class="n">aux</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">(</span><span class="n">acc</span> <span class="o">*</span> <span class="n">n</span><span class="o">)</span>
+  <span class="n">aux</span> <span class="n">n</span> <span class="n">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里, <code>aux</code>是尾递归的, 其递归调用部分是一个函数调用. 这时候我们再来看<code>(fact 4)</code>的执行过程:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="nf">fact</span> <span class="mi">4</span><span class="p">)</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nf">aux</span> <span class="mi">4</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nf">aux</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nf">aux</span> <span class="mi">2</span> <span class="mi">12</span><span class="p">)</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nf">aux</span> <span class="mi">1</span> <span class="mi">24</span><span class="p">)</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nf">aux</span> <span class="mi">0</span> <span class="mi">24</span><span class="p">)</span>
+<span class="k">=&gt; </span><span class="mi">24</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这过程中, 我们的<em>continuation</em>始终是<code>#</code>, 程序不需要保存额外的信息, 每次只需要调用函数<code>aux</code>就行.因此, 一个直接的结论是<strong>尾递归不增长控制上下文</strong>, 也就是说如果表达式e1返回的是表达式e2的值, 那么e1和e2应该在同一个<em>continuation</em>中. 因此, 如果一个递归函数是尾递归的, 那么它的调用栈可以不增长, 具体取决于语言是否有尾递归优化.</p>
+<h2 id="continuation-passing-stylecps">Continuation Passing Style(CPS)</h2>
+<p>CPS指得是将<em>continuation</em>作为显示参数传递的风格, 例如, 阶乘函数<code>fact</code>的CPS版本为:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">rec</span> <span class="n">factCPS</span> <span class="n">n</span> <span class="n">k</span> <span class="o">=</span> 
+  <span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="n">0</span>
+  <span class="k">then</span> <span class="n">k</span> <span class="n">1</span>
+  <span class="k">else</span> <span class="n">fact</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">k</span> <span class="o">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">x</span><span class="o">))</span>
+<span class="k">let</span> <span class="nv">fact</span> <span class="n">n</span> <span class="o">=</span> <span class="n">factCPS</span> <span class="n">n</span> <span class="n">id</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里我们用单参数函数来表示<em>continuation</em>, 因为函数本身就是接受输入在执行后续的计算, 和<em>continuation</em>表示未来的计算不谋而合, 通常用<code>id</code>来表示一个终止的<em>continuation</em>. 在CPS中, 我们总是把下一步需要的计算作为函数的显示参数传入. 再来看一个fold的<a href="https://en.wikibooks.org/wiki/Yet_Another_Haskell_Tutorial/Type_basics#Continuation_Passing_Style">例子</a>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">rec</span> <span class="n">foldCPS</span> <span class="n">f</span> <span class="n">z</span> <span class="o">=</span> <span class="k">function</span>
+<span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">z</span>
+<span class="o">|</span> <span class="n">x</span> <span class="o">::</span> <span class="n">xs</span> <span class="o">-&gt;</span> <span class="n">f</span> <span class="n">x</span> <span class="n">z</span> <span class="o">(</span><span class="k">fun</span> <span class="n">y</span> <span class="o">-&gt;</span> <span class="n">foldCPS</span> <span class="n">f</span> <span class="n">y</span> <span class="n">xs</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="nv">foldl</span> <span class="n">f</span> <span class="n">z</span> <span class="n">ls</span> <span class="o">=</span> <span class="n">foldCPS</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="n">z</span> <span class="n">g</span> <span class="o">-&gt;</span> <span class="n">g</span> <span class="o">(</span><span class="n">f</span> <span class="n">z</span> <span class="n">x</span><span class="o">))</span> <span class="n">z</span> <span class="n">ls</span>
+<span class="k">let</span> <span class="nv">foldr</span> <span class="n">f</span> <span class="n">z</span> <span class="n">ls</span> <span class="o">=</span> <span class="n">foldCPS</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="n">z</span> <span class="n">g</span> <span class="o">-&gt;</span> <span class="n">f</span> <span class="n">x</span> <span class="o">(</span><span class="n">g</span> <span class="n">z</span><span class="o">))</span> <span class="n">z</span> <span class="n">ls</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里<code>foldCPS</code>的<code>f</code>是CPS的, 其第一个参数是列表头部的元素, 第二个参数是累加的值, 第三个参数是一个<em>continuation</em>. 我们还通过<code>foldCPS</code>定义了<code>foldl</code>和<code>foldr</code>, <code>foldl f z [1; 2; 3; 4]</code>的逻辑是<code>(f (f (f (f z 1) 2) 3) 4)</code>, 即我们先计算头部元素和累加值的运算结果再将其传入<em>continuation</em>(接下来的计算); 而<code>foldr f z [1; 2; 3; 4]</code>的逻辑是<code>(f 1 (f 2 (f 3 (f 4 z))))</code>, 即我们先将累加值传入<em>continuation</em>(接下来的计算)得到结果后再计算其与头部元素的计算结果. 这和我们正常版本的<code>foldl</code>和<code>foldr</code>的逻辑是一致的:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">rec</span> <span class="n">foldl</span> <span class="n">f</span> <span class="n">z</span> <span class="o">=</span> <span class="k">function</span>
+<span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">z</span>
+<span class="o">|</span> <span class="n">x</span> <span class="o">::</span> <span class="n">xs</span> <span class="o">-&gt;</span> <span class="n">foldl</span> <span class="n">f</span> <span class="o">(</span><span class="n">f</span> <span class="n">z</span> <span class="n">x</span><span class="o">)</span> <span class="n">xs</span>
+
+<span class="k">let</span> <span class="nv">rec</span> <span class="n">foldr</span> <span class="n">f</span> <span class="n">z</span> <span class="o">=</span> <span class="k">function</span>
+<span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">z</span>
+<span class="o">|</span> <span class="n">x</span> <span class="o">::</span> <span class="n">xs</span> <span class="o">-&gt;</span> <span class="n">f</span> <span class="n">x</span> <span class="o">(</span><span class="n">foldr</span> <span class="n">f</span> <span class="n">z</span> <span class="n">xs</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>CPS的一个重要特征就是所有函数都是尾递归的. 因此, 不难想到, 如果我们所有函数都能够写成CPS的形式, 那么就可以在具有尾递归优化的语言中受益. 下面就描述如何将普通的函数转化为CPS风格的函数:</p>
+<ol>
+<li>
+<p>增加一个额外的参数表示我们的<em>continuation</em>(通常用<code>k</code>或<code>cont</code>)</p>
+</li>
+<li>
+<p>如果函数返回一个常量<code>c</code>, 就将其传入<em>continuation</em>返回, 即改为<code>k c</code></p>
+</li>
+<li>
+<p>如果是一个尾调用, 即返回的是一个函数调用, 就改成在相同的<em>continuation</em>下调用该函数</p>
+</li>
+<li>
+<p>如果返回的一个表达式, 函数调用作为操作数, 就改为在一个新的<em>continuation</em>下调用该函数,</p>
+<p>具体而讲就是构造一个新的函数, 其参数是函数调用的结果, 函数体是在旧的<em>continuation</em>下完成计算, 例如上文<code>factCPS</code>中的<code>else fact (n - 1) (fun x -&gt; k (n * x))</code>.</p>
+</li>
+</ol>
+<p>我们来看一个斐波那契数列的例子:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">rec</span> <span class="n">fib</span> <span class="n">n</span> <span class="o">=</span>
+	<span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">2</span>
+	<span class="k">then</span> <span class="n">1</span>
+	<span class="k">else</span> <span class="n">fib</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">+</span> <span class="n">fib</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">2</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>我们首先添加一个额外的参数<code>k</code>. 随后, 该函数总共有俩处返回, <code>then</code>分支返回的是常量, 则改为<code>k 2</code>; <code>else</code>分支返回了一个表达式, 而且俩个操作数都是函数调用, 我们首先改写左边的操作数, 即<code>fib (n - 1) (fun v1 -&gt; v1 + fib (n - 2))</code>, 随后改写第二个操作数, 并将结果传入<em>continuation</em>中, 即<code>fib (n - 2) (fun v2 -&gt; v1 + v2 |&gt; k)</code>, 将这些整合就得到了CPS版本的<code>fib</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">rec</span> <span class="n">fibCPS</span> <span class="n">n</span> <span class="n">k</span> <span class="o">=</span> 
+	<span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">2</span>
+	<span class="k">then</span> <span class="n">k</span> <span class="n">1</span>
+	<span class="k">else</span> <span class="n">fibCPS</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">&lt;|</span> <span class="k">fun</span> <span class="n">v1</span> <span class="o">-&gt;</span> <span class="n">fibCPS</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">2</span><span class="o">)</span> <span class="o">&lt;|</span> <span class="k">fun</span> <span class="n">v2</span> <span class="o">-&gt;</span> <span class="n">v1</span> <span class="o">+</span> <span class="n">v2</span> <span class="o">|&gt;</span> <span class="n">k</span>
+<span class="k">let</span> <span class="nv">fib</span> <span class="n">n</span> <span class="o">=</span> <span class="n">fibCPS</span> <span class="n">n</span> <span class="n">id</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到, <code>fib</code>的CPS版本相较于原始版本显得更加不直观, 而这确实是CPS的缺点, 由于显示的传递控制上下文, 我们的代码变得不够直观.</p>
+<h2 id="cps与尾递归优化">CPS与尾递归优化</h2>
+<p>所谓的尾递归优化(<em>tail call optimization</em>, TCO)指的是对于一个尾递归的函数, 例如我们有函数f, 其尾递归调用了g, 由于不需要额外的信息, 我们可以直接传递f的返回地址. 这样当g返回时, 其可以直接返回到f的调用者. 从上文我们知道, CPS总是尾递归的, 因此CPS可以和TCO同时使用来消除递归函数的调用栈的增长. 因此CPS可以用于那些具有尾递归优化的语言来使避免我们的递归函数栈溢出, 但由于CPS使得代码变得不够直观, 因此其效果可能并不如使用<em>accumulator</em>, 同时CPS也可以作为编译器的IR(<em>intermediate representation</em>), <a href="https://www.smlnj.org/">SML/NJ</a>就是一个例子, 具体可以参考<a href="https://www.cs.princeton.edu/~appel/">Andrew</a>的&quot;Compiling with Continuations&rdquo;.</p>
+<h2 id="net中的tail-call">.NET中的tail call</h2>
+<p>.NET的CIL中存在着<code>tail.</code>的opcode, 不过C#的编译器本身不会做TCO, 而F#的编译器则会处理TCO, 对于简单的尾递归, 例如递归调用自身, F#编译器通常将其优化为循环, 对于其他的情况才会使用<code>tail.</code>, 具体可以参考&rdquo;<a href="https://devblogs.microsoft.com/fsharpteam/tail-calls-in-f/">Tail calls in F#</a>&quot;.</p>
+<h2 id="总结">总结</h2>
+<p>以上就是关于CPS与尾递归的介绍, 然而这仅仅是关于<em>continuation</em>的一点皮毛而已, 也没有涉及到<code>call/cc</code>的内容, 如果你对<em>continuation</em>有兴趣, 可以参考Haskell中的&rdquo;<a href="https://wiki.haskell.org/All_About_Monads#The_Continuation_monad">Continuation monad</a>&quot;. 另外, 如果你关于本文有任何问题, 欢迎<a href="mailto:hey_christophe@outlook.com">邮件</a>我.</p>
+
+  </section>
+
+  <section>
+    
+      
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>Continuation Passing Style and Tail Recursion</b><nav id="TableOfContents">
+  <ul>
+    <li><a href="#continuation">Continuation</a></li>
+    <li><a href="#continuation-passing-stylecps">Continuation Passing Style(CPS)</a></li>
+    <li><a href="#cps与尾递归优化">CPS与尾递归优化</a></li>
+    <li><a href="#net中的tail-call">.NET中的tail call</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    ©Christophe &middot; 
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
+    
+  </body>
+</html>

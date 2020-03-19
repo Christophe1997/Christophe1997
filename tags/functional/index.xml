@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>&amp;copy;Christophe</copyright>
-    <lastBuildDate>Thu, 27 Feb 2020 21:17:41 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 29 Feb 2020 21:40:07 +0800</lastBuildDate>
     
 	<atom:link href="https://christophe1997.github.io/tags/functional/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Continuation Passing Style and Tail Recursion</title>
+      <link>https://christophe1997.github.io/posts/cps/</link>
+      <pubDate>Sat, 29 Feb 2020 21:40:07 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/cps/</guid>
+      <description>之前在&amp;quot;Essentials of Programming Languages&amp;quot;中学习过CPS(Continuation Passing Style), 而笔记在blog改版后被</description>
+    </item>
     
     <item>
       <title>Zipper</title>
