@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pearls on CastOff</title>
+    <link>https://christophe1997.github.io/tags/pearls/</link>
+    <description>Recent content in Pearls on CastOff</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy;Christophe</copyright>
+    <lastBuildDate>Tue, 05 May 2020 21:01:11 +0800</lastBuildDate>
+    
+	<atom:link href="https://christophe1997.github.io/tags/pearls/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Smallest Free Number</title>
+      <link>https://christophe1997.github.io/posts/the-smallest-free-number/</link>
+      <pubDate>Tue, 05 May 2020 21:01:11 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/the-smallest-free-number/</guid>
+      <description>Pearl 1: 给定一个自然数的有限集X, 计算不属于X的最小自然数. X表示为不包含重复元素的无序列表. 时间复杂度要求$O(n)$. Type: minfree :: [Int] -&amp;gt; Int(也可</description>
+    </item>
+    
+  </channel>
+</rss>

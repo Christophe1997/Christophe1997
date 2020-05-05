@@ -13,8 +13,38 @@
   </url>
   
   <url>
+    <loc>https://christophe1997.github.io/categories/algorithm/</loc>
+    <lastmod>2020-05-05T23:38:22+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://christophe1997.github.io/categories/</loc>
-    <lastmod>2020-04-06T20:32:31+08:00</lastmod>
+    <lastmod>2020-05-05T23:38:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/tags/functional/</loc>
+    <lastmod>2020-05-05T23:38:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/tags/haskell/</loc>
+    <lastmod>2020-05-05T23:38:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/tags/pearls/</loc>
+    <lastmod>2020-05-05T23:38:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/tags/</loc>
+    <lastmod>2020-05-05T23:38:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://christophe1997.github.io/posts/the-smallest-free-number/</loc>
+    <lastmod>2020-05-05T23:38:22+08:00</lastmod>
   </url>
   
   <url>
@@ -33,17 +63,7 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/tags/functional/</loc>
-    <lastmod>2020-04-06T20:32:31+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://christophe1997.github.io/categories/language-concepts/</loc>
-    <lastmod>2020-04-06T20:32:31+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://christophe1997.github.io/tags/</loc>
     <lastmod>2020-04-06T20:32:31+08:00</lastmod>
   </url>
   
@@ -105,11 +125,6 @@
   <url>
     <loc>https://christophe1997.github.io/categories/%E6%9D%82%E9%A1%B9/</loc>
     <lastmod>2020-02-25T11:36:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://christophe1997.github.io/tags/haskell/</loc>
-    <lastmod>2020-03-17T23:44:28+08:00</lastmod>
   </url>
   
   <url>
@@ -179,11 +194,6 @@
   
   <url>
     <loc>https://christophe1997.github.io/posts/computer-system-1/</loc>
-    <lastmod>2020-02-25T11:36:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://christophe1997.github.io/categories/algorithm/</loc>
     <lastmod>2020-02-25T11:36:28+08:00</lastmod>
   </url>
   

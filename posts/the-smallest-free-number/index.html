@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-112755173-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  The Smallest Free Number &ndash; CastOff
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="Pearl 1: 给定一个自然数的有限集X, 计算不属于X的最小自然数. X表示为不包含重复元素的无序列表. 时间复杂度要求$O(n)$. Type: minfree :: [Int] -&amp;gt; Int(也可|">
+    
+
+    <meta name="apple-mobile-web-app-title" content="CastOff">
+    
+    
+    <link rel="icon" href="/favicon-64.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="mask-icon" size="any" href="/pinned-icon.svg">
+    
+    
+    
+
+    <meta name="msvalidate.01" content="A66009ECF32987EBBB7783F428A03342" />
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="https://christophe1997.github.io">
+    CastOff
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/posts/">
+      
+      <span>Blogs</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="/">
+      
+      <span>About</span>
+    </a>
+    
+    
+  </div>
+  
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">The Smallest Free Number</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+<a href='/categories/algorithm' class="muted-link">
+  <span class="Label Label--gray-darker">Algorithm</span>
+</a>
+
+
+
+<a href='/tags/functional' class="muted-link">
+  <span class="Label Label--gray">Functional</span>
+</a>
+
+<a href='/tags/haskell' class="muted-link">
+  <span class="Label Label--gray">Haskell</span>
+</a>
+
+<a href='/tags/pearls' class="muted-link">
+  <span class="Label Label--gray">Pearls</span>
+</a>
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2020-05-05. Published at: 2020-05-05.">
+        
+          Lastmod: 2020-05-05
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <p><strong>Pearl 1</strong>: 给定一个自然数的有限集X, 计算不属于X的最小自然数. X表示为不包含重复元素的无序列表. 时间复杂度要求$O(n)$.</p>
+<p><strong>Type</strong>: <code>minfree :: [Int] -&gt; Int</code>(也可以额外的定义自然数类型, 不过这不是我们的重点)</p>
+<p>&ldquo;Pearls of Functional Algorithm Design&quot;的第一章, 其描述了一个分治的算法和一个基于array的算法, 这里按个人的思路讲解一下基于分治的算法, 基于array的算法具体可以查阅原文. 首先拿到这个问题, 我觉得最直接的想法就是</p>
+<p><em>Solution 1</em>: <code>minfree xs = head $ [0..] \\ xs </code></p>
+<p>然而这和要求的线性时间复杂度不符. 第二个想法就是设计一个fold的函数遍历一遍列表, 这样时间复杂度符合要求. 但是越来越多的边界条件让我意识到思路不对. 看了原文才发现忽略了解题的一个重要条件.</p>
+<p><strong>Fact</strong>: <code>[0..n]</code>中的所有自然数不可能都在X(<code>xs</code>)中, 其中<code>n = length xs</code>.</p>
+<p>这也很容易证明, 因为$ n + 1 = length\ [0..n] &gt; n $, 因此不属于集合X的最小自然数就是<code>[0..n]</code>中不属于X的最小自然数. 至此,该问题很容易解决, 只需要一个marked的array来表示<code>[0,,n]</code>中的自然数是否在X中即可. 下面描述基于分治的算法, 首先给出一个基本的结论.</p>
+<p><strong>Theorem</strong>: <code>(as ++ bs) \\ (us ++ vs) == (as \\ us) ++ (bs \\ vs)</code>, 如果<code>as \\ vs == as &amp;&amp; bs \\ us == bs</code>.</p>
+<p>这显然是符合集合论的. 显然, <code>[0..n]</code>可以拆分为两个不想交的集合<code>[0..b-1]</code>以及<code>[b..n]</code>, 因此<code>[0..b]</code>可以拆分为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="p">([</span><span class="mi">0</span><span class="o">..</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">\\</span> <span class="n">us</span><span class="p">)</span> <span class="o">++</span> <span class="p">([</span><span class="n">b</span><span class="o">..</span><span class="p">]</span> <span class="o">\\</span> <span class="n">vs</span><span class="p">)</span> <span class="kr">where</span>
+  <span class="p">(</span><span class="n">us</span><span class="p">,</span> <span class="n">vs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">partition</span> <span class="p">(</span><span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span> <span class="n">xs</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>而<code>minfree</code>则可以改写为</p>
+<p><em>Solution 2</em>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">minfree</span> <span class="n">xs</span> <span class="ow">=</span> <span class="kr">if</span> <span class="n">null</span> <span class="o">$</span> <span class="p">[</span><span class="mi">0</span><span class="o">..</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">\\</span> <span class="n">us</span>
+             <span class="kr">then</span> <span class="n">head</span> <span class="o">$</span> <span class="p">[</span><span class="n">b</span><span class="o">..</span><span class="p">]</span> <span class="o">\\</span> <span class="n">vs</span>
+             <span class="kr">else</span> <span class="n">head</span> <span class="o">$</span> <span class="p">[</span><span class="mi">0</span><span class="o">..</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">\\</span> <span class="n">us</span>
+             <span class="kr">where</span> <span class="p">(</span><span class="n">us</span><span class="p">,</span> <span class="n">vs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">partition</span> <span class="p">(</span><span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span> <span class="n">xs</span>
+                   <span class="n">b</span>        <span class="ow">=</span> 
+</code></pre></td></tr></table>
+</div>
+</div><p>很容易发现<code>null $ [0..b-1] \\ us</code>等价于<code>length us == b</code>, 后者更加高效. 同时, 我们也可以进一步的抽象<code>minfree</code>, 因为我们在上面限制了从0开始:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">minfrom</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+<span class="nf">minfrom</span> <span class="n">a</span> <span class="n">xs</span> <span class="ow">=</span> <span class="n">head</span> <span class="o">$</span> <span class="p">[</span><span class="n">a</span><span class="o">..</span><span class="p">]</span> <span class="o">\\</span> <span class="n">xs</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>至此, 我们的<code>minfree</code>可以改为:</p>
+<p><em>Solution 3</em>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">minfree</span> <span class="ow">=</span> <span class="n">minfrom</span> <span class="mi">0</span>
+
+<span class="nf">minfrom</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+<span class="nf">minfrom</span> <span class="n">a</span> <span class="n">xs</span> <span class="o">|</span> <span class="n">null</span> <span class="n">xs</span>            <span class="ow">=</span> <span class="n">a</span>
+             <span class="o">|</span> <span class="n">length</span> <span class="n">us</span> <span class="o">==</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">minfrom</span> <span class="n">b</span> <span class="n">vs</span>
+             <span class="o">|</span> <span class="n">otherwise</span>          <span class="ow">=</span> <span class="n">minfrom</span> <span class="n">a</span> <span class="n">us</span>
+               <span class="kr">where</span> <span class="p">(</span><span class="n">us</span><span class="p">,</span> <span class="n">vs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">partition</span> <span class="p">(</span><span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span> <span class="n">xs</span>
+                     <span class="n">b</span>        <span class="ow">=</span> 
+</code></pre></td></tr></table>
+</div>
+</div><p>接下来的问题是<code>b</code>应该是多少, 显然<code>b</code>可以是$(a, n=length\ xs)$中的任意一个自然数, 不过<code>b</code>的选择应该使得<code>us</code>和<code>vs</code>的长度尽可能的小, 否则的会导致算法在最坏情况下开销的增加. 因此比较理想的取值是<code>b = a + 1 + n `div` 2</code>, 这样如果<code>length us &lt; b - a</code>的, 那么<code>length us &lt; b - a  &lt; n `div` 2 + 1 &lt;= n `div` 2</code>, 而如果<code>length us == b - a</code>, 那么<code>length vs = n - b + a = n - n `div` 2 - 1 &lt;= n `div` 2</code>. 此时可以看到算法的复杂度是$O(n)$的. 在<code>minfree</code>的最终版本, 为了避免重复计算, 我们可以传入<code>(length xs, xs)</code>.</p>
+<p><em>Final Solution</em>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">minfree</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+<span class="nf">minfree</span> <span class="n">xs</span> <span class="ow">=</span> <span class="n">minfrom</span> <span class="mi">0</span> <span class="p">(</span><span class="n">length</span> <span class="n">xs</span><span class="p">,</span> <span class="n">xs</span><span class="p">)</span>
+
+<span class="nf">minfrom</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+<span class="nf">minfrom</span> <span class="n">a</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">xs</span><span class="p">)</span> <span class="o">|</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span>     <span class="ow">=</span> <span class="n">a</span>
+                  <span class="o">|</span> <span class="n">m</span> <span class="o">==</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">minfrom</span> <span class="n">b</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">m</span><span class="p">,</span> <span class="n">vs</span><span class="p">)</span>
+                  <span class="o">|</span> <span class="n">otherwise</span>  <span class="ow">=</span> <span class="n">minfrom</span> <span class="n">a</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">us</span><span class="p">)</span>
+                    <span class="kr">where</span> <span class="p">(</span><span class="n">us</span><span class="p">,</span> <span class="n">vs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">partition</span> <span class="p">(</span><span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span> <span class="n">xs</span>
+                          <span class="n">b</span>        <span class="ow">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">n</span> <span class="p">`</span><span class="n">div</span><span class="p">`</span> <span class="mi">2</span>
+                          <span class="n">m</span>        <span class="ow">=</span> <span class="n">length</span> <span class="n">us</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>整个pearl看下来给我最大的感受就是首先给出一个比较naive的解, 然后利用分治的思想一步步的分解问题并优化解.</p>
+
+  </section>
+
+  <section>
+    
+      
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>The Smallest Free Number</b><nav id="TableOfContents"></nav></div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    ©Christophe &middot; 
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
+    
+  </body>
+</html>
