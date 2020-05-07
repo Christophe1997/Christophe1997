@@ -112,9 +112,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-05-05. Published at: 2020-05-05.">
+      <span title="Lastmod: 2020-05-07. Published at: 2020-05-05.">
         
-          Lastmod: 2020-05-05
+          Lastmod: 2020-05-07
         
       </span>
     </div>
@@ -127,7 +127,7 @@ if (!doNotTrack) {
     <p><strong>Pearl 1</strong>: 给定一个自然数的有限集X, 计算不属于X的最小自然数. X表示为不包含重复元素的无序列表. 时间复杂度要求$O(n)$.</p>
 <p><strong>Type</strong>: <code>minfree :: [Int] -&gt; Int</code>(也可以额外的定义自然数类型, 不过这不是我们的重点)</p>
 <p>&ldquo;Pearls of Functional Algorithm Design&quot;的第一章, 其描述了一个分治的算法和一个基于array的算法, 这里按个人的思路讲解一下基于分治的算法, 基于array的算法具体可以查阅原文. 首先拿到这个问题, 我觉得最直接的想法就是</p>
-<p><em>Solution 1</em>: <code>minfree xs = head $ [0..] \\ xs </code></p>
+<p><em>Base Solution</em>: <code>minfree xs = head $ [0..] \\ xs </code></p>
 <p>然而这和要求的线性时间复杂度不符. 第二个想法就是设计一个fold的函数遍历一遍列表, 这样时间复杂度符合要求. 但是越来越多的边界条件让我意识到思路不对. 看了原文才发现忽略了解题的一个重要条件.</p>
 <p><strong>Fact</strong>: <code>[0..n]</code>中的所有自然数不可能都在X(<code>xs</code>)中, 其中<code>n = length xs</code>.</p>
 <p>这也很容易证明, 因为$ n + 1 = length\ [0..n] &gt; n $, 因此不属于集合X的最小自然数就是<code>[0..n]</code>中不属于X的最小自然数. 至此,该问题很容易解决, 只需要一个marked的array来表示<code>[0,,n]</code>中的自然数是否在X中即可. 下面描述基于分治的算法, 首先给出一个基本的结论.</p>
@@ -144,7 +144,6 @@ if (!doNotTrack) {
 </code></pre></td></tr></table>
 </div>
 </div><p>而<code>minfree</code>则可以改写为</p>
-<p><em>Solution 2</em>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -173,7 +172,6 @@ if (!doNotTrack) {
 </code></pre></td></tr></table>
 </div>
 </div><p>至此, 我们的<code>minfree</code>可以改为:</p>
-<p><em>Solution 3</em>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -224,7 +222,8 @@ if (!doNotTrack) {
                           <span class="n">m</span>        <span class="ow">=</span> <span class="n">length</span> <span class="n">us</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>整个pearl看下来给我最大的感受就是首先给出一个比较naive的解, 然后利用分治的思想一步步的分解问题并优化解.</p>
+</div><h2 id="后记">后记</h2>
+<p>整个pearl看下来给我最大的感受就是首先给出一个比较naive的解, 然后利用分治的思想一步步的分解问题并优化解. 同时, 虽然函数式的算法总是会比相应的命令式的算法差一个对数阶(因为函数式的算法中无法保证array的更新是常数级的, 通常是一个对数级的), 但是在这个pearl上, 作者通过不断的迭代算法缩小了这个差距.</p>
 
   </section>
 
@@ -242,7 +241,11 @@ if (!doNotTrack) {
           
   
     <div id="toc" class="Box Box--blue mb-3">
-      <b>The Smallest Free Number</b><nav id="TableOfContents"></nav></div>
+      <b>The Smallest Free Number</b><nav id="TableOfContents">
+  <ul>
+    <li><a href="#后记">后记</a></li>
+  </ul>
+</nav></div>
   
 
   
