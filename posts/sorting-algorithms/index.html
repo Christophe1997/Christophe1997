@@ -104,9 +104,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-02-25. Published at: 2018-03-30.">
+      <span title="Lastmod: 2020-05-29. Published at: 2018-03-30.">
         
-          Lastmod: 2020-02-25
+          Lastmod: 2020-05-29
         
       </span>
     </div>
@@ -160,43 +160,43 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Sort</span> <span class="o">{</span>
-    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
     <span class="o">}</span>
 
     <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">less</span><span class="o">(</span><span class="n">Comparable</span> <span class="n">v</span><span class="o">,</span> <span class="n">Comparable</span> <span class="n">w</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">w</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">exch</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Comparable</span> <span class="n">t</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-        <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">exch</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Comparable</span> <span class="n">t</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">;</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="o">;</span>
         <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">t</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">show</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">show</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">for</span> <span class="o">(</span><span class="n">Comparable</span> <span class="n">x</span> <span class="o">:</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">StdOut</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="o">);</span>
-            <span class="n">StdOut</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+            <span class="n">StdOut</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="o">)</span><span class="o">;</span>
+            <span class="n">StdOut</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
         <span class="o">}</span>
     <span class="o">}</span>
 
-    <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isSorted</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">less</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">]))</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isSorted</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">less</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">]</span><span class="o">)</span><span class="o">)</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
         <span class="o">}</span>
         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">String</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="n">StdIn</span><span class="o">.</span><span class="na">readAllStrings</span><span class="o">();</span>
-        <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
-        <span class="k">assert</span> <span class="n">isSorted</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
-        <span class="n">show</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[</span><span class="o">]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">String</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span> <span class="o">=</span> <span class="n">StdIn</span><span class="o">.</span><span class="na">readAllStrings</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">assert</span> <span class="n">isSorted</span><span class="o">(</span><span class="n">a</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">show</span><span class="o">(</span><span class="n">a</span><span class="o">)</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="选择排序-">选择排序</h2>
+</div><h2 id="heading">选择排序</h2>
 <p>最简单的算法是选择排序, 不断寻找数组剩下元素的最小值, 并将其放在适当的位置. 其特点在于:</p>
 <ul>
 <li>运行时间与输入无关.</li>
@@ -216,20 +216,20 @@ if (!doNotTrack) {
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
     <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">min</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">],</span> <span class="n">a</span><span class="o">[</span><span class="n">min</span><span class="o">]))</span> <span class="n">min</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
-            <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">min</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">j</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">min</span><span class="o">]</span><span class="o">)</span><span class="o">)</span> <span class="n">min</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
+            <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">min</span><span class="o">)</span><span class="o">;</span>
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>对于长度为N的数组, 选择排序大约需要$ N^2/2 $次比较和N次交换.</p>
-<h2 id="插入排序-">插入排序</h2>
+<h2 id="heading1">插入排序</h2>
 <p>对于随机排列长度为N且主键不重复的数组, 平均情况下插入排序需要$ \sim N^2/4 $次比较以及$ \sim N^2/4 $次交换. 最坏情况下, 比较和交换的次数
 都为$ \sim N^2/2 $, 最好的情况下需要N-1次比较和0次交换.</p>
 <div class="highlight"><div class="chroma">
@@ -244,11 +244,11 @@ if (!doNotTrack) {
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
     <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">],</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="n">1</span><span class="o">]);</span> <span class="n">j</span><span class="o">--)</span> <span class="o">{</span>
-            <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">j</span><span class="o">,</span> <span class="n">j</span><span class="o">-</span><span class="n">1</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="n">1</span><span class="o">]</span><span class="o">)</span><span class="o">;</span> <span class="n">j</span><span class="o">-</span><span class="o">-</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">j</span><span class="o">,</span> <span class="n">j</span><span class="o">-</span><span class="n">1</span><span class="o">)</span><span class="o">;</span>
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -264,7 +264,7 @@ if (!doNotTrack) {
 <p>插入排序对这样的数组很有效, 当倒置数量很少时, 插入排序可能比其他任何排序都快. 事实上, 设长度为N的数组的倒置数量为m, 则插入排序需要的交换操作等于m,
 需要的比较次数大于等于m, 小于等于m+N-1.</p>
 <p>对于随机排序的无重复主键的数组, 插入排序和选择排序的运行时间是平方级别的, 两者之比应该是一个较小的常数.</p>
-<h2 id="希尔排序-">希尔排序</h2>
+<h2 id="heading2">希尔排序</h2>
 <p>希尔排序简单的改进了插入排序, 其思想是使数组中任意间隔为h的元素都是有序的, 这样的数组称为h有序数组. 一个h有序数组指的是h个互相独立的数组交错在一起
 的数组, 当h很大时, 就能把元素移到较远的位置. 对于任意以1结尾的h序列, 数组都能够排序.</p>
 <div class="highlight"><div class="chroma">
@@ -285,24 +285,24 @@ if (!doNotTrack) {
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
     <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
     <span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
     <span class="c1">// 使用序列1/2 (3^k - 1)
 </span><span class="c1"></span>    <span class="k">while</span> <span class="o">(</span><span class="n">h</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">/</span><span class="n">3</span><span class="o">)</span> <span class="n">h</span> <span class="o">=</span> <span class="n">3</span> <span class="o">*</span> <span class="n">h</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
-    <span class="k">while</span> <span class="o">(</span><span class="n">h</span> <span class="o">&gt;=</span> <span class="n">1</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">h</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="n">h</span> <span class="o">&amp;&amp;</span> <span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">],</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span> <span class="o">-</span> <span class="n">h</span><span class="o">]);</span> <span class="n">j</span> <span class="o">-=</span> <span class="n">h</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">j</span><span class="o">,</span> <span class="n">j</span> <span class="o">-</span> <span class="n">h</span><span class="o">);</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">h</span> <span class="o">&gt;</span><span class="o">=</span> <span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">h</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="n">j</span> <span class="o">&gt;</span><span class="o">=</span> <span class="n">h</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span> <span class="o">-</span> <span class="n">h</span><span class="o">]</span><span class="o">)</span><span class="o">;</span> <span class="n">j</span> <span class="o">-</span><span class="o">=</span> <span class="n">h</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">j</span><span class="o">,</span> <span class="n">j</span> <span class="o">-</span> <span class="n">h</span><span class="o">)</span><span class="o">;</span>
             <span class="o">}</span>
         <span class="o">}</span>
-        <span class="n">h</span> <span class="o">/=</span> <span class="n">3</span><span class="o">;</span>
+        <span class="n">h</span> <span class="o">/</span><span class="o">=</span> <span class="n">3</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>算法的性能取决于h序列的选择, 我们选择的序列在最坏的情况下与$ N^{3/2} $成正比. 其他算法在N不是特别大的情况下, 大约只比希尔排序快2倍左右.</p>
-<h2 id="归并排序-">归并排序</h2>
+<h2 id="heading3">归并排序</h2>
 <p>归并排序保证任意长度为N的数组排序所需的时间和NlgN成正比, 它的主要缺点是所需的额外空间也和N成正比.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -337,31 +337,31 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 自顶向下
-</span><span class="c1"></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
     <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
     <span class="c1">// 辅助数组
-</span><span class="c1"></span>    <span class="n">aux</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Comparable</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
-    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">N</span> <span class="o">-</span> <span class="n">1</span><span class="o">);</span>
+</span><span class="c1"></span>    <span class="n">aux</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Comparable</span><span class="o">[</span><span class="n">N</span><span class="o">]</span><span class="o">;</span>
+    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">N</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span><span class="o">;</span>
 <span class="o">}</span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">hi</span> <span class="o">&lt;=</span> <span class="n">lo</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
-    <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="o">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="o">)/</span><span class="n">2</span><span class="o">;</span>
-    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">mid</span><span class="o">);</span>
-    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">hi</span><span class="o">);</span>
-    <span class="n">merge</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">mid</span><span class="o">,</span> <span class="n">hi</span><span class="o">);</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">hi</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">lo</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="o">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="o">)</span><span class="o">/</span><span class="n">2</span><span class="o">;</span>
+    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">mid</span><span class="o">)</span><span class="o">;</span>
+    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">hi</span><span class="o">)</span><span class="o">;</span>
+    <span class="n">merge</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">mid</span><span class="o">,</span> <span class="n">hi</span><span class="o">)</span><span class="o">;</span>
 <span class="o">}</span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">merge</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mid</span><span class="o">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">merge</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mid</span><span class="o">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="o">)</span> <span class="o">{</span>
     <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">lo</span><span class="o">;</span>
     <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">lo</span><span class="o">;</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">hi</span><span class="o">;</span> <span class="n">k</span><span class="o">++)</span> <span class="n">aux</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">];</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">lo</span><span class="o">;</span> <span class="n">k</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">hi</span><span class="o">;</span> <span class="n">k</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="n">aux</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">]</span><span class="o">;</span>
 
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">lo</span><span class="o">;</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">hi</span><span class="o">;</span> <span class="n">k</span><span class="o">++)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="n">mid</span><span class="o">)</span> <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">aux</span><span class="o">[</span><span class="n">j</span><span class="o">++];</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&gt;</span> <span class="n">hi</span><span class="o">)</span> <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">aux</span><span class="o">[</span><span class="n">i</span><span class="o">++];</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">aux</span><span class="o">[</span><span class="n">j</span><span class="o">],</span> <span class="n">aux</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span> <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">aux</span><span class="o">[</span><span class="n">j</span><span class="o">++];</span>
-        <span class="k">else</span> <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">aux</span><span class="o">[</span><span class="n">i</span><span class="o">++];</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">lo</span><span class="o">;</span> <span class="n">k</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">hi</span><span class="o">;</span> <span class="n">k</span><span class="o">+</span><span class="o">+</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="n">mid</span><span class="o">)</span> <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">aux</span><span class="o">[</span><span class="n">j</span><span class="o">+</span><span class="o">+</span><span class="o">]</span><span class="o">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&gt;</span> <span class="n">hi</span><span class="o">)</span> <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">aux</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">]</span><span class="o">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">aux</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="o">,</span> <span class="n">aux</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">)</span><span class="o">)</span> <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">aux</span><span class="o">[</span><span class="n">j</span><span class="o">+</span><span class="o">+</span><span class="o">]</span><span class="o">;</span>
+        <span class="k">else</span> <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">aux</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">]</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
@@ -380,7 +380,7 @@ $$ C(N) = C(2^n) = n \times 2^n = NlgN $$</p>
 <p>同理, 自顶向下的归并排序最多需要访问数组6NlgN.</p>
 <p>用不同的方法处理小规模问题能改进大多数递归算法的性能, 因为递归会使小规模问题中方法的调用过于频繁, 从而改进对它们的处理方法能够改进整个算法. 在归并
 算法中, 使用插入排序来处理小规模的子数组一般能将运行时间缩短10%~15%. 而通过测试数组是否有序可以将任何有序的子数组运行时间变为线性.</p>
-<h2 id="排序算法的复杂度-">排序算法的复杂度</h2>
+<h2 id="heading4">排序算法的复杂度</h2>
 <p>我们研究的排序算法是基于比较的(忽略了访问数组的开销), 一个基于比较的算法在两次比较之间可能会进行任意规模的计算, 但它们只能通过主键之间的比较来得到关
 于某个主键的信息.</p>
 <p>没有任何基于比较的算法能够保证使用少于~NlgN(lgN!)次比较将长度为N的数组排序.</p>
@@ -398,7 +398,7 @@ $$ N! \le 叶子数 \le 2^h $$
 <li>算法的其他操作也可能成为关键所在.</li>
 <li>不进行比较也能够将某些数组排序.</li>
 </ul>
-<h2 id="快速排序-">快速排序</h2>
+<h2 id="heading5">快速排序</h2>
 <p>快速排序的特点包括原地排序(只需要一个很小的辅助栈), 且将长度为N的数组排序的时间和NlgN成正比. 另外, 快速排序的内循环比大多数排序算法都小. 它的主要
 缺点在于非常脆弱, 实现时要避免低劣的性能. 快速排序的效率依赖于切分数组的效果, 即依赖于切分数组的值.</p>
 <div class="highlight"><div class="chroma">
@@ -433,29 +433,29 @@ $$ N! \le 叶子数 \le 2^h $$
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//简单的实现
-</span><span class="c1"></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">StdRandom</span><span class="o">.</span><span class="na">shuffle</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
-    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">StdRandom</span><span class="o">.</span><span class="na">shuffle</span><span class="o">(</span><span class="n">a</span><span class="o">)</span><span class="o">;</span>
+    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">)</span><span class="o">;</span>
 <span class="o">}</span>
 
-<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">if</span> <span class="o">(</span><span class="n">hi</span> <span class="o">&lt;</span> <span class="n">lo</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
-    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">partition</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">hi</span><span class="o">);</span>
-    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">j</span><span class="o">);</span>
-    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">j</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">hi</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">partition</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">hi</span><span class="o">)</span><span class="o">;</span>
+    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">j</span><span class="o">)</span><span class="o">;</span>
+    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">j</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">hi</span><span class="o">)</span><span class="o">;</span>
 <span class="o">}</span>
 
-<span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">partition</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">lo</span> <span class="o">==</span> <span class="n">hi</span><span class="o">)</span> <span class="k">return</span> <span class="n">lo</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">partition</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">lo</span> <span class="o">=</span><span class="o">=</span> <span class="n">hi</span><span class="o">)</span> <span class="k">return</span> <span class="n">lo</span><span class="o">;</span>
     <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">lo</span><span class="o">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">hi</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
-    <span class="n">Comparable</span> <span class="n">v</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">lo</span><span class="o">];</span>
+    <span class="n">Comparable</span> <span class="n">v</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">lo</span><span class="o">]</span><span class="o">;</span>
     <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">while</span> <span class="o">(</span><span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">a</span><span class="o">[++</span><span class="n">i</span><span class="o">],</span> <span class="n">v</span><span class="o">))</span> <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">hi</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
-        <span class="k">while</span> <span class="o">(</span><span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">v</span><span class="o">,</span> <span class="n">a</span><span class="o">[--</span><span class="n">j</span><span class="o">]))</span> <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">==</span> <span class="n">lo</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="o">+</span><span class="o">+</span><span class="n">i</span><span class="o">]</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span><span class="o">)</span> <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">=</span><span class="o">=</span> <span class="n">hi</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">Sort</span><span class="o">.</span><span class="na">less</span><span class="o">(</span><span class="n">v</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="o">-</span><span class="o">-</span><span class="n">j</span><span class="o">]</span><span class="o">)</span><span class="o">)</span> <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">=</span><span class="o">=</span> <span class="n">lo</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="n">j</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
-        <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">j</span><span class="o">);</span>
+        <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">j</span><span class="o">)</span><span class="o">;</span>
     <span class="o">}</span>
-    <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">j</span><span class="o">);</span>
+    <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">j</span><span class="o">)</span><span class="o">;</span>
     <span class="k">return</span> <span class="n">j</span><span class="o">;</span>
 
 <span class="o">}</span>
@@ -478,7 +478,7 @@ $$ C_N/(N+1) = C_{N-1}/N + 2/(N+1) $$
 </blockquote>
 <p>上述简单的快速排序有一个潜在的缺点, 即在切分不平衡时, 可能会极为低效, 在最坏的情况下快速排序需要$ N^2/2 $次比较, 我们在排序前shuffle数组就是为了
 减少这种情况的发生.</p>
-<h3 id="改进-">改进</h3>
+<h3 id="heading6">改进</h3>
 <ol>
 <li>适时切换到插入排序
 和大多数递归算法一样, 对于小数组快速排序比插入排序更慢, 在数组长度为5~15之间选择插入排序通常能取得较好的效果.</li>
@@ -488,7 +488,7 @@ $$ C_N/(N+1) = C_{N-1}/N + 2/(N+1) $$
 <li>熵最优排序
 当数组中含有大量重复元素的时候, 对于元素全部重复的元素可以不再排序. 一个简单的办法是将数组切分为三部分(荷兰国旗问题).</li>
 </ol>
-<h3 id="三向切分的快速排序-">三向切分的快速排序</h3>
+<h3 id="heading7">三向切分的快速排序</h3>
 <p>E. W. Dijkstra提出的三向切分解法:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -513,24 +513,24 @@ $$ C_N/(N+1) = C_{N-1}/N + 2/(N+1) $$
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">StdRandom</span><span class="o">.</span><span class="na">shuffle</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
-    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">);</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">StdRandom</span><span class="o">.</span><span class="na">shuffle</span><span class="o">(</span><span class="n">a</span><span class="o">)</span><span class="o">;</span>
+    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span><span class="o">;</span>
 <span class="o">}</span>
 
 <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">&#34;unchecked&#34;</span><span class="o">)</span>
-<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">hi</span> <span class="o">&lt;=</span> <span class="n">lo</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">hi</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">lo</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
     <span class="kt">int</span> <span class="n">lt</span> <span class="o">=</span> <span class="n">lo</span><span class="o">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">gt</span> <span class="o">=</span> <span class="n">hi</span><span class="o">;</span>
-    <span class="n">Comparable</span> <span class="n">v</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">lo</span><span class="o">];</span>
-    <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">gt</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">compareTo</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lt</span><span class="o">++,</span> <span class="n">i</span><span class="o">++);</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">gt</span><span class="o">--,</span> <span class="n">i</span><span class="o">);</span>
-        <span class="k">else</span> <span class="n">i</span><span class="o">++;</span>
+    <span class="n">Comparable</span> <span class="n">v</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">lo</span><span class="o">]</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">gt</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">v</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lt</span><span class="o">+</span><span class="o">+</span><span class="o">,</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cmp</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="n">Sort</span><span class="o">.</span><span class="na">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">gt</span><span class="o">-</span><span class="o">-</span><span class="o">,</span> <span class="n">i</span><span class="o">)</span><span class="o">;</span>
+        <span class="k">else</span> <span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="o">;</span>
     <span class="o">}</span>
-    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">lt</span> <span class="o">-</span> <span class="n">1</span><span class="o">);</span>
-    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">gt</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">hi</span><span class="o">);</span>
+    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">lt</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span><span class="o">;</span>
+    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">gt</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">hi</span><span class="o">)</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -543,7 +543,7 @@ $$ H = -(p_1lgp_1 + p_2lgp_2 + \cdots + p_klgp_k) $$
 <li>对于大小为N的数组, 三向切分的快速排序需要~(2ln2)NH次比较.</li>
 </ul>
 <p>当不存在重复主键时, $ H=lgN $, 而有重复主键时, 其具有更好的性能. 这两个性质说明了三向切分的快速排序是信息最优的.</p>
-<h2 id="堆排序-">堆排序</h2>
+<h2 id="heading8">堆排序</h2>
 <p>堆排序首先构造一个堆, 然后使用下沉操作将数组按升序排序.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -577,31 +577,31 @@ $$ H = -(p_1lgp_1 + p_2lgp_2 + \cdots + p_klgp_k) $$
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
     <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">N</span> <span class="o">/</span> <span class="n">2</span><span class="o">;</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="n">1</span><span class="o">;</span> <span class="n">k</span><span class="o">--)</span> <span class="n">sink</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">k</span><span class="o">,</span> <span class="n">N</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">N</span> <span class="o">/</span> <span class="n">2</span><span class="o">;</span> <span class="n">k</span> <span class="o">&gt;</span><span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">k</span><span class="o">-</span><span class="o">-</span><span class="o">)</span> <span class="n">sink</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">k</span><span class="o">,</span> <span class="n">N</span><span class="o">)</span><span class="o">;</span>
     <span class="k">while</span> <span class="o">(</span><span class="n">N</span> <span class="o">&gt;</span> <span class="n">1</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">N</span><span class="o">--);</span>
-        <span class="n">sink</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">N</span><span class="o">);</span>
+        <span class="n">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">N</span><span class="o">-</span><span class="o">-</span><span class="o">)</span><span class="o">;</span>
+        <span class="n">sink</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">N</span><span class="o">)</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 
-<span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">less</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">].</span><span class="na">compareTo</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span> <span class="o">-</span> <span class="n">1</span><span class="o">])</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">less</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">]</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span> <span class="o">-</span> <span class="n">1</span><span class="o">]</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">;</span>
 <span class="o">}</span>
 
-<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">exch</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">Comparable</span> <span class="n">t</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">];</span>
-    <span class="n">a</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span> <span class="o">-</span> <span class="n">1</span><span class="o">];</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">exch</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Comparable</span> <span class="n">t</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">]</span><span class="o">;</span>
+    <span class="n">a</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span> <span class="o">-</span> <span class="n">1</span><span class="o">]</span><span class="o">;</span>
     <span class="n">a</span><span class="o">[</span><span class="n">j</span> <span class="o">-</span> <span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">t</span><span class="o">;</span>
 <span class="o">}</span>
 
-<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sink</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">k</span><span class="o">,</span> <span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">while</span> <span class="o">(</span><span class="n">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sink</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[</span><span class="o">]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">k</span><span class="o">,</span> <span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">&lt;</span><span class="o">=</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">2</span> <span class="o">*</span> <span class="n">k</span><span class="o">;</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">&amp;&amp;</span> <span class="n">less</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">j</span><span class="o">,</span> <span class="n">j</span> <span class="o">+</span> <span class="n">1</span><span class="o">))</span> <span class="n">j</span><span class="o">++;</span>
-        <span class="k">if</span> <span class="o">(!</span><span class="n">less</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">))</span> <span class="k">break</span><span class="o">;</span>
-        <span class="n">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">&amp;</span><span class="o">&amp;</span> <span class="n">less</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">j</span><span class="o">,</span> <span class="n">j</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span><span class="o">)</span> <span class="n">j</span><span class="o">+</span><span class="o">+</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="o">!</span><span class="n">less</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">)</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
+        <span class="n">exch</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">k</span><span class="o">,</span> <span class="n">j</span><span class="o">)</span><span class="o">;</span>
         <span class="n">k</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -610,7 +610,7 @@ $$ H = -(p_1lgp_1 + p_2lgp_2 + \cdots + p_klgp_k) $$
 </div><p>将N个元素排序, 堆排序需要(2NlgN+2N)次比较(2N来源于堆的构造). 堆排序在排序复杂性的研究中具有重要地位, 因为它是唯一一个能够同时最优地利用空间和时间
 的方法, 在最坏的情况下它也能保证~2NlgN次比较和恒定的空间. 在空间紧张的场景下具有很好的效果, 但却很少被现代操作系统的其他应用采用, 因为其无法利用缓
 存.</p>
-<h2 id="常用排序算法的比较-">常用排序算法的比较</h2>
+<h2 id="heading9">常用排序算法的比较</h2>
 <table>
 <thead>
 <tr>
@@ -693,19 +693,19 @@ $$ H = -(p_1lgp_1 + p_2lgp_2 + \cdots + p_klgp_k) $$
     <div id="toc" class="Box Box--blue mb-3">
       <b>排序算法</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#选择排序-">选择排序</a></li>
-    <li><a href="#插入排序-">插入排序</a></li>
-    <li><a href="#希尔排序-">希尔排序</a></li>
-    <li><a href="#归并排序-">归并排序</a></li>
-    <li><a href="#排序算法的复杂度-">排序算法的复杂度</a></li>
-    <li><a href="#快速排序-">快速排序</a>
+    <li><a href="#heading">选择排序</a></li>
+    <li><a href="#heading1">插入排序</a></li>
+    <li><a href="#heading2">希尔排序</a></li>
+    <li><a href="#heading3">归并排序</a></li>
+    <li><a href="#heading4">排序算法的复杂度</a></li>
+    <li><a href="#heading5">快速排序</a>
       <ul>
-        <li><a href="#改进-">改进</a></li>
-        <li><a href="#三向切分的快速排序-">三向切分的快速排序</a></li>
+        <li><a href="#heading6">改进</a></li>
+        <li><a href="#heading7">三向切分的快速排序</a></li>
       </ul>
     </li>
-    <li><a href="#堆排序-">堆排序</a></li>
-    <li><a href="#常用排序算法的比较-">常用排序算法的比较</a></li>
+    <li><a href="#heading8">堆排序</a></li>
+    <li><a href="#heading9">常用排序算法的比较</a></li>
   </ul>
 </nav></div>
   

@@ -25,7 +25,7 @@ if (!doNotTrack) {
     
     
     <meta name="description" property="og:description" content="Assembler Computer execute machine code, sequences of bytes encoding the low-level operations that manipulate data manage memory, read and write data on storage devices, and communicate over networks.
-We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it&amp;rsquo;s widely used in supercomputer and lager data center.
+We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it&#39;s widely used in supercomputer and lager data center.
 the x86-64 machine code is much different with the corresponding C code, the processor states below are everywhere:|">
     
 
@@ -106,9 +106,9 @@ the x86-64 machine code is much different with the corresponding C code, the pro
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-02-25. Published at: 2018-05-28.">
+      <span title="Lastmod: 2020-05-29. Published at: 2018-05-28.">
         
-          Lastmod: 2020-02-25
+          Lastmod: 2020-05-29
         
       </span>
     </div>
@@ -118,11 +118,11 @@ the x86-64 machine code is much different with the corresponding C code, the pro
 <article>
   
   <section class="pb-6 mb-3 border-bottom">
-    <h2 id="assembler-">Assembler</h2>
+    <h2 id="assembler">Assembler</h2>
 <p>Computer execute machine code, sequences of bytes encoding the low-level operations that manipulate data manage memory,
 read and write data on storage devices, and communicate over networks.</p>
 <!-- raw HTML omitted -->
-<p>We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it&rsquo;s widely used in
+<p>We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it's widely used in
 supercomputer and lager data center.</p>
 <p>the x86-64 machine code is much different with the corresponding C code, the processor states below are everywhere:</p>
 <ul>
@@ -144,10 +144,10 @@ for example, the below C code:</li>
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-C" data-lang="C"><span class="c1">//mstore.c
-</span><span class="c1"></span><span class="kt">long</span> <span class="nf">mult2</span><span class="p">(</span><span class="kt">long</span><span class="p">,</span> <span class="kt">long</span><span class="p">);</span>
+</span><span class="c1"></span><span class="kt">long</span> <span class="nf">mult2</span><span class="p">(</span><span class="kt">long</span><span class="p">,</span> <span class="kt">long</span><span class="p">)</span><span class="p">;</span>
 
 <span class="kt">void</span> <span class="nf">multstore</span><span class="p">(</span><span class="kt">long</span> <span class="n">x</span><span class="p">,</span> <span class="kt">long</span> <span class="n">y</span><span class="p">,</span> <span class="kt">long</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">long</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mult2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+    <span class="kt">long</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mult2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="p">;</span>
     <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -242,8 +242,8 @@ The table below illsulates the default C data types and its x86-64 representatio
 </table>
 <p>A x86-64 CPU contains a set of 16 universal destination registers storing 64-bit values. They are: %rax, %rbx, %rcx, %rdx,
 %rsi, %rdi, %rbp, %rsp(in 32-bit those begin with e, e.g. %eax), %r8 to %r15(in 32-bit those ends with d, e.g. %r9d).
-It&rsquo;s worth noting that the stack point %rsp, which indicates the address of program finished stack.</p>
-<h3 id="data-movement-instructions-">Data movement instructions</h3>
+It's worth noting that the stack point %rsp, which indicates the address of program finished stack.</p>
+<h3 id="data-movement-instructions">Data movement instructions</h3>
 <p>Among the most heavily used instructions are those that copy data from one location to another. The most simplest instructions
 is the MOV class, cosists of four instructions: <code>movb</code>, <code>movw</code>, <code>movl</code>, <code>movq</code>; they differ only in that they operate on data
 of size 1, 2, 4 and 8 bytes. In most casees, MOV only update the register and memory address indicated by the operands,
@@ -257,7 +257,7 @@ For example to push a quad words onto a stack, first we subtract %rsp(the stack 
 address to low address) and write the data to the new address of %rsp. Since the stack is contained in the same memory as
 the program code and other forms of program data, programs can access arbitrary positions within the stack using the
 standard memory addressing methods.</p>
-<h3 id="arithmetic-and-logical-operations-">Arithmetic and logical operations</h3>
+<h3 id="arithmetic-and-logical-operations">Arithmetic and logical operations</h3>
 <table>
 <thead>
 <tr>
@@ -359,7 +359,7 @@ In addition, it can be used co compactly describe common arithmetic operations, 
 then the instruction <code>leal 7(%edx, &amp;edx, 4), %eax</code> will set register %eax to 5x+7. But the destination operand must be a
 register.</p>
 <p>For shift operations, the shift amount is given either as an immediate or in the single-byte register element %c1(in %rcx),</p>
-<h3 id="control-">Control</h3>
+<h3 id="control">Control</h3>
 <p>Machine code provides two basic low-level mechanisms for implementing coditional behavior: it tests data values and then
 either alters the control flow or the data flow based on the result of these test. Data-dependent control flow is the
 more general and more common approach for implementing coditional behavior. The execution order of a set of machine-code
@@ -373,7 +373,7 @@ The most useful cndition codes are:</p>
 for unsigned operations</li>
 <li>ZF: Zero Flag. The most recent operation yielded zero.</li>
 <li>SF: Sign Flag. The most recent operation yielded negative value.</li>
-<li>OF: Overflow Flag. The most recent operation caused a two&rsquo;s-complement overflow, either negative or positive.</li>
+<li>OF: Overflow Flag. The most recent operation caused a two's-complement overflow, either negative or positive.</li>
 </ul>
 <p>For example, suppose we used one of the ADD instructions to perform the equivalent of the C assignment <code>t=a+b</code>, where
 variables a, b, and t are integers. Then the condition codes would be set according to the following C expressions:</p>
@@ -384,8 +384,8 @@ variables a, b, and t are integers. Then the condition codes would be set accord
 <li>OF: <code>(a &lt; 0 == b &lt; 0) &amp;&amp; (t &lt; 0 != a &lt; 0)</code>    Signed overflow</li>
 </ul>
 <p>There are two instruction classes that set condition codes without altering any other registers, the CMP class and TEST
-class. The CMP instructions behave in the same manner as the SUB instructions except that they don&rsquo;t update their destinations.
-The TEST instructions behave in the same manner as the And instructions except that they don&rsquo;t update their destinations,
+class. The CMP instructions behave in the same manner as the SUB instructions except that they don't update their destinations.
+The TEST instructions behave in the same manner as the And instructions except that they don't update their destinations,
 too.</p>
 <p>Rather than reading the condition codes directly, there are three common ways of using the codition code:</p>
 <ol>
@@ -397,7 +397,7 @@ too.</p>
 condition codes. e.g. <code>setl</code> and <code>setb</code> denote &ldquo;set less&rdquo; and &ldquo;set below&rdquo;</p>
 <p>A <em>jump</em> instruction can cause the execution to switch to a completely new position in the program. These jump destinations
 are negerally indicated in assembly code by a <em>label</em></p>
-<h2 id="translating-conditional-branches-">Translating Conditional Branches</h2>
+<h2 id="translating-conditional-branches">Translating Conditional Branches</h2>
 <p>The most general way to translate conditional expressions and statement from C into machine code is to use combinations
 of conditional and unconditional jumps.</p>
 <p>The general form of an if-else statement in C is given by the template</p>
@@ -491,9 +491,9 @@ with instructions.</p>
 <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">)</span> <span class="n">v</span> <span class="o">=</span> <span class="n">ve</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>So, it&rsquo;s easy to see that it could be much slow if the cost if <code>then-expr</code> and <code>else-expr</code> is too expensive.</p>
-<h2 id="loop-">Loop</h2>
-<h3 id="do-while-loop-">Do-while loop</h3>
+</div><p>So, it's easy to see that it could be much slow if the cost if <code>then-expr</code> and <code>else-expr</code> is too expensive.</p>
+<h2 id="loop">Loop</h2>
+<h3 id="dowhile-loop">Do-while loop</h3>
 <p>do-while have the form below:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -524,7 +524,7 @@ with instructions.</p>
         <span class="k">goto</span> <span class="n">loop</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="while-loop-">While loop</h3>
+</div><h3 id="while-loop">While loop</h3>
 <p>while loop have the form below:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -574,7 +574,7 @@ with instructions.</p>
     <span class="k">goto</span> <span class="n">done</span><span class="p">;</span>
 <span class="k">do</span>
     <span class="n">body</span><span class="o">-</span><span class="n">statement</span>
-<span class="k">while</span> <span class="p">(</span><span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">);</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">test</span><span class="o">-</span><span class="n">expr</span><span class="p">)</span><span class="p">;</span>
 <span class="nl">done</span><span class="p">:</span>
 </code></pre></td></tr></table>
 </div>
@@ -604,7 +604,7 @@ with instructions.</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>GCC would translate while loop in guarded-do form with <code>-O1</code> option.</p>
-<h3 id="for-loop-">For loop</h3>
+<h3 id="for-loop">For loop</h3>
 <p>for loop has the form below:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -632,7 +632,7 @@ with instructions.</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>So GCC translate the for loop as same as the while loop above, choosing which form depending to the optimization degree.</p>
-<h3 id="switch-statement-">Switch statement</h3>
+<h3 id="switch-statement">Switch statement</h3>
 <p>A switch statement provides a multi way branching capability vased on the value of an integer index. They are particularly
 useful when dealing with tests where there can be a large number of possible outcomes. Not only do they make the C code
 more readable, they also allow an efficiant implementation using a data structure called <em>jump table</em>. JUmp tables are
@@ -665,16 +665,16 @@ used when there are a number of cases(e.g. four or more) and they span a small r
     <span class="kt">long</span> <span class="n">val</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
     <span class="k">switch</span> <span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">case</span> <span class="mi">100</span><span class="o">:</span>
-            <span class="n">val</span> <span class="o">*=</span> <span class="mi">13</span><span class="p">;</span>
+            <span class="n">val</span> <span class="o">*</span><span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
             <span class="k">break</span><span class="p">;</span>
         <span class="k">case</span> <span class="mi">102</span><span class="o">:</span>
-            <span class="n">val</span> <span class="o">+=</span> <span class="mi">10</span><span class="p">;</span>
+            <span class="n">val</span> <span class="o">+</span><span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
         <span class="k">case</span> <span class="mi">103</span><span class="o">:</span>
-            <span class="n">val</span> <span class="o">+=</span> <span class="mi">11</span><span class="p">;</span>
+            <span class="n">val</span> <span class="o">+</span><span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
             <span class="k">break</span><span class="p">;</span>
         <span class="k">case</span> <span class="mi">104</span><span class="o">:</span>
         <span class="k">case</span> <span class="mi">106</span><span class="o">:</span>
-            <span class="n">val</span> <span class="o">*=</span> <span class="n">val</span><span class="p">;</span>
+            <span class="n">val</span> <span class="o">*</span><span class="o">=</span> <span class="n">val</span><span class="p">;</span>
             <span class="k">break</span><span class="p">;</span>
         <span class="k">default</span><span class="o">:</span>
             <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -721,7 +721,7 @@ used when there are a number of cases(e.g. four or more) and they span a small r
 	movq	%rdi, (%rdx)
 	ret
 	.cfi_endproc
-</code></pre><h2 id="procedures-">Procedures</h2>
+</code></pre><h2 id="procedures">Procedures</h2>
 <p>A procedure call involves passing both data and control form one part of program to another, it could have different form
 in different language: function, method, subroutine, handler. To supprot procedures, machine must have the abilities:</p>
 <ul>
@@ -729,23 +729,23 @@ in different language: function, method, subroutine, handler. To supprot procedu
 <li>transfer data</li>
 <li>allocate and deallocate memory sapce.</li>
 </ul>
-<h3 id="runtime-stack-">Runtime stack</h3>
+<h3 id="runtime-stack">Runtime stack</h3>
 <p>While the x86-64 procedure need more spaces than register have, then it would allocate space on stack, which called a
-stack frame of the procedure. If all local variables could be stored in register, the procedure don&rsquo;t need the stack frame.</p>
-<h3 id="transfer-control-">Transfer control</h3>
+stack frame of the procedure. If all local variables could be stored in register, the procedure don't need the stack frame.</p>
+<h3 id="transfer-control">Transfer control</h3>
 <p>To transfer control from procedure P to Q, it just simply set the PC with the start of Q, x86-64 uses <code>call Q</code> to push
 address A and then set the PC with the start of Q, the corresponding instruction <code>ret</code> would pop the address A, and set
 the PC with A.</p>
-<h3 id="transfer-data-">Transfer data</h3>
+<h3 id="transfer-data">Transfer data</h3>
 <p>In x86-64, it can store 6 parameters in register at most, for 64-bit size data, they stored in the order: %rdi, %rsi, %rdx
 %rcx, %r8, %r9. So the parameters beyond should transfer by stack.</p>
-<h3 id="register-local-space-">Register local space</h3>
+<h3 id="register-local-space">Register local space</h3>
 <p>Register is the only resource shared by all procedures. Conventionally, register %rbx, %rbp and %r12 ~ %r15 are called
 <em>callee-saved</em> registers, this means when procedure Q is called by P, then Q must save the values of any of these registers
 on the stack before overwriting them and restore them before returning. Any other registers except the stack point %rsp
 are called <em>caller-saved</em> registers, this means any procedure can overwriting this registers without restoring. The prefix
 of &ldquo;saved&rdquo; means who should store the data before pass the control to another procedure.</p>
-<h2 id="out-of-bounds-memory-references-and-buffer-overflow-">Out-of-Bounds Memory References and Buffer Overflow</h2>
+<h2 id="outofbounds-memory-references-and-buffer-overflow">Out-of-Bounds Memory References and Buffer Overflow</h2>
 <p>We have see that C does not perform any bounds checking for array references, and that local variables are stored on the
 stack along with state information such as saved register values and return addresses. This combination can lead to serious
 program errors, where the state stored on the stack gets corrupted by a write to an out-of-bounds array element. When the
@@ -770,31 +770,31 @@ wrong.</p>
     <div id="toc" class="Box Box--blue mb-3">
       <b>Computer System 2</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#assembler-">Assembler</a>
+    <li><a href="#assembler">Assembler</a>
       <ul>
-        <li><a href="#data-movement-instructions-">Data movement instructions</a></li>
-        <li><a href="#arithmetic-and-logical-operations-">Arithmetic and logical operations</a></li>
-        <li><a href="#control-">Control</a></li>
+        <li><a href="#data-movement-instructions">Data movement instructions</a></li>
+        <li><a href="#arithmetic-and-logical-operations">Arithmetic and logical operations</a></li>
+        <li><a href="#control">Control</a></li>
       </ul>
     </li>
-    <li><a href="#translating-conditional-branches-">Translating Conditional Branches</a></li>
-    <li><a href="#loop-">Loop</a>
+    <li><a href="#translating-conditional-branches">Translating Conditional Branches</a></li>
+    <li><a href="#loop">Loop</a>
       <ul>
-        <li><a href="#do-while-loop-">Do-while loop</a></li>
-        <li><a href="#while-loop-">While loop</a></li>
-        <li><a href="#for-loop-">For loop</a></li>
-        <li><a href="#switch-statement-">Switch statement</a></li>
+        <li><a href="#dowhile-loop">Do-while loop</a></li>
+        <li><a href="#while-loop">While loop</a></li>
+        <li><a href="#for-loop">For loop</a></li>
+        <li><a href="#switch-statement">Switch statement</a></li>
       </ul>
     </li>
-    <li><a href="#procedures-">Procedures</a>
+    <li><a href="#procedures">Procedures</a>
       <ul>
-        <li><a href="#runtime-stack-">Runtime stack</a></li>
-        <li><a href="#transfer-control-">Transfer control</a></li>
-        <li><a href="#transfer-data-">Transfer data</a></li>
-        <li><a href="#register-local-space-">Register local space</a></li>
+        <li><a href="#runtime-stack">Runtime stack</a></li>
+        <li><a href="#transfer-control">Transfer control</a></li>
+        <li><a href="#transfer-data">Transfer data</a></li>
+        <li><a href="#register-local-space">Register local space</a></li>
       </ul>
     </li>
-    <li><a href="#out-of-bounds-memory-references-and-buffer-overflow-">Out-of-Bounds Memory References and Buffer Overflow</a></li>
+    <li><a href="#outofbounds-memory-references-and-buffer-overflow">Out-of-Bounds Memory References and Buffer Overflow</a></li>
   </ul>
 </nav></div>
   

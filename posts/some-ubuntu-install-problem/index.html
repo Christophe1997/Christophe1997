@@ -108,9 +108,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-02-25. Published at: 2018-04-28.">
+      <span title="Lastmod: 2020-05-29. Published at: 2018-04-28.">
         
-          Lastmod: 2020-02-25
+          Lastmod: 2020-05-29
         
       </span>
     </div>
@@ -127,7 +127,7 @@ desktop wasjust so uncomfortable. And after one hour I gone back to 16.04:(, and
 problems I met while reinstalling the OS.</p>
 <!-- raw HTML omitted -->
 <p>I installed the 16.04 OS just the same as what I done before: burned the IOS to USB, started the computer, and do what the OS suggested to do.</p>
-<h2 id="soft-lockup-">Soft Lockup</h2>
+<h2 id="soft-lockup">Soft Lockup</h2>
 <p>The first thing I met was what called soft lockup, like below</p>
 <pre><code> watchdog: BUG: soft lockup cpu#0 stuck for 23s.
 </code></pre><p>emmm, it was quite depressed, but fortunately I found the solutions on <em>ubuntu forums</em>. The
@@ -139,9 +139,9 @@ with the hightlighted kernel you do before. Go down to the line starting with <c
 add the parameter <code>nomodeset</code> to its end. Now press <code>Ctrl</code> + <code>x</code> to boot in the specific
 config. And remember it just work temporarily, you should configure the <code>/etc/default/grub</code>
 file as same as what you do before, finally run <code>sudo update-grub</code> to permanently update
-GRUB&rsquo;s configuration.</p>
+GRUB's configuration.</p>
 <p>So in conclusion, what you need to do is add <code>nomodeset</code> to kernel boot configure.</p>
-<h2 id="pcie-bus-error-">PCIe Bus Error</h2>
+<h2 id="pcie-bus-error">PCIe Bus Error</h2>
 <p>After I solved the problem above, finally I was led to a <strong>NEW PROBLEM</strong>:( The PCIe Bus
 error actually appeared before the soft lockup, it was solved by <em>askubuntu</em>, just add
 <code>pci=noaer</code> to the kernel boot config, which I explained at soft lockup.</p>
@@ -156,7 +156,7 @@ video mode setting into the kernel. So all the programming of hardware specific 
 and registers on the video card happen in the kernel rather than in the X driver when the
 X server starts. This make it possible to have high resolution nice looking splash(boot)
 screens and flicker free transitions from boot splash to login screen. Unfortunately, on
-some cards this doesn&rsquo;t work properly and you end up with a black screen(or soft lockup
+some cards this doesn't work properly and you end up with a black screen(or soft lockup
 above). Adding the parameter instructs the kernel to not load video drivers and use BIOS
 modes instead until X is loaded. Note that this option is sometions needed for nVidia cards
 when using the default &ldquo;nouveau&rdquo; drivers. Installing proprietary nvidia drivers ususlly
@@ -168,13 +168,13 @@ permanet, just for one boot until you installed the nvidia drivers.</p>
 device behaviour.</p>
 </li>
 </ol>
-<h3 id="ubuntu-and-windows-time-difference-">Ubuntu and Windows Time Difference</h3>
+<h3 id="ubuntu-and-windows-time-difference">Ubuntu and Windows Time Difference</h3>
 <p>Operating systems store and retrieve the time in the hardware clock located on your motherland so
 that it can keep track of the time even when the system does not have power. Most operating system(Linux,
 Unix, MacOS) store the time on the hardware clock as UTC by default, though some system(notably Microsoft
 Windows) store the time on the hardware clock as the &ldquo;local&rdquo; time. This causes problems in a dual boot system
 if both system view the hardware clock differently.</p>
-<p>The advantage of having the hardware clock as UTC is that you don&rsquo;t need to change the hardware clock when moving
+<p>The advantage of having the hardware clock as UTC is that you don't need to change the hardware clock when moving
 bewteen timezones or when Daylight Savings Time(DST) begins or ends as UTC does not have DST or timezone offsets.
 And changing Linux to use local time is easier and more reliable than changing Windows to use UTC.</p>
 <ol>
@@ -212,10 +212,10 @@ it to registry:</p>
     <div id="toc" class="Box Box--blue mb-3">
       <b>一些Ubuntu安装问题</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#soft-lockup-">Soft Lockup</a></li>
-    <li><a href="#pcie-bus-error-">PCIe Bus Error</a>
+    <li><a href="#soft-lockup">Soft Lockup</a></li>
+    <li><a href="#pcie-bus-error">PCIe Bus Error</a>
       <ul>
-        <li><a href="#ubuntu-and-windows-time-difference-">Ubuntu and Windows Time Difference</a></li>
+        <li><a href="#ubuntu-and-windows-time-difference">Ubuntu and Windows Time Difference</a></li>
       </ul>
     </li>
   </ul>
