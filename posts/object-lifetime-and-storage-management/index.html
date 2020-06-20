@@ -104,9 +104,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-05-29. Published at: 2018-12-08.">
+      <span title="Lastmod: 2020-02-25. Published at: 2018-12-08.">
         
-          Lastmod: 2020-05-29
+          Lastmod: 2020-02-25
         
       </span>
     </div>
@@ -135,7 +135,7 @@ if (!doNotTrack) {
 <li>栈(<em>stack</em>)对象随着子程序的调用和返回而被创建以及按照LIFO的顺序析构.</li>
 <li>堆(<em>heap</em>)对象可以在任何时候创建和析构, 其额外要求更加通用和昂贵的内存分配算法.</li>
 </ol>
-<h2 id="static-allocation">静态分配(<em>static allocation</em>)</h2>
+<h2 id="静态分配_static-allocation_-">静态分配(<em>static allocation</em>)</h2>
 <p>静态分配最明显的例子就是全局对象, 当然全局对象不是唯一的例子. 构成程序机器语言翻译的指令也可以认为是静态分配的变量; 数字和字符串的常量当然也是静态分配
 的; 另外很多编译器会产生一系列的表用于支持运行时的debug, 动态类型检查, 垃圾回收, 异常处理等, 这些表也都是静态分配的. 静态分配的对象通常希望它们的值
 不在变化, 因此经常被分配在被保护的只读的内存中以方便在试图修改其值产生中断并抛出运行时错误.</p>
@@ -149,7 +149,7 @@ time之后改变的值, 这些值可能依赖与其他在运行时才能确定�
 <li>临时变量, 通常是那些复杂计算过程的中间值, 一个优秀的编译器也会将它们保存在寄存器内.</li>
 <li><em>bookkeeping information</em>, 这些通常包含子程序的返回地址.</li>
 </ol>
-<h2 id="stackbased-allocation">基于栈的分配(<em>stack-based allocation</em>)</h2>
+<h2 id="基于栈的分配_stack-based-allocation_-">基于栈的分配(<em>stack-based allocation</em>)</h2>
 <p>一门语言如果想要支持递归, 那么在局部变量上采用静态分配的策略将不再适用(Fortran90之前不支持递归), 因为需要变量的个数是未知的. 所幸的是递归天然地适用
 于栈结构的分配策略. 每一个子程序在运行时都有一个栈帧(<em>frame</em>, 或者称为活动记录, <em>activation record</em>), 包含了传入参数, 局部变量, 临时变量, 以及
 bookkeeping信息. 通常传入参数位于帧的顶部, 方便被调用者定位参数, 而其他的布局则依赖于实现. 栈的维护是子程序调用序列的责任, 即调用者在调用前(序言,
@@ -158,7 +158,7 @@ bookkeeping信息. 通常传入参数位于帧的顶部, 方便被调用者定�
 这些都保存在调用者的帧上.</p>
 <p>即时没有递归的语言也可以从基于栈的分配中获益, 因为大多数语言的子程序都无法在同一个时间内运行, 如果采用静态分配意味着需要预先分配所有局部变量(运行的与
 不运行的), 而基于栈的分配则可以节省很大的空间开销.</p>
-<h2 id="heapbased-allocation">基于堆的分配(<em>heap-based allocation</em>)</h2>
+<h2 id="基于堆的分配_heap-based-allocation_-">基于堆的分配(<em>heap-based allocation</em>)</h2>
 <p>堆上的子块(<em>subblock</em>)可以在任何时候分配和释放. 堆对于那些链式数据结构, 以及在运行时会改变大小的对象, 诸如列表, 集合, 通用的字符串等是必须的.
 堆上的空间管理策略众多, 主要的原则是在速度和空间上进行权衡. 空间上又可以细分为内部错误(<em>internal fragmentation</em>)与外部错误(<em>external
 fragmentation</em>), 内部错误发生在一个内存分配算法分配的块比实际对象需要的空间更大, 而外部错误发生在未被使用的空间过于碎片化, 虽然有空间但无法满足实际
@@ -175,7 +175,7 @@ fragmentation</em>), 内部错误发生在一个内存分配算法分配的块�
 时出现的另一半)合并. 类似的, 斐波那契堆将标准大小序列分成斐波那契数列, 该算法产生内部错误比伙伴系统更少, 因为斐波那契数列增长比2的指数序列更为缓慢.</p>
 <p>外部错误出现的问题在于堆的分配能力总是随着时间下降的. 总存在一个分配序列使得总大小小于堆的大小而堆无法完成所有分配, 为了减少外部错误, 必须要压紧(<em>compact</em>)
 堆.</p>
-<h2 id="garbage-collection">垃圾回收(<em>garbage collection</em>)</h2>
+<h2 id="垃圾回收_garbage-collection_-">垃圾回收(<em>garbage collection</em>)</h2>
 <p>使用堆分配的对象, 在某些语言中(C, C++, Pascal)可以显示释放, 而更多的语言则规定分配的对象将在不再被使用时隐式地释放. 对于这种语言的运行时库(<em>run-time
 library</em>)必须要提供垃圾回收(<em>garbage collection</em>)机制来识别和回收不可达的对象. 许多函数式语言和脚本语言以及最近的命令式(<em>imprerative</em>,
 指广泛意义上的)语言, 如Java, Modula-3和C#都提供了垃圾回收. 支持显示释放的传统观点包括实现更简单以及执行更高效, 即使是一个简单(<em>naive</em>)的自动垃圾
@@ -203,10 +203,10 @@ library</em>)必须要提供垃圾回收(<em>garbage collection</em>)机制来�
     <div id="toc" class="Box Box--blue mb-3">
       <b>Object Lifetime and Storage Management</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#static-allocation">静态分配(static allocation)</a></li>
-    <li><a href="#stackbased-allocation">基于栈的分配(stack-based allocation)</a></li>
-    <li><a href="#heapbased-allocation">基于堆的分配(heap-based allocation)</a></li>
-    <li><a href="#garbage-collection">垃圾回收(garbage collection)</a></li>
+    <li><a href="#静态分配_static-allocation_-">静态分配(<em>static allocation</em>)</a></li>
+    <li><a href="#基于栈的分配_stack-based-allocation_-">基于栈的分配(<em>stack-based allocation</em>)</a></li>
+    <li><a href="#基于堆的分配_heap-based-allocation_-">基于堆的分配(<em>heap-based allocation</em>)</a></li>
+    <li><a href="#垃圾回收_garbage-collection_-">垃圾回收(<em>garbage collection</em>)</a></li>
   </ul>
 </nav></div>
   

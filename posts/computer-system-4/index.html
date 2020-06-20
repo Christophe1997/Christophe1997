@@ -104,9 +104,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-05-29. Published at: 2018-06-10.">
+      <span title="Lastmod: 2020-02-25. Published at: 2018-06-10.">
         
-          Lastmod: 2020-05-29
+          Lastmod: 2020-02-25
         
       </span>
     </div>
@@ -116,13 +116,13 @@ if (!doNotTrack) {
 <article>
   
   <section class="pb-6 mb-3 border-bottom">
-    <h2 id="linking">Linking</h2>
+    <h2 id="linking-">Linking</h2>
 <p>Linking is the process of collecting and combining various pieces of code and data into a single file that can be loaded
 (copied) into memory and executed. Linking can be performed at compile time, when the source code is translated into
 machine code; at load time, when the program is loaded into memory and executed by the <em>loader</em>; and even at run time, by
 application programs. On modern systems, linking is performed automatically by programs called <em>linkers</em>.</p>
 <!-- raw HTML omitted -->
-<h3 id="static-linking">Static linking</h3>
+<h3 id="static-linking-">Static linking</h3>
 <p><em>Static linker</em> such as the Unix ld program take as input a collection of relocatable object files and command-line arguments
 and generate as output a fully linked executable object file that can be loaded and run. To build the executable, the
 linker must perform two main tasks:</p>
@@ -133,7 +133,7 @@ symbol reference with exactly one symbol definition.</li>
 these sections by associating a memory location with each symbol definition, and then modifying all of the references
 to those symbols so that they point to this memory location.</li>
 </ol>
-<h3 id="object-file">Object file</h3>
+<h3 id="object-file-">Object file</h3>
 <p>Object files are merely collections of blocks of bytes, it comes in three forms:</p>
 <ul>
 <li><em>Relocatable object file</em>. Contains binary code and data in a form that can be combined with other relocatable object
@@ -162,7 +162,7 @@ defined and referenced in the program, and the original C source file.</li>
 section headers.</li>
 </ul>
 <p>The .debug and .line sections only present if the compiler driver is invoked with the -g option.</p>
-<h3 id="symbol">Symbol</h3>
+<h3 id="symbol-">Symbol</h3>
 <p>Each relocatable object module m, has a symbol table that contains information about the symbols that are defined and
 referenced by m. In the context of a linker, there are three different kinds of symbols:</p>
 <ul>
@@ -203,7 +203,7 @@ contains an array of entries, each entry has the format below:</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>The linker resolves symbol references by associating each reference with exactly one symbol definition from the symbol
-tables of its input relocatable object files. It's much easy to reference local symbols than global symbols.The compiler
+tables of its input relocatable object files. It&rsquo;s much easy to reference local symbols than global symbols.The compiler
 allows only one definition of each local symbol per module. Overloaded functions in C++ and Java work because the compiler
 encodes each unique method and parameter list combination into a unique name for the linker, which is known as mangling.</p>
 <p>At compile time, the compiler exports each global symbol to the assembler as either <em>strong</em> or <em>weak</em>, and the assembler
@@ -215,7 +215,7 @@ Unix linkers use the following rules for dealing with multiply defined:</p>
 <li>Given a strong symbol and multiple weak symbols, choose the strong symbol.</li>
 <li>Given multiple weak symbols, choose any of the weak symbols.</li>
 </ol>
-<h2 id="exceptional-control-flow">Exceptional Control Flow</h2>
+<h2 id="exceptional-control-flow-">Exceptional Control Flow</h2>
 <p>Exceptions can be divided into four classes: <em>interrupts</em>, <em>traps</em>, <em>faults</em> and <em>aborts</em>.</p>
 <p><em>Interrupts</em> occur asynchronously as a result of signals from I/O devices that are external to the processor. Exception
 handlers for hardware interrupts are often called <em>interrupt handlers</em>. After the current instruction finishes executing,
@@ -224,7 +224,7 @@ the appropriate interrupt handler. When the handler return, it returns control t
 of exceptions(traps, falusts and aborts) occur synchronously as a result of executing the current instruction. We refer
 to this instruction as the <em>faluting instruction</em>.</p>
 <p><em>Traps</em> are intentional exceptions that occur as a result of executing an instruction. The most import use of traps is
-to provide a procedure-like interface between user programs and the kernel known as <em>system call</em>. From a programmer's
+to provide a procedure-like interface between user programs and the kernel known as <em>system call</em>. From a programmer&rsquo;s
 perspective, a system call is identical to a regular function call. However, regular functions run in user mode, which
 restricts the types of instructions they can execute, and they acess the same stack as the calling function, while a
 system call runs in kernel mode, which allows it to execute instructions, and accesses a stack defined in the kernel.</p>
@@ -236,7 +236,7 @@ terminates the application program that caused the fault.</p>
 <p>x86-64 system has up to 256 different exception types. Numbers in the range from 0 to 31 corresnpond to execeptions that
 are defined by Intel, while numbers in the range from 32 to 255 correspond to interrupts and traps that are defined by
 the operating system.</p>
-<h3 id="processes">Processes</h3>
+<h3 id="processes-">Processes</h3>
 <p>Exceptions are the basic building blocks that allow the operating system to provide the notion of a <em>process</em>, one of
 the most profound and successful ideas in computer science. The classic definition of a process is an <em>instance of a
 program in execution</em>. A process provides two key abstractions: An independent logical control flow and A private address
@@ -268,34 +268,34 @@ the PID of the child. In the child, fork returns a value of 0. For example:</p>
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-C" data-lang="C"><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+<pre class="chroma"><code class="language-C" data-lang="C"><span class="cp">#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
 </span><span class="cp"></span>
-<span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span><span class="p">)</span> <span class="p">{</span>
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>
     <span class="n">pid_t</span> <span class="n">pid</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
-    <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">=</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">child : x=%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="o">+</span><span class="o">+</span><span class="n">x</span><span class="p">)</span><span class="p">;</span>
-        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;child : x=%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="o">++</span><span class="n">x</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">parent: x=%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="o">-</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;parent: x=%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="o">--</span><span class="n">x</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>And it's result in Unix system is</p>
+</div><p>And it&rsquo;s result in Unix system is</p>
 <pre><code>parent: x=0
 child: x=2
 </code></pre><p>Here you can see the fork function call once, return twice. And the parent and the child are sperate processes that run
 concurrently, we can never make assumptions about the order of the two process. Those two process also share duplicate but
 separate address spaces, they both have x equals to 1, but they do different things to x sperately. Also they share files,
-that means the child process inherits all of parent's open files.</p>
-<h3 id="common-memoryrelated-bugs-in-c">Common memory-related bugs in C</h3>
+that means the child process inherits all of parent&rsquo;s open files.</p>
+<h3 id="common-memory-related-bugs-in-c-">Common memory-related bugs in C</h3>
 <ol>
 <li>
 <p>Dereference bad pointers: If we attempt to dereference a pointer into the unmapped virtual address or the read-only
@@ -333,7 +333,7 @@ examining the size of the input string.</p>
 definition never terminate.</p>
 </li>
 </ol>
-<h2 id="systemlevel-io">System-level I/O</h2>
+<h2 id="system-level-io-">System-level I/O</h2>
 <p>A Unix file is a sequence of m bytes:
 $$ B_0, B_1, \cdots, B_k, \cdots, B_{m-1} $$
 All I/O devices, such as networks, disks, and terminals, are modeled as files, and all input and output is performed by
@@ -374,20 +374,20 @@ location.</li>
     <div id="toc" class="Box Box--blue mb-3">
       <b>Computer System 4</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#linking">Linking</a>
+    <li><a href="#linking-">Linking</a>
       <ul>
-        <li><a href="#static-linking">Static linking</a></li>
-        <li><a href="#object-file">Object file</a></li>
-        <li><a href="#symbol">Symbol</a></li>
+        <li><a href="#static-linking-">Static linking</a></li>
+        <li><a href="#object-file-">Object file</a></li>
+        <li><a href="#symbol-">Symbol</a></li>
       </ul>
     </li>
-    <li><a href="#exceptional-control-flow">Exceptional Control Flow</a>
+    <li><a href="#exceptional-control-flow-">Exceptional Control Flow</a>
       <ul>
-        <li><a href="#processes">Processes</a></li>
-        <li><a href="#common-memoryrelated-bugs-in-c">Common memory-related bugs in C</a></li>
+        <li><a href="#processes-">Processes</a></li>
+        <li><a href="#common-memory-related-bugs-in-c-">Common memory-related bugs in C</a></li>
       </ul>
     </li>
-    <li><a href="#systemlevel-io">System-level I/O</a></li>
+    <li><a href="#system-level-io-">System-level I/O</a></li>
   </ul>
 </nav></div>
   

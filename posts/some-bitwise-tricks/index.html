@@ -104,9 +104,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-05-29. Published at: 2020-02-25.">
+      <span title="Lastmod: 2020-02-25. Published at: 2020-02-25.">
         
-          Lastmod: 2020-05-29
+          Lastmod: 2020-02-25
         
       </span>
     </div>
@@ -129,7 +129,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 01011000 -&gt; 01010000
-</span><span class="c1"></span><span class="c1">// if no one then return 0
+</span><span class="c1">// if no one then return 0
 </span><span class="c1"></span><span class="n">x</span> <span class="p">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
@@ -145,7 +145,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10100111 -&gt; 10101111
-</span><span class="c1"></span><span class="c1">// if no zero then return -1
+</span><span class="c1">// if no zero then return -1
 </span><span class="c1"></span><span class="n">x</span> <span class="p">|</span> <span class="p">(</span><span class="n">x</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
@@ -160,7 +160,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10100111 -&gt; 10100000
-</span><span class="c1"></span><span class="c1">// if no trailing 1s then identity
+</span><span class="c1">// if no trailing 1s then identity
 </span><span class="c1"></span><span class="n">x</span> <span class="p">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
@@ -176,7 +176,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10101000 -&gt; 10101111
-</span><span class="c1"></span><span class="c1">// if no trailing 1s then identity
+</span><span class="c1">// if no trailing 1s then identity
 </span><span class="c1"></span><span class="n">x</span> <span class="p">|</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
@@ -191,7 +191,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10100111 -&gt; 00001000
-</span><span class="c1"></span><span class="c1">// if no rightmost 0 then return 0
+</span><span class="c1">// if no rightmost 0 then return 0
 </span><span class="c1"></span><span class="p">~</span><span class="n">x</span> <span class="p">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
@@ -206,7 +206,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10101000 -&gt; 11110111
-</span><span class="c1"></span><span class="c1">// if no rightmost 1 then return -1
+</span><span class="c1">// if no rightmost 1 then return -1
 </span><span class="c1"></span><span class="p">~</span><span class="n">x</span> <span class="p">|</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
@@ -221,7 +221,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 01011000 -&gt; 00000111
-</span><span class="c1"></span><span class="c1">// if no trailling 0s then return 0
+</span><span class="c1">// if no trailling 0s then return 0
 </span><span class="c1"></span><span class="p">~</span><span class="n">x</span> <span class="p">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
@@ -236,7 +236,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 10100111 -&gt; 11111000
-</span><span class="c1"></span><span class="c1">// if no trailing 1s then return -1
+</span><span class="c1">// if no trailing 1s then return -1
 </span><span class="c1"></span><span class="p">~</span><span class="n">x</span> <span class="p">|</span> <span class="p">(</span><span class="n">x</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
@@ -251,7 +251,7 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 01011000 -&gt; 00001000
-</span><span class="c1"></span><span class="c1">// if no rightmost 1 then return 0
+</span><span class="c1">// if no rightmost 1 then return 0
 </span><span class="c1"></span><span class="n">x</span> <span class="p">^</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
@@ -267,8 +267,8 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">// 01010111 -&gt; 00001111
-</span><span class="c1"></span><span class="c1">// if no rightmost 0 then return -1
-</span><span class="c1"></span><span class="c1">// else if no trailing 1s then return 1
+</span><span class="c1">// if no rightmost 0 then return -1
+</span><span class="c1">// else if no trailing 1s then return 1
 </span><span class="c1"></span><span class="n">x</span> <span class="p">^</span> <span class="p">(</span><span class="n">x</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
@@ -280,7 +280,7 @@ if (!doNotTrack) {
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="p">(</span><span class="p">(</span><span class="n">x</span> <span class="p">|</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span><span class="p">)</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span> <span class="p">&amp;</span> <span class="n">x</span>
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="p">((</span><span class="n">x</span> <span class="p">|</span> <span class="p">(</span><span class="n">x</span> <span class="p">-</span> <span class="m">1</span><span class="p">))</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span> <span class="p">&amp;</span> <span class="n">x</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>上式也可以用来判断一个无符号的整数是否是$ 2 ^ n - 2 ^ m (n &gt; m) $的形式.</p>

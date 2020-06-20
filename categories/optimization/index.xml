@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Optimization on CastOff</title>
+    <link>https://christophe1997.github.io/categories/optimization/</link>
+    <description>Recent content in Optimization on CastOff</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy;Christophe</copyright>
+    <lastBuildDate>Fri, 19 Jun 2020 21:39:35 +0800</lastBuildDate>
+    
+	<atom:link href="https://christophe1997.github.io/categories/optimization/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Memoization in Haskell</title>
+      <link>https://christophe1997.github.io/posts/memoization-in-haskell/</link>
+      <pubDate>Fri, 19 Jun 2020 21:39:35 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/posts/memoization-in-haskell/</guid>
+      <description>Memoization是动态规划(Dynamic Programming)中自顶向下处理问题采用的策略, 其基本想法是通过将子问题的解保存起来避</description>
+    </item>
+    
+  </channel>
+</rss>

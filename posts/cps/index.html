@@ -112,9 +112,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-05-29. Published at: 2020-02-29.">
+      <span title="Lastmod: 2020-04-06. Published at: 2020-02-29.">
         
-          Lastmod: 2020-05-29
+          Lastmod: 2020-04-06
         
       </span>
     </div>
@@ -138,7 +138,7 @@ if (!doNotTrack) {
 <pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">rec</span> <span class="n">fact</span> <span class="n">n</span> <span class="o">=</span> 
 <span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="n">0</span>
 <span class="k">then</span> <span class="n">1</span>
-<span class="k">else</span> <span class="n">n</span> <span class="o">*</span> <span class="o">(</span><span class="n">fact</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span><span class="o">)</span>
+<span class="k">else</span> <span class="n">n</span> <span class="o">*</span> <span class="o">(</span><span class="n">fact</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">))</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>当我们计算<code>(fact 4)</code>时, 其执行过程为(用lisp的形式是因为更加形象):</p>
@@ -157,13 +157,13 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="nf">fact</span> <span class="mi">4</span><span class="p">)</span>
-<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">3</span><span class="p">)</span><span class="p">)</span>
-<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">2</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
-<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">1</span><span class="p">)</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
-<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="p">(</span><span class="nb">* </span><span class="mi">1</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">0</span><span class="p">)</span><span class="p">)</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
-<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="p">(</span><span class="nb">* </span><span class="mi">1</span> <span class="mi">1</span><span class="p">)</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
-<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="mi">1</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
-<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="mi">2</span><span class="p">)</span><span class="p">)</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">1</span><span class="p">))))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="p">(</span><span class="nb">* </span><span class="mi">1</span> <span class="p">(</span><span class="nf">fact</span> <span class="mi">0</span><span class="p">)))))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="p">(</span><span class="nb">* </span><span class="mi">1</span> <span class="mi">1</span><span class="p">))))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="mi">2</span><span class="p">))</span>
 <span class="k">=&gt; </span><span class="p">(</span><span class="nb">* </span><span class="mi">4</span> <span class="mi">6</span><span class="p">)</span>
 <span class="k">=&gt; </span><span class="mi">24</span>
 </code></pre></td></tr></table>
@@ -223,7 +223,7 @@ if (!doNotTrack) {
 <pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">rec</span> <span class="n">factCPS</span> <span class="n">n</span> <span class="n">k</span> <span class="o">=</span> 
   <span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="n">0</span>
   <span class="k">then</span> <span class="n">k</span> <span class="n">1</span>
-  <span class="k">else</span> <span class="n">fact</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">k</span> <span class="o">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">x</span><span class="o">)</span><span class="o">)</span>
+  <span class="k">else</span> <span class="n">fact</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">k</span> <span class="o">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">x</span><span class="o">))</span>
 <span class="k">let</span> <span class="nv">fact</span> <span class="n">n</span> <span class="o">=</span> <span class="n">factCPS</span> <span class="n">n</span> <span class="n">id</span>
 </code></pre></td></tr></table>
 </div>
@@ -242,8 +242,8 @@ if (!doNotTrack) {
 <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">z</span>
 <span class="o">|</span> <span class="n">x</span> <span class="o">::</span> <span class="n">xs</span> <span class="o">-&gt;</span> <span class="n">f</span> <span class="n">x</span> <span class="n">z</span> <span class="o">(</span><span class="k">fun</span> <span class="n">y</span> <span class="o">-&gt;</span> <span class="n">foldCPS</span> <span class="n">f</span> <span class="n">y</span> <span class="n">xs</span><span class="o">)</span>
 
-<span class="k">let</span> <span class="nv">foldl</span> <span class="n">f</span> <span class="n">z</span> <span class="n">ls</span> <span class="o">=</span> <span class="n">foldCPS</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="n">z</span> <span class="n">g</span> <span class="o">-&gt;</span> <span class="n">g</span> <span class="o">(</span><span class="n">f</span> <span class="n">z</span> <span class="n">x</span><span class="o">)</span><span class="o">)</span> <span class="n">z</span> <span class="n">ls</span>
-<span class="k">let</span> <span class="nv">foldr</span> <span class="n">f</span> <span class="n">z</span> <span class="n">ls</span> <span class="o">=</span> <span class="n">foldCPS</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="n">z</span> <span class="n">g</span> <span class="o">-&gt;</span> <span class="n">f</span> <span class="n">x</span> <span class="o">(</span><span class="n">g</span> <span class="n">z</span><span class="o">)</span><span class="o">)</span> <span class="n">z</span> <span class="n">ls</span>
+<span class="k">let</span> <span class="nv">foldl</span> <span class="n">f</span> <span class="n">z</span> <span class="n">ls</span> <span class="o">=</span> <span class="n">foldCPS</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="n">z</span> <span class="n">g</span> <span class="o">-&gt;</span> <span class="n">g</span> <span class="o">(</span><span class="n">f</span> <span class="n">z</span> <span class="n">x</span><span class="o">))</span> <span class="n">z</span> <span class="n">ls</span>
+<span class="k">let</span> <span class="nv">foldr</span> <span class="n">f</span> <span class="n">z</span> <span class="n">ls</span> <span class="o">=</span> <span class="n">foldCPS</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="n">z</span> <span class="n">g</span> <span class="o">-&gt;</span> <span class="n">f</span> <span class="n">x</span> <span class="o">(</span><span class="n">g</span> <span class="n">z</span><span class="o">))</span> <span class="n">z</span> <span class="n">ls</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>这里<code>foldCPS</code>的<code>f</code>是CPS的, 其第一个参数是列表头部的元素, 第二个参数是累加的值, 第三个参数是一个<em>continuation</em>. 我们还通过<code>foldCPS</code>定义了<code>foldl</code>和<code>foldr</code>, <code>foldl f z [1; 2; 3; 4]</code>的逻辑是<code>(f (f (f (f z 1) 2) 3) 4)</code>, 即我们先计算头部元素和累加值的运算结果再将其传入<em>continuation</em>(接下来的计算); 而<code>foldr f z [1; 2; 3; 4]</code>的逻辑是<code>(f 1 (f 2 (f 3 (f 4 z))))</code>, 即我们先将累加值传入<em>continuation</em>(接下来的计算)得到结果后再计算其与头部元素的计算结果. 这和我们正常版本的<code>foldl</code>和<code>foldr</code>的逻辑是一致的:</p>
@@ -311,16 +311,16 @@ if (!doNotTrack) {
 <pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">rec</span> <span class="n">fibCPS</span> <span class="n">n</span> <span class="n">k</span> <span class="o">=</span> 
 	<span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">2</span>
 	<span class="k">then</span> <span class="n">k</span> <span class="n">1</span>
-	<span class="k">else</span> <span class="n">fibCPS</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">&lt;</span><span class="o">|</span> <span class="k">fun</span> <span class="n">v1</span> <span class="o">-&gt;</span> <span class="n">fibCPS</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">2</span><span class="o">)</span> <span class="o">&lt;</span><span class="o">|</span> <span class="k">fun</span> <span class="n">v2</span> <span class="o">-&gt;</span> <span class="n">v1</span> <span class="o">+</span> <span class="n">v2</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">k</span>
+	<span class="k">else</span> <span class="n">fibCPS</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">&lt;|</span> <span class="k">fun</span> <span class="n">v1</span> <span class="o">-&gt;</span> <span class="n">fibCPS</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">2</span><span class="o">)</span> <span class="o">&lt;|</span> <span class="k">fun</span> <span class="n">v2</span> <span class="o">-&gt;</span> <span class="n">v1</span> <span class="o">+</span> <span class="n">v2</span> <span class="o">|&gt;</span> <span class="n">k</span>
 <span class="k">let</span> <span class="nv">fib</span> <span class="n">n</span> <span class="o">=</span> <span class="n">fibCPS</span> <span class="n">n</span> <span class="n">id</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>可以看到, <code>fib</code>的CPS版本相较于原始版本显得更加不直观, 而这确实是CPS的缺点, 由于显示的传递控制上下文, 我们的代码变得不够直观.</p>
-<h2 id="cps">CPS与尾递归优化</h2>
+<h2 id="cps与尾递归优化">CPS与尾递归优化</h2>
 <p>所谓的尾递归优化(<em>tail call optimization</em>, TCO)指的是对于一个尾递归的函数, 例如我们有函数f, 其尾递归调用了g, 由于不需要额外的信息, 我们可以直接传递f的返回地址. 这样当g返回时, 其可以直接返回到f的调用者. 从上文我们知道, CPS总是尾递归的, 因此CPS可以和TCO同时使用来消除递归函数的调用栈的增长. 因此CPS可以用于那些具有尾递归优化的语言来使避免我们的递归函数栈溢出, 但由于CPS使得代码变得不够直观, 因此其效果可能并不如使用<em>accumulator</em>, 同时CPS也可以作为编译器的IR(<em>intermediate representation</em>), <a href="https://www.smlnj.org/">SML/NJ</a>就是一个例子, 具体可以参考<a href="https://www.cs.princeton.edu/~appel/">Andrew</a>的&quot;Compiling with Continuations&rdquo;.</p>
-<h2 id="nettail-call">.NET中的tail call</h2>
+<h2 id="net中的tail-call">.NET中的tail call</h2>
 <p>.NET的CIL中存在着<code>tail.</code>的opcode, 不过C#的编译器本身不会做TCO, 而F#的编译器则会处理TCO, 对于简单的尾递归, 例如递归调用自身, F#编译器通常将其优化为循环, 对于其他的情况才会使用<code>tail.</code>, 具体可以参考&rdquo;<a href="https://devblogs.microsoft.com/fsharpteam/tail-calls-in-f/">Tail calls in F#</a>&quot;.</p>
-<h2 id="heading">总结</h2>
+<h2 id="总结">总结</h2>
 <p>以上就是关于CPS与尾递归的介绍, 然而这仅仅是关于<em>continuation</em>的一点皮毛而已, 也没有涉及到<code>call/cc</code>的内容, 如果你对<em>continuation</em>有兴趣, 可以参考Haskell中的&rdquo;<a href="https://wiki.haskell.org/All_About_Monads#The_Continuation_monad">Continuation monad</a>&quot;. 另外, 如果你关于本文有任何问题, 欢迎<a href="mailto:hey_christophe@outlook.com">邮件</a>我</p>
 
   </section>
@@ -343,9 +343,9 @@ if (!doNotTrack) {
   <ul>
     <li><a href="#continuation">Continuation</a></li>
     <li><a href="#continuation-passing-stylecps">Continuation Passing Style(CPS)</a></li>
-    <li><a href="#cps">CPS与尾递归优化</a></li>
-    <li><a href="#nettail-call">.NET中的tail call</a></li>
-    <li><a href="#heading">总结</a></li>
+    <li><a href="#cps与尾递归优化">CPS与尾递归优化</a></li>
+    <li><a href="#net中的tail-call">.NET中的tail call</a></li>
+    <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
   

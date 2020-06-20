@@ -108,9 +108,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-05-29. Published at: 2020-02-27.">
+      <span title="Lastmod: 2020-03-02. Published at: 2020-02-27.">
         
-          Lastmod: 2020-05-29
+          Lastmod: 2020-03-02
         
       </span>
     </div>
@@ -121,8 +121,8 @@ if (!doNotTrack) {
   
   <section class="pb-6 mb-3 border-bottom">
     <p>近来想于函数式编程中寻找类似与双向链表的数据结构, 结果找到了Zipper. Zipper中文为拉链, 泛指一类常在函数式编程中使用的聚合数据结构, <strong>其加强了原有的数据结构, 使得能够遍历或更新原有数据结构的任意部分</strong>. zipper的关键思想是将目前需要处理的部分和不需要处理的部分分开, 同时保存目前不需要的部分, 也可以将其形象的理解为光标. 本文首先介绍了如何在list的基础上构建zipper, 随后将其扩展到二叉树上.</p>
-<h2 id="list">list的例子</h2>
-<h3 id="zipper">定义zipper</h3>
+<h2 id="list的例子">list的例子</h2>
+<h3 id="定义zipper">定义zipper</h3>
 <p>list或者说是单向链表, 是函数式编程中最负盛名的结构, 其既简单又实用. 当我们需要修改list中的一部分时, 例如将<code>[1 2 3 4 5]</code>中的<code>[3 4 5]</code>替换为<code>[5 6]</code>, list就带来了问题. 这时候一个简单的做法是:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -156,7 +156,7 @@ if (!doNotTrack) {
 </code></pre></td></tr></table>
 </div>
 </div><p>对于list而言, 我们需要处理的部分总是位于某个子列表的头部, 而需要保存的部分则是目标位置前面的部分, 因此我们可以用俩个列表, 一个表示目前正在处理的部分, 另一个表示之前的部分.</p>
-<h3 id="heading">移动光标</h3>
+<h3 id="移动光标">移动光标</h3>
 <p>在一开始, 我曾提到可以将zipper理解为光标, 初始化时光标的位置位于开头. 当光标在一个列表中时, 容易看到其只能向前或向后移动:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -179,23 +179,23 @@ if (!doNotTrack) {
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">goForward</span> <span class="o">(</span><span class="n">ListZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span><span class="o">)</span> <span class="o">=</span> 
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">goForward</span> <span class="o">(</span><span class="n">ListZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">back</span><span class="o">))</span> <span class="o">=</span> 
   <span class="k">match</span> <span class="n">cur</span> <span class="k">with</span>
-  <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;</span><span class="s">Out of range</span><span class="s">&#34;</span> <span class="c1">// 也可以用Maybe monad来处理
+  <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;Out of range&#34;</span> <span class="c1">// 也可以用Maybe monad来处理
 </span><span class="c1"></span>  <span class="o">|</span> <span class="n">x</span> <span class="o">::</span> <span class="n">xs</span> <span class="o">-&gt;</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="n">xs</span><span class="o">,</span> <span class="n">x</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span>
   
-<span class="k">let</span> <span class="nv">goBack</span> <span class="o">(</span><span class="n">ListZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span><span class="o">)</span> <span class="o">=</span> 
+<span class="k">let</span> <span class="nv">goBack</span> <span class="o">(</span><span class="n">ListZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">back</span><span class="o">))</span> <span class="o">=</span> 
   <span class="k">match</span> <span class="n">back</span> <span class="k">with</span>
-  <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;</span><span class="s">At the beginning of list</span><span class="s">&#34;</span>
+  <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;At the beginning of list&#34;</span>
   <span class="o">|</span> <span class="n">x</span> <span class="o">::</span> <span class="n">xs</span> <span class="o">-&gt;</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="n">x</span> <span class="o">::</span> <span class="n">cur</span><span class="o">,</span> <span class="n">xs</span><span class="o">)</span>
 
 <span class="k">let</span> <span class="nv">rec</span> <span class="n">goEnd</span> <span class="o">=</span> <span class="k">function</span>
-<span class="o">|</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="bp">[]</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="k">as</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span>
-<span class="o">|</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goForward</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goEnd</span>
+<span class="o">|</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="bp">[]</span><span class="o">,</span> <span class="o">_)</span> <span class="k">as</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span>
+<span class="o">|</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span> <span class="o">|&gt;</span> <span class="n">goForward</span> <span class="o">|&gt;</span> <span class="n">goEnd</span>
 
 <span class="k">let</span> <span class="nv">rec</span> <span class="n">goStart</span> <span class="o">=</span> <span class="k">function</span>
-<span class="o">|</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span> <span class="k">as</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span>
-<span class="o">|</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goBack</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goStart</span>
+<span class="o">|</span> <span class="n">ListZipper</span> <span class="o">(_,</span> <span class="bp">[]</span><span class="o">)</span> <span class="k">as</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span>
+<span class="o">|</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span> <span class="o">|&gt;</span> <span class="n">goBack</span> <span class="o">|&gt;</span> <span class="n">goStart</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>现在我们可以移动光标了:</p>
@@ -216,14 +216,14 @@ if (!doNotTrack) {
 <span class="k">let</span> <span class="nv">start</span> <span class="o">=</span> <span class="n">zipper</span> <span class="n">origin</span>
 
 <span class="o">&gt;</span> <span class="k">let</span> <span class="nv">pos1</span> <span class="o">=</span> <span class="n">goForward</span> <span class="n">start</span><span class="o">;;</span>
-<span class="k">val</span> <span class="n">pos1</span> <span class="o">:</span> <span class="n">int</span> <span class="n">ListZipper</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="o">[</span><span class="n">2</span><span class="o">;</span> <span class="n">3</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">6</span><span class="o">]</span><span class="o">,</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">pos1</span> <span class="o">:</span> <span class="n">int</span> <span class="n">ListZipper</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">([</span><span class="n">2</span><span class="o">;</span> <span class="n">3</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">6</span><span class="o">],[</span><span class="n">1</span><span class="o">])</span>
 <span class="o">&gt;</span> <span class="k">let</span> <span class="nv">pos2</span> <span class="o">=</span> <span class="n">goForward</span> <span class="n">pos1</span><span class="o">;;</span>
-<span class="k">val</span> <span class="n">pos2</span> <span class="o">:</span> <span class="n">int</span> <span class="n">ListZipper</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="o">[</span><span class="n">3</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">6</span><span class="o">]</span><span class="o">,</span><span class="o">[</span><span class="n">2</span><span class="o">;</span> <span class="n">1</span><span class="o">]</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">pos2</span> <span class="o">:</span> <span class="n">int</span> <span class="n">ListZipper</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">([</span><span class="n">3</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">6</span><span class="o">],[</span><span class="n">2</span><span class="o">;</span> <span class="n">1</span><span class="o">])</span>
 <span class="o">&gt;</span> <span class="k">let</span> <span class="nv">endP</span> <span class="o">=</span> <span class="n">goEnd</span> <span class="n">start</span><span class="o">;;</span>
-<span class="k">val</span> <span class="n">endP</span> <span class="o">:</span> <span class="n">int</span> <span class="n">ListZipper</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="bp">[]</span><span class="o">,</span><span class="o">[</span><span class="n">6</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">3</span><span class="o">;</span> <span class="n">2</span><span class="o">;</span> <span class="n">1</span><span class="o">]</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">endP</span> <span class="o">:</span> <span class="n">int</span> <span class="n">ListZipper</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="bp">[]</span><span class="o">,[</span><span class="n">6</span><span class="o">;</span> <span class="n">5</span><span class="o">;</span> <span class="n">4</span><span class="o">;</span> <span class="n">3</span><span class="o">;</span> <span class="n">2</span><span class="o">;</span> <span class="n">1</span><span class="o">])</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="heading1">修改操作</h3>
+</div><h3 id="修改操作">修改操作</h3>
 <p>由于我们最终的目的是希望能够方便的修改列表, 因此需要在zipper上定义修改的函数:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -236,13 +236,13 @@ if (!doNotTrack) {
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">add</span> <span class="n">x</span> <span class="o">(</span><span class="n">ListZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span><span class="o">)</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">x</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span>
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">add</span> <span class="n">x</span> <span class="o">(</span><span class="n">ListZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">back</span><span class="o">))</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">x</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span>
 
 <span class="k">let</span> <span class="nv">delete</span> <span class="o">=</span> <span class="k">function</span>
-<span class="o">|</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span> <span class="k">as</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span>
+<span class="o">|</span> <span class="n">ListZipper</span> <span class="o">(_,</span> <span class="bp">[]</span><span class="o">)</span> <span class="k">as</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span>
 <span class="o">|</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">x</span> <span class="o">::</span> <span class="n">xs</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">xs</span><span class="o">)</span>
 
-<span class="k">let</span> <span class="nv">replace</span> <span class="o">(</span><span class="n">ListZipper</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span><span class="o">)</span> <span class="n">ls</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="n">ls</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span>
+<span class="k">let</span> <span class="nv">replace</span> <span class="o">(</span><span class="n">ListZipper</span> <span class="o">(_,</span> <span class="n">back</span><span class="o">))</span> <span class="n">ls</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="n">ls</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>同时, 我们也可能需要得到修改后的整个列表:</p>
@@ -255,7 +255,7 @@ if (!doNotTrack) {
 <td class="lntd">
 <pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">rec</span> <span class="n">extract</span> <span class="o">=</span> <span class="k">function</span>
 <span class="o">|</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="n">ls</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">ls</span>
-<span class="o">|</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goStart</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">extract</span>
+<span class="o">|</span> <span class="n">lz</span> <span class="o">-&gt;</span> <span class="n">lz</span> <span class="o">|&gt;</span> <span class="n">goStart</span> <span class="o">|&gt;</span> <span class="n">extract</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>至此, 我们就完成了list zipper, 使用zipper就像在使用一个拉链或者说是光标. 一个直观的应用场景是缓冲区的使用, 或者更具体而言就是我们打字的输入缓冲, 我们可以通过前后移动光标来改变我们的输入. 即:</p>
@@ -275,12 +275,12 @@ if (!doNotTrack) {
 <span class="k">let</span> <span class="nv">init</span> <span class="o">=</span> <span class="n">zipper</span> <span class="n">empty</span>
 
 <span class="c1">// 和我们正常输入的体验是一致的
-</span><span class="c1"></span><span class="o">&gt;</span> <span class="k">let</span> <span class="nv">afterInut</span> <span class="o">=</span> <span class="n">init</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">add</span> <span class="sc">&#39;c&#39;</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">add</span> <span class="sc">&#39;d&#39;</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">delete</span><span class="o">;;</span>
-<span class="k">val</span> <span class="n">afterInut</span> <span class="o">:</span> <span class="kt">char</span> <span class="n">ListZipper</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="bp">[]</span><span class="o">,</span><span class="o">[</span><span class="sc">&#39;c&#39;</span><span class="o">]</span><span class="o">)</span>
+</span><span class="c1"></span><span class="o">&gt;</span> <span class="k">let</span> <span class="nv">afterInut</span> <span class="o">=</span> <span class="n">init</span> <span class="o">|&gt;</span> <span class="n">add</span> <span class="sc">&#39;c&#39;</span> <span class="o">|&gt;</span> <span class="n">add</span> <span class="sc">&#39;d&#39;</span> <span class="o">|&gt;</span> <span class="n">delete</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">afterInut</span> <span class="o">:</span> <span class="kt">char</span> <span class="n">ListZipper</span> <span class="o">=</span> <span class="n">ListZipper</span> <span class="o">(</span><span class="bp">[]</span><span class="o">,[</span><span class="sc">&#39;c&#39;</span><span class="o">])</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="zipper1">基于树的zipper</h2>
-<h3 id="zipper2">定义zipper</h3>
+</div><h2 id="基于树的zipper">基于树的zipper</h2>
+<h3 id="定义zipper-1">定义zipper</h3>
 <p>首先我们定义简单的二叉树类型:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -309,8 +309,8 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">goLeft</span> <span class="o">=</span> <span class="k">function</span>
-<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;</span><span class="s">cannot go left</span><span class="s">&#34;</span>
-<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span>
+<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;cannot go left&#34;</span>
+<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">),</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span>
 <span class="c1">// goRight是类似的
 </span></code></pre></td></tr></table>
 </div>
@@ -329,7 +329,7 @@ if (!doNotTrack) {
 <span class="k">let</span> <span class="nv">zipper</span> <span class="n">t</span> <span class="o">=</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="heading2">移动光标</h3>
+</div><h3 id="移动光标-1">移动光标</h3>
 <p>现在, 我们可以轻松的定义移动函数:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -352,21 +352,21 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="k">let</span> <span class="nv">goLeft</span> <span class="o">=</span> <span class="k">function</span>
-<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;</span><span class="s">cannot go left</span><span class="s">&#34;</span>
-<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">Left</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span>
+<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;cannot go left&#34;</span>
+<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">),</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">Left</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span>
 
 <span class="k">let</span> <span class="nv">goRight</span> <span class="o">=</span> <span class="k">function</span>
-<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;</span><span class="s">cannot go right</span><span class="s">&#34;</span>
-<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">Right</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span>
+<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;cannot go right&#34;</span>
+<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">),</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">Right</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span>
 
 <span class="k">let</span> <span class="nv">goUp</span> <span class="o">=</span> <span class="k">function</span>
-<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;</span><span class="s">cannot go up, at the root of tree</span><span class="s">&#34;</span>
+<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(_,</span> <span class="bp">[]</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;cannot go up, at the root of tree&#34;</span>
 <span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">Left</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="o">::</span> <span class="n">tail</span><span class="o">)</span>
-<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">Right</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">::</span> <span class="n">tail</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span><span class="o">,</span> <span class="n">tail</span><span class="o">)</span>
+<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">Right</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">::</span> <span class="n">tail</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">),</span> <span class="n">tail</span><span class="o">)</span>
 
 <span class="k">let</span> <span class="nv">rec</span> <span class="n">goRoot</span> <span class="o">=</span> <span class="k">function</span>
-<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span> <span class="k">as</span> <span class="n">tz</span> <span class="o">-&gt;</span> <span class="n">tz</span>
-<span class="o">|</span> <span class="n">tz</span> <span class="o">-&gt;</span> <span class="n">tz</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goUp</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goRoot</span>
+<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(_,</span> <span class="bp">[]</span><span class="o">)</span> <span class="k">as</span> <span class="n">tz</span> <span class="o">-&gt;</span> <span class="n">tz</span>
+<span class="o">|</span> <span class="n">tz</span> <span class="o">-&gt;</span> <span class="n">tz</span> <span class="o">|&gt;</span> <span class="n">goUp</span> <span class="o">|&gt;</span> <span class="n">goRoot</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>可以简单的测试一下:</p>
@@ -399,34 +399,34 @@ if (!doNotTrack) {
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="o">&gt;</span> <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">Empty</span><span class="o">)</span><span class="o">,</span> <span class="n">2</span><span class="o">,</span> <span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">5</span><span class="o">,</span> <span class="n">Empty</span><span class="o">)</span><span class="o">)</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">6</span><span class="o">,</span> <span class="n">Empty</span><span class="o">)</span><span class="o">,</span> <span class="n">3</span><span class="o">,</span> <span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">7</span><span class="o">,</span> <span class="n">Empty</span><span class="o">)</span><span class="o">)</span><span class="o">)</span><span class="o">;;</span>
+<pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="o">&gt;</span> <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">4</span><span class="o">,</span> <span class="n">Empty</span><span class="o">),</span> <span class="n">2</span><span class="o">,</span> <span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">5</span><span class="o">,</span> <span class="n">Empty</span><span class="o">)),</span> <span class="n">1</span><span class="o">,</span> <span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">6</span><span class="o">,</span> <span class="n">Empty</span><span class="o">),</span> <span class="n">3</span><span class="o">,</span> <span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">7</span><span class="o">,</span> <span class="n">Empty</span><span class="o">)));;</span>
 <span class="o">&gt;</span> <span class="k">val</span> <span class="n">a</span> <span class="o">:</span> <span class="n">int</span> <span class="n">Tree</span> <span class="o">=</span>
   <span class="n">Tree</span>
-    <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">)</span><span class="o">,</span><span class="n">1</span><span class="o">,</span>
-     <span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">,</span><span class="n">3</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">)</span><span class="o">)</span>
+    <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">Empty</span><span class="o">),</span><span class="n">2</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">Empty</span><span class="o">)),</span><span class="n">1</span><span class="o">,</span>
+     <span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">Empty</span><span class="o">),</span><span class="n">3</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">Empty</span><span class="o">)))</span>
      
 <span class="o">&gt;</span> <span class="k">let</span> <span class="nv">init</span> <span class="o">=</span> <span class="n">zipper</span> <span class="n">a</span><span class="o">;;</span>
 <span class="k">val</span> <span class="n">init</span> <span class="o">:</span> <span class="n">int</span> <span class="n">TreeZipper</span> <span class="o">=</span>
   <span class="n">TreeZipper</span>
     <span class="o">(</span><span class="n">Tree</span>
-       <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">)</span><span class="o">,</span><span class="n">1</span><span class="o">,</span>
-        <span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">,</span><span class="n">3</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">)</span><span class="o">)</span><span class="o">,</span><span class="bp">[]</span><span class="o">)</span>
+       <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">Empty</span><span class="o">),</span><span class="n">2</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">Empty</span><span class="o">)),</span><span class="n">1</span><span class="o">,</span>
+        <span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">Empty</span><span class="o">),</span><span class="n">3</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">Empty</span><span class="o">))),</span><span class="bp">[]</span><span class="o">)</span>
         
-<span class="o">&gt;</span> <span class="n">init</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goLeft</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goRight</span><span class="o">;;</span>
+<span class="o">&gt;</span> <span class="n">init</span> <span class="o">|&gt;</span> <span class="n">goLeft</span> <span class="o">|&gt;</span> <span class="n">goRight</span><span class="o">;;</span>
 <span class="k">val</span> <span class="n">it</span> <span class="o">:</span> <span class="n">int</span> <span class="n">TreeZipper</span> <span class="o">=</span>
   <span class="n">TreeZipper</span>
-    <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">,</span>
-     <span class="o">[</span><span class="n">Right</span> <span class="o">(</span><span class="n">2</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">)</span><span class="o">;</span>
-      <span class="n">Left</span> <span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">,</span><span class="n">3</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">)</span><span class="o">)</span><span class="o">]</span><span class="o">)</span>
+    <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">Empty</span><span class="o">),</span>
+     <span class="o">[</span><span class="n">Right</span> <span class="o">(</span><span class="n">2</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">Empty</span><span class="o">));</span>
+      <span class="n">Left</span> <span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">Empty</span><span class="o">),</span><span class="n">3</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">Empty</span><span class="o">)))])</span>
 
-<span class="o">&gt;</span> <span class="n">init</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goLeft</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goRight</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goUp</span><span class="o">;;</span>
+<span class="o">&gt;</span> <span class="n">init</span> <span class="o">|&gt;</span> <span class="n">goLeft</span> <span class="o">|&gt;</span> <span class="n">goRight</span> <span class="o">|&gt;</span> <span class="n">goUp</span><span class="o">;;</span>
 <span class="k">val</span> <span class="n">it</span> <span class="o">:</span> <span class="n">int</span> <span class="n">TreeZipper</span> <span class="o">=</span>
   <span class="n">TreeZipper</span>
-    <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">)</span><span class="o">,</span>
-     <span class="o">[</span><span class="n">Left</span> <span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">,</span><span class="n">3</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">Empty</span><span class="o">)</span><span class="o">)</span><span class="o">)</span><span class="o">]</span><span class="o">)</span>
+    <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">4</span><span class="o">,</span><span class="n">Empty</span><span class="o">),</span><span class="n">2</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">Empty</span><span class="o">)),</span>
+     <span class="o">[</span><span class="n">Left</span> <span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">6</span><span class="o">,</span><span class="n">Empty</span><span class="o">),</span><span class="n">3</span><span class="o">,</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span><span class="n">7</span><span class="o">,</span><span class="n">Empty</span><span class="o">)))])</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="heading3">修改操作</h3>
+</div><h3 id="修改操作-1">修改操作</h3>
 <p>同样的, 和list一样, 我们还需要修改的函数, 以及能够得到修改后的树的函数:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -454,33 +454,33 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fsharp" data-lang="fsharp"><span class="c1">// 一种简单的处理
-</span><span class="c1"></span><span class="k">let</span> <span class="nv">add</span> <span class="n">x</span> <span class="o">(</span><span class="n">TreeZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span><span class="o">)</span> <span class="o">=</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">Empty</span><span class="o">)</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span>
+</span><span class="c1"></span><span class="k">let</span> <span class="nv">add</span> <span class="n">x</span> <span class="o">(</span><span class="n">TreeZipper</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">back</span><span class="o">))</span> <span class="o">=</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">cur</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">Empty</span><span class="o">),</span> <span class="n">back</span><span class="o">)</span>
 
-<span class="k">let</span> <span class="nv">replace</span> <span class="n">t</span> <span class="o">(</span><span class="n">TreeZipper</span> <span class="o">(</span><span class="o">_</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span><span class="o">)</span> <span class="o">=</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span>
+<span class="k">let</span> <span class="nv">replace</span> <span class="n">t</span> <span class="o">(</span><span class="n">TreeZipper</span> <span class="o">(_,</span> <span class="n">back</span><span class="o">))</span> <span class="o">=</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span>
 
 <span class="k">let</span> <span class="nv">rec</span> <span class="n">extract</span> <span class="o">=</span> <span class="k">function</span>
 <span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">t</span>
-<span class="o">|</span> <span class="n">tz</span> <span class="o">-&gt;</span> <span class="n">tz</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goRoot</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">extract</span>
+<span class="o">|</span> <span class="n">tz</span> <span class="o">-&gt;</span> <span class="n">tz</span> <span class="o">|&gt;</span> <span class="n">goRoot</span> <span class="o">|&gt;</span> <span class="n">extract</span>
 
 <span class="c1">// 删除值后将子树的左子树放到右子树最近的空节点处
 </span><span class="c1"></span><span class="k">let</span> <span class="nv">delete</span> <span class="o">=</span> <span class="k">function</span>
-<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;</span><span class="s">cannot delete empty</span><span class="s">&#34;</span>
-<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="o">_</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span>
+<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s">&#34;cannot delete empty&#34;</span>
+<span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="o">_,</span> <span class="n">r</span><span class="o">),</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span>
   <span class="k">let</span> <span class="nv">rec</span> <span class="n">nearestEmpty</span> <span class="o">=</span> <span class="k">function</span>
-  <span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="o">_</span><span class="o">)</span> <span class="k">as</span> <span class="n">tz</span> <span class="o">-&gt;</span> <span class="n">tz</span>
-  <span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">Left</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span>
-  <span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">Empty</span><span class="o">)</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">Right</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span> 
-  <span class="o">|</span> <span class="n">tz</span> <span class="o">-&gt;</span> <span class="n">tz</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">goLeft</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">nearestEmpty</span>
+  <span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="o">_)</span> <span class="k">as</span> <span class="n">tz</span> <span class="o">-&gt;</span> <span class="n">tz</span>
+  <span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">),</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">Left</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span>
+  <span class="o">|</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Tree</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">Empty</span><span class="o">),</span> <span class="n">back</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">Empty</span><span class="o">,</span> <span class="n">Right</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">::</span> <span class="n">back</span><span class="o">)</span> 
+  <span class="o">|</span> <span class="n">tz</span> <span class="o">-&gt;</span> <span class="n">tz</span> <span class="o">|&gt;</span> <span class="n">goLeft</span> <span class="o">|&gt;</span> <span class="n">nearestEmpty</span>
   <span class="k">let</span> <span class="nv">rz</span> <span class="o">=</span> <span class="n">zipper</span> <span class="n">r</span>
-  <span class="k">let</span> <span class="nv">t</span> <span class="o">=</span> <span class="n">rz</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">nearestEmpty</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">replace</span> <span class="n">l</span> <span class="o">|</span><span class="o">&gt;</span> <span class="n">extract</span>
+  <span class="k">let</span> <span class="nv">t</span> <span class="o">=</span> <span class="n">rz</span> <span class="o">|&gt;</span> <span class="n">nearestEmpty</span> <span class="o">|&gt;</span> <span class="n">replace</span> <span class="n">l</span> <span class="o">|&gt;</span> <span class="n">extract</span>
   <span class="n">TreeZipper</span> <span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">back</span><span class="o">)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>对于树而言, <code>replace</code>与list逻辑是相同的, 但<code>add</code>和<code>delete</code>的逻辑有所不同且存在着多种处理方式. 例如<code>delete</code>函数中, 这边采用的逻辑是将值删除后, 把左子树放到了右子树最近的空节点处, 还可以将其置于最右边或者最左边的空节点处.</p>
 <p>至此, 我们就完成了基于树的zipper, 可以看到基于树的zipper总体思想和基于list的zipper是一致的, 同样像是一个光标, 将其分成了需要处理的部分与不需要处理的部分.</p>
-<h2 id="heading4">结语</h2>
+<h2 id="结语">结语</h2>
 <p>如果你看到了这里, 我想你对于zipper应该有了一个较为清晰的认识. 只要能够明白zipper的基本思想: <strong>将需要处理的部分与不需要处理的部分分离</strong>, 就能够正确的将其应用与其他数据结构. 最后, 如果你有任何问题, 欢迎<a href="mailto:hey_christophe@outlook.com">邮件</a>我</p>
-<h2 id="heading5">参考文献</h2>
+<h2 id="参考文献">参考文献</h2>
 <p>[1] <a href="http://learnyouahaskell.com/zippers">Zippers</a></p>
 <p>[2] Huet, G. (1997). The zipper. <em>Journal of functional programming</em>, <em>7</em>(5), 549-554.</p>
 
@@ -502,22 +502,22 @@ if (!doNotTrack) {
     <div id="toc" class="Box Box--blue mb-3">
       <b>Zipper</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#list">list的例子</a>
+    <li><a href="#list的例子">list的例子</a>
       <ul>
-        <li><a href="#zipper">定义zipper</a></li>
-        <li><a href="#heading">移动光标</a></li>
-        <li><a href="#heading1">修改操作</a></li>
+        <li><a href="#定义zipper">定义zipper</a></li>
+        <li><a href="#移动光标">移动光标</a></li>
+        <li><a href="#修改操作">修改操作</a></li>
       </ul>
     </li>
-    <li><a href="#zipper1">基于树的zipper</a>
+    <li><a href="#基于树的zipper">基于树的zipper</a>
       <ul>
-        <li><a href="#zipper2">定义zipper</a></li>
-        <li><a href="#heading2">移动光标</a></li>
-        <li><a href="#heading3">修改操作</a></li>
+        <li><a href="#定义zipper-1">定义zipper</a></li>
+        <li><a href="#移动光标-1">移动光标</a></li>
+        <li><a href="#修改操作-1">修改操作</a></li>
       </ul>
     </li>
-    <li><a href="#heading4">结语</a></li>
-    <li><a href="#heading5">参考文献</a></li>
+    <li><a href="#结语">结语</a></li>
+    <li><a href="#参考文献">参考文献</a></li>
   </ul>
 </nav></div>
   

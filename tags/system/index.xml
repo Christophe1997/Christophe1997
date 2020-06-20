@@ -55,7 +55,7 @@
       
       <guid>https://christophe1997.github.io/posts/computer-system-2/</guid>
       <description>Assembler Computer execute machine code, sequences of bytes encoding the low-level operations that manipulate data manage memory, read and write data on storage devices, and communicate over networks.
-We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it&#39;s widely used in supercomputer and lager data center.
+We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it&amp;rsquo;s widely used in supercomputer and lager data center.
 the x86-64 machine code is much different with the corresponding C code, the processor states below are everywhere:</description>
     </item>
     
