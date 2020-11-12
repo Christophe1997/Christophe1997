@@ -104,9 +104,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-02-25. Published at: 2018-06-24.">
+      <span title="Lastmod: 2020-11-12. Published at: 2018-06-24.">
         
-          Lastmod: 2020-02-25
+          Lastmod: 2020-11-12
         
       </span>
     </div>
@@ -116,7 +116,7 @@ if (!doNotTrack) {
 <article>
   
   <section class="pb-6 mb-3 border-bottom">
-    <h2 id="the-address-space-">The Address Space</h2>
+    <h2 id="the-address-space">The Address Space</h2>
 <p>The address space is the abstraction that OS is providing to the running program. The address space of a process contains
 all of the memory state of the running program. For example, the code of the program, the stack and the heap. In the sight
 of the program, it loaded into at a particular address and has a potentially very large address space, thus, we say that
@@ -128,7 +128,7 @@ efficient as possible, both in terms of time and space. Finally, a third VM goal
 <p>In running a C program, there are two types of memory that are allocated. The first is called stack memory, and allocations
 and deallocations of it are managed implicitly by the compiler, for this reason it is sometimes called <em>automatic</em> memory.
 The second type of memory, called heap memory, where all allocations and deallocations are explicitly handled by the programmer.</p>
-<h2 id="address-translation-">Address Translation</h2>
+<h2 id="address-translation">Address Translation</h2>
 <p>With address translation, the hardware transforms each memory access, changing the virtual address provided by the instruction
 to a physical address where the desired information is actually located. Thus, on each and every memory reference, an
 address translation is performed by the hardware to redirect application memory reference to their actual locations in
@@ -138,7 +138,7 @@ it must thus manage memory, keeping track of which locations are free and which 
 of this work is to create a beautiful illusion: that the program has its own private memory, where its own code and data
 reside. While behind the virtual reality lies the ugly physical truth: that many programs are actually sharing memory at
 the same time, as the CPU switchs between running one program and the next.</p>
-<h3 id="segmentation-">Segmentation</h3>
+<h3 id="segmentation">Segmentation</h3>
 <p>The first hardware-based address translation is a simple idea referred to as base and bounds. Specifically, we&rsquo;ll need
 two hardware registers within each CPU: one is called the <strong>base</strong> register, and the other the <strong>bounds</strong>(sometimes called
 a <strong>limit</strong> register). When a program starts running, the OS decides where in physical memory it should be loaded and sets
@@ -161,7 +161,7 @@ make sure to set up the base and bounds registers correctly before letting the p
 important issue is managing free space in physical memory, called <em>external fragmentation</em>, the problem grows when many
 segments was allocated and each segment might be a different size. Thus the physical memory quickly becomes full of little
 holes of free space, making it difficult to allocate new segment or to grow existing ones.</p>
-<h3 id="paging-">Paging</h3>
+<h3 id="paging">Paging</h3>
 <p>The segmentation chops things up into <em>variabled-sized</em> pieces, unfortunately, the space itselt can become fragmented under
 this solution. Thus the second approach chopping things into <em>fixed-sized</em> pieces may be worth considering, which is called
 paging. In this view, the physical memory like an array of fixed-sized slots called page frames. With a full-developed
@@ -190,11 +190,11 @@ different processes have different page table.</p>
     <div id="toc" class="Box Box--blue mb-3">
       <b>Address Space</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#the-address-space-">The Address Space</a></li>
-    <li><a href="#address-translation-">Address Translation</a>
+    <li><a href="#the-address-space">The Address Space</a></li>
+    <li><a href="#address-translation">Address Translation</a>
       <ul>
-        <li><a href="#segmentation-">Segmentation</a></li>
-        <li><a href="#paging-">Paging</a></li>
+        <li><a href="#segmentation">Segmentation</a></li>
+        <li><a href="#paging">Paging</a></li>
       </ul>
     </li>
   </ul>

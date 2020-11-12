@@ -112,9 +112,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-04-06. Published at: 2020-02-29.">
+      <span title="Lastmod: 2020-11-12. Published at: 2020-02-29.">
         
-          Lastmod: 2020-04-06
+          Lastmod: 2020-11-12
         
       </span>
     </div>
@@ -126,7 +126,7 @@ if (!doNotTrack) {
   <section class="pb-6 mb-3 border-bottom">
     <p>之前在&quot;Essentials of Programming Languages&quot;中学习过CPS(<em>Continuation Passing Style</em>), 而笔记在blog改版后被丢弃, 故在这篇文章中重新详细的探讨下CPS以及尾递归, 且当是温故而知新.</p>
 <h2 id="continuation">Continuation</h2>
-<p>在理解什么是&quot;Continuation Passing Style&quot;之前, 我们首先需要定义<em>Continuation</em>(惭愧的是我都不知道中文叫啥, 查了下好像是&quot;续延&rdquo;). <em>Continuation</em>是计算机程序控制状态的抽象表示, 换言之, 其就是一种表示程序执行中间某一计算步骤的控制上下文的数据结构, 即表示某一计算的未来. 一个形象的例子是阶乘函数:</p>
+<p>在理解什么是&quot;Continuation Passing Style&quot;之前, 我们首先需要定义<em>Continuation</em>(惭愧的是我都不知道中文叫啥, 查了下好像是&quot;续延&quot;). <em>Continuation</em>是计算机程序控制状态的抽象表示, 换言之, 其就是一种表示程序执行中间某一计算步骤的控制上下文的数据结构, 即表示某一计算的未来. 一个形象的例子是阶乘函数:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -168,7 +168,7 @@ if (!doNotTrack) {
 <span class="k">=&gt; </span><span class="mi">24</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>这过程中, <code>(* 4 #)</code>就是一个<em>continuation</em>, 是<code>(fact 3)</code>的控制上下文, 等待着<code>(fact 3)</code>的计算结果传入我们的&rdquo;#&quot;, <code>(* 4 (* 3 #))</code>也是一个<em>continuation</em>. 容易看到的是在这样一个计算过程中, <em>continuation</em>在不断增长, 因为调用栈在不断增长, 程序不得不保存<code>*</code>的左操作数, 计算右操作数. 接下来, 我们来看<code>fact</code>的尾递归版本, 所谓的<strong>尾递归</strong>(<em>tail recursion</em>)指的是递归函数的递归调用部分只有函数调用, 即:</p>
+</div><p>这过程中, <code>(* 4 #)</code>就是一个<em>continuation</em>, 是<code>(fact 3)</code>的控制上下文, 等待着<code>(fact 3)</code>的计算结果传入我们的&quot;#&quot;, <code>(* 4 (* 3 #))</code>也是一个<em>continuation</em>. 容易看到的是在这样一个计算过程中, <em>continuation</em>在不断增长, 因为调用栈在不断增长, 程序不得不保存<code>*</code>的左操作数, 计算右操作数. 接下来, 我们来看<code>fact</code>的尾递归版本, 所谓的<strong>尾递归</strong>(<em>tail recursion</em>)指的是递归函数的递归调用部分只有函数调用, 即:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -317,11 +317,11 @@ if (!doNotTrack) {
 </div>
 </div><p>可以看到, <code>fib</code>的CPS版本相较于原始版本显得更加不直观, 而这确实是CPS的缺点, 由于显示的传递控制上下文, 我们的代码变得不够直观.</p>
 <h2 id="cps与尾递归优化">CPS与尾递归优化</h2>
-<p>所谓的尾递归优化(<em>tail call optimization</em>, TCO)指的是对于一个尾递归的函数, 例如我们有函数f, 其尾递归调用了g, 由于不需要额外的信息, 我们可以直接传递f的返回地址. 这样当g返回时, 其可以直接返回到f的调用者. 从上文我们知道, CPS总是尾递归的, 因此CPS可以和TCO同时使用来消除递归函数的调用栈的增长. 因此CPS可以用于那些具有尾递归优化的语言来使避免我们的递归函数栈溢出, 但由于CPS使得代码变得不够直观, 因此其效果可能并不如使用<em>accumulator</em>, 同时CPS也可以作为编译器的IR(<em>intermediate representation</em>), <a href="https://www.smlnj.org/">SML/NJ</a>就是一个例子, 具体可以参考<a href="https://www.cs.princeton.edu/~appel/">Andrew</a>的&quot;Compiling with Continuations&rdquo;.</p>
+<p>所谓的尾递归优化(<em>tail call optimization</em>, TCO)指的是对于一个尾递归的函数, 例如我们有函数f, 其尾递归调用了g, 由于不需要额外的信息, 我们可以直接传递f的返回地址. 这样当g返回时, 其可以直接返回到f的调用者. 从上文我们知道, CPS总是尾递归的, 因此CPS可以和TCO同时使用来消除递归函数的调用栈的增长. 因此CPS可以用于那些具有尾递归优化的语言来使避免我们的递归函数栈溢出, 但由于CPS使得代码变得不够直观, 因此其效果可能并不如使用<em>accumulator</em>, 同时CPS也可以作为编译器的IR(<em>intermediate representation</em>), <a href="https://www.smlnj.org/">SML/NJ</a>就是一个例子, 具体可以参考<a href="https://www.cs.princeton.edu/~appel/">Andrew</a>的&quot;Compiling with Continuations&quot;.</p>
 <h2 id="net中的tail-call">.NET中的tail call</h2>
-<p>.NET的CIL中存在着<code>tail.</code>的opcode, 不过C#的编译器本身不会做TCO, 而F#的编译器则会处理TCO, 对于简单的尾递归, 例如递归调用自身, F#编译器通常将其优化为循环, 对于其他的情况才会使用<code>tail.</code>, 具体可以参考&rdquo;<a href="https://devblogs.microsoft.com/fsharpteam/tail-calls-in-f/">Tail calls in F#</a>&quot;.</p>
+<p>.NET的CIL中存在着<code>tail.</code>的opcode, 不过C#的编译器本身不会做TCO, 而F#的编译器则会处理TCO, 对于简单的尾递归, 例如递归调用自身, F#编译器通常将其优化为循环, 对于其他的情况才会使用<code>tail.</code>, 具体可以参考&quot;<a href="https://devblogs.microsoft.com/fsharpteam/tail-calls-in-f/">Tail calls in F#</a>&quot;.</p>
 <h2 id="总结">总结</h2>
-<p>以上就是关于CPS与尾递归的介绍, 然而这仅仅是关于<em>continuation</em>的一点皮毛而已, 也没有涉及到<code>call/cc</code>的内容, 如果你对<em>continuation</em>有兴趣, 可以参考Haskell中的&rdquo;<a href="https://wiki.haskell.org/All_About_Monads#The_Continuation_monad">Continuation monad</a>&quot;. 另外, 如果你关于本文有任何问题, 欢迎<a href="mailto:hey_christophe@outlook.com">邮件</a>我</p>
+<p>以上就是关于CPS与尾递归的介绍, 然而这仅仅是关于<em>continuation</em>的一点皮毛而已, 也没有涉及到<code>call/cc</code>的内容, 如果你对<em>continuation</em>有兴趣, 可以参考Haskell中的&quot;<a href="https://wiki.haskell.org/All_About_Monads#The_Continuation_monad">Continuation monad</a>&quot;. 另外, 如果你关于本文有任何问题, 欢迎<a href="mailto:hey_christophe@outlook.com">邮件</a>我</p>
 
   </section>
 

@@ -6,11 +6,7 @@
     <description>Recent content in Blogs on CastOff</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <copyright>&amp;copy;Christophe</copyright>
-    
-	<atom:link href="https://christophe1997.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <copyright>&amp;copy;Christophe</copyright><atom:link href="https://christophe1997.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Memoization in Haskell</title>
       <link>https://christophe1997.github.io/posts/memoization-in-haskell/</link>

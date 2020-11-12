@@ -104,9 +104,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-03-17. Published at: 2019-03-24.">
+      <span title="Lastmod: 2020-11-12. Published at: 2019-03-24.">
         
-          Lastmod: 2020-03-17
+          Lastmod: 2020-11-12
         
       </span>
     </div>
@@ -116,7 +116,7 @@ if (!doNotTrack) {
 <article>
   
   <section class="pb-6 mb-3 border-bottom">
-    <h2 id="semigroup-">Semigroup</h2>
+    <h2 id="semigroup">Semigroup</h2>
 <p>半群即一个集合以及在之上定义的一个满足结合律的二元运算, 在Haskell中定义为(部分):</p>
 <!-- raw HTML omitted -->
 <div class="highlight"><div class="chroma">
@@ -131,7 +131,7 @@ if (!doNotTrack) {
   <span class="cm">{-# MINIMAL (&lt;&gt;) #-}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="laws-">Laws</h3>
+</div><h3 id="laws">Laws</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -142,7 +142,7 @@ if (!doNotTrack) {
 <span class="nf">a</span> <span class="o">&lt;&gt;</span> <span class="p">(</span><span class="n">b</span> <span class="o">&lt;&gt;</span> <span class="n">c</span><span class="p">)</span> <span class="ow">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">&lt;&gt;</span> <span class="n">c</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="monoid-">Monoid</h2>
+</div><h2 id="monoid">Monoid</h2>
 <p>&ldquo;A monoid is a binary associative operation with an identity&rdquo;, 在Haskell中定义为(部分):</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -162,7 +162,7 @@ if (!doNotTrack) {
   <span class="cm">{-# MINIMAL mempty #-}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="laws--1">Laws</h3>
+</div><h3 id="laws-1">Laws</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -186,7 +186,7 @@ if (!doNotTrack) {
 </code></pre></td></tr></table>
 </div>
 </div><p>这和数学上带幺半群所满足的性质是一致的, 带幺半群即一个包含单位元的半群.</p>
-<h2 id="functor-">Functor</h2>
+<h2 id="functor">Functor</h2>
 <p>Functor最初由逻辑学家Rudolf Carnap在1930s引入, 其接受一个<em>sentence</em>(<em>phrase</em>)作为输入, 并生成一个<em>sentence</em>(<em>phrase</em>)作为输出. Functor在Haskell中定义为(部分):</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -203,7 +203,7 @@ if (!doNotTrack) {
 </code></pre></td></tr></table>
 </div>
 </div><p>其中<code>fmap</code>的中缀运算符为<code>&lt;$&gt;</code>.</p>
-<h3 id="laws--2">Laws</h3>
+<h3 id="laws-2">Laws</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -282,7 +282,7 @@ m &lt;<span class="o">=</span>&gt; g x and n &lt;<span class="o">=</span>&gt; g 
               &lt;<span class="o">=</span>&gt; <span class="o">(</span>x -&gt; y<span class="o">)</span> -&gt; <span class="o">(</span>f g x -&gt; f g y
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="io-functor-">IO Functor</h3>
+</div><h3 id="io-functor">IO Functor</h3>
 <p>Haskell的IO是Haskell关键设计之一, 由于其没有构造器, 因此只能使用IO typeclass所提供的来处理<code>IO a</code>, 其中最简单的处理之一是Functor.
 例如:</p>
 <div class="highlight"><div class="chroma">
@@ -327,7 +327,7 @@ m &lt;<span class="o">=</span>&gt; g x and n &lt;<span class="o">=</span>&gt; g 
   <span class="n">return</span> <span class="p">(</span><span class="n">input</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="applicative-">Applicative</h2>
+</div><h2 id="applicative">Applicative</h2>
 <p>Applicative是monoidal functor, 其在Haskell中定义为(部分):</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -349,7 +349,7 @@ m &lt;<span class="o">=</span>&gt; g x and n &lt;<span class="o">=</span>&gt; g 
 <span class="nf">fmap</span> <span class="n">f</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">pure</span> <span class="n">f</span> <span class="o">&lt;*&gt;</span> <span class="n">x</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="laws--3">Laws</h3>
+</div><h3 id="laws-3">Laws</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -378,7 +378,7 @@ m &lt;<span class="o">=</span>&gt; g x and n &lt;<span class="o">=</span>&gt; g 
 <span class="nf">u</span> <span class="o">&lt;*&gt;</span> <span class="n">pure</span> <span class="n">y</span> <span class="ow">=</span> <span class="n">pure</span> <span class="p">(</span><span class="o">$</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">u</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="monad-">Monad</h2>
+</div><h2 id="monad">Monad</h2>
 <p>Monad是Haskell中讨论最多的结构, 但严格来讲Monad对于Haskell并不是必须的(<em>Haskell Programming From First Principle</em> p745). 当前的Haskell确实使用Monad来构成和转换IO动作, 但更早的Haskell并不是.</p>
 <p>Monad是applicative functor, 但有一些唯一的特性使得其比applicative或functor更强大, 其在haskell中定义为(部分):</p>
 <div class="highlight"><div class="chroma">
@@ -404,7 +404,7 @@ m &lt;<span class="o">=</span>&gt; g x and n &lt;<span class="o">=</span>&gt; g 
 </code></pre></td></tr></table>
 </div>
 </div><p>因此, 任何Monad的实例都必须是Applicative和Functor的实例.</p>
-<h3 id="laws--4">Laws</h3>
+<h3 id="laws-4">Laws</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -427,9 +427,9 @@ m &lt;<span class="o">=</span>&gt; g x and n &lt;<span class="o">=</span>&gt; g 
 <span class="p">(</span><span class="n">m</span> <span class="o">&gt;&gt;=</span> <span class="n">f</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">g</span> <span class="ow">=</span> <span class="n">m</span> <span class="o">&gt;&gt;=</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">x</span> <span class="o">&gt;&gt;=</span> <span class="n">g</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="monad与计算-">Monad与计算</h3>
+</div><h3 id="monad与计算">Monad与计算</h3>
 <p>一种Monad定义了一种计算类型, <code>return</code>用来构造该计算类型的值, <code>bind</code>用来组合这些计算以构建更为复杂的计算. 例如, <code>Maybe</code>Monad定义了可能不返回任何值的计算, 而<code>List</code>Monad则定义了模糊计算, 即返回结果包含多个值的计算.</p>
-<p>Haskell的do-notation允许使用命令式的风格来写monadic计算, Monad计算的值可以通过<code>&lt;-</code>来&quot;绑定&rdquo;(do-notation中才能使用), 例如<code>x:xs &lt;- Just [1, 2, 3]</code>, <code>x:xs</code>会匹配<code>[1, 2, 3]</code>. 一个do-notation的块也可以使用分号和大括号, 例如<code>do {a &lt;- Just 2; b &lt;- Just 3; ...}</code>. 因此, do-notation很像命令式编程, 虽然其只是语法糖, 例如你可以将<code>x &lt;- expr1</code>写成<code>expr1 &gt;&gt;= \x -&gt;</code>, 没有绑定的<code>expr2</code>写成<code>expr2 &gt;&gt;= \_ -&gt;</code>, 可见相比与不使用do-notation, 其要方便很多, 可以说是很甜了.</p>
+<p>Haskell的do-notation允许使用命令式的风格来写monadic计算, Monad计算的值可以通过<code>&lt;-</code>来&quot;绑定&quot;(do-notation中才能使用), 例如<code>x:xs &lt;- Just [1, 2, 3]</code>, <code>x:xs</code>会匹配<code>[1, 2, 3]</code>. 一个do-notation的块也可以使用分号和大括号, 例如<code>do {a &lt;- Just 2; b &lt;- Just 3; ...}</code>. 因此, do-notation很像命令式编程, 虽然其只是语法糖, 例如你可以将<code>x &lt;- expr1</code>写成<code>expr1 &gt;&gt;= \x -&gt;</code>, 没有绑定的<code>expr2</code>写成<code>expr2 &gt;&gt;= \_ -&gt;</code>, 可见相比与不使用do-notation, 其要方便很多, 可以说是很甜了.</p>
 <p>Haskell的Monad的定义中还包含了两个函数, <code>fail</code>和<code>&gt;&gt;</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -466,7 +466,7 @@ m &lt;<span class="o">=</span>&gt; g x and n &lt;<span class="o">=</span>&gt; g 
             <span class="n">return</span> <span class="n">xs</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="monadplus-">MonadPlus</h3>
+</div><h3 id="monadplus">MonadPlus</h3>
 <p>除了上述三条基本的规则以外, 一些Monad还符合额外的规则, 这些Monad有一个<code>mzero</code>和<code>mplus</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -615,7 +615,7 @@ m &lt;<span class="o">=</span>&gt; g x and n &lt;<span class="o">=</span>&gt; g 
 </code></pre></td></tr></table>
 </div>
 </div><p>Traversable可以用来翻转两个类型构造器, 或者先map在翻转.</p>
-<h3 id="laws">Laws</h3>
+<h3 id="laws-5">Laws</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -709,38 +709,38 @@ m &lt;<span class="o">=</span>&gt; g x and n &lt;<span class="o">=</span>&gt; g 
     <div id="toc" class="Box Box--blue mb-3">
       <b>Haskell Algebra</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#semigroup-">Semigroup</a>
+    <li><a href="#semigroup">Semigroup</a>
       <ul>
-        <li><a href="#laws-">Laws</a></li>
+        <li><a href="#laws">Laws</a></li>
       </ul>
     </li>
-    <li><a href="#monoid-">Monoid</a>
+    <li><a href="#monoid">Monoid</a>
       <ul>
-        <li><a href="#laws--1">Laws</a></li>
+        <li><a href="#laws-1">Laws</a></li>
       </ul>
     </li>
-    <li><a href="#functor-">Functor</a>
+    <li><a href="#functor">Functor</a>
       <ul>
-        <li><a href="#laws--2">Laws</a></li>
-        <li><a href="#io-functor-">IO Functor</a></li>
+        <li><a href="#laws-2">Laws</a></li>
+        <li><a href="#io-functor">IO Functor</a></li>
       </ul>
     </li>
-    <li><a href="#applicative-">Applicative</a>
+    <li><a href="#applicative">Applicative</a>
       <ul>
-        <li><a href="#laws--3">Laws</a></li>
+        <li><a href="#laws-3">Laws</a></li>
       </ul>
     </li>
-    <li><a href="#monad-">Monad</a>
+    <li><a href="#monad">Monad</a>
       <ul>
-        <li><a href="#laws--4">Laws</a></li>
-        <li><a href="#monad与计算-">Monad与计算</a></li>
-        <li><a href="#monadplus-">MonadPlus</a></li>
+        <li><a href="#laws-4">Laws</a></li>
+        <li><a href="#monad与计算">Monad与计算</a></li>
+        <li><a href="#monadplus">MonadPlus</a></li>
       </ul>
     </li>
     <li><a href="#foldable">Foldable</a></li>
     <li><a href="#traversable">Traversable</a>
       <ul>
-        <li><a href="#laws">Laws</a></li>
+        <li><a href="#laws-5">Laws</a></li>
       </ul>
     </li>
     <li><a href="#--r-as-functor-applicative-and-monad"><code>(-&gt;) r</code> as Functor, Applicative and Monad</a></li>

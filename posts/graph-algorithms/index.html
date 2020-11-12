@@ -104,9 +104,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-02-25. Published at: 2018-04-20.">
+      <span title="Lastmod: 2020-11-12. Published at: 2018-04-20.">
         
-          Lastmod: 2020-02-25
+          Lastmod: 2020-11-12
         
       </span>
     </div>
@@ -132,34 +132,34 @@ if (!doNotTrack) {
 <table>
 <thead>
 <tr>
-<th align="center">数据结构</th>
-<th align="center">所需空间</th>
-<th align="center">添加边</th>
-<th align="center">检查顶点是否相邻</th>
-<th align="center">遍历所有相邻顶点</th>
+<th style="text-align:center">数据结构</th>
+<th style="text-align:center">所需空间</th>
+<th style="text-align:center">添加边</th>
+<th style="text-align:center">检查顶点是否相邻</th>
+<th style="text-align:center">遍历所有相邻顶点</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">边的列表</td>
-<td align="center">E</td>
-<td align="center">1</td>
-<td align="center">E</td>
-<td align="center">E</td>
+<td style="text-align:center">边的列表</td>
+<td style="text-align:center">E</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">E</td>
+<td style="text-align:center">E</td>
 </tr>
 <tr>
-<td align="center">邻接矩阵</td>
-<td align="center">$ V^2 $</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">V</td>
+<td style="text-align:center">邻接矩阵</td>
+<td style="text-align:center">$ V^2 $</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">V</td>
 </tr>
 <tr>
-<td align="center">邻接表</td>
-<td align="center">E+V</td>
-<td align="center">1</td>
-<td align="center">degree(V)</td>
-<td align="center">degree(V)</td>
+<td style="text-align:center">邻接表</td>
+<td style="text-align:center">E+V</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">degree(V)</td>
+<td style="text-align:center">degree(V)</td>
 </tr>
 </tbody>
 </table>
@@ -169,9 +169,9 @@ if (!doNotTrack) {
 <li>添加一条边所需要的时间为常数, 以及</li>
 <li>遍历顶点v的所有相邻顶点所需要的时间和v的度数成正比.</li>
 </ul>
-<h2 id="无向图-">无向图</h2>
+<h2 id="无向图">无向图</h2>
 <p>无向图只定义了顶点以及顶点之间的关系.</p>
-<h3 id="深度优先搜索-">深度优先搜索</h3>
+<h3 id="深度优先搜索">深度优先搜索</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -221,7 +221,7 @@ if (!doNotTrack) {
 </code></pre></td></tr></table>
 </div>
 </div><p>深度优先搜索能够所有与起点相连的顶点, 且所需时间和所有连通顶点的度数之和成正比.</p>
-<h3 id="广度优先搜索-">广度优先搜索</h3>
+<h3 id="广度优先搜索">广度优先搜索</h3>
 <p>深度优先搜索得到的路径不仅取决于图的结构, 还取决于图的表示和递归调用的性质.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -294,8 +294,8 @@ if (!doNotTrack) {
 <li>将v的所有相邻而又为被标记的顶点加入数据结构
 两者的差别只在于数据结构如何获取下一个顶点, 而这种差异导致了图的两者不同视图, 但最终所有与顶点相连的点都会被检查到</li>
 </ul>
-<h2 id="有向图-">有向图</h2>
-<h3 id="环的检测-">环的检测</h3>
+<h2 id="有向图">有向图</h2>
+<h3 id="环的检测">环的检测</h3>
 <p>有向图常常需要检测是否存在环.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -383,7 +383,7 @@ if (!doNotTrack) {
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="拓扑排序-">拓扑排序</h3>
+</div><h3 id="拓扑排序">拓扑排序</h3>
 <p>拓扑排序是解决优先级限制下任务调度的常见算法, 能否进行拓扑排序的先决条件是是否是有向无环图. 进而问题变为有向无环图中基于深度优先遍历的顶点排序问题,
 常见的排序方式有以下三种:</p>
 <ul>
@@ -514,9 +514,9 @@ if (!doNotTrack) {
 <li>如果顶点的入度变为0, 将其加入Q;</li>
 <li>跳转至2.</li>
 </ol>
-<h2 id="加权无向图-">加权无向图</h2>
+<h2 id="加权无向图">加权无向图</h2>
 <p>加权无向图的一个典型问题是如何寻找最小生成树.</p>
-<h3 id="prim算法-">prim算法</h3>
+<h3 id="prim算法">prim算法</h3>
 <ol>
 <li>设N&lt;V, {E}&gt;是连通网, 记U={ $u_0$ }, TE={}</li>
 <li>在所有$ u \in U, v \in V-U $的边$ (u, v) \in E $中找到一条代价最小的边$ (u_0, v_0)并加入TE $</li>
@@ -660,7 +660,7 @@ if (!doNotTrack) {
 </div>
 </div><p>即时的版本所需时间与ElgV成正比, 空间和V成正比.</p>
 <p>对于常见的稀疏图而言, 两者在时间上限上没有明显的区别(对于稀疏图而言, lgE~lgV), 但空间占用上显然即时的版本更优秀.</p>
-<h3 id="kruskal-算法-">Kruskal 算法</h3>
+<h3 id="kruskal-算法">Kruskal 算法</h3>
 <p>相较于Prim算法根据顶点构成树, Kruskal则算法根据边来构成树. 该算法不断地将最小边加入到树中并确保不会构成环. 可以使用最小队列来保存边, 并用
 union-find来判断是否有环:</p>
 <div class="highlight"><div class="chroma">
@@ -730,42 +730,42 @@ union-find来判断是否有环:</p>
 <table>
 <thead>
 <tr>
-<th align="center">算法</th>
-<th align="center">空间</th>
-<th align="center">时间</th>
+<th style="text-align:center">算法</th>
+<th style="text-align:center">空间</th>
+<th style="text-align:center">时间</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">延时的Prim算法</td>
-<td align="center">E</td>
-<td align="center">ElgE</td>
+<td style="text-align:center">延时的Prim算法</td>
+<td style="text-align:center">E</td>
+<td style="text-align:center">ElgE</td>
 </tr>
 <tr>
-<td align="center">即时的Prim算法</td>
-<td align="center">V</td>
-<td align="center">ElgV</td>
+<td style="text-align:center">即时的Prim算法</td>
+<td style="text-align:center">V</td>
+<td style="text-align:center">ElgV</td>
 </tr>
 <tr>
-<td align="center">Kruskal</td>
-<td align="center">E</td>
-<td align="center">ElgE</td>
+<td style="text-align:center">Kruskal</td>
+<td style="text-align:center">E</td>
+<td style="text-align:center">ElgE</td>
 </tr>
 <tr>
-<td align="center">Fredman-Tarjan</td>
-<td align="center">V</td>
-<td align="center">E+VlgV</td>
+<td style="text-align:center">Fredman-Tarjan</td>
+<td style="text-align:center">V</td>
+<td style="text-align:center">E+VlgV</td>
 </tr>
 <tr>
-<td align="center">Chazelle</td>
-<td align="center">V</td>
-<td align="center">非常接近E</td>
+<td style="text-align:center">Chazelle</td>
+<td style="text-align:center">V</td>
+<td style="text-align:center">非常接近E</td>
 </tr>
 </tbody>
 </table>
-<h2 id="加权有向图-">加权有向图</h2>
+<h2 id="加权有向图">加权有向图</h2>
 <p>加权有向图的一个典型的问题是如何寻找最短路径. 我们的重点是单点最短路径问题, 对于给定的起点s得到一颗包含s到所有可达顶点的最短路径树(SPT).</p>
-<h3 id="dijkstra算法-">Dijkstra算法</h3>
+<h3 id="dijkstra算法">Dijkstra算法</h3>
 <p>Dijkstra算法按广度优先来寻找最短路径</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -866,7 +866,7 @@ union-find来判断是否有环:</p>
 </div><p>可以看到, Dijkstra算法和Prim算法两者之间非常类似. 某种程度上可以把Dijkstra看成是Prim算法的有向图版本. 类似的, Dijkstra算法所需的空间与V成正比
 时间与ElgV成正比. 但是Dijkstra算法不适用于存在权重为负的有向图(因为在允许负权重的有向图中, 绕路经过更多的负权重边可能会使得权重之和更小, 而这在
 Dijkstra算法中是不被允许的).</p>
-<h3 id="无环加权有向图的最短路径算法-">无环加权有向图的最短路径算法</h3>
+<h3 id="无环加权有向图的最短路径算法">无环加权有向图的最短路径算法</h3>
 <p>无环加权有向图可以利用拓扑排序来获得一个线性时间的最短路径算法, 并且能够处理负权重的边.</p>
 <pre><code>public class AcyclicSP {
     private DirectedEdge[] edgeTo;
@@ -927,7 +927,7 @@ Dijkstra算法中是不被允许的).</p>
 <p>因为该算法依赖于拓扑排序, 所以任何有环的图都将无法使用该算法. 另外一点是, 该算法可以解决负权重的边. 值得一提的是, 简单的修改上述算法可以在
 线性时间复杂度内解决无环加权有向图的单点最长路径, 将<code>Double.POSITIVE_INFINITY</code>改为<code>Double.NEGATIVE_INFINITY</code>, 并修改<code>relax</code>的
 不等号方向. 但是在一般的加权有向图中寻找最长简单路径的已知最好算法是指数级别的.</p>
-<h3 id="关键路径-">关键路径</h3>
+<h3 id="关键路径">关键路径</h3>
 <p>一种和无环加权有向图的最长路径等价的问题是优先级限制下的并行任务调度问题, 即关键路径问题. 将并行调度任务转换为无环有向图的步骤如下:</p>
 <ol>
 <li>创建一个包含起点s和终点t且每个任务都对应两个顶点(一个起始顶点和结束顶点);</li>
@@ -1017,7 +1017,7 @@ Dijkstra算法中是不被允许的).</p>
    9:  41.0
 Finish time: 173.0
 </code></pre><p>之所以最长路径路径能够解决并行任务调度问题在于s到t的最长路径是所有任务完成所需的最短时间.</p>
-<h3 id="一般加权有向图的最短路径算法-">一般加权有向图的最短路径算法</h3>
+<h3 id="一般加权有向图的最短路径算法">一般加权有向图的最短路径算法</h3>
 <p>考虑包含deadline限制的相对最后期限限制下的并行任务调度问题, 一般的deadline限制都是相对与第一个的任务的开始时间而言, 即在任务调度的问题中加入某个任
 务必须在指定的时间点之前开始. 该问题等价于加权有向图中最短路径问题(可以有环和负权重).
 构造一个加权有向图与关键路径类似, 但需要为每条deadline限制添加一条边: 如果任务v必须在任务w启动后的d个单位时间内开始, 则添加一条从v指向w且权重为负的
@@ -1172,38 +1172,38 @@ Finish time: 173.0
 </code></pre></td></tr></table>
 </div>
 </div><p>为了避免负权重出现, 我们需要在每轮进行负权重环的检测.</p>
-<h3 id="加权有向图最短路径算法比较-">加权有向图最短路径算法比较</h3>
+<h3 id="加权有向图最短路径算法比较">加权有向图最短路径算法比较</h3>
 <table>
 <thead>
 <tr>
-<th align="center">算法</th>
-<th align="center">限制</th>
-<th align="center">时间复杂度</th>
-<th align="center">空间复杂度</th>
-<th align="center">优势</th>
+<th style="text-align:center">算法</th>
+<th style="text-align:center">限制</th>
+<th style="text-align:center">时间复杂度</th>
+<th style="text-align:center">空间复杂度</th>
+<th style="text-align:center">优势</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">Dijkstra算法</td>
-<td align="center">权重需要为正</td>
-<td align="center">ElgV</td>
-<td align="center">V</td>
-<td align="center">最坏情况下仍有较好性能</td>
+<td style="text-align:center">Dijkstra算法</td>
+<td style="text-align:center">权重需要为正</td>
+<td style="text-align:center">ElgV</td>
+<td style="text-align:center">V</td>
+<td style="text-align:center">最坏情况下仍有较好性能</td>
 </tr>
 <tr>
-<td align="center">利用拓扑排序的最短路径算法</td>
-<td align="center">只适用于无环加权有向图</td>
-<td align="center">E + V</td>
-<td align="center">V</td>
-<td align="center">是无环图中的最优算法</td>
+<td style="text-align:center">利用拓扑排序的最短路径算法</td>
+<td style="text-align:center">只适用于无环加权有向图</td>
+<td style="text-align:center">E + V</td>
+<td style="text-align:center">V</td>
+<td style="text-align:center">是无环图中的最优算法</td>
 </tr>
 <tr>
-<td align="center">Bellman-Ford算法</td>
-<td align="center">不能存在负权重环</td>
-<td align="center">E + V(最坏EV)</td>
-<td align="center">V</td>
-<td align="center">适用性高</td>
+<td style="text-align:center">Bellman-Ford算法</td>
+<td style="text-align:center">不能存在负权重环</td>
+<td style="text-align:center">E + V(最坏EV)</td>
+<td style="text-align:center">V</td>
+<td style="text-align:center">适用性高</td>
 </tr>
 </tbody>
 </table>
@@ -1226,31 +1226,31 @@ Finish time: 173.0
     <div id="toc" class="Box Box--blue mb-3">
       <b>图算法</b><nav id="TableOfContents">
   <ul>
-    <li><a href="#无向图-">无向图</a>
+    <li><a href="#无向图">无向图</a>
       <ul>
-        <li><a href="#深度优先搜索-">深度优先搜索</a></li>
-        <li><a href="#广度优先搜索-">广度优先搜索</a></li>
+        <li><a href="#深度优先搜索">深度优先搜索</a></li>
+        <li><a href="#广度优先搜索">广度优先搜索</a></li>
       </ul>
     </li>
-    <li><a href="#有向图-">有向图</a>
+    <li><a href="#有向图">有向图</a>
       <ul>
-        <li><a href="#环的检测-">环的检测</a></li>
-        <li><a href="#拓扑排序-">拓扑排序</a></li>
+        <li><a href="#环的检测">环的检测</a></li>
+        <li><a href="#拓扑排序">拓扑排序</a></li>
       </ul>
     </li>
-    <li><a href="#加权无向图-">加权无向图</a>
+    <li><a href="#加权无向图">加权无向图</a>
       <ul>
-        <li><a href="#prim算法-">prim算法</a></li>
-        <li><a href="#kruskal-算法-">Kruskal 算法</a></li>
+        <li><a href="#prim算法">prim算法</a></li>
+        <li><a href="#kruskal-算法">Kruskal 算法</a></li>
       </ul>
     </li>
-    <li><a href="#加权有向图-">加权有向图</a>
+    <li><a href="#加权有向图">加权有向图</a>
       <ul>
-        <li><a href="#dijkstra算法-">Dijkstra算法</a></li>
-        <li><a href="#无环加权有向图的最短路径算法-">无环加权有向图的最短路径算法</a></li>
-        <li><a href="#关键路径-">关键路径</a></li>
-        <li><a href="#一般加权有向图的最短路径算法-">一般加权有向图的最短路径算法</a></li>
-        <li><a href="#加权有向图最短路径算法比较-">加权有向图最短路径算法比较</a></li>
+        <li><a href="#dijkstra算法">Dijkstra算法</a></li>
+        <li><a href="#无环加权有向图的最短路径算法">无环加权有向图的最短路径算法</a></li>
+        <li><a href="#关键路径">关键路径</a></li>
+        <li><a href="#一般加权有向图的最短路径算法">一般加权有向图的最短路径算法</a></li>
+        <li><a href="#加权有向图最短路径算法比较">加权有向图最短路径算法比较</a></li>
       </ul>
     </li>
   </ul>

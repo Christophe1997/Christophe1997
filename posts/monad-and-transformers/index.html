@@ -104,9 +104,9 @@ if (!doNotTrack) {
 
     
     <div class="float-md-right">
-      <span title="Lastmod: 2020-02-25. Published at: 2019-04-06.">
+      <span title="Lastmod: 2020-11-12. Published at: 2019-04-06.">
         
-          Lastmod: 2020-02-25
+          Lastmod: 2020-11-12
         
       </span>
     </div>
@@ -288,8 +288,8 @@ if (!doNotTrack) {
 <span class="nf">ap</span> <span class="ow">=</span> <span class="n">liftM2</span> <span class="p">(</span><span class="o">$</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="monads-">Monads</h2>
-<h3 id="the-identity-monad-">The Identity Monad</h3>
+</div><h2 id="monads">Monads</h2>
+<h3 id="the-identity-monad">The Identity Monad</h3>
 <p>Identity Monad(Data.Functor.Identity)不包含任何计算:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -308,7 +308,7 @@ if (!doNotTrack) {
 </code></pre></td></tr></table>
 </div>
 </div><p>Identity Monad是Monad转换的基石, 任意一个Monad transformer作用在Identity Monad上返回一个非转换器版本的Monad.</p>
-<h3 id="the-maybe-monad-">The Maybe Monad</h3>
+<h3 id="the-maybe-monad">The Maybe Monad</h3>
 <p>Maybe Monad表示有可能不返回值(<code>Nothing</code>)的计算:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -340,7 +340,7 @@ if (!doNotTrack) {
   <span class="n">x</span> <span class="p">`</span><span class="n">mplus</span><span class="p">`</span> <span class="kr">_</span> <span class="ow">=</span> <span class="n">x</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="the-error-monad-">The Error Monad</h3>
+</div><h3 id="the-error-monad">The Error Monad</h3>
 <p>Error Monad(或Exception Monad)表示可能出错或抛出异常的计算, 例如Either Monad. Haskell中的<code>MonadError</code>是由错误的类型和相应Monad构造器参数化的:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -377,7 +377,7 @@ if (!doNotTrack) {
   <span class="n">a</span> <span class="p">`</span><span class="n">catchError</span><span class="p">`</span> <span class="kr">_</span> <span class="ow">=</span> <span class="n">a</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="the-list-monad-">The List Monad</h3>
+</div><h3 id="the-list-monad">The List Monad</h3>
 <p>List monad表示可能返回0, 1, 或多个值的计算:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -412,7 +412,7 @@ the state is the real world.</p>
 <p>The wonderful feature of a one-way monad is that it can support side-effects in its monadic operations but prevent them from destroying the functional properties of the non-monadic portions of the program.*</p>
 </blockquote>
 <p>需要注意的是, IO Monad并不是IO, 而仅仅是IO类型的Monad实例.GHC经常会为了提升性能而优化代码, 诸如调整运算顺序, 共享变量, 内联函数. IO类型的最主要工作就是禁止其中的大部分工作. 显然调整运算顺序就在IO(以及ST)中被禁止, IO操作被包含在嵌套的lambdas中以保证运算顺序的不变. 之所以需要IO Monad是因为这是一种将嵌套lambdas的噪声剥离的抽象. IO Monad是一种One-way Monad, One-way Monad意味着你无法设计一个函数在IO Monad中完成计算并返回一个没有IO Monad类型的值. IO monad的定义是平台相关的, 且没有任何构造器可以使用, 也没有任何函数能够从IO Monad中获得值.</p>
-<h3 id="the-state-monad-">The State Monad</h3>
+<h3 id="the-state-monad">The State Monad</h3>
 <p>State Monad表示带有状态的计算:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -448,7 +448,7 @@ the state is the real world.</p>
   <span class="n">put</span> <span class="n">s</span> <span class="ow">=</span> <span class="kt">State</span> <span class="o">$</span> <span class="nf">\</span><span class="kr">_</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="nb">()</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>  <span class="c1">-- 设置状态且没有值</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="the-reader-monad-">The Reader Monad</h3>
+</div><h3 id="the-reader-monad">The Reader Monad</h3>
 <p>Reader Monad表示从共享环境中读取值的计算:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -490,7 +490,7 @@ the state is the real world.</p>
 <span class="nf">asks</span> <span class="n">sel</span> <span class="ow">=</span> <span class="n">ask</span> <span class="o">&gt;&gt;=</span> <span class="n">return</span> <span class="o">.</span> <span class="n">sel</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="the-writer-monad-">The Writer Monad</h3>
+</div><h3 id="the-writer-monad">The Writer Monad</h3>
 <p>Write Monad表示除了计算值以外还产生数据流的计算:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -621,7 +621,7 @@ the state is the real world.</p>
 <span class="nf">join</span> <span class="ow">::</span> <span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span> <span class="p">(</span><span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="kt">Compose</span> <span class="n">f</span> <span class="n">g</span> <span class="n">a</span> 
 </code></pre></td></tr></table>
 </div>
-</div><p>我们总是可以忽略掉外层的Compose, 此时对于join而言, 我们就得打了<code>f g (f g a) -&gt; f g a</code>, 如果存在一个函数<code>aux :: (Monad f, Monad g) =&gt; f (g a) -&gt; g (f a)</code>, 那么我们就可以从<code>f g (f g a)</code>中获得<code>f g a</code>, 因为对于f和g而言都有各自的<code>join</code>, 使得 <code>f (f a) -&gt; f a</code>. 然而并不是对于每个monad都存在这样的<code>aux</code>, 例如<code>IO (Maybe a) -&gt; Maybe (IO a)</code>就不存在这样的<code>aux</code>. 因而&quot;Monad do not compose&rdquo;, 此时我们就需要monad transformer.</p>
+</div><p>我们总是可以忽略掉外层的Compose, 此时对于join而言, 我们就得打了<code>f g (f g a) -&gt; f g a</code>, 如果存在一个函数<code>aux :: (Monad f, Monad g) =&gt; f (g a) -&gt; g (f a)</code>, 那么我们就可以从<code>f g (f g a)</code>中获得<code>f g a</code>, 因为对于f和g而言都有各自的<code>join</code>, 使得 <code>f (f a) -&gt; f a</code>. 然而并不是对于每个monad都存在这样的<code>aux</code>, 例如<code>IO (Maybe a) -&gt; Maybe (IO a)</code>就不存在这样的<code>aux</code>. 因而&quot;Monad do not compose&quot;, 此时我们就需要monad transformer.</p>
 <h3 id="identityt">IdentityT</h3>
 <p>我们已经看到对于任意的两个monad的compose, <code>join</code>并不总是可以的. 因此我们需要限制其中一个monad, 希望它对于另外一个任意的monad的compose总是可行的. 我们从IdentityT开始介绍monad transformer:</p>
 <div class="highlight"><div class="chroma">
@@ -910,16 +910,16 @@ more memory than you’d like. Writer can accumulate unevaluated thunks, causing
       <b>Monad and Transformers</b><nav id="TableOfContents">
   <ul>
     <li><a href="#monad-support">Monad Support</a></li>
-    <li><a href="#monads-">Monads</a>
+    <li><a href="#monads">Monads</a>
       <ul>
-        <li><a href="#the-identity-monad-">The Identity Monad</a></li>
-        <li><a href="#the-maybe-monad-">The Maybe Monad</a></li>
-        <li><a href="#the-error-monad-">The Error Monad</a></li>
-        <li><a href="#the-list-monad-">The List Monad</a></li>
+        <li><a href="#the-identity-monad">The Identity Monad</a></li>
+        <li><a href="#the-maybe-monad">The Maybe Monad</a></li>
+        <li><a href="#the-error-monad">The Error Monad</a></li>
+        <li><a href="#the-list-monad">The List Monad</a></li>
         <li><a href="#the-io-monad">The IO Monad</a></li>
-        <li><a href="#the-state-monad-">The State Monad</a></li>
-        <li><a href="#the-reader-monad-">The Reader Monad</a></li>
-        <li><a href="#the-writer-monad-">The Writer Monad</a></li>
+        <li><a href="#the-state-monad">The State Monad</a></li>
+        <li><a href="#the-reader-monad">The Reader Monad</a></li>
+        <li><a href="#the-writer-monad">The Writer Monad</a></li>
         <li><a href="#the-continuation-monad">The Continuation monad</a></li>
       </ul>
     </li>
