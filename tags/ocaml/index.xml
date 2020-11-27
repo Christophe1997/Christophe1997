@@ -8,30 +8,30 @@
     <lastBuildDate>Fri, 13 Dec 2019 19:47:37 +0800</lastBuildDate><atom:link href="https://christophe1997.github.io/tags/ocaml/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Value restriction，从OCaml到F#</title>
-      <link>https://christophe1997.github.io/posts/value-restriction/</link>
+      <link>https://christophe1997.github.io/posts/2018/value-restriction/</link>
       <pubDate>Fri, 13 Dec 2019 19:47:37 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/value-restriction/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/value-restriction/</guid>
       <description>Value Restriction是什么？ Value restriction是用于控制类型推断能否对值声明进行多态泛化的规则（MLton原文：“The value restriction is a rule that governs when type inference is allowed to polymorphically generalize a value declaration.”）。常出现在ML系的语言中，如SML，OCaml，F#中，其实value restriction产生的本质原因是为了保证类型系统在结合参数多态与命令式特性（imperative feature，如ref）时候的可靠性（soundness）。一个典型的例子就是：
 // 如果没有value restriction let x = ref None // &amp;#39;a option ref let y: int option ref = x // type checked let z: string option ref = x // type checked let () = y := Some 2 // type checked let v: string = !</description>
     </item>
     
     <item>
       <title>Functional Data Structure 2</title>
-      <link>https://christophe1997.github.io/posts/functional-data-structure-2/</link>
+      <link>https://christophe1997.github.io/posts/2018/functional-data-structure-2/</link>
       <pubDate>Tue, 24 Jul 2018 15:54:24 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/functional-data-structure-2/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/functional-data-structure-2/</guid>
       <description>Amortization Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about the running time of any individual operation.
 For instance, given a sequence of n operations, we may wish to bound the total running time of the sequence by O(n) without insisting than every individual operation run in O(1) time.</description>
     </item>
     
     <item>
       <title>Functional Data Structure 1</title>
-      <link>https://christophe1997.github.io/posts/functional-data-structure-1/</link>
+      <link>https://christophe1997.github.io/posts/2018/functional-data-structure-1/</link>
       <pubDate>Thu, 19 Jul 2018 17:00:11 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/functional-data-structure-1/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/functional-data-structure-1/</guid>
       <description>Introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&amp;rsquo;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&amp;rsquo;s knives.
 Imperative data structures often rely on assignments in crucial ways, and so different solutions must be found for functional programs. The second difficulty is that functional data strcutures are expected to be more flexible than their imperative counterparts.</description>
     </item>

@@ -8,10 +8,10 @@
     <lastBuildDate>Sat, 08 Dec 2018 16:48:49 +0000</lastBuildDate><atom:link href="https://christophe1997.github.io/tags/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Object Lifetime and Storage Management</title>
-      <link>https://christophe1997.github.io/posts/object-lifetime-and-storage-management/</link>
+      <link>https://christophe1997.github.io/posts/2018/object-lifetime-and-storage-management/</link>
       <pubDate>Sat, 08 Dec 2018 16:48:49 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/object-lifetime-and-storage-management/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/object-lifetime-and-storage-management/</guid>
       <description>在考虑标识符和绑定(bindings)的时候, 关键在于区分标识符和它们所引用的对象, 以及以下事件:
  对象的创建 绑定的创建 所有使用绑定的情况, 诸如引用变量, 子程序, 类型等 停用和重用那些暂时没有用的绑定 绑定的析构(destruction) 对象的析构  绑定的生命周期指的是这个绑定从创建到析构的整个过程, 类似的可以定义对象的生命周期. 通常情况下, 一个对象的生命周期可能会大于对应的绑定的生命周期, 即当 标识符不再引用该对象时, 该对象依然存在(例如在子程序中传入某个对象的引用, 如C++中的&amp;amp;参数). 当然, 一个绑定的生命周期也有可能大于对应对象的生命周期, 虽然这通常被认为是一个BUG.
 对象的生命周期通常与以下内存分配(storage allocation)机制有关:

@@ -8,10 +8,10 @@
     <lastBuildDate>Wed, 06 May 2020 20:06:38 +0800</lastBuildDate><atom:link href="https://christophe1997.github.io/tags/functional/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Surpasser Count</title>
-      <link>https://christophe1997.github.io/posts/surpasser-count/</link>
+      <link>https://christophe1997.github.io/posts/2020/surpasser-count/</link>
       <pubDate>Wed, 06 May 2020 20:06:38 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/surpasser-count/</guid>
+      <guid>https://christophe1997.github.io/posts/2020/surpasser-count/</guid>
       <description>Pearl 2: 给定一个长度大于1的列表, 计算其元素的最大surpasser count, 要求算法复杂度$O(n log n)$. Type: msc: Ord a =&amp;gt; [a] -&amp;gt; Int
 &amp;ldquo;Pearls of functional algorithm design&amp;quot;的第二章, 我们先来看surpasser的定义
 Definition surpasser: 称列表中$X[j]$是$X[i]$的surpasser, 如果$X[i] &amp;lt; X[j]$且$i &amp;lt; j$.
@@ -22,10 +22,10 @@ msc :: Ord a =&amp;gt; [a] -&amp;gt; Int msc xs = maximum [scount z zs | z:zs &a
     
     <item>
       <title>The Smallest Free Number</title>
-      <link>https://christophe1997.github.io/posts/the-smallest-free-number/</link>
+      <link>https://christophe1997.github.io/posts/2020/the-smallest-free-number/</link>
       <pubDate>Tue, 05 May 2020 21:01:11 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/the-smallest-free-number/</guid>
+      <guid>https://christophe1997.github.io/posts/2020/the-smallest-free-number/</guid>
       <description>Pearl 1: 给定一个自然数的有限集X, 计算不属于X的最小自然数. X表示为不包含重复元素的无序列表. 时间复杂度要求$O(n)$.
 Type: minfree :: [Int] -&amp;gt; Int(也可以额外的定义自然数类型, 不过这不是我们的重点)
 &amp;ldquo;Pearls of Functional Algorithm Design&amp;quot;的第一章, 其描述了一个分治的算法和一个基于array的算法, 这里按个人的思路讲解一下基于分治的算法, 基于array的算法具体可以查阅原文. 首先拿到这个问题, 我觉得最直接的想法就是
@@ -38,10 +38,10 @@ Theorem: (as ++ bs) \\ (us ++ vs) == (as \\ us) ++ (bs \\ vs), 如果as \\ vs ==
     
     <item>
       <title>Continuation Passing Style and Tail Recursion</title>
-      <link>https://christophe1997.github.io/posts/cps/</link>
+      <link>https://christophe1997.github.io/posts/2020/cps/</link>
       <pubDate>Sat, 29 Feb 2020 21:40:07 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/cps/</guid>
+      <guid>https://christophe1997.github.io/posts/2020/cps/</guid>
       <description>之前在&amp;quot;Essentials of Programming Languages&amp;quot;中学习过CPS(Continuation Passing Style), 而笔记在blog改版后被丢弃, 故在这篇文章中重新详细的探讨下CPS以及尾递归, 且当是温故而知新.
 Continuation 在理解什么是&amp;quot;Continuation Passing Style&amp;quot;之前, 我们首先需要定义Continuation(惭愧的是我都不知道中文叫啥, 查了下好像是&amp;quot;续延&amp;quot;). Continuation是计算机程序控制状态的抽象表示, 换言之, 其就是一种表示程序执行中间某一计算步骤的控制上下文的数据结构, 即表示某一计算的未来. 一个形象的例子是阶乘函数:
 let rec fact n = if n = 0 then 1 else n * (fact (n - 1)) 当我们计算(fact 4)时, 其执行过程为(用lisp的形式是因为更加形象):
@@ -50,10 +50,10 @@ let rec fact n = if n = 0 then 1 else n * (fact (n - 1)) 当我们计算(fact 4)
     
     <item>
       <title>Zipper</title>
-      <link>https://christophe1997.github.io/posts/zipper/</link>
+      <link>https://christophe1997.github.io/posts/2020/zipper/</link>
       <pubDate>Thu, 27 Feb 2020 21:17:41 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/zipper/</guid>
+      <guid>https://christophe1997.github.io/posts/2020/zipper/</guid>
       <description>近来想于函数式编程中寻找类似与双向链表的数据结构, 结果找到了Zipper. Zipper中文为拉链, 泛指一类常在函数式编程中使用的聚合数据结构, 其加强了原有的数据结构, 使得能够遍历或更新原有数据结构的任意部分. zipper的关键思想是将目前需要处理的部分和不需要处理的部分分开, 同时保存目前不需要的部分, 也可以将其形象的理解为光标. 本文首先介绍了如何在list的基础上构建zipper, 随后将其扩展到二叉树上.
 list的例子 定义zipper list或者说是单向链表, 是函数式编程中最负盛名的结构, 其既简单又实用. 当我们需要修改list中的一部分时, 例如将[1 2 3 4 5]中的[3 4 5]替换为[5 6], list就带来了问题. 这时候一个简单的做法是:
 let rec changeTailOfList l1 idx l2 = match l1 with | [] -&amp;gt; l2 // 忽略了idx大于0的情况  | x::xs -&amp;gt; if idx = 0 then l2 else x :: (changeTailOfList xs (idx - 1) l2) changeTailOfList [1; 2; 3; 4; 5] 2 [5; 6] // [1; 2; 5; 6] 看起来好像挺不错, 而这时候如果我们想要修改刚刚添加的内容, 例如在上面的例子中, 我们把5替换为[7 8], 这时候同样可以采取和changeTailOfList一样的做法, 从头开始遍历列表, 在目标位置进行更改.</description>
@@ -61,20 +61,20 @@ let rec changeTailOfList l1 idx l2 = match l1 with | [] -&amp;gt; l2 // 忽略�
     
     <item>
       <title>Functional Data Structure 2</title>
-      <link>https://christophe1997.github.io/posts/functional-data-structure-2/</link>
+      <link>https://christophe1997.github.io/posts/2018/functional-data-structure-2/</link>
       <pubDate>Tue, 24 Jul 2018 15:54:24 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/functional-data-structure-2/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/functional-data-structure-2/</guid>
       <description>Amortization Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about the running time of any individual operation.
 For instance, given a sequence of n operations, we may wish to bound the total running time of the sequence by O(n) without insisting than every individual operation run in O(1) time.</description>
     </item>
     
     <item>
       <title>Functional Data Structure 1</title>
-      <link>https://christophe1997.github.io/posts/functional-data-structure-1/</link>
+      <link>https://christophe1997.github.io/posts/2018/functional-data-structure-1/</link>
       <pubDate>Thu, 19 Jul 2018 17:00:11 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/functional-data-structure-1/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/functional-data-structure-1/</guid>
       <description>Introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&amp;rsquo;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&amp;rsquo;s knives.
 Imperative data structures often rely on assignments in crucial ways, and so different solutions must be found for functional programs. The second difficulty is that functional data strcutures are expected to be more flexible than their imperative counterparts.</description>
     </item>

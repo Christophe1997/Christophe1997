@@ -8,10 +8,10 @@
     <lastBuildDate>Thu, 05 Dec 2019 20:29:00 +0800</lastBuildDate><atom:link href="https://christophe1997.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>使用hugo生成博客</title>
-      <link>https://christophe1997.github.io/posts/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</link>
+      <link>https://christophe1997.github.io/posts/2019/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Thu, 05 Dec 2019 20:29:00 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</guid>
+      <guid>https://christophe1997.github.io/posts/2019/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</guid>
       <description>之前一直有使用Hexo来生成静态博客，如今将博客迁移到了Hugo下。两种工具总体而言各有优势，个人此次转移到hugo的主要原因大概是希望能够重拾写博客的习惯，本文主要介绍了使用Hugo的大致流程。首先给出个人博客的文件结构：
 Root # blog根目录 | +-- archetypes +-- content |-- posts # 博客目录 |-- _index.md # 主页 +-- data +-- layouts +-- ox-hugo # org文件位置 |-- messy.org # category为杂项的org文件 +-- public # submodule +-- resource +-- static +-- themes |-- xxx # 主题文件夹, submodule +-- .git +-- config.toml +-- .dir-locals.el # 自动将org文件转为markdown配置文件 +-- .gitmodules 其中只有 ox-hugo 为自定义文件夹, .dir-locals 为ox-hugo自动转换的配置文件，其他都是自动生成的。接下来个人就hugo生成博客关键部分展开介绍下。
 主题的选择 首先搭建博客面对的问题就是主题，如果你非常擅长网页设计可以自己DIY一款主题。大多数还是会选择已有的主题，我们在选择主题时，除了最重要的UI外，还应当考虑以下的因素：

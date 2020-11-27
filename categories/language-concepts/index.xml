@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Language concepts on CastOff</title>
+    <title>language concepts on CastOff</title>
     <link>https://christophe1997.github.io/categories/language-concepts/</link>
-    <description>Recent content in Language concepts on CastOff</description>
+    <description>Recent content in language concepts on CastOff</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sat, 29 Feb 2020 21:40:07 +0800</lastBuildDate><atom:link href="https://christophe1997.github.io/categories/language-concepts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Continuation Passing Style and Tail Recursion</title>
-      <link>https://christophe1997.github.io/posts/cps/</link>
+      <link>https://christophe1997.github.io/posts/2020/cps/</link>
       <pubDate>Sat, 29 Feb 2020 21:40:07 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/cps/</guid>
+      <guid>https://christophe1997.github.io/posts/2020/cps/</guid>
       <description>之前在&amp;quot;Essentials of Programming Languages&amp;quot;中学习过CPS(Continuation Passing Style), 而笔记在blog改版后被丢弃, 故在这篇文章中重新详细的探讨下CPS以及尾递归, 且当是温故而知新.
 Continuation 在理解什么是&amp;quot;Continuation Passing Style&amp;quot;之前, 我们首先需要定义Continuation(惭愧的是我都不知道中文叫啥, 查了下好像是&amp;quot;续延&amp;quot;). Continuation是计算机程序控制状态的抽象表示, 换言之, 其就是一种表示程序执行中间某一计算步骤的控制上下文的数据结构, 即表示某一计算的未来. 一个形象的例子是阶乘函数:
 let rec fact n = if n = 0 then 1 else n * (fact (n - 1)) 当我们计算(fact 4)时, 其执行过程为(用lisp的形式是因为更加形象):
@@ -20,20 +20,20 @@ let rec fact n = if n = 0 then 1 else n * (fact (n - 1)) 当我们计算(fact 4)
     
     <item>
       <title>Value restriction，从OCaml到F#</title>
-      <link>https://christophe1997.github.io/posts/value-restriction/</link>
+      <link>https://christophe1997.github.io/posts/2018/value-restriction/</link>
       <pubDate>Fri, 13 Dec 2019 19:47:37 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/value-restriction/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/value-restriction/</guid>
       <description>Value Restriction是什么？ Value restriction是用于控制类型推断能否对值声明进行多态泛化的规则（MLton原文：“The value restriction is a rule that governs when type inference is allowed to polymorphically generalize a value declaration.”）。常出现在ML系的语言中，如SML，OCaml，F#中，其实value restriction产生的本质原因是为了保证类型系统在结合参数多态与命令式特性（imperative feature，如ref）时候的可靠性（soundness）。一个典型的例子就是：
 // 如果没有value restriction let x = ref None // &amp;#39;a option ref let y: int option ref = x // type checked let z: string option ref = x // type checked let () = y := Some 2 // type checked let v: string = !</description>
     </item>
     
     <item>
       <title>Monad and Transformers</title>
-      <link>https://christophe1997.github.io/posts/monad-and-transformers/</link>
+      <link>https://christophe1997.github.io/posts/2019/monad-and-transformers/</link>
       <pubDate>Sat, 06 Apr 2019 20:26:43 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/monad-and-transformers/</guid>
+      <guid>https://christophe1997.github.io/posts/2019/monad-and-transformers/</guid>
       <description>Monad是Haskell中讨论最多的结构, 需要更详细的探讨其相关内容, 即使它对于Haskell而言不是必须的:(.
 参考: All about Monads
 Monad Support 除了之前介绍过的一些基本函数, Haskell本身定义了一些辅助函数配合Monad一起使用:
@@ -44,10 +44,10 @@ sequence_ :: Monad m =&amp;gt; [m a] -&amp;gt; m () sequence_ = flodr (&amp;gt;&
     
     <item>
       <title>Haskell Algebra</title>
-      <link>https://christophe1997.github.io/posts/haskell-algebra/</link>
+      <link>https://christophe1997.github.io/posts/2019/haskell-algebra/</link>
       <pubDate>Sun, 24 Mar 2019 14:32:05 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/haskell-algebra/</guid>
+      <guid>https://christophe1997.github.io/posts/2019/haskell-algebra/</guid>
       <description>Semigroup 半群即一个集合以及在之上定义的一个满足结合律的二元运算, 在Haskell中定义为(部分):
 class Semigroup where (&amp;lt;&amp;gt;) :: a -&amp;gt; a -&amp;gt; a {-# MINIMAL (&amp;lt;&amp;gt;) #-} Laws -- associativity a &amp;lt;&amp;gt; (b &amp;lt;&amp;gt; c) = (a &amp;lt;&amp;gt; b) &amp;lt;&amp;gt; c Monoid &amp;ldquo;A monoid is a binary associative operation with an identity&amp;rdquo;, 在Haskell中定义为(部分):
 class Monoid m where mempty :: m mappend :: m -&amp;gt; m -&amp;gt; m mconcat :: [m] -&amp;gt; m mconcat = foldr mappend mempty {-# MINIMAL mempty #-} Laws -- left identity mappend menpty x = x -- right identity mappend x mempty = x -- associativity mappend x (mappend y z) = mappend (mappend x y) z 这和数学上带幺半群所满足的性质是一致的, 带幺半群即一个包含单位元的半群.</description>

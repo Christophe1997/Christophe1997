@@ -28,7 +28,7 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/memoization-in-haskell/</loc>
+    <loc>https://christophe1997.github.io/posts/2020/memoization-in-haskell/</loc>
     <lastmod>2020-06-19T21:39:35+08:00</lastmod>
   </url>
   
@@ -63,12 +63,12 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/surpasser-count/</loc>
+    <loc>https://christophe1997.github.io/posts/2020/surpasser-count/</loc>
     <lastmod>2020-05-06T20:06:38+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/the-smallest-free-number/</loc>
+    <loc>https://christophe1997.github.io/posts/2020/the-smallest-free-number/</loc>
     <lastmod>2020-05-05T21:01:11+08:00</lastmod>
   </url>
   
@@ -78,7 +78,7 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/cps/</loc>
+    <loc>https://christophe1997.github.io/posts/2020/cps/</loc>
     <lastmod>2020-02-29T21:40:07+08:00</lastmod>
   </url>
   
@@ -103,7 +103,7 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/zipper/</loc>
+    <loc>https://christophe1997.github.io/posts/2020/zipper/</loc>
     <lastmod>2020-02-27T21:17:41+08:00</lastmod>
   </url>
   
@@ -118,7 +118,7 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/some-bitwise-tricks/</loc>
+    <loc>https://christophe1997.github.io/posts/2020/some-bitwise-tricks/</loc>
     <lastmod>2020-02-25T11:50:04+08:00</lastmod>
   </url>
   
@@ -128,7 +128,7 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/value-restriction/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/value-restriction/</loc>
     <lastmod>2019-12-13T19:47:37+08:00</lastmod>
   </url>
   
@@ -143,7 +143,7 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</loc>
+    <loc>https://christophe1997.github.io/posts/2019/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2019-12-19T20:24:17+08:00</lastmod>
   </url>
   
@@ -153,22 +153,22 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/monad-and-transformers/</loc>
+    <loc>https://christophe1997.github.io/posts/2019/monad-and-transformers/</loc>
     <lastmod>2019-04-06T20:26:43+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/haskell-algebra/</loc>
+    <loc>https://christophe1997.github.io/posts/2019/haskell-algebra/</loc>
     <lastmod>2019-03-24T14:32:05+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/%E6%9D%82%E8%AE%B0/</loc>
+    <loc>https://christophe1997.github.io/posts/2019/%E6%9D%82%E8%AE%B0/</loc>
     <lastmod>2019-03-04T17:12:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/object-lifetime-and-storage-management/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/object-lifetime-and-storage-management/</loc>
     <lastmod>2018-12-08T16:48:49+00:00</lastmod>
   </url>
   
@@ -183,42 +183,42 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/process/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/process/</loc>
     <lastmod>2018-08-03T13:10:58+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/functional-data-structure-2/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/functional-data-structure-2/</loc>
     <lastmod>2018-07-24T15:54:24+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/functional-data-structure-1/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/functional-data-structure-1/</loc>
     <lastmod>2018-07-19T17:00:11+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/address-space/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/address-space/</loc>
     <lastmod>2018-06-24T23:54:04+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/computer-system-4/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/computer-system-4/</loc>
     <lastmod>2018-06-10T19:14:22+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/computer-system-3/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/computer-system-3/</loc>
     <lastmod>2018-06-01T23:23:16+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/computer-system-2/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/computer-system-2/</loc>
     <lastmod>2018-05-28T17:20:36+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/computer-system-1/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/computer-system-1/</loc>
     <lastmod>2018-05-23T23:54:04+00:00</lastmod>
   </url>
   
@@ -228,7 +228,7 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/string-algorithms/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/string-algorithms/</loc>
     <lastmod>2018-05-07T21:18:59+00:00</lastmod>
   </url>
   
@@ -243,32 +243,32 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/some-ubuntu-install-problem/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/some-ubuntu-install-problem/</loc>
     <lastmod>2018-04-28T21:11:36+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/graph-algorithms/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/graph-algorithms/</loc>
     <lastmod>2018-04-20T19:21:30+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/search-algorithms/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/search-algorithms/</loc>
     <lastmod>2018-04-05T15:21:41+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/priority-queue/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/priority-queue/</loc>
     <lastmod>2018-04-04T16:18:50+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/sorting-algorithms/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/sorting-algorithms/</loc>
     <lastmod>2018-03-30T12:07:09+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/union-find-algorithm/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/union-find-algorithm/</loc>
     <lastmod>2018-03-14T22:54:16+00:00</lastmod>
   </url>
   
@@ -283,7 +283,7 @@
   </url>
   
   <url>
-    <loc>https://christophe1997.github.io/posts/git-cheat-sheet/</loc>
+    <loc>https://christophe1997.github.io/posts/2018/git-cheat-sheet/</loc>
     <lastmod>2018-03-11T13:07:40+00:00</lastmod>
   </url>
   

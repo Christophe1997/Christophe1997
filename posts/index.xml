@@ -8,10 +8,10 @@
     <lastBuildDate>Fri, 19 Jun 2020 21:39:35 +0800</lastBuildDate><atom:link href="https://christophe1997.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Memoization in Haskell</title>
-      <link>https://christophe1997.github.io/posts/memoization-in-haskell/</link>
+      <link>https://christophe1997.github.io/posts/2020/memoization-in-haskell/</link>
       <pubDate>Fri, 19 Jun 2020 21:39:35 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/memoization-in-haskell/</guid>
+      <guid>https://christophe1997.github.io/posts/2020/memoization-in-haskell/</guid>
       <description>Memoization是动态规划(Dynamic Programming)中自顶向下处理问题采用的策略, 其基本想法是通过将子问题的解保存起来避免重复计算来优化算法. 这个概念本身很简单, 在其他有明显mutable语义的语言中, 实现起来也非常简单. 但是在Haskell中问题就变的复杂了不少, 对于一个原始的函数f :: a -&amp;gt; b你如果要用ref, 比如说IORef, 你必须要把它放到IO monad中, 你的memoize函数就变成了... -&amp;gt; IO (a -&amp;gt; b). 我们希望是能够找到一个memoize :: ... -&amp;gt; (a -&amp;gt; b), 这样memoize之后得到的和原函数类型是一致的. 为了讨论的方便, 我们主要关注两个例子的memoization, 一个是经典的Fibonacci数列:
 fib :: Int -&amp;gt; Integer fib 0 = 0 fib 1 = 1 fib n = fib (n - 2) + fib (n - 1) 另一个则是动态规划(自底向上)中典型的最小编辑距离的问题, 所谓的最小编辑距离就是一个字符串通过增加, 删除, 替换的操作得到另一个字符串所需要的操作次数:
 minEditDist :: String -&amp;gt; String -&amp;gt; Int minEditDist [] [] = 0 minEditDist s [] = length s minEditDist [] s = length s minEditDist (x:xs) (y:ys) | x == y = minEditDist xs ys | otherwise = 1 + minimum [minEditDist xs ys, minEditDist xs (y:ys), minEditDist (x:xs) ys] Memoizing with specific problem 首先来看fib的问题, wiki给出了一个非常elegant的解(就fib本身而言, 还有更经典的解, fib = (fibs !</description>
@@ -19,10 +19,10 @@ minEditDist :: String -&amp;gt; String -&amp;gt; Int minEditDist [] [] = 0 minEd
     
     <item>
       <title>Surpasser Count</title>
-      <link>https://christophe1997.github.io/posts/surpasser-count/</link>
+      <link>https://christophe1997.github.io/posts/2020/surpasser-count/</link>
       <pubDate>Wed, 06 May 2020 20:06:38 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/surpasser-count/</guid>
+      <guid>https://christophe1997.github.io/posts/2020/surpasser-count/</guid>
       <description>Pearl 2: 给定一个长度大于1的列表, 计算其元素的最大surpasser count, 要求算法复杂度$O(n log n)$. Type: msc: Ord a =&amp;gt; [a] -&amp;gt; Int
 &amp;ldquo;Pearls of functional algorithm design&amp;quot;的第二章, 我们先来看surpasser的定义
 Definition surpasser: 称列表中$X[j]$是$X[i]$的surpasser, 如果$X[i] &amp;lt; X[j]$且$i &amp;lt; j$.
@@ -33,10 +33,10 @@ msc :: Ord a =&amp;gt; [a] -&amp;gt; Int msc xs = maximum [scount z zs | z:zs &a
     
     <item>
       <title>The Smallest Free Number</title>
-      <link>https://christophe1997.github.io/posts/the-smallest-free-number/</link>
+      <link>https://christophe1997.github.io/posts/2020/the-smallest-free-number/</link>
       <pubDate>Tue, 05 May 2020 21:01:11 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/the-smallest-free-number/</guid>
+      <guid>https://christophe1997.github.io/posts/2020/the-smallest-free-number/</guid>
       <description>Pearl 1: 给定一个自然数的有限集X, 计算不属于X的最小自然数. X表示为不包含重复元素的无序列表. 时间复杂度要求$O(n)$.
 Type: minfree :: [Int] -&amp;gt; Int(也可以额外的定义自然数类型, 不过这不是我们的重点)
 &amp;ldquo;Pearls of Functional Algorithm Design&amp;quot;的第一章, 其描述了一个分治的算法和一个基于array的算法, 这里按个人的思路讲解一下基于分治的算法, 基于array的算法具体可以查阅原文. 首先拿到这个问题, 我觉得最直接的想法就是
@@ -49,10 +49,10 @@ Theorem: (as ++ bs) \\ (us ++ vs) == (as \\ us) ++ (bs \\ vs), 如果as \\ vs ==
     
     <item>
       <title>Continuation Passing Style and Tail Recursion</title>
-      <link>https://christophe1997.github.io/posts/cps/</link>
+      <link>https://christophe1997.github.io/posts/2020/cps/</link>
       <pubDate>Sat, 29 Feb 2020 21:40:07 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/cps/</guid>
+      <guid>https://christophe1997.github.io/posts/2020/cps/</guid>
       <description>之前在&amp;quot;Essentials of Programming Languages&amp;quot;中学习过CPS(Continuation Passing Style), 而笔记在blog改版后被丢弃, 故在这篇文章中重新详细的探讨下CPS以及尾递归, 且当是温故而知新.
 Continuation 在理解什么是&amp;quot;Continuation Passing Style&amp;quot;之前, 我们首先需要定义Continuation(惭愧的是我都不知道中文叫啥, 查了下好像是&amp;quot;续延&amp;quot;). Continuation是计算机程序控制状态的抽象表示, 换言之, 其就是一种表示程序执行中间某一计算步骤的控制上下文的数据结构, 即表示某一计算的未来. 一个形象的例子是阶乘函数:
 let rec fact n = if n = 0 then 1 else n * (fact (n - 1)) 当我们计算(fact 4)时, 其执行过程为(用lisp的形式是因为更加形象):
@@ -61,10 +61,10 @@ let rec fact n = if n = 0 then 1 else n * (fact (n - 1)) 当我们计算(fact 4)
     
     <item>
       <title>Zipper</title>
-      <link>https://christophe1997.github.io/posts/zipper/</link>
+      <link>https://christophe1997.github.io/posts/2020/zipper/</link>
       <pubDate>Thu, 27 Feb 2020 21:17:41 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/zipper/</guid>
+      <guid>https://christophe1997.github.io/posts/2020/zipper/</guid>
       <description>近来想于函数式编程中寻找类似与双向链表的数据结构, 结果找到了Zipper. Zipper中文为拉链, 泛指一类常在函数式编程中使用的聚合数据结构, 其加强了原有的数据结构, 使得能够遍历或更新原有数据结构的任意部分. zipper的关键思想是将目前需要处理的部分和不需要处理的部分分开, 同时保存目前不需要的部分, 也可以将其形象的理解为光标. 本文首先介绍了如何在list的基础上构建zipper, 随后将其扩展到二叉树上.
 list的例子 定义zipper list或者说是单向链表, 是函数式编程中最负盛名的结构, 其既简单又实用. 当我们需要修改list中的一部分时, 例如将[1 2 3 4 5]中的[3 4 5]替换为[5 6], list就带来了问题. 这时候一个简单的做法是:
 let rec changeTailOfList l1 idx l2 = match l1 with | [] -&amp;gt; l2 // 忽略了idx大于0的情况  | x::xs -&amp;gt; if idx = 0 then l2 else x :: (changeTailOfList xs (idx - 1) l2) changeTailOfList [1; 2; 3; 4; 5] 2 [5; 6] // [1; 2; 5; 6] 看起来好像挺不错, 而这时候如果我们想要修改刚刚添加的内容, 例如在上面的例子中, 我们把5替换为[7 8], 这时候同样可以采取和changeTailOfList一样的做法, 从头开始遍历列表, 在目标位置进行更改.</description>
@@ -72,10 +72,10 @@ let rec changeTailOfList l1 idx l2 = match l1 with | [] -&amp;gt; l2 // 忽略�
     
     <item>
       <title>Some Bitwise Tricks</title>
-      <link>https://christophe1997.github.io/posts/some-bitwise-tricks/</link>
+      <link>https://christophe1997.github.io/posts/2020/some-bitwise-tricks/</link>
       <pubDate>Tue, 25 Feb 2020 11:50:04 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/some-bitwise-tricks/</guid>
+      <guid>https://christophe1997.github.io/posts/2020/some-bitwise-tricks/</guid>
       <description>Bitwise tricks 近来翻到一本&amp;quot;Hackers Delight&amp;quot;的书, 其主要介绍基于二进制运算的算法. 初读来大感震撼, 其结果之巧妙,过程之精简, 于仅仅是了解计算机数是用补码所表示, 并未深入了解过二进制运算的人而言不可谓不精美. 正如Dijkstra所言, 计算机程序是集逻辑美感与机械实现的矛盾体. 本文姑且将其中的一些皮毛摘录如下, 以便日后之使用, 目前倒是难以得到应用.
   使最右位的1变成0
 // 01011000 -&amp;gt; 01010000 // if no one then return 0 x &amp;amp; (x - 1) 上式也可以用来判断一个无符号的整数是否是$ 2^n $的形式.
@@ -86,20 +86,20 @@ let rec changeTailOfList l1 idx l2 = match l1 with | [] -&amp;gt; l2 // 忽略�
     
     <item>
       <title>Value restriction，从OCaml到F#</title>
-      <link>https://christophe1997.github.io/posts/value-restriction/</link>
+      <link>https://christophe1997.github.io/posts/2018/value-restriction/</link>
       <pubDate>Fri, 13 Dec 2019 19:47:37 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/value-restriction/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/value-restriction/</guid>
       <description>Value Restriction是什么？ Value restriction是用于控制类型推断能否对值声明进行多态泛化的规则（MLton原文：“The value restriction is a rule that governs when type inference is allowed to polymorphically generalize a value declaration.”）。常出现在ML系的语言中，如SML，OCaml，F#中，其实value restriction产生的本质原因是为了保证类型系统在结合参数多态与命令式特性（imperative feature，如ref）时候的可靠性（soundness）。一个典型的例子就是：
 // 如果没有value restriction let x = ref None // &amp;#39;a option ref let y: int option ref = x // type checked let z: string option ref = x // type checked let () = y := Some 2 // type checked let v: string = !</description>
     </item>
     
     <item>
       <title>使用hugo生成博客</title>
-      <link>https://christophe1997.github.io/posts/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</link>
+      <link>https://christophe1997.github.io/posts/2019/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Thu, 05 Dec 2019 20:29:00 +0800</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</guid>
+      <guid>https://christophe1997.github.io/posts/2019/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</guid>
       <description>之前一直有使用Hexo来生成静态博客，如今将博客迁移到了Hugo下。两种工具总体而言各有优势，个人此次转移到hugo的主要原因大概是希望能够重拾写博客的习惯，本文主要介绍了使用Hugo的大致流程。首先给出个人博客的文件结构：
 Root # blog根目录 | +-- archetypes +-- content |-- posts # 博客目录 |-- _index.md # 主页 +-- data +-- layouts +-- ox-hugo # org文件位置 |-- messy.org # category为杂项的org文件 +-- public # submodule +-- resource +-- static +-- themes |-- xxx # 主题文件夹, submodule +-- .git +-- config.toml +-- .dir-locals.el # 自动将org文件转为markdown配置文件 +-- .gitmodules 其中只有 ox-hugo 为自定义文件夹, .dir-locals 为ox-hugo自动转换的配置文件，其他都是自动生成的。接下来个人就hugo生成博客关键部分展开介绍下。
 主题的选择 首先搭建博客面对的问题就是主题，如果你非常擅长网页设计可以自己DIY一款主题。大多数还是会选择已有的主题，我们在选择主题时，除了最重要的UI外，还应当考虑以下的因素：
@@ -109,10 +109,10 @@ Root # blog根目录 | +-- archetypes +-- content |-- posts # 博客目录 |-- _
     
     <item>
       <title>Monad and Transformers</title>
-      <link>https://christophe1997.github.io/posts/monad-and-transformers/</link>
+      <link>https://christophe1997.github.io/posts/2019/monad-and-transformers/</link>
       <pubDate>Sat, 06 Apr 2019 20:26:43 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/monad-and-transformers/</guid>
+      <guid>https://christophe1997.github.io/posts/2019/monad-and-transformers/</guid>
       <description>Monad是Haskell中讨论最多的结构, 需要更详细的探讨其相关内容, 即使它对于Haskell而言不是必须的:(.
 参考: All about Monads
 Monad Support 除了之前介绍过的一些基本函数, Haskell本身定义了一些辅助函数配合Monad一起使用:
@@ -123,10 +123,10 @@ sequence_ :: Monad m =&amp;gt; [m a] -&amp;gt; m () sequence_ = flodr (&amp;gt;&
     
     <item>
       <title>Haskell Algebra</title>
-      <link>https://christophe1997.github.io/posts/haskell-algebra/</link>
+      <link>https://christophe1997.github.io/posts/2019/haskell-algebra/</link>
       <pubDate>Sun, 24 Mar 2019 14:32:05 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/haskell-algebra/</guid>
+      <guid>https://christophe1997.github.io/posts/2019/haskell-algebra/</guid>
       <description>Semigroup 半群即一个集合以及在之上定义的一个满足结合律的二元运算, 在Haskell中定义为(部分):
 class Semigroup where (&amp;lt;&amp;gt;) :: a -&amp;gt; a -&amp;gt; a {-# MINIMAL (&amp;lt;&amp;gt;) #-} Laws -- associativity a &amp;lt;&amp;gt; (b &amp;lt;&amp;gt; c) = (a &amp;lt;&amp;gt; b) &amp;lt;&amp;gt; c Monoid &amp;ldquo;A monoid is a binary associative operation with an identity&amp;rdquo;, 在Haskell中定义为(部分):
 class Monoid m where mempty :: m mappend :: m -&amp;gt; m -&amp;gt; m mconcat :: [m] -&amp;gt; m mconcat = foldr mappend mempty {-# MINIMAL mempty #-} Laws -- left identity mappend menpty x = x -- right identity mappend x mempty = x -- associativity mappend x (mappend y z) = mappend (mappend x y) z 这和数学上带幺半群所满足的性质是一致的, 带幺半群即一个包含单位元的半群.</description>
@@ -134,10 +134,10 @@ class Monoid m where mempty :: m mappend :: m -&amp;gt; m -&amp;gt; m mconcat ::
     
     <item>
       <title>杂记</title>
-      <link>https://christophe1997.github.io/posts/%E6%9D%82%E8%AE%B0/</link>
+      <link>https://christophe1997.github.io/posts/2019/%E6%9D%82%E8%AE%B0/</link>
       <pubDate>Mon, 04 Mar 2019 17:12:00 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/%E6%9D%82%E8%AE%B0/</guid>
+      <guid>https://christophe1997.github.io/posts/2019/%E6%9D%82%E8%AE%B0/</guid>
       <description>多态(polymorphic)最早从19世纪希腊语中引入, 其中poly代表很多(many), morph代表形式(form), 而-ic的后缀表示由&amp;hellip;制成(made of). 因此, 多态意味着&amp;quot;made of many form&amp;quot;, 即有许多形式构成. 因此单态(monomorphic)很容易猜到是&amp;quot;made of one form&amp;quot;. 2019.03.04
   -ary的后缀表示属于或关于(of or pertaining to), 在讨论数学上的元数(arity)时, -ary是公共的后缀, 诸如nullary(零元), unary(一元), binary(二元)等. 2019.03.07
   我发现gnome-terminal下C-;会映射成;,导致我在terminal的emacs中使用快捷键C-x C-;注释行失败.
@@ -148,10 +148,10 @@ class Monoid m where mempty :: m mappend :: m -&amp;gt; m -&amp;gt; m mconcat ::
     
     <item>
       <title>Object Lifetime and Storage Management</title>
-      <link>https://christophe1997.github.io/posts/object-lifetime-and-storage-management/</link>
+      <link>https://christophe1997.github.io/posts/2018/object-lifetime-and-storage-management/</link>
       <pubDate>Sat, 08 Dec 2018 16:48:49 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/object-lifetime-and-storage-management/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/object-lifetime-and-storage-management/</guid>
       <description>在考虑标识符和绑定(bindings)的时候, 关键在于区分标识符和它们所引用的对象, 以及以下事件:
  对象的创建 绑定的创建 所有使用绑定的情况, 诸如引用变量, 子程序, 类型等 停用和重用那些暂时没有用的绑定 绑定的析构(destruction) 对象的析构  绑定的生命周期指的是这个绑定从创建到析构的整个过程, 类似的可以定义对象的生命周期. 通常情况下, 一个对象的生命周期可能会大于对应的绑定的生命周期, 即当 标识符不再引用该对象时, 该对象依然存在(例如在子程序中传入某个对象的引用, 如C++中的&amp;amp;参数). 当然, 一个绑定的生命周期也有可能大于对应对象的生命周期, 虽然这通常被认为是一个BUG.
 对象的生命周期通常与以下内存分配(storage allocation)机制有关:
@@ -163,67 +163,67 @@ class Monoid m where mempty :: m mappend :: m -&amp;gt; m -&amp;gt; m mconcat ::
     
     <item>
       <title>进程</title>
-      <link>https://christophe1997.github.io/posts/process/</link>
+      <link>https://christophe1997.github.io/posts/2018/process/</link>
       <pubDate>Fri, 03 Aug 2018 13:10:58 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/process/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/process/</guid>
       <description>The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system:
  create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process.  The first thing that the OS must do to run a program is to load its code and any static data into memory, into the address space of the process.</description>
     </item>
     
     <item>
       <title>Functional Data Structure 2</title>
-      <link>https://christophe1997.github.io/posts/functional-data-structure-2/</link>
+      <link>https://christophe1997.github.io/posts/2018/functional-data-structure-2/</link>
       <pubDate>Tue, 24 Jul 2018 15:54:24 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/functional-data-structure-2/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/functional-data-structure-2/</guid>
       <description>Amortization Implementations with good amortized bounds are often simpler and faster than implementations with comparable worst-case bounds. Given a sequence of operations, we may wish to know the running time of the entire sequence, but not care about the running time of any individual operation.
 For instance, given a sequence of n operations, we may wish to bound the total running time of the sequence by O(n) without insisting than every individual operation run in O(1) time.</description>
     </item>
     
     <item>
       <title>Functional Data Structure 1</title>
-      <link>https://christophe1997.github.io/posts/functional-data-structure-1/</link>
+      <link>https://christophe1997.github.io/posts/2018/functional-data-structure-1/</link>
       <pubDate>Thu, 19 Jul 2018 17:00:11 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/functional-data-structure-1/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/functional-data-structure-1/</guid>
       <description>Introduction To implement data structure in a functional way, there are two basic problems. First, from the point of view of designing and implementing efficient data structures, functional programming&amp;rsquo;s stricture against destructive updates(i.e. assignments) is a staggering handicap, tantamount to confiscating a master chef&amp;rsquo;s knives.
 Imperative data structures often rely on assignments in crucial ways, and so different solutions must be found for functional programs. The second difficulty is that functional data strcutures are expected to be more flexible than their imperative counterparts.</description>
     </item>
     
     <item>
       <title>Address Space</title>
-      <link>https://christophe1997.github.io/posts/address-space/</link>
+      <link>https://christophe1997.github.io/posts/2018/address-space/</link>
       <pubDate>Sun, 24 Jun 2018 23:54:04 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/address-space/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/address-space/</guid>
       <description>The Address Space The address space is the abstraction that OS is providing to the running program. The address space of a process contains all of the memory state of the running program. For example, the code of the program, the stack and the heap. In the sight of the program, it loaded into at a particular address and has a potentially very large address space, thus, we say that the OS is virtualizing memory.</description>
     </item>
     
     <item>
       <title>Computer System 4</title>
-      <link>https://christophe1997.github.io/posts/computer-system-4/</link>
+      <link>https://christophe1997.github.io/posts/2018/computer-system-4/</link>
       <pubDate>Sun, 10 Jun 2018 19:14:22 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/computer-system-4/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/computer-system-4/</guid>
       <description>Linking Linking is the process of collecting and combining various pieces of code and data into a single file that can be loaded (copied) into memory and executed. Linking can be performed at compile time, when the source code is translated into machine code; at load time, when the program is loaded into memory and executed by the loader; and even at run time, by application programs. On modern systems, linking is performed automatically by programs called linkers.</description>
     </item>
     
     <item>
       <title>Computer System 3</title>
-      <link>https://christophe1997.github.io/posts/computer-system-3/</link>
+      <link>https://christophe1997.github.io/posts/2018/computer-system-3/</link>
       <pubDate>Fri, 01 Jun 2018 23:23:16 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/computer-system-3/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/computer-system-3/</guid>
       <description>Optimization Writing an efficient program requires several type of activities. First, we must select an appropriate set of algorithms and data structures. Second, we must write source code that the compiler can effectively optimize to turn into efficient executable code. A third technique for dealing with especially demanding computations is to divide a task into portions that can be computed in parallel, on some combination of multiple cores and multiple processors.</description>
     </item>
     
     <item>
       <title>Computer System 2</title>
-      <link>https://christophe1997.github.io/posts/computer-system-2/</link>
+      <link>https://christophe1997.github.io/posts/2018/computer-system-2/</link>
       <pubDate>Mon, 28 May 2018 17:20:36 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/computer-system-2/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/computer-system-2/</guid>
       <description>Assembler Computer execute machine code, sequences of bytes encoding the low-level operations that manipulate data manage memory, read and write data on storage devices, and communicate over networks.
 We will focus on x86-64, the commonest machine language used in processor with laptop and PC, also it&amp;rsquo;s widely used in supercomputer and lager data center.
 the x86-64 machine code is much different with the corresponding C code, the processor states below are everywhere:</description>
@@ -231,20 +231,20 @@ the x86-64 machine code is much different with the corresponding C code, the pro
     
     <item>
       <title>Computer System 1</title>
-      <link>https://christophe1997.github.io/posts/computer-system-1/</link>
+      <link>https://christophe1997.github.io/posts/2018/computer-system-1/</link>
       <pubDate>Wed, 23 May 2018 23:54:04 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/computer-system-1/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/computer-system-1/</guid>
       <description>Hardware Organization of A System A typical system has those hadrware below:
   Buses: Running throughout the system is a collection of electrical conduits called buses that carry bytes of ingormation back and forth betweent the components. Buses are typically designed to transfer fiexed sized chunks of bytes know as words. The number of bytes in a word is a fundamental system parameter that varies across systems. Most have word sizes of 8 bytes (64 bits)today</description>
     </item>
     
     <item>
       <title>字符串处理算法</title>
-      <link>https://christophe1997.github.io/posts/string-algorithms/</link>
+      <link>https://christophe1997.github.io/posts/2018/string-algorithms/</link>
       <pubDate>Mon, 07 May 2018 21:18:59 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/string-algorithms/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/string-algorithms/</guid>
       <description>字符串处理算法具有很高的重要性以及应用领域的多样性. 以下讨论默认的是扩展的ASCII字符集(R=256).
 字符串排序算法 对于许多排序应用而言, 决定顺序的键都是字符串. 利用字符串的特殊性质来将其排序通常能够获得更高的效率.
 键索引计数法 我们首先介绍一种适用于小整数键的简单排序算法.
@@ -253,19 +253,19 @@ public class KeyIndexedCount { public static void sort(char[] chr, int R) { int[
     
     <item>
       <title>一些Ubuntu安装问题</title>
-      <link>https://christophe1997.github.io/posts/some-ubuntu-install-problem/</link>
+      <link>https://christophe1997.github.io/posts/2018/some-ubuntu-install-problem/</link>
       <pubDate>Sat, 28 Apr 2018 21:11:36 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/some-ubuntu-install-problem/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/some-ubuntu-install-problem/</guid>
       <description>One day ago, I started upgrading my Ubuntu 16.04 to 18.04, after I see the update from website. The most diffrience betwen 16.04 and 18.04 is that the 18.04 use GNOME desktop rather than Unity. I had heard that the GNOME desktop is better than Unity, so I tried 18.04 for the new desktop. Unfortunately, after I upgraded my OS, I found that the GNOME desktop wasjust so uncomfortable. And after one hour I gone back to 16.</description>
     </item>
     
     <item>
       <title>图算法</title>
-      <link>https://christophe1997.github.io/posts/graph-algorithms/</link>
+      <link>https://christophe1997.github.io/posts/2018/graph-algorithms/</link>
       <pubDate>Fri, 20 Apr 2018 19:21:30 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/graph-algorithms/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/graph-algorithms/</guid>
       <description>采用哪种数据结构来表示图, 主要考虑以下两个方面:
  必须为可能在应用中碰到的各种类型的图预留出足够的空间, 以及 Graph的实例方法一定要高效.  常见的表示方法有以下几种:
  邻接矩阵, 对于有N个顶点的图而言, 邻接矩阵需要$ N^2 $的空间. 边的数组, 通过定义边来定义图, 这种方法在寻找相邻的点时需要遍历整个数组. 邻接表数组, 使用一个顶点为索引的列表数组, 其中每个元素都是和该顶点相邻的顶点列表. 这种结构能够满足上述的两个条件.  常见实现的性能比较(V表示结点数, E表示边数):
@@ -275,10 +275,10 @@ public class KeyIndexedCount { public static void sort(char[] chr, int R) { int[
     
     <item>
       <title>查找算法</title>
-      <link>https://christophe1997.github.io/posts/search-algorithms/</link>
+      <link>https://christophe1997.github.io/posts/2018/search-algorithms/</link>
       <pubDate>Thu, 05 Apr 2018 15:21:41 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/search-algorithms/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/search-algorithms/</guid>
       <description>符号表是一种存储键值对的数据结构, 支持插入和查找操作. 要确定一个给定的键是否存在于符号表中, 首先要建立对象等价性的概念. 为了保证一致性, 最好选择不 可变的数据类型作为键. 成本模型: 统计比较的次数, 在内循环不进行比较的情况下, 转为统计数组的访问次数.
 二叉查找树 每个结点的键都大于其左子树的任意结点的键而小于右子树的任一结点的键. 一棵二叉查找树代表了一组键(及其相应的值)的集合, 同一个集合可以用多棵不同的二叉树 表示, 如果将所有键都投影到一条直线上, 则可以保证得到一个有序的键列.
 查找的惯用做法是: 如果含有该键的结点存在于表中, 则返回相应的值或者返回null. 我们将采用Java 8的Optional类型使得查找的结果总是返回Optional, 将 显示的调用交给使用者.
@@ -288,10 +288,10 @@ public class BST&amp;lt;Key extends Comparable&amp;lt;Key&amp;gt;, Value&amp;gt;
     
     <item>
       <title>优先队列</title>
-      <link>https://christophe1997.github.io/posts/priority-queue/</link>
+      <link>https://christophe1997.github.io/posts/2018/priority-queue/</link>
       <pubDate>Wed, 04 Apr 2018 16:18:50 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/priority-queue/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/priority-queue/</guid>
       <description>优先队列 当一颗二叉树的每个节点都大于等于它的两个子结点时, 它被称为堆有序, 于是从任一结点向上都能够得到一列非递减的元素. 二叉堆(以下简称堆)是一组能够用堆有序 的完全二叉树排序的元素, 并在数组中按照层级存储. 在一个堆中, 位置k的节点的父结点的位置为$ \lfloor k/2 \rfloor $, 而它的两个子节点的位置是2k和 2k+1.
 对于一个含有N个元素的堆, 插入元素操作只需不超过lgN+1次比较, 删除最大元素的操作不超过2lgN次比较.
 public class MaxPQ&amp;lt;Key extends Comparable&amp;lt;Key&amp;gt;&amp;gt; { private Key[] pq; private int N = 0; @SuppressWarnings(&amp;#34;unchecked&amp;#34;) private Key[] cast(Object obj) { return (Key[]) obj; } private boolean less(int i, int j) { return pq[i].compareTo(pq[j]) &amp;lt; 0; } private void exch(int i, int j) { Key t = pq[i]; pq[i] = pq[j]; pq[j] = t; } private void swim(int k) { while (k &amp;gt; 1 &amp;amp;&amp;amp; less(k / 2, k)) { exch(k, k / 2); k = k / 2; } } private void sink(int k) { while (2 * k &amp;lt;= N) { int j = 2 * k; if (j &amp;lt; N &amp;amp;&amp;amp; less(j, j + 1)) j++; if (!</description>
@@ -299,10 +299,10 @@ public class MaxPQ&amp;lt;Key extends Comparable&amp;lt;Key&amp;gt;&amp;gt; { pr
     
     <item>
       <title>排序算法</title>
-      <link>https://christophe1997.github.io/posts/sorting-algorithms/</link>
+      <link>https://christophe1997.github.io/posts/2018/sorting-algorithms/</link>
       <pubDate>Fri, 30 Mar 2018 12:07:09 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/sorting-algorithms/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/sorting-algorithms/</guid>
       <description>排序算法的目标就是将所有元素的主键按照某种方式排列. 成本模型: 计算比较和交换的次数, 对于不交换元素的算法, 计算访问数组的次数. 排序算法的额外内存开销 和运行时间是同等重要的, 排序算法可以分为原地排序算法以及需要额外内存空间来存储另一份数组副本的其他排序算法.
 我们使用的算法模板如下
 public interface Sort { static void sort(Comparable[] a) { } static boolean less(Comparable v, Comparable w) { return v.compareTo(w) &amp;lt; 0; } static void exch(Comparable[] a, int i, int j) { Comparable t = a[i]; a[i] = a[j]; a[j] = t; } static void show(Comparable[] a) { for (Comparable x : a) { StdOut.print(x + &amp;#34; &amp;#34;); StdOut.println(); } } static boolean isSorted(Comparable[] a) { for (int i = 1; i &amp;lt; a.</description>
@@ -310,10 +310,10 @@ public interface Sort { static void sort(Comparable[] a) { } static boolean less
     
     <item>
       <title>union-find算法</title>
-      <link>https://christophe1997.github.io/posts/union-find-algorithm/</link>
+      <link>https://christophe1997.github.io/posts/2018/union-find-algorithm/</link>
       <pubDate>Wed, 14 Mar 2018 22:54:16 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/union-find-algorithm/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/union-find-algorithm/</guid>
       <description>union-find算法是一个解决动态连通性的经典算法, 具有广泛性的应用. 简单起见, 我们将对象称为触点, 将整数对称为连接, 将等价类称为连通分量, 并用0 到N-1的整数来表示N个触点.
 API public class UF { UF(int N) // 以整数标识初始化N个触点  void union(int p, int q) // 在p和q之间添加一条连接  int find(int p) //p所在分量的标识符  boolean connected(int p, int q) // p和q之间是否存在于同一个分量中  int count() // 连通分量的数量 } 成本模型: 以数组的访问次数作为成本模型, 无论读写.
 算法的关键在于find和union的设计上.
@@ -322,10 +322,10 @@ quick-find算法 //quick-find算法 public int find(int p) { return id[p]; } pub
     
     <item>
       <title>Git Cheat Sheet</title>
-      <link>https://christophe1997.github.io/posts/git-cheat-sheet/</link>
+      <link>https://christophe1997.github.io/posts/2018/git-cheat-sheet/</link>
       <pubDate>Sun, 11 Mar 2018 13:07:40 +0000</pubDate>
       
-      <guid>https://christophe1997.github.io/posts/git-cheat-sheet/</guid>
+      <guid>https://christophe1997.github.io/posts/2018/git-cheat-sheet/</guid>
       <description>本地操作 状态检览 $ git status -s XY PATH1 -&amp;gt; PATH2 PATH2只有在PATH1关联到不同的路径时才会显示(例如, 文件重命名).
 XY是两个状态码, 在合并冲突的时候, X和Y分别表示合并双方的修改状态; 而在一般情况下X表示暂存区域(index)的状态, Y表示工作目录的状态(work tree):
  &#39; &#39; = unmodified M = modified A = added D = deleted R = renamed C = copied U = updated but unmerged  未被追踪(untracked)的文件, XY = ??; 默认不显示忽略的文件(ignored), 除非使用--ignore选项, 此时XY = !!.
