@@ -5,8 +5,6 @@
     <link>https://christophe1997.github.io/tags/system/</link>
     <description>Recent content in System on CastOff</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>&amp;copy;Christophe</copyright>
     <lastBuildDate>Fri, 03 Aug 2018 13:10:58 +0000</lastBuildDate><atom:link href="https://christophe1997.github.io/tags/system/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>进程</title>
@@ -14,7 +12,8 @@
       <pubDate>Fri, 03 Aug 2018 13:10:58 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/process/</guid>
-      <description>The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system: create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process. The first thing that the OS must</description>
+      <description>The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system:
+ create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process.  The first thing that the OS must do to run a program is to load its code and any static data into memory, into the address space of the process.</description>
     </item>
     
     <item>

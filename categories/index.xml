@@ -5,8 +5,6 @@
     <link>https://christophe1997.github.io/categories/</link>
     <description>Recent content in Categories on CastOff</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>&amp;copy;Christophe</copyright>
     <lastBuildDate>Fri, 19 Jun 2020 21:39:35 +0800</lastBuildDate><atom:link href="https://christophe1997.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Optimization</title>
@@ -14,15 +12,6 @@
       <pubDate>Fri, 19 Jun 2020 21:39:35 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/categories/optimization/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Notes</title>
-      <link>https://christophe1997.github.io/categories/notes/</link>
-      <pubDate>Fri, 05 Jun 2020 20:27:43 +0800</pubDate>
-      
-      <guid>https://christophe1997.github.io/categories/notes/</guid>
       <description></description>
     </item>
     
@@ -50,6 +39,15 @@
       <pubDate>Thu, 27 Feb 2020 21:17:41 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/categories/data-structure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Notes</title>
+      <link>https://christophe1997.github.io/categories/notes/</link>
+      <pubDate>Tue, 25 Feb 2020 11:50:04 +0800</pubDate>
+      
+      <guid>https://christophe1997.github.io/categories/notes/</guid>
       <description></description>
     </item>
     

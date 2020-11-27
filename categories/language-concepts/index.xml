@@ -5,8 +5,6 @@
     <link>https://christophe1997.github.io/categories/language-concepts/</link>
     <description>Recent content in Language concepts on CastOff</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>&amp;copy;Christophe</copyright>
     <lastBuildDate>Sat, 29 Feb 2020 21:40:07 +0800</lastBuildDate><atom:link href="https://christophe1997.github.io/categories/language-concepts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Continuation Passing Style and Tail Recursion</title>
@@ -14,7 +12,10 @@
       <pubDate>Sat, 29 Feb 2020 21:40:07 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/cps/</guid>
-      <description>之前在&amp;quot;Essentials of Programming Languages&amp;quot;中学习过CPS(Continuation Passing Style), 而笔记在blog改版后被</description>
+      <description>之前在&amp;quot;Essentials of Programming Languages&amp;quot;中学习过CPS(Continuation Passing Style), 而笔记在blog改版后被丢弃, 故在这篇文章中重新详细的探讨下CPS以及尾递归, 且当是温故而知新.
+Continuation 在理解什么是&amp;quot;Continuation Passing Style&amp;quot;之前, 我们首先需要定义Continuation(惭愧的是我都不知道中文叫啥, 查了下好像是&amp;quot;续延&amp;quot;). Continuation是计算机程序控制状态的抽象表示, 换言之, 其就是一种表示程序执行中间某一计算步骤的控制上下文的数据结构, 即表示某一计算的未来. 一个形象的例子是阶乘函数:
+let rec fact n = if n = 0 then 1 else n * (fact (n - 1)) 当我们计算(fact 4)时, 其执行过程为(用lisp的形式是因为更加形象):
+(fact 4) =&amp;gt; (* 4 (fact 3)) =&amp;gt; (* 4 (* 3 (fact 2))) =&amp;gt; (* 4 (* 3 (* 2 (fact 1)))) =&amp;gt; (* 4 (* 3 (* 2 (* 1 (fact 0))))) =&amp;gt; (* 4 (* 3 (* 2 (* 1 1)))) =&amp;gt; (* 4 (* 3 (* 2 1))) =&amp;gt; (* 4 (* 3 2)) =&amp;gt; (* 4 6) =&amp;gt; 24 这过程中, (* 4 #)就是一个continuation, 是(fact 3)的控制上下文, 等待着(fact 3)的计算结果传入我们的&amp;quot;#&amp;quot;, (* 4 (* 3 #))也是一个continuation.</description>
     </item>
     
     <item>
@@ -23,7 +24,8 @@
       <pubDate>Fri, 13 Dec 2019 19:47:37 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/value-restriction/</guid>
-      <description>Value Restriction是什么？ Value restriction是用于控制类型推断能否对值声明进行多态泛化的规则（MLton原文：“The value restriction is a rule</description>
+      <description>Value Restriction是什么？ Value restriction是用于控制类型推断能否对值声明进行多态泛化的规则（MLton原文：“The value restriction is a rule that governs when type inference is allowed to polymorphically generalize a value declaration.”）。常出现在ML系的语言中，如SML，OCaml，F#中，其实value restriction产生的本质原因是为了保证类型系统在结合参数多态与命令式特性（imperative feature，如ref）时候的可靠性（soundness）。一个典型的例子就是：
+// 如果没有value restriction let x = ref None // &amp;#39;a option ref let y: int option ref = x // type checked let z: string option ref = x // type checked let () = y := Some 2 // type checked let v: string = !</description>
     </item>
     
     <item>
@@ -32,7 +34,12 @@
       <pubDate>Sat, 06 Apr 2019 20:26:43 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/monad-and-transformers/</guid>
-      <description>Monad是Haskell中讨论最多的结构, 需要更详细的探讨其相关内容, 即使它对于Haskell而言不是必须的:(. 参考: All about Monads Monad Support 除了之前</description>
+      <description>Monad是Haskell中讨论最多的结构, 需要更详细的探讨其相关内容, 即使它对于Haskell而言不是必须的:(.
+参考: All about Monads
+Monad Support 除了之前介绍过的一些基本函数, Haskell本身定义了一些辅助函数配合Monad一起使用:
+  sequence
+-- 任意一个fail会导致整个fail sequence :: Monad m =&amp;gt; [m a] -&amp;gt; m [a] sequence = foldr mcons (return []) where mcons p q = p &amp;gt;&amp;gt;= \x -&amp;gt; q &amp;gt;&amp;gt;= \y -&amp;gt; return (x : y)   sequence_和sequence类似但其不返回值, 在只关心序列的副作用时其非常有用.
+sequence_ :: Monad m =&amp;gt; [m a] -&amp;gt; m () sequence_ = flodr (&amp;gt;&amp;gt;) (return ())   mapM其由sequence和map定义</description>
     </item>
     
     <item>
@@ -41,7 +48,9 @@
       <pubDate>Sun, 24 Mar 2019 14:32:05 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/haskell-algebra/</guid>
-      <description>Semigroup 半群即一个集合以及在之上定义的一个满足结合律的二元运算, 在Haskell中定义为(部分): 1 2 3 class Semigroup where (&amp;lt;&amp;gt;) :: a -&amp;gt; a -&amp;gt; a {-# MINIMAL (&amp;lt;&amp;gt;) #-} Laws 1 2 -- associativity a &amp;lt;&amp;gt;</description>
+      <description>Semigroup 半群即一个集合以及在之上定义的一个满足结合律的二元运算, 在Haskell中定义为(部分):
+class Semigroup where (&amp;lt;&amp;gt;) :: a -&amp;gt; a -&amp;gt; a {-# MINIMAL (&amp;lt;&amp;gt;) #-} Laws -- associativity a &amp;lt;&amp;gt; (b &amp;lt;&amp;gt; c) = (a &amp;lt;&amp;gt; b) &amp;lt;&amp;gt; c Monoid &amp;ldquo;A monoid is a binary associative operation with an identity&amp;rdquo;, 在Haskell中定义为(部分):
+class Monoid m where mempty :: m mappend :: m -&amp;gt; m -&amp;gt; m mconcat :: [m] -&amp;gt; m mconcat = foldr mappend mempty {-# MINIMAL mempty #-} Laws -- left identity mappend menpty x = x -- right identity mappend x mempty = x -- associativity mappend x (mappend y z) = mappend (mappend x y) z 这和数学上带幺半群所满足的性质是一致的, 带幺半群即一个包含单位元的半群.</description>
     </item>
     
   </channel>

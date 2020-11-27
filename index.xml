@@ -1,37 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>About on CastOff</title>
+    <title>CastOff</title>
     <link>https://christophe1997.github.io/</link>
-    <description>Recent content in About on CastOff</description>
+    <description>Recent content on CastOff</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>&amp;copy;Christophe</copyright><atom:link href="https://christophe1997.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Jun 2020 21:39:35 +0800</lastBuildDate><atom:link href="https://christophe1997.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Memoization in Haskell</title>
       <link>https://christophe1997.github.io/posts/memoization-in-haskell/</link>
       <pubDate>Fri, 19 Jun 2020 21:39:35 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/memoization-in-haskell/</guid>
-      <description>Memoization是动态规划(Dynamic Programming)中自顶向下处理问题采用的策略, 其基本想法是通过将子问题的解保存起来避</description>
-    </item>
-    
-    <item>
-      <title>Effective Java 2</title>
-      <link>https://christophe1997.github.io/posts/effective-java-2/</link>
-      <pubDate>Fri, 05 Jun 2020 20:27:43 +0800</pubDate>
-      
-      <guid>https://christophe1997.github.io/posts/effective-java-2/</guid>
-      <description>&amp;ldquo;effective Java&amp;quot;的第二部分总结, 内容主要关于Object的可重写的方法(equals, toString, hashCode, clone, finalize)以及类和接口的使用。 Ob</description>
-    </item>
-    
-    <item>
-      <title>Effective Java 1</title>
-      <link>https://christophe1997.github.io/posts/effective-java-1/</link>
-      <pubDate>Thu, 04 Jun 2020 20:53:58 +0800</pubDate>
-      
-      <guid>https://christophe1997.github.io/posts/effective-java-1/</guid>
-      <description>&amp;ldquo;Effective Java&amp;quot;的第一部分(对象的创建与销毁)总结. 用static的方法(静态工厂方法)代替构造函数创建对象 优点: 可以有更合理的方法名</description>
+      <description>Memoization是动态规划(Dynamic Programming)中自顶向下处理问题采用的策略, 其基本想法是通过将子问题的解保存起来避免重复计算来优化算法. 这个概念本身很简单, 在其他有明显mutable语义的语言中, 实现起来也非常简单. 但是在Haskell中问题就变的复杂了不少, 对于一个原始的函数f :: a -&amp;gt; b你如果要用ref, 比如说IORef, 你必须要把它放到IO monad中, 你的memoize函数就变成了... -&amp;gt; IO (a -&amp;gt; b). 我们希望是能够找到一个memoize :: ... -&amp;gt; (a -&amp;gt; b), 这样memoize之后得到的和原函数类型是一致的. 为了讨论的方便, 我们主要关注两个例子的memoization, 一个是经典的Fibonacci数列:
+fib :: Int -&amp;gt; Integer fib 0 = 0 fib 1 = 1 fib n = fib (n - 2) + fib (n - 1) 另一个则是动态规划(自底向上)中典型的最小编辑距离的问题, 所谓的最小编辑距离就是一个字符串通过增加, 删除, 替换的操作得到另一个字符串所需要的操作次数:
+minEditDist :: String -&amp;gt; String -&amp;gt; Int minEditDist [] [] = 0 minEditDist s [] = length s minEditDist [] s = length s minEditDist (x:xs) (y:ys) | x == y = minEditDist xs ys | otherwise = 1 + minimum [minEditDist xs ys, minEditDist xs (y:ys), minEditDist (x:xs) ys] Memoizing with specific problem 首先来看fib的问题, wiki给出了一个非常elegant的解(就fib本身而言, 还有更经典的解, fib = (fibs !</description>
     </item>
     
     <item>
@@ -40,7 +23,12 @@
       <pubDate>Wed, 06 May 2020 20:06:38 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/surpasser-count/</guid>
-      <description>Pearl 2: 给定一个长度大于1的列表, 计算其元素的最大surpasser count, 要求算法复杂度$O(n log n)$. Type: msc: Ord a =&amp;gt; [a] -&amp;gt; Int &amp;ldquo;Pearls of functional algorithm design&amp;quot;</description>
+      <description>Pearl 2: 给定一个长度大于1的列表, 计算其元素的最大surpasser count, 要求算法复杂度$O(n log n)$. Type: msc: Ord a =&amp;gt; [a] -&amp;gt; Int
+&amp;ldquo;Pearls of functional algorithm design&amp;quot;的第二章, 我们先来看surpasser的定义
+Definition surpasser: 称列表中$X[j]$是$X[i]$的surpasser, 如果$X[i] &amp;lt; X[j]$且$i &amp;lt; j$.
+因此一个元素的surpasser count就是其surpasser的数目.
+同样, 一个naive的实现很容易:
+msc :: Ord a =&amp;gt; [a] -&amp;gt; Int msc xs = maximum [scount z zs | z:zs &amp;lt;- tails xs] scount :: Ord a =&amp;gt; a -&amp;gt; [a] -&amp;gt; Int scount x xs = length $ filter (&amp;gt; x) xs 同时也很容易看到, 这个实现的时间复杂度是$O(n^2)$, 不符合要求的$O(n log n)$.</description>
     </item>
     
     <item>
@@ -49,7 +37,14 @@
       <pubDate>Tue, 05 May 2020 21:01:11 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/the-smallest-free-number/</guid>
-      <description>Pearl 1: 给定一个自然数的有限集X, 计算不属于X的最小自然数. X表示为不包含重复元素的无序列表. 时间复杂度要求$O(n)$. Type: minfree :: [Int] -&amp;gt; Int(也可</description>
+      <description>Pearl 1: 给定一个自然数的有限集X, 计算不属于X的最小自然数. X表示为不包含重复元素的无序列表. 时间复杂度要求$O(n)$.
+Type: minfree :: [Int] -&amp;gt; Int(也可以额外的定义自然数类型, 不过这不是我们的重点)
+&amp;ldquo;Pearls of Functional Algorithm Design&amp;quot;的第一章, 其描述了一个分治的算法和一个基于array的算法, 这里按个人的思路讲解一下基于分治的算法, 基于array的算法具体可以查阅原文. 首先拿到这个问题, 我觉得最直接的想法就是
+Base Solution: minfree xs = head $ [0..] \\ xs 
+然而这和要求的线性时间复杂度不符. 第二个想法就是设计一个fold的函数遍历一遍列表, 这样时间复杂度符合要求. 但是越来越多的边界条件让我意识到思路不对. 看了原文才发现忽略了解题的一个重要条件.
+Fact: [0..n]中的所有自然数不可能都在X(xs)中, 其中n = length xs.
+这也很容易证明, 因为$ n + 1 = length\ [0..n] &amp;gt; n $, 因此不属于集合X的最小自然数就是[0..n]中不属于X的最小自然数. 至此,该问题很容易解决, 只需要一个marked的array来表示[0,,n]中的自然数是否在X中即可. 下面描述基于分治的算法, 首先给出一个基本的结论.
+Theorem: (as ++ bs) \\ (us ++ vs) == (as \\ us) ++ (bs \\ vs), 如果as \\ vs == as &amp;amp;&amp;amp; bs \\ us == bs.</description>
     </item>
     
     <item>
@@ -58,7 +53,10 @@
       <pubDate>Sat, 29 Feb 2020 21:40:07 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/cps/</guid>
-      <description>之前在&amp;quot;Essentials of Programming Languages&amp;quot;中学习过CPS(Continuation Passing Style), 而笔记在blog改版后被</description>
+      <description>之前在&amp;quot;Essentials of Programming Languages&amp;quot;中学习过CPS(Continuation Passing Style), 而笔记在blog改版后被丢弃, 故在这篇文章中重新详细的探讨下CPS以及尾递归, 且当是温故而知新.
+Continuation 在理解什么是&amp;quot;Continuation Passing Style&amp;quot;之前, 我们首先需要定义Continuation(惭愧的是我都不知道中文叫啥, 查了下好像是&amp;quot;续延&amp;quot;). Continuation是计算机程序控制状态的抽象表示, 换言之, 其就是一种表示程序执行中间某一计算步骤的控制上下文的数据结构, 即表示某一计算的未来. 一个形象的例子是阶乘函数:
+let rec fact n = if n = 0 then 1 else n * (fact (n - 1)) 当我们计算(fact 4)时, 其执行过程为(用lisp的形式是因为更加形象):
+(fact 4) =&amp;gt; (* 4 (fact 3)) =&amp;gt; (* 4 (* 3 (fact 2))) =&amp;gt; (* 4 (* 3 (* 2 (fact 1)))) =&amp;gt; (* 4 (* 3 (* 2 (* 1 (fact 0))))) =&amp;gt; (* 4 (* 3 (* 2 (* 1 1)))) =&amp;gt; (* 4 (* 3 (* 2 1))) =&amp;gt; (* 4 (* 3 2)) =&amp;gt; (* 4 6) =&amp;gt; 24 这过程中, (* 4 #)就是一个continuation, 是(fact 3)的控制上下文, 等待着(fact 3)的计算结果传入我们的&amp;quot;#&amp;quot;, (* 4 (* 3 #))也是一个continuation.</description>
     </item>
     
     <item>
@@ -67,7 +65,9 @@
       <pubDate>Thu, 27 Feb 2020 21:17:41 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/zipper/</guid>
-      <description>近来想于函数式编程中寻找类似与双向链表的数据结构, 结果找到了Zipper. Zipper中文为拉链, 泛指一类常在函数式编程中使用的聚合数据结构</description>
+      <description>近来想于函数式编程中寻找类似与双向链表的数据结构, 结果找到了Zipper. Zipper中文为拉链, 泛指一类常在函数式编程中使用的聚合数据结构, 其加强了原有的数据结构, 使得能够遍历或更新原有数据结构的任意部分. zipper的关键思想是将目前需要处理的部分和不需要处理的部分分开, 同时保存目前不需要的部分, 也可以将其形象的理解为光标. 本文首先介绍了如何在list的基础上构建zipper, 随后将其扩展到二叉树上.
+list的例子 定义zipper list或者说是单向链表, 是函数式编程中最负盛名的结构, 其既简单又实用. 当我们需要修改list中的一部分时, 例如将[1 2 3 4 5]中的[3 4 5]替换为[5 6], list就带来了问题. 这时候一个简单的做法是:
+let rec changeTailOfList l1 idx l2 = match l1 with | [] -&amp;gt; l2 // 忽略了idx大于0的情况  | x::xs -&amp;gt; if idx = 0 then l2 else x :: (changeTailOfList xs (idx - 1) l2) changeTailOfList [1; 2; 3; 4; 5] 2 [5; 6] // [1; 2; 5; 6] 看起来好像挺不错, 而这时候如果我们想要修改刚刚添加的内容, 例如在上面的例子中, 我们把5替换为[7 8], 这时候同样可以采取和changeTailOfList一样的做法, 从头开始遍历列表, 在目标位置进行更改.</description>
     </item>
     
     <item>
@@ -76,7 +76,12 @@
       <pubDate>Tue, 25 Feb 2020 11:50:04 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/some-bitwise-tricks/</guid>
-      <description>Bitwise tricks 近来翻到一本&amp;quot;Hackers Delight&amp;quot;的书, 其主要介绍基于二进制运算的算法. 初读来大感震撼, 其结果之巧妙,过程</description>
+      <description>Bitwise tricks 近来翻到一本&amp;quot;Hackers Delight&amp;quot;的书, 其主要介绍基于二进制运算的算法. 初读来大感震撼, 其结果之巧妙,过程之精简, 于仅仅是了解计算机数是用补码所表示, 并未深入了解过二进制运算的人而言不可谓不精美. 正如Dijkstra所言, 计算机程序是集逻辑美感与机械实现的矛盾体. 本文姑且将其中的一些皮毛摘录如下, 以便日后之使用, 目前倒是难以得到应用.
+  使最右位的1变成0
+// 01011000 -&amp;gt; 01010000 // if no one then return 0 x &amp;amp; (x - 1) 上式也可以用来判断一个无符号的整数是否是$ 2^n $的形式.
+  使最右位的0变成1
+// 10100111 -&amp;gt; 10101111 // if no zero then return -1 x | (x + 1)   使尾部的1变成0
+// 10100111 -&amp;gt; 10100000 // if no trailing 1s then identity x &amp;amp; (x + 1) 上式也可以用来判断一个无符号的整数是否是$ 2^n - 1 $的形式.</description>
     </item>
     
     <item>
@@ -85,7 +90,8 @@
       <pubDate>Fri, 13 Dec 2019 19:47:37 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/value-restriction/</guid>
-      <description>Value Restriction是什么？ Value restriction是用于控制类型推断能否对值声明进行多态泛化的规则（MLton原文：“The value restriction is a rule</description>
+      <description>Value Restriction是什么？ Value restriction是用于控制类型推断能否对值声明进行多态泛化的规则（MLton原文：“The value restriction is a rule that governs when type inference is allowed to polymorphically generalize a value declaration.”）。常出现在ML系的语言中，如SML，OCaml，F#中，其实value restriction产生的本质原因是为了保证类型系统在结合参数多态与命令式特性（imperative feature，如ref）时候的可靠性（soundness）。一个典型的例子就是：
+// 如果没有value restriction let x = ref None // &amp;#39;a option ref let y: int option ref = x // type checked let z: string option ref = x // type checked let () = y := Some 2 // type checked let v: string = !</description>
     </item>
     
     <item>
@@ -94,7 +100,11 @@
       <pubDate>Thu, 05 Dec 2019 20:29:00 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/%E4%BD%BF%E7%94%A8hugo%E7%94%9F%E6%88%90%E5%8D%9A%E5%AE%A2/</guid>
-      <description>之前一直有使用Hexo来生成静态博客，如今将博客迁移到了Hugo下。两种工具总体而言各有优势，个人此次转移到hugo的主要原因大概是希望能够</description>
+      <description>之前一直有使用Hexo来生成静态博客，如今将博客迁移到了Hugo下。两种工具总体而言各有优势，个人此次转移到hugo的主要原因大概是希望能够重拾写博客的习惯，本文主要介绍了使用Hugo的大致流程。首先给出个人博客的文件结构：
+Root # blog根目录 | +-- archetypes +-- content |-- posts # 博客目录 |-- _index.md # 主页 +-- data +-- layouts +-- ox-hugo # org文件位置 |-- messy.org # category为杂项的org文件 +-- public # submodule +-- resource +-- static +-- themes |-- xxx # 主题文件夹, submodule +-- .git +-- config.toml +-- .dir-locals.el # 自动将org文件转为markdown配置文件 +-- .gitmodules 其中只有 ox-hugo 为自定义文件夹, .dir-locals 为ox-hugo自动转换的配置文件，其他都是自动生成的。接下来个人就hugo生成博客关键部分展开介绍下。
+主题的选择 首先搭建博客面对的问题就是主题，如果你非常擅长网页设计可以自己DIY一款主题。大多数还是会选择已有的主题，我们在选择主题时，除了最重要的UI外，还应当考虑以下的因素：
+ 是否支持写作的基本功能，如公式的显示（通常是MathJax）； 是否支持博客网站的基本功能，如分类，标签，分享，评论等。  尤其是评论这块，个人之前用的disqus, 但好像在国内的访问存在一些问题，目前比较推荐的方案是使用git issues来实现评论功能，如gitment。像我这样的懒人当然是选择不支持评论功能啦：）
+博客的托管 比较推荐的方案是将整个blog作为一个git项目，并且将 public 和 themes/xxx 作为该项目的submodule。其中 public 对应于你的要作为Github pages的 git项目地址，通常建议是 &amp;lt;username&amp;gt;.</description>
     </item>
     
     <item>
@@ -103,7 +113,12 @@
       <pubDate>Sat, 06 Apr 2019 20:26:43 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/monad-and-transformers/</guid>
-      <description>Monad是Haskell中讨论最多的结构, 需要更详细的探讨其相关内容, 即使它对于Haskell而言不是必须的:(. 参考: All about Monads Monad Support 除了之前</description>
+      <description>Monad是Haskell中讨论最多的结构, 需要更详细的探讨其相关内容, 即使它对于Haskell而言不是必须的:(.
+参考: All about Monads
+Monad Support 除了之前介绍过的一些基本函数, Haskell本身定义了一些辅助函数配合Monad一起使用:
+  sequence
+-- 任意一个fail会导致整个fail sequence :: Monad m =&amp;gt; [m a] -&amp;gt; m [a] sequence = foldr mcons (return []) where mcons p q = p &amp;gt;&amp;gt;= \x -&amp;gt; q &amp;gt;&amp;gt;= \y -&amp;gt; return (x : y)   sequence_和sequence类似但其不返回值, 在只关心序列的副作用时其非常有用.
+sequence_ :: Monad m =&amp;gt; [m a] -&amp;gt; m () sequence_ = flodr (&amp;gt;&amp;gt;) (return ())   mapM其由sequence和map定义</description>
     </item>
     
     <item>
@@ -112,7 +127,9 @@
       <pubDate>Sun, 24 Mar 2019 14:32:05 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/haskell-algebra/</guid>
-      <description>Semigroup 半群即一个集合以及在之上定义的一个满足结合律的二元运算, 在Haskell中定义为(部分): 1 2 3 class Semigroup where (&amp;lt;&amp;gt;) :: a -&amp;gt; a -&amp;gt; a {-# MINIMAL (&amp;lt;&amp;gt;) #-} Laws 1 2 -- associativity a &amp;lt;&amp;gt;</description>
+      <description>Semigroup 半群即一个集合以及在之上定义的一个满足结合律的二元运算, 在Haskell中定义为(部分):
+class Semigroup where (&amp;lt;&amp;gt;) :: a -&amp;gt; a -&amp;gt; a {-# MINIMAL (&amp;lt;&amp;gt;) #-} Laws -- associativity a &amp;lt;&amp;gt; (b &amp;lt;&amp;gt; c) = (a &amp;lt;&amp;gt; b) &amp;lt;&amp;gt; c Monoid &amp;ldquo;A monoid is a binary associative operation with an identity&amp;rdquo;, 在Haskell中定义为(部分):
+class Monoid m where mempty :: m mappend :: m -&amp;gt; m -&amp;gt; m mconcat :: [m] -&amp;gt; m mconcat = foldr mappend mempty {-# MINIMAL mempty #-} Laws -- left identity mappend menpty x = x -- right identity mappend x mempty = x -- associativity mappend x (mappend y z) = mappend (mappend x y) z 这和数学上带幺半群所满足的性质是一致的, 带幺半群即一个包含单位元的半群.</description>
     </item>
     
     <item>
@@ -121,7 +138,12 @@
       <pubDate>Mon, 04 Mar 2019 17:12:00 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/%E6%9D%82%E8%AE%B0/</guid>
-      <description>多态(polymorphic)最早从19世纪希腊语中引入, 其中poly代表很多(many), morph代表形式(form), 而-ic的后缀表</description>
+      <description>多态(polymorphic)最早从19世纪希腊语中引入, 其中poly代表很多(many), morph代表形式(form), 而-ic的后缀表示由&amp;hellip;制成(made of). 因此, 多态意味着&amp;quot;made of many form&amp;quot;, 即有许多形式构成. 因此单态(monomorphic)很容易猜到是&amp;quot;made of one form&amp;quot;. 2019.03.04
+  -ary的后缀表示属于或关于(of or pertaining to), 在讨论数学上的元数(arity)时, -ary是公共的后缀, 诸如nullary(零元), unary(一元), binary(二元)等. 2019.03.07
+  我发现gnome-terminal下C-;会映射成;,导致我在terminal的emacs中使用快捷键C-x C-;注释行失败.
+网上查阅后发现, 由于gnome-terminal没有C-;的转义序列(escape sequence), 而默认的将其识别为;. 2019.04.13
+  紧接3, 我发现在gnome-terminal下emacs无法使用C-;, 又懒的配置term. 于是就重新编译了带有GUI的emacs(./configure --with-gnutls=no --without-pop --with-x), 之后发现其默认会使用Anacnoda的lib, 一开始会报一些libxml2.so: undefined reference to `ucnv_close_58&#39;, 之后我将LD_LIBRARY_PATH设置为~/anaconda3/lib之后, 上述错误没有了, 但又报了新的错误libSM.so: undefined reference to `uuid_unparse_lower@UUID_1.0&#39;. 解决方法是不使用Anaconda的lib, 而使用系统的lib(export不包含~/anaconda/bin的PATH, 随后重新configure和make), 具体原因未查明. 2019.04.13
+  i3-wm的layout-restore的问题. i3-save-tree生成的json文件无法直接使用, 需要手工修改layout文件, 首先需要包含一个顶层的container, 随后每一个swallows都需要声明class和instance, i3-save-tree会生成class和instance信息, 当然也可以通过xprop获取.</description>
     </item>
     
     <item>
@@ -130,7 +152,13 @@
       <pubDate>Sat, 08 Dec 2018 16:48:49 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/object-lifetime-and-storage-management/</guid>
-      <description>在考虑标识符和绑定(bindings)的时候, 关键在于区分标识符和它们所引用的对象, 以及以下事件: 对象的创建 绑定的创建 所有使用绑定的情况, 诸</description>
+      <description>在考虑标识符和绑定(bindings)的时候, 关键在于区分标识符和它们所引用的对象, 以及以下事件:
+ 对象的创建 绑定的创建 所有使用绑定的情况, 诸如引用变量, 子程序, 类型等 停用和重用那些暂时没有用的绑定 绑定的析构(destruction) 对象的析构  绑定的生命周期指的是这个绑定从创建到析构的整个过程, 类似的可以定义对象的生命周期. 通常情况下, 一个对象的生命周期可能会大于对应的绑定的生命周期, 即当 标识符不再引用该对象时, 该对象依然存在(例如在子程序中传入某个对象的引用, 如C++中的&amp;amp;参数). 当然, 一个绑定的生命周期也有可能大于对应对象的生命周期, 虽然这通常被认为是一个BUG.
+对象的生命周期通常与以下内存分配(storage allocation)机制有关:
+ 静态(static)对象会在程序的整个运行过程中被分配一个绝对地址. 栈(stack)对象随着子程序的调用和返回而被创建以及按照LIFO的顺序析构. 堆(heap)对象可以在任何时候创建和析构, 其额外要求更加通用和昂贵的内存分配算法.  静态分配(static allocation) 静态分配最明显的例子就是全局对象, 当然全局对象不是唯一的例子. 构成程序机器语言翻译的指令也可以认为是静态分配的变量; 数字和字符串的常量当然也是静态分配 的; 另外很多编译器会产生一系列的表用于支持运行时的debug, 动态类型检查, 垃圾回收, 异常处理等, 这些表也都是静态分配的. 静态分配的对象通常希望它们的值 不在变化, 因此经常被分配在被保护的只读的内存中以方便在试图修改其值产生中断并抛出运行时错误.
+在很多语言中,一个具名常量通常要求有一个能够在编译期确定的初始值. 通常这些初始值都被限制在那些已知的常量以及内置的函数. 这些具名常量加上字面常量通常被 叫做表现常量(manifest constants)或者编译期常量(compile-time constants). 在某些语言中(C, Ada), 常量仅仅只是那些无法在elaboration time之后改变的值, 这些值可能依赖与其他在运行时才能确定的值. 这些elaboration-time的常量在作为递归函数的局部变量时必须要分配在栈上. C#显示提供了 声明两种常量的方法, 即const和readonly关键字.
+另外编译器通常对于子程序的某些值采用特定的分配策略:
+ 参数和返回值, 编译器通常会尽可能的将这些值存在寄存器中. 临时变量, 通常是那些复杂计算过程的中间值, 一个优秀的编译器也会将它们保存在寄存器内. bookkeeping information, 这些通常包含子程序的返回地址.</description>
     </item>
     
     <item>
@@ -139,7 +167,8 @@
       <pubDate>Fri, 03 Aug 2018 13:10:58 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/process/</guid>
-      <description>The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system: create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process. The first thing that the OS must</description>
+      <description>The abstraction provided by the OS of a running program is something we call a process. And there are some APIs must be included in any interface of an operating system:
+ create destroy wait miscellaneous control, most OS provide some kind of method to suspend a process and resume it. status, there are usually interfaces to get some status information about a process.  The first thing that the OS must do to run a program is to load its code and any static data into memory, into the address space of the process.</description>
     </item>
     
     <item>
@@ -216,7 +245,10 @@ the x86-64 machine code is much different with the corresponding C code, the pro
       <pubDate>Mon, 07 May 2018 21:18:59 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/string-algorithms/</guid>
-      <description>字符串处理算法具有很高的重要性以及应用领域的多样性. 以下讨论默认的是扩展的ASCII字符集(R=256). 字符串排序算法 对于许多排序应用而言</description>
+      <description>字符串处理算法具有很高的重要性以及应用领域的多样性. 以下讨论默认的是扩展的ASCII字符集(R=256).
+字符串排序算法 对于许多排序应用而言, 决定顺序的键都是字符串. 利用字符串的特殊性质来将其排序通常能够获得更高的效率.
+键索引计数法 我们首先介绍一种适用于小整数键的简单排序算法.
+public class KeyIndexedCount { public static void sort(char[] chr, int R) { int[] count = new int[R + 1]; char[] temp = new char[chr.length]; for (char aChr : chr) { count[aChr + 1]++; } for (int i = 0; i &amp;lt; R; i++) { count[i + 1] += count[i]; } for (char aChr : chr) { temp[count[aChr]] = aChr; count[aChr]++; } System.arraycopy(temp, 0, chr, 0, chr.</description>
     </item>
     
     <item>
@@ -225,7 +257,7 @@ the x86-64 machine code is much different with the corresponding C code, the pro
       <pubDate>Sat, 28 Apr 2018 21:11:36 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/some-ubuntu-install-problem/</guid>
-      <description>One day ago, I started upgrading my Ubuntu 16.04 to 18.04, after I see the update from website. The most diffrience betwen 16.04 and 18.04 is that the 18.04 use GNOME desktop rather than Unity. I had heard that the GNOME desktop is better than Unity, so I tried 18.04 for the new desktop. Unfortunately, after I upgraded my OS, I found that the GNOME desktop wasjust so uncomfortable. And</description>
+      <description>One day ago, I started upgrading my Ubuntu 16.04 to 18.04, after I see the update from website. The most diffrience betwen 16.04 and 18.04 is that the 18.04 use GNOME desktop rather than Unity. I had heard that the GNOME desktop is better than Unity, so I tried 18.04 for the new desktop. Unfortunately, after I upgraded my OS, I found that the GNOME desktop wasjust so uncomfortable. And after one hour I gone back to 16.</description>
     </item>
     
     <item>
@@ -234,7 +266,11 @@ the x86-64 machine code is much different with the corresponding C code, the pro
       <pubDate>Fri, 20 Apr 2018 19:21:30 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/graph-algorithms/</guid>
-      <description>采用哪种数据结构来表示图, 主要考虑以下两个方面: 必须为可能在应用中碰到的各种类型的图预留出足够的空间, 以及 Graph的实例方法一定要高效. 常</description>
+      <description>采用哪种数据结构来表示图, 主要考虑以下两个方面:
+ 必须为可能在应用中碰到的各种类型的图预留出足够的空间, 以及 Graph的实例方法一定要高效.  常见的表示方法有以下几种:
+ 邻接矩阵, 对于有N个顶点的图而言, 邻接矩阵需要$ N^2 $的空间. 边的数组, 通过定义边来定义图, 这种方法在寻找相邻的点时需要遍历整个数组. 邻接表数组, 使用一个顶点为索引的列表数组, 其中每个元素都是和该顶点相邻的顶点列表. 这种结构能够满足上述的两个条件.  常见实现的性能比较(V表示结点数, E表示边数):
+   数据结构 所需空间 添加边 检查顶点是否相邻 遍历所有相邻顶点     边的列表 E 1 E E   邻接矩阵 $ V^2 $ 1 1 V   邻接表 E+V 1 degree(V) degree(V)    非稠密图的标准表示是邻接表, 这种表示具有以下特性:
+ 使用的空间和V+E成正比, 添加一条边所需要的时间为常数, 以及 遍历顶点v的所有相邻顶点所需要的时间和v的度数成正比.  无向图 无向图只定义了顶点以及顶点之间的关系.</description>
     </item>
     
     <item>
@@ -243,7 +279,11 @@ the x86-64 machine code is much different with the corresponding C code, the pro
       <pubDate>Thu, 05 Apr 2018 15:21:41 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/search-algorithms/</guid>
-      <description>符号表是一种存储键值对的数据结构, 支持插入和查找操作. 要确定一个给定的键是否存在于符号表中, 首先要建立对象等价性的概念. 为了保证一致性, 最好</description>
+      <description>符号表是一种存储键值对的数据结构, 支持插入和查找操作. 要确定一个给定的键是否存在于符号表中, 首先要建立对象等价性的概念. 为了保证一致性, 最好选择不 可变的数据类型作为键. 成本模型: 统计比较的次数, 在内循环不进行比较的情况下, 转为统计数组的访问次数.
+二叉查找树 每个结点的键都大于其左子树的任意结点的键而小于右子树的任一结点的键. 一棵二叉查找树代表了一组键(及其相应的值)的集合, 同一个集合可以用多棵不同的二叉树 表示, 如果将所有键都投影到一条直线上, 则可以保证得到一个有序的键列.
+查找的惯用做法是: 如果含有该键的结点存在于表中, 则返回相应的值或者返回null. 我们将采用Java 8的Optional类型使得查找的结果总是返回Optional, 将 显示的调用交给使用者.
+使用二叉查找树的算法的运行时间取决于树的形状. 在最好的情况下, 一棵含有N个结点的树是完全平衡的, 每条空链接和根结点的距离都为~lgN; 而在最坏的情况下 树的高度为N. 当键的分布是随机的情况下, 二叉查找树一般具有较好的平衡性, 此时查找或者插入操作平均所需的次数为~2lnN(1.39lgN). 虽然二叉查找树的查找 成本比二分查找高约39%, 但插入操作是对数级别的.
+public class BST&amp;lt;Key extends Comparable&amp;lt;Key&amp;gt;, Value&amp;gt; { private Node root; private class Node { private Node left, right; private Key key; private Value val; private int N; Node(Key key, Value val, int N) { this.</description>
     </item>
     
     <item>
@@ -252,7 +292,9 @@ the x86-64 machine code is much different with the corresponding C code, the pro
       <pubDate>Wed, 04 Apr 2018 16:18:50 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/priority-queue/</guid>
-      <description>优先队列 当一颗二叉树的每个节点都大于等于它的两个子结点时, 它被称为堆有序, 于是从任一结点向上都能够得到一列非递减的元素. 二叉堆(以下简称堆)</description>
+      <description>优先队列 当一颗二叉树的每个节点都大于等于它的两个子结点时, 它被称为堆有序, 于是从任一结点向上都能够得到一列非递减的元素. 二叉堆(以下简称堆)是一组能够用堆有序 的完全二叉树排序的元素, 并在数组中按照层级存储. 在一个堆中, 位置k的节点的父结点的位置为$ \lfloor k/2 \rfloor $, 而它的两个子节点的位置是2k和 2k+1.
+对于一个含有N个元素的堆, 插入元素操作只需不超过lgN+1次比较, 删除最大元素的操作不超过2lgN次比较.
+public class MaxPQ&amp;lt;Key extends Comparable&amp;lt;Key&amp;gt;&amp;gt; { private Key[] pq; private int N = 0; @SuppressWarnings(&amp;#34;unchecked&amp;#34;) private Key[] cast(Object obj) { return (Key[]) obj; } private boolean less(int i, int j) { return pq[i].compareTo(pq[j]) &amp;lt; 0; } private void exch(int i, int j) { Key t = pq[i]; pq[i] = pq[j]; pq[j] = t; } private void swim(int k) { while (k &amp;gt; 1 &amp;amp;&amp;amp; less(k / 2, k)) { exch(k, k / 2); k = k / 2; } } private void sink(int k) { while (2 * k &amp;lt;= N) { int j = 2 * k; if (j &amp;lt; N &amp;amp;&amp;amp; less(j, j + 1)) j++; if (!</description>
     </item>
     
     <item>
@@ -261,7 +303,9 @@ the x86-64 machine code is much different with the corresponding C code, the pro
       <pubDate>Fri, 30 Mar 2018 12:07:09 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/sorting-algorithms/</guid>
-      <description>排序算法的目标就是将所有元素的主键按照某种方式排列. 成本模型: 计算比较和交换的次数, 对于不交换元素的算法, 计算访问数组的次数. 排序算法的额外</description>
+      <description>排序算法的目标就是将所有元素的主键按照某种方式排列. 成本模型: 计算比较和交换的次数, 对于不交换元素的算法, 计算访问数组的次数. 排序算法的额外内存开销 和运行时间是同等重要的, 排序算法可以分为原地排序算法以及需要额外内存空间来存储另一份数组副本的其他排序算法.
+我们使用的算法模板如下
+public interface Sort { static void sort(Comparable[] a) { } static boolean less(Comparable v, Comparable w) { return v.compareTo(w) &amp;lt; 0; } static void exch(Comparable[] a, int i, int j) { Comparable t = a[i]; a[i] = a[j]; a[j] = t; } static void show(Comparable[] a) { for (Comparable x : a) { StdOut.print(x + &amp;#34; &amp;#34;); StdOut.println(); } } static boolean isSorted(Comparable[] a) { for (int i = 1; i &amp;lt; a.</description>
     </item>
     
     <item>
@@ -270,7 +314,10 @@ the x86-64 machine code is much different with the corresponding C code, the pro
       <pubDate>Wed, 14 Mar 2018 22:54:16 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/union-find-algorithm/</guid>
-      <description>union-find算法是一个解决动态连通性的经典算法, 具有广泛性的应用. 简单起见, 我们将对象称为触点, 将整数对称为连接, 将等价类称为连通分</description>
+      <description>union-find算法是一个解决动态连通性的经典算法, 具有广泛性的应用. 简单起见, 我们将对象称为触点, 将整数对称为连接, 将等价类称为连通分量, 并用0 到N-1的整数来表示N个触点.
+API public class UF { UF(int N) // 以整数标识初始化N个触点  void union(int p, int q) // 在p和q之间添加一条连接  int find(int p) //p所在分量的标识符  boolean connected(int p, int q) // p和q之间是否存在于同一个分量中  int count() // 连通分量的数量 } 成本模型: 以数组的访问次数作为成本模型, 无论读写.
+算法的关键在于find和union的设计上.
+quick-find算法 //quick-find算法 public int find(int p) { return id[p]; } public void union(int p, int q) { int pID = find(p), qID = find(q); // 两次读操作  if (pID !</description>
     </item>
     
     <item>
@@ -279,7 +326,20 @@ the x86-64 machine code is much different with the corresponding C code, the pro
       <pubDate>Sun, 11 Mar 2018 13:07:40 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/git-cheat-sheet/</guid>
-      <description>本地操作 状态检览 1 2 $ git status -s XY PATH1 -&amp;gt; PATH2 PATH2只有在PATH1关联到不同的路径时才会显示(例如, 文件重命名). XY是两个状态码, 在合并冲突的</description>
+      <description>本地操作 状态检览 $ git status -s XY PATH1 -&amp;gt; PATH2 PATH2只有在PATH1关联到不同的路径时才会显示(例如, 文件重命名).
+XY是两个状态码, 在合并冲突的时候, X和Y分别表示合并双方的修改状态; 而在一般情况下X表示暂存区域(index)的状态, Y表示工作目录的状态(work tree):
+ &#39; &#39; = unmodified M = modified A = added D = deleted R = renamed C = copied U = updated but unmerged  未被追踪(untracked)的文件, XY = ??; 默认不显示忽略的文件(ignored), 除非使用--ignore选项, 此时XY = !!.
+查看已暂存和未暂存的修改 $ git diff 用来比较工作目录中当前文件和暂存区域快照之间的差异, 使用--staged选项查看已经暂存的将要添加到下次修改的内容
+提交更新 $ git commit 这种方式会启动shell的环境变量$EDDITOR所指定的软件, 一般是VIM或emacs, 或者使用git	config	--global	core.editor来指定编辑器, 使用-v选项将diff的内容追加到编辑器中, 使用-m &#39;${comment}&#39;选项来直接添加提交信息, 而不打开编辑器.</description>
+    </item>
+    
+    <item>
+      <title>Archive</title>
+      <link>https://christophe1997.github.io/archives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/archives/</guid>
+      <description>archives</description>
     </item>
     
   </channel>

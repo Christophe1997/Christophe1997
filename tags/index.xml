@@ -5,8 +5,6 @@
     <link>https://christophe1997.github.io/tags/</link>
     <description>Recent content in Tags on CastOff</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>&amp;copy;Christophe</copyright>
     <lastBuildDate>Fri, 19 Jun 2020 21:39:35 +0800</lastBuildDate><atom:link href="https://christophe1997.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DP</title>
@@ -32,15 +30,6 @@
       <pubDate>Fri, 19 Jun 2020 21:39:35 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/tags/memoization/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Java</title>
-      <link>https://christophe1997.github.io/tags/java/</link>
-      <pubDate>Fri, 05 Jun 2020 20:27:43 +0800</pubDate>
-      
-      <guid>https://christophe1997.github.io/tags/java/</guid>
       <description></description>
     </item>
     
@@ -140,6 +129,15 @@
       <pubDate>Fri, 03 Aug 2018 13:10:58 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/tags/system/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java</title>
+      <link>https://christophe1997.github.io/tags/java/</link>
+      <pubDate>Mon, 07 May 2018 21:18:59 +0000</pubDate>
+      
+      <guid>https://christophe1997.github.io/tags/java/</guid>
       <description></description>
     </item>
     

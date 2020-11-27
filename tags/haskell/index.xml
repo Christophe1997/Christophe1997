@@ -5,8 +5,6 @@
     <link>https://christophe1997.github.io/tags/haskell/</link>
     <description>Recent content in Haskell on CastOff</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>&amp;copy;Christophe</copyright>
     <lastBuildDate>Fri, 19 Jun 2020 21:39:35 +0800</lastBuildDate><atom:link href="https://christophe1997.github.io/tags/haskell/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Memoization in Haskell</title>
@@ -14,7 +12,9 @@
       <pubDate>Fri, 19 Jun 2020 21:39:35 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/memoization-in-haskell/</guid>
-      <description>Memoization是动态规划(Dynamic Programming)中自顶向下处理问题采用的策略, 其基本想法是通过将子问题的解保存起来避</description>
+      <description>Memoization是动态规划(Dynamic Programming)中自顶向下处理问题采用的策略, 其基本想法是通过将子问题的解保存起来避免重复计算来优化算法. 这个概念本身很简单, 在其他有明显mutable语义的语言中, 实现起来也非常简单. 但是在Haskell中问题就变的复杂了不少, 对于一个原始的函数f :: a -&amp;gt; b你如果要用ref, 比如说IORef, 你必须要把它放到IO monad中, 你的memoize函数就变成了... -&amp;gt; IO (a -&amp;gt; b). 我们希望是能够找到一个memoize :: ... -&amp;gt; (a -&amp;gt; b), 这样memoize之后得到的和原函数类型是一致的. 为了讨论的方便, 我们主要关注两个例子的memoization, 一个是经典的Fibonacci数列:
+fib :: Int -&amp;gt; Integer fib 0 = 0 fib 1 = 1 fib n = fib (n - 2) + fib (n - 1) 另一个则是动态规划(自底向上)中典型的最小编辑距离的问题, 所谓的最小编辑距离就是一个字符串通过增加, 删除, 替换的操作得到另一个字符串所需要的操作次数:
+minEditDist :: String -&amp;gt; String -&amp;gt; Int minEditDist [] [] = 0 minEditDist s [] = length s minEditDist [] s = length s minEditDist (x:xs) (y:ys) | x == y = minEditDist xs ys | otherwise = 1 + minimum [minEditDist xs ys, minEditDist xs (y:ys), minEditDist (x:xs) ys] Memoizing with specific problem 首先来看fib的问题, wiki给出了一个非常elegant的解(就fib本身而言, 还有更经典的解, fib = (fibs !</description>
     </item>
     
     <item>
@@ -23,7 +23,12 @@
       <pubDate>Wed, 06 May 2020 20:06:38 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/surpasser-count/</guid>
-      <description>Pearl 2: 给定一个长度大于1的列表, 计算其元素的最大surpasser count, 要求算法复杂度$O(n log n)$. Type: msc: Ord a =&amp;gt; [a] -&amp;gt; Int &amp;ldquo;Pearls of functional algorithm design&amp;quot;</description>
+      <description>Pearl 2: 给定一个长度大于1的列表, 计算其元素的最大surpasser count, 要求算法复杂度$O(n log n)$. Type: msc: Ord a =&amp;gt; [a] -&amp;gt; Int
+&amp;ldquo;Pearls of functional algorithm design&amp;quot;的第二章, 我们先来看surpasser的定义
+Definition surpasser: 称列表中$X[j]$是$X[i]$的surpasser, 如果$X[i] &amp;lt; X[j]$且$i &amp;lt; j$.
+因此一个元素的surpasser count就是其surpasser的数目.
+同样, 一个naive的实现很容易:
+msc :: Ord a =&amp;gt; [a] -&amp;gt; Int msc xs = maximum [scount z zs | z:zs &amp;lt;- tails xs] scount :: Ord a =&amp;gt; a -&amp;gt; [a] -&amp;gt; Int scount x xs = length $ filter (&amp;gt; x) xs 同时也很容易看到, 这个实现的时间复杂度是$O(n^2)$, 不符合要求的$O(n log n)$.</description>
     </item>
     
     <item>
@@ -32,7 +37,14 @@
       <pubDate>Tue, 05 May 2020 21:01:11 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/the-smallest-free-number/</guid>
-      <description>Pearl 1: 给定一个自然数的有限集X, 计算不属于X的最小自然数. X表示为不包含重复元素的无序列表. 时间复杂度要求$O(n)$. Type: minfree :: [Int] -&amp;gt; Int(也可</description>
+      <description>Pearl 1: 给定一个自然数的有限集X, 计算不属于X的最小自然数. X表示为不包含重复元素的无序列表. 时间复杂度要求$O(n)$.
+Type: minfree :: [Int] -&amp;gt; Int(也可以额外的定义自然数类型, 不过这不是我们的重点)
+&amp;ldquo;Pearls of Functional Algorithm Design&amp;quot;的第一章, 其描述了一个分治的算法和一个基于array的算法, 这里按个人的思路讲解一下基于分治的算法, 基于array的算法具体可以查阅原文. 首先拿到这个问题, 我觉得最直接的想法就是
+Base Solution: minfree xs = head $ [0..] \\ xs 
+然而这和要求的线性时间复杂度不符. 第二个想法就是设计一个fold的函数遍历一遍列表, 这样时间复杂度符合要求. 但是越来越多的边界条件让我意识到思路不对. 看了原文才发现忽略了解题的一个重要条件.
+Fact: [0..n]中的所有自然数不可能都在X(xs)中, 其中n = length xs.
+这也很容易证明, 因为$ n + 1 = length\ [0..n] &amp;gt; n $, 因此不属于集合X的最小自然数就是[0..n]中不属于X的最小自然数. 至此,该问题很容易解决, 只需要一个marked的array来表示[0,,n]中的自然数是否在X中即可. 下面描述基于分治的算法, 首先给出一个基本的结论.
+Theorem: (as ++ bs) \\ (us ++ vs) == (as \\ us) ++ (bs \\ vs), 如果as \\ vs == as &amp;amp;&amp;amp; bs \\ us == bs.</description>
     </item>
     
     <item>
@@ -41,7 +53,12 @@
       <pubDate>Sat, 06 Apr 2019 20:26:43 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/monad-and-transformers/</guid>
-      <description>Monad是Haskell中讨论最多的结构, 需要更详细的探讨其相关内容, 即使它对于Haskell而言不是必须的:(. 参考: All about Monads Monad Support 除了之前</description>
+      <description>Monad是Haskell中讨论最多的结构, 需要更详细的探讨其相关内容, 即使它对于Haskell而言不是必须的:(.
+参考: All about Monads
+Monad Support 除了之前介绍过的一些基本函数, Haskell本身定义了一些辅助函数配合Monad一起使用:
+  sequence
+-- 任意一个fail会导致整个fail sequence :: Monad m =&amp;gt; [m a] -&amp;gt; m [a] sequence = foldr mcons (return []) where mcons p q = p &amp;gt;&amp;gt;= \x -&amp;gt; q &amp;gt;&amp;gt;= \y -&amp;gt; return (x : y)   sequence_和sequence类似但其不返回值, 在只关心序列的副作用时其非常有用.
+sequence_ :: Monad m =&amp;gt; [m a] -&amp;gt; m () sequence_ = flodr (&amp;gt;&amp;gt;) (return ())   mapM其由sequence和map定义</description>
     </item>
     
     <item>
@@ -50,7 +67,9 @@
       <pubDate>Sun, 24 Mar 2019 14:32:05 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/haskell-algebra/</guid>
-      <description>Semigroup 半群即一个集合以及在之上定义的一个满足结合律的二元运算, 在Haskell中定义为(部分): 1 2 3 class Semigroup where (&amp;lt;&amp;gt;) :: a -&amp;gt; a -&amp;gt; a {-# MINIMAL (&amp;lt;&amp;gt;) #-} Laws 1 2 -- associativity a &amp;lt;&amp;gt;</description>
+      <description>Semigroup 半群即一个集合以及在之上定义的一个满足结合律的二元运算, 在Haskell中定义为(部分):
+class Semigroup where (&amp;lt;&amp;gt;) :: a -&amp;gt; a -&amp;gt; a {-# MINIMAL (&amp;lt;&amp;gt;) #-} Laws -- associativity a &amp;lt;&amp;gt; (b &amp;lt;&amp;gt; c) = (a &amp;lt;&amp;gt; b) &amp;lt;&amp;gt; c Monoid &amp;ldquo;A monoid is a binary associative operation with an identity&amp;rdquo;, 在Haskell中定义为(部分):
+class Monoid m where mempty :: m mappend :: m -&amp;gt; m -&amp;gt; m mconcat :: [m] -&amp;gt; m mconcat = foldr mappend mempty {-# MINIMAL mempty #-} Laws -- left identity mappend menpty x = x -- right identity mappend x mempty = x -- associativity mappend x (mappend y z) = mappend (mappend x y) z 这和数学上带幺半群所满足的性质是一致的, 带幺半群即一个包含单位元的半群.</description>
     </item>
     
   </channel>
