@@ -53,7 +53,7 @@ Theorem: (as ++ bs) \\ (us ++ vs) == (as \\ us) ++ (bs \\ vs), 如果as \\ vs ==
       <pubDate>Sat, 29 Feb 2020 21:40:07 +0800</pubDate>
       
       <guid>https://christophe1997.github.io/posts/2020/cps/</guid>
-      <description>之前在&amp;quot;Essentials of Programming Languages&amp;quot;中学习过CPS(Continuation Passing Style), 而笔记在blog改版后被丢弃, 故在这篇文章中重新详细的探讨下CPS以及尾递归, 且当是温故而知新.
+      <description>之前在&amp;quot;Essentials of Programming Languages&amp;quot;中学习过CPS(Continuation Passing Style), 而笔记在blog改版后被丢弃, 故在这篇文章中重新详细的探讨下CPS以及尾递归, 就当是温故而知新.
 Continuation 在理解什么是&amp;quot;Continuation Passing Style&amp;quot;之前, 我们首先需要定义Continuation(惭愧的是我都不知道中文叫啥, 查了下好像是&amp;quot;续延&amp;quot;). Continuation是计算机程序控制状态的抽象表示, 换言之, 其就是一种表示程序执行中间某一计算步骤的控制上下文的数据结构, 即表示某一计算的未来. 一个形象的例子是阶乘函数:
 let rec fact n = if n = 0 then 1 else n * (fact (n - 1)) 当我们计算(fact 4)时, 其执行过程为(用lisp的形式是因为更加形象):
 (fact 4) =&amp;gt; (* 4 (fact 3)) =&amp;gt; (* 4 (* 3 (fact 2))) =&amp;gt; (* 4 (* 3 (* 2 (fact 1)))) =&amp;gt; (* 4 (* 3 (* 2 (* 1 (fact 0))))) =&amp;gt; (* 4 (* 3 (* 2 (* 1 1)))) =&amp;gt; (* 4 (* 3 (* 2 1))) =&amp;gt; (* 4 (* 3 2)) =&amp;gt; (* 4 6) =&amp;gt; 24 这过程中, (* 4 #)就是一个continuation, 是(fact 3)的控制上下文, 等待着(fact 3)的计算结果传入我们的&amp;quot;#&amp;quot;, (* 4 (* 3 #))也是一个continuation.</description>
