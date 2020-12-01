@@ -14,10 +14,9 @@
       <guid>https://christophe1997.github.io/posts/2020/some-bitwise-tricks/</guid>
       <description>Bitwise tricks 近来翻到一本&amp;quot;Hackers Delight&amp;quot;的书, 其主要介绍基于二进制运算的算法. 初读来大感震撼, 其结果之巧妙,过程之精简, 于仅仅是了解计算机数是用补码所表示, 并未深入了解过二进制运算的人而言不可谓不精美. 正如Dijkstra所言, 计算机程序是集逻辑美感与机械实现的矛盾体. 本文姑且将其中的一些皮毛摘录如下, 以便日后之使用, 目前倒是难以得到应用.
   使最右位的1变成0
-// 01011000 -&amp;gt; 01010000 // if no one then return 0 x &amp;amp; (x - 1) 上式也可以用来判断一个无符号的整数是否是$ 2^n $的形式.
+1 2 3  // 01011000 -&amp;gt; 01010000 // if no one then return 0 x &amp;amp; (x - 1)   上式也可以用来判断一个无符号的整数是否是$ 2^n $的形式.
   使最右位的0变成1
-// 10100111 -&amp;gt; 10101111 // if no zero then return -1 x | (x + 1)   使尾部的1变成0
-// 10100111 -&amp;gt; 10100000 // if no trailing 1s then identity x &amp;amp; (x + 1) 上式也可以用来判断一个无符号的整数是否是$ 2^n - 1 $的形式.</description>
+1 2 3  // 10100111 -&amp;gt; 10101111 // if no zero then return -1 x | (x + 1)     使尾部的1变成0</description>
     </item>
     
     <item>

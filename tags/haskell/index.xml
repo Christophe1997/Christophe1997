@@ -13,8 +13,8 @@
       
       <guid>https://christophe1997.github.io/posts/2020/memoization-in-haskell/</guid>
       <description>Memoization是动态规划(Dynamic Programming)中自顶向下处理问题采用的策略, 其基本想法是通过将子问题的解保存起来避免重复计算来优化算法. 这个概念本身很简单, 在其他有明显mutable语义的语言中, 实现起来也非常简单. 但是在Haskell中问题就变的复杂了不少, 对于一个原始的函数f :: a -&amp;gt; b你如果要用ref, 比如说IORef, 你必须要把它放到IO monad中, 你的memoize函数就变成了... -&amp;gt; IO (a -&amp;gt; b). 我们希望是能够找到一个memoize :: ... -&amp;gt; (a -&amp;gt; b), 这样memoize之后得到的和原函数类型是一致的. 为了讨论的方便, 我们主要关注两个例子的memoization, 一个是经典的Fibonacci数列:
-fib :: Int -&amp;gt; Integer fib 0 = 0 fib 1 = 1 fib n = fib (n - 2) + fib (n - 1) 另一个则是动态规划(自底向上)中典型的最小编辑距离的问题, 所谓的最小编辑距离就是一个字符串通过增加, 删除, 替换的操作得到另一个字符串所需要的操作次数:
-minEditDist :: String -&amp;gt; String -&amp;gt; Int minEditDist [] [] = 0 minEditDist s [] = length s minEditDist [] s = length s minEditDist (x:xs) (y:ys) | x == y = minEditDist xs ys | otherwise = 1 + minimum [minEditDist xs ys, minEditDist xs (y:ys), minEditDist (x:xs) ys] Memoizing with specific problem 首先来看fib的问题, wiki给出了一个非常elegant的解(就fib本身而言, 还有更经典的解, fib = (fibs !</description>
+1 2 3 4  fib :: Int -&amp;gt; Integer fib 0 = 0 fib 1 = 1 fib n = fib (n - 2) + fib (n - 1)   另一个则是动态规划(自底向上)中典型的最小编辑距离的问题, 所谓的最小编辑距离就是一个字符串通过增加, 删除, 替换的操作得到另一个字符串所需要的操作次数:
+1 2 3 4 5 6  minEditDist :: String -&amp;gt; String -&amp;gt; Int minEditDist [] [] = 0 minEditDist s [] = length s minEditDist [] s = length s minEditDist (x:xs) (y:ys) | x == y = minEditDist xs ys | otherwise = 1 + minimum [minEditDist xs ys, minEditDist xs (y:ys), minEditDist (x:xs) ys]   Memoizing with specific problem 首先来看fib的问题, wiki给出了一个非常elegant的解(就fib本身而言, 还有更经典的解, fib = (fibs !</description>
     </item>
     
     <item>
@@ -28,7 +28,7 @@ minEditDist :: String -&amp;gt; String -&amp;gt; Int minEditDist [] [] = 0 minEd
 Definition surpasser: 称列表中$X[j]$是$X[i]$的surpasser, 如果$X[i] &amp;lt; X[j]$且$i &amp;lt; j$.
 因此一个元素的surpasser count就是其surpasser的数目.
 同样, 一个naive的实现很容易:
-msc :: Ord a =&amp;gt; [a] -&amp;gt; Int msc xs = maximum [scount z zs | z:zs &amp;lt;- tails xs] scount :: Ord a =&amp;gt; a -&amp;gt; [a] -&amp;gt; Int scount x xs = length $ filter (&amp;gt; x) xs 同时也很容易看到, 这个实现的时间复杂度是$O(n^2)$, 不符合要求的$O(n log n)$.</description>
+1 2 3 4  msc :: Ord a =&amp;gt; [a] -&amp;gt; Int msc xs = maximum [scount z zs | z:zs &amp;lt;- tails xs] scount :: Ord a =&amp;gt; a -&amp;gt; [a] -&amp;gt; Int scount x xs = length $ filter (&amp;gt; x) xs   同时也很容易看到, 这个实现的时间复杂度是$O(n^2)$, 不符合要求的$O(n log n)$.</description>
     </item>
     
     <item>
@@ -57,8 +57,8 @@ Theorem: (as ++ bs) \\ (us ++ vs) == (as \\ us) ++ (bs \\ vs), 如果as \\ vs ==
 参考: All about Monads
 Monad Support 除了之前介绍过的一些基本函数, Haskell本身定义了一些辅助函数配合Monad一起使用:
   sequence
--- 任意一个fail会导致整个fail sequence :: Monad m =&amp;gt; [m a] -&amp;gt; m [a] sequence = foldr mcons (return []) where mcons p q = p &amp;gt;&amp;gt;= \x -&amp;gt; q &amp;gt;&amp;gt;= \y -&amp;gt; return (x : y)   sequence_和sequence类似但其不返回值, 在只关心序列的副作用时其非常有用.
-sequence_ :: Monad m =&amp;gt; [m a] -&amp;gt; m () sequence_ = flodr (&amp;gt;&amp;gt;) (return ())   mapM其由sequence和map定义</description>
+1 2 3 4  -- 任意一个fail会导致整个fail sequence :: Monad m =&amp;gt; [m a] -&amp;gt; m [a] sequence = foldr mcons (return []) where mcons p q = p &amp;gt;&amp;gt;= \x -&amp;gt; q &amp;gt;&amp;gt;= \y -&amp;gt; return (x : y)     sequence_和sequence类似但其不返回值, 在只关心序列的副作用时其非常有用.
+1 2  sequence_ :: Monad m =&amp;gt; [m a] -&amp;gt; m () sequence_ = flodr (&amp;gt;&amp;gt;) (return ())     mapM其由sequence和map定义</description>
     </item>
     
     <item>
@@ -68,8 +68,8 @@ sequence_ :: Monad m =&amp;gt; [m a] -&amp;gt; m () sequence_ = flodr (&amp;gt;&
       
       <guid>https://christophe1997.github.io/posts/2019/haskell-algebra/</guid>
       <description>Semigroup 半群即一个集合以及在之上定义的一个满足结合律的二元运算, 在Haskell中定义为(部分):
-class Semigroup where (&amp;lt;&amp;gt;) :: a -&amp;gt; a -&amp;gt; a {-# MINIMAL (&amp;lt;&amp;gt;) #-} Laws -- associativity a &amp;lt;&amp;gt; (b &amp;lt;&amp;gt; c) = (a &amp;lt;&amp;gt; b) &amp;lt;&amp;gt; c Monoid &amp;ldquo;A monoid is a binary associative operation with an identity&amp;rdquo;, 在Haskell中定义为(部分):
-class Monoid m where mempty :: m mappend :: m -&amp;gt; m -&amp;gt; m mconcat :: [m] -&amp;gt; m mconcat = foldr mappend mempty {-# MINIMAL mempty #-} Laws -- left identity mappend menpty x = x -- right identity mappend x mempty = x -- associativity mappend x (mappend y z) = mappend (mappend x y) z 这和数学上带幺半群所满足的性质是一致的, 带幺半群即一个包含单位元的半群.</description>
+1 2 3  class Semigroup where (&amp;lt;&amp;gt;) :: a -&amp;gt; a -&amp;gt; a {-# MINIMAL (&amp;lt;&amp;gt;) #-}   Laws 1 2  -- associativity a &amp;lt;&amp;gt; (b &amp;lt;&amp;gt; c) = (a &amp;lt;&amp;gt; b) &amp;lt;&amp;gt; c   Monoid &amp;ldquo;A monoid is a binary associative operation with an identity&amp;rdquo;, 在Haskell中定义为(部分):
+1 2 3 4 5 6  class Monoid m where mempty :: m mappend :: m -&amp;gt; m -&amp;gt; m mconcat :: [m] -&amp;gt; m mconcat = foldr mappend mempty {-# MINIMAL mempty #-}   Laws 1 2 3 4 5 6 7 8  -- left identity mappend menpty x = x -- right identity mappend x mempty = x -- associativity mappend x (mappend y z) = mappend (mappend x y) z   这和数学上带幺半群所满足的性质是一致的, 带幺半群即一个包含单位元的半群.</description>
     </item>
     
   </channel>

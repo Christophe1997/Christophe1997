@@ -17,7 +17,7 @@
 Definition surpasser: 称列表中$X[j]$是$X[i]$的surpasser, 如果$X[i] &amp;lt; X[j]$且$i &amp;lt; j$.
 因此一个元素的surpasser count就是其surpasser的数目.
 同样, 一个naive的实现很容易:
-msc :: Ord a =&amp;gt; [a] -&amp;gt; Int msc xs = maximum [scount z zs | z:zs &amp;lt;- tails xs] scount :: Ord a =&amp;gt; a -&amp;gt; [a] -&amp;gt; Int scount x xs = length $ filter (&amp;gt; x) xs 同时也很容易看到, 这个实现的时间复杂度是$O(n^2)$, 不符合要求的$O(n log n)$.</description>
+1 2 3 4  msc :: Ord a =&amp;gt; [a] -&amp;gt; Int msc xs = maximum [scount z zs | z:zs &amp;lt;- tails xs] scount :: Ord a =&amp;gt; a -&amp;gt; [a] -&amp;gt; Int scount x xs = length $ filter (&amp;gt; x) xs   同时也很容易看到, 这个实现的时间复杂度是$O(n^2)$, 不符合要求的$O(n log n)$.</description>
     </item>
     
     <item>

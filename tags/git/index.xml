@@ -12,11 +12,11 @@
       <pubDate>Sun, 11 Mar 2018 13:07:40 +0000</pubDate>
       
       <guid>https://christophe1997.github.io/posts/2018/git-cheat-sheet/</guid>
-      <description>本地操作 状态检览 $ git status -s XY PATH1 -&amp;gt; PATH2 PATH2只有在PATH1关联到不同的路径时才会显示(例如, 文件重命名).
+      <description>本地操作 状态检览 1 2  $ git status -s XY PATH1 -&amp;gt; PATH2   PATH2只有在PATH1关联到不同的路径时才会显示(例如, 文件重命名).
 XY是两个状态码, 在合并冲突的时候, X和Y分别表示合并双方的修改状态; 而在一般情况下X表示暂存区域(index)的状态, Y表示工作目录的状态(work tree):
  &#39; &#39; = unmodified M = modified A = added D = deleted R = renamed C = copied U = updated but unmerged  未被追踪(untracked)的文件, XY = ??; 默认不显示忽略的文件(ignored), 除非使用--ignore选项, 此时XY = !!.
-查看已暂存和未暂存的修改 $ git diff 用来比较工作目录中当前文件和暂存区域快照之间的差异, 使用--staged选项查看已经暂存的将要添加到下次修改的内容
-提交更新 $ git commit 这种方式会启动shell的环境变量$EDDITOR所指定的软件, 一般是VIM或emacs, 或者使用git	config	--global	core.editor来指定编辑器, 使用-v选项将diff的内容追加到编辑器中, 使用-m &#39;${comment}&#39;选项来直接添加提交信息, 而不打开编辑器.</description>
+查看已暂存和未暂存的修改 1  $ git diff   用来比较工作目录中当前文件和暂存区域快照之间的差异, 使用--staged选项查看已经暂存的将要添加到下次修改的内容
+提交更新 1  $ git commit   这种方式会启动shell的环境变量$EDDITOR所指定的软件, 一般是VIM或emacs, 或者使用git	config	--global	core.</description>
     </item>
     
   </channel>

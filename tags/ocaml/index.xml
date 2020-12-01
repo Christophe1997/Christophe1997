@@ -13,7 +13,7 @@
       
       <guid>https://christophe1997.github.io/posts/2018/value-restriction/</guid>
       <description>Value Restriction是什么？ Value restriction是用于控制类型推断能否对值声明进行多态泛化的规则（MLton原文：“The value restriction is a rule that governs when type inference is allowed to polymorphically generalize a value declaration.”）。常出现在ML系的语言中，如SML，OCaml，F#中，其实value restriction产生的本质原因是为了保证类型系统在结合参数多态与命令式特性（imperative feature，如ref）时候的可靠性（soundness）。一个典型的例子就是：
-// 如果没有value restriction let x = ref None // &amp;#39;a option ref let y: int option ref = x // type checked let z: string option ref = x // type checked let () = y := Some 2 // type checked let v: string = !</description>
+1 2 3 4 5 6  // 如果没有value restriction let x = ref None // &amp;#39;a option ref let y: int option ref = x // type checked let z: string option ref = x // type checked let () = y := Some 2 // type checked let v: string = !</description>
     </item>
     
     <item>
