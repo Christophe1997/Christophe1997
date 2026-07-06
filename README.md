@@ -16,6 +16,7 @@ Here are some ideas to get you started:
 -->
 
 <!-- token-profile:start -->
+```
 ┌──────────────────────────────────────────────────────────────────────────────────┐
 │ Tokens: 25,340,477   Cost: $1104.99                                              │
 │                                                                                  │
@@ -44,4 +45,5 @@ Here are some ideas to get you started:
 │                                                                                  │
 │ Last updated: 2026-07-06 03:47 UTC                                               │
 └──────────────────────────────────────────────────────────────────────────────────┘
+```
 <!-- token-profile:end -->
