@@ -3,252 +3,252 @@
     "date": "2026-06-08",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 561855,
+    "tokens": 68572580,
     "cost": 53.02007350000002
   },
   {
     "date": "2026-06-08",
     "agent": "claude",
     "model": "claude-haiku-4-5-20251001",
-    "tokens": 1470,
+    "tokens": 145008,
     "cost": 0.0621506
   },
   {
     "date": "2026-06-09",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 1011522,
+    "tokens": 137876474,
     "cost": 105.85869274999989
   },
   {
     "date": "2026-06-10",
     "agent": "claude",
     "model": "claude-fable-5",
-    "tokens": 488301,
+    "tokens": 66017880,
     "cost": 98.24851000000015
   },
   {
     "date": "2026-06-10",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 1759043,
+    "tokens": 14900611,
     "cost": 35.503840499999995
   },
   {
     "date": "2026-06-11",
     "agent": "claude",
     "model": "claude-fable-5",
-    "tokens": 389377,
+    "tokens": 72983628,
     "cost": 105.77123850000001
   },
   {
     "date": "2026-06-11",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 315581,
+    "tokens": 28541137,
     "cost": 24.08367150000001
   },
   {
     "date": "2026-06-11",
     "agent": "claude",
     "model": "claude-haiku-4-5-20251001",
-    "tokens": 3750,
+    "tokens": 1789957,
     "cost": 0.28879799999999994
   },
   {
     "date": "2026-06-11",
     "agent": "claude",
     "model": "kiro-claude-opus-4-8",
-    "tokens": 5689136,
+    "tokens": 14471568,
     "cost": 0
   },
   {
     "date": "2026-06-12",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 497382,
+    "tokens": 48694376,
     "cost": 39.883666000000005
   },
   {
     "date": "2026-06-12",
     "agent": "claude",
     "model": "claude-fable-5",
-    "tokens": 39372,
+    "tokens": 2687949,
     "cost": 5.151514499999999
   },
   {
     "date": "2026-06-12",
     "agent": "claude",
     "model": "claude-haiku-4-5-20251001",
-    "tokens": 50602,
+    "tokens": 8779046,
     "cost": 1.6020263500000005
   },
   {
     "date": "2026-06-22",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 541098,
+    "tokens": 73650442,
     "cost": 53.92264899999998
   },
   {
     "date": "2026-06-22",
     "agent": "claude",
     "model": "claude-haiku-4-5-20251001",
-    "tokens": 18370,
+    "tokens": 1079084,
     "cost": 0.23340085
   },
   {
     "date": "2026-06-23",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 2049767,
+    "tokens": 59162548,
     "cost": 68.14385475
   },
   {
     "date": "2026-06-23",
     "agent": "claude",
     "model": "claude-sonnet-4-6",
-    "tokens": 17315,
+    "tokens": 1354175,
     "cost": 1.2147141
   },
   {
     "date": "2026-06-23",
     "agent": "claude",
     "model": "claude-haiku-4-5-20251001",
-    "tokens": 35353,
+    "tokens": 6505316,
     "cost": 1.1336176499999993
   },
   {
     "date": "2026-06-24",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 793405,
+    "tokens": 81312642,
     "cost": 76.20023399999995
   },
   {
     "date": "2026-06-24",
     "agent": "claude",
     "model": "claude-haiku-4-5-20251001",
-    "tokens": 9741,
+    "tokens": 4294575,
     "cost": 0.7458360000000002
   },
   {
     "date": "2026-06-25",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 1670075,
+    "tokens": 156776912,
     "cost": 121.38727599999999
   },
   {
     "date": "2026-06-25",
     "agent": "claude",
     "model": "claude-sonnet-4-6",
-    "tokens": 9907,
+    "tokens": 2307631,
     "cost": 1.2220339500000001
   },
   {
     "date": "2026-06-25",
     "agent": "claude",
     "model": "claude-haiku-4-5-20251001",
-    "tokens": 5820,
+    "tokens": 461018,
     "cost": 0.15092040000000004
   },
   {
     "date": "2026-06-26",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 74551,
+    "tokens": 7298067,
     "cost": 5.804662499999997
   },
   {
     "date": "2026-06-29",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 424693,
+    "tokens": 55134627,
     "cost": 39.37230424999999
   },
   {
     "date": "2026-06-29",
     "agent": "claude",
     "model": "claude-haiku-4-5-20251001",
-    "tokens": 46810,
+    "tokens": 7673191,
     "cost": 1.4258849500000006
   },
   {
     "date": "2026-06-30",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 944129,
+    "tokens": 51351939,
     "cost": 44.871564250000006
   },
   {
     "date": "2026-06-30",
     "agent": "claude",
     "model": "claude-sonnet-4-6",
-    "tokens": 5254,
+    "tokens": 250168,
     "cost": 0.5636988
   },
   {
     "date": "2026-07-01",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 5438628,
+    "tokens": 40148598,
     "cost": 94.45680324999992
   },
   {
     "date": "2026-07-01",
     "agent": "claude",
     "model": "claude-haiku-4-5-20251001",
-    "tokens": 3683,
+    "tokens": 42277,
     "cost": 0.04716775
   },
   {
     "date": "2026-07-02",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 229849,
+    "tokens": 15480335,
     "cost": 14.5467665
   },
   {
     "date": "2026-07-03",
     "agent": "claude",
     "model": "claude-sonnet-5",
-    "tokens": 2095939,
-    "cost": 93.43194990000005
+    "tokens": 175003684,
+    "cost": 62.30435660000001
   },
   {
     "date": "2026-07-03",
     "agent": "claude",
     "model": "claude-haiku-4-5-20251001",
-    "tokens": 32390,
+    "tokens": 972040,
     "cost": 0.4982155
   },
   {
     "date": "2026-07-03",
     "agent": "claude",
     "model": "claude-opus-4-8",
-    "tokens": 16892,
+    "tokens": 39661,
     "cost": 0.12583975
   },
   {
     "date": "2026-07-04",
     "agent": "claude",
     "model": "claude-sonnet-5",
-    "tokens": 4,
-    "cost": 0.13394129999999999
+    "tokens": 446355,
+    "cost": 0.08929419999999999
   },
   {
     "date": "2026-07-06",
     "agent": "claude",
     "model": "claude-sonnet-5",
-    "tokens": 382726,
-    "cost": 45.97694549999998
+    "tokens": 119543219,
+    "cost": 32.34335269999998
   },
   {
     "date": "2026-06-09",
     "agent": "codex",
     "model": "gpt-5.5",
-    "tokens": 4556,
+    "tokens": 13132,
     "cost": 0.030243
   }
 ]
