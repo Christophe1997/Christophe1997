@@ -1,0 +1,170 @@
+[
+  {
+    "date": "2026-05-09",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 8728176,
+    "cost": 9.007058500000003
+  },
+  {
+    "date": "2026-05-11",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 14166930,
+    "cost": 16.184842
+  },
+  {
+    "date": "2026-05-12",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 10076262,
+    "cost": 15.534733749999997
+  },
+  {
+    "date": "2026-05-13",
+    "agent": "claude",
+    "model": "claude-haiku-4-5-20251001",
+    "tokens": 4933821,
+    "cost": 0.8055945500000002
+  },
+  {
+    "date": "2026-05-13",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 4827469,
+    "cost": 6.989920249999999
+  },
+  {
+    "date": "2026-05-14",
+    "agent": "claude",
+    "model": "claude-haiku-4-5-20251001",
+    "tokens": 3519373,
+    "cost": 0.7209949999999999
+  },
+  {
+    "date": "2026-05-14",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 38872596,
+    "cost": 34.54078525
+  },
+  {
+    "date": "2026-05-15",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 3978279,
+    "cost": 7.613
+  },
+  {
+    "date": "2026-05-18",
+    "agent": "claude",
+    "model": "claude-haiku-4-5-20251001",
+    "tokens": 2264130,
+    "cost": 0.34520345
+  },
+  {
+    "date": "2026-05-18",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 30255408,
+    "cost": 32.26422574999999
+  },
+  {
+    "date": "2026-05-18",
+    "agent": "codex",
+    "model": "gpt-5.4",
+    "tokens": 18161,
+    "cost": 0.036129
+  },
+  {
+    "date": "2026-05-18",
+    "agent": "codex",
+    "model": "gpt-5.5",
+    "tokens": 41672,
+    "cost": 0.075544
+  },
+  {
+    "date": "2026-05-19",
+    "agent": "claude",
+    "model": "claude-haiku-4-5-20251001",
+    "tokens": 2106499,
+    "cost": 0.51115745
+  },
+  {
+    "date": "2026-05-19",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 38669724,
+    "cost": 35.20633575
+  },
+  {
+    "date": "2026-05-20",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 44078059,
+    "cost": 36.94869925000001
+  },
+  {
+    "date": "2026-05-21",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 4478602,
+    "cost": 4.648315749999999
+  },
+  {
+    "date": "2026-05-22",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 2107753,
+    "cost": 3.810429
+  },
+  {
+    "date": "2026-05-25",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 13801866,
+    "cost": 19.10945825
+  },
+  {
+    "date": "2026-05-26",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 23314063,
+    "cost": 22.656666249999994
+  },
+  {
+    "date": "2026-05-27",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 9961033,
+    "cost": 8.7511175
+  },
+  {
+    "date": "2026-05-28",
+    "agent": "claude",
+    "model": "claude-haiku-4-5-20251001",
+    "tokens": 601188,
+    "cost": 0.15997379999999997
+  },
+  {
+    "date": "2026-05-28",
+    "agent": "claude",
+    "model": "claude-opus-4-7",
+    "tokens": 37702641,
+    "cost": 35.75737824999998
+  },
+  {
+    "date": "2026-05-29",
+    "agent": "claude",
+    "model": "claude-haiku-4-5-20251001",
+    "tokens": 365942,
+    "cost": 0.11164390000000002
+  },
+  {
+    "date": "2026-05-29",
+    "agent": "claude",
+    "model": "claude-opus-4-8",
+    "tokens": 32721362,
+    "cost": 32.184567
+  }
+]

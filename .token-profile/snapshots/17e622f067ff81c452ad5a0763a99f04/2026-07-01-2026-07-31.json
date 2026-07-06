@@ -1,0 +1,58 @@
+[
+  {
+    "date": "2026-07-01",
+    "agent": "claude",
+    "model": "claude-haiku-4-5-20251001",
+    "tokens": 42277,
+    "cost": 0.04716775
+  },
+  {
+    "date": "2026-07-01",
+    "agent": "claude",
+    "model": "claude-opus-4-8",
+    "tokens": 40148598,
+    "cost": 94.45680324999992
+  },
+  {
+    "date": "2026-07-02",
+    "agent": "claude",
+    "model": "claude-opus-4-8",
+    "tokens": 15480335,
+    "cost": 14.5467665
+  },
+  {
+    "date": "2026-07-03",
+    "agent": "claude",
+    "model": "claude-haiku-4-5-20251001",
+    "tokens": 972040,
+    "cost": 0.4982155
+  },
+  {
+    "date": "2026-07-03",
+    "agent": "claude",
+    "model": "claude-opus-4-8",
+    "tokens": 39661,
+    "cost": 0.12583975
+  },
+  {
+    "date": "2026-07-03",
+    "agent": "claude",
+    "model": "claude-sonnet-5",
+    "tokens": 175003684,
+    "cost": 62.30435660000001
+  },
+  {
+    "date": "2026-07-04",
+    "agent": "claude",
+    "model": "claude-sonnet-5",
+    "tokens": 446355,
+    "cost": 0.08929419999999999
+  },
+  {
+    "date": "2026-07-06",
+    "agent": "claude",
+    "model": "claude-sonnet-5",
+    "tokens": 202213359,
+    "cost": 52.213834900000016
+  }
+]
