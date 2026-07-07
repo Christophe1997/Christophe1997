@@ -65,9 +65,16 @@
   {
     "date": "2026-07-07",
     "agent": "claude",
+    "model": "claude-opus-4-8",
+    "tokens": 26099655,
+    "cost": 24.09429024999999
+  },
+  {
+    "date": "2026-07-07",
+    "agent": "claude",
     "model": "claude-sonnet-5",
-    "tokens": 159893235,
-    "cost": 44.71438349999998
+    "tokens": 173986681,
+    "cost": 48.809963599999975
   },
   {
     "date": "2026-07-07",
