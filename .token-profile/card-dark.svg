@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="520" viewBox="0 0 640 520" role="img" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+<title>Token Profile — last 30 days</title>
+<rect width="100%" height="100%" fill="#0d1117"/>
+<rect x="1" y="1" width="638" height="518" rx="12" fill="none" stroke="#30363d" stroke-width="2"/>
+<text x="32" y="40" font-size="22" font-weight="600" fill="#58a6ff">Token Profile — last 30 days</text>
+<line x1="32" y1="56" x2="608" y2="56" stroke="#30363d" stroke-width="1"/>
+
+
+<text x="32" y="84" font-size="12" font-weight="600" letter-spacing="1" fill="#8b949e">TOKENS</text>
+<text x="32" y="118" font-size="26" font-weight="700" fill="#c9d1d9">1.6B<tspan font-size="15" font-weight="600" fill="#3fb950"> +100%</tspan></text>
+
+<text x="332" y="84" font-size="12" font-weight="600" letter-spacing="1" fill="#8b949e">COST</text>
+<text x="332" y="118" font-size="26" font-weight="700" fill="#c9d1d9">$1180.70<tspan font-size="15" font-weight="600" fill="#3fb950"> +65%</tspan></text>
+
+<text x="32" y="152" font-size="12" font-weight="600" letter-spacing="1" fill="#8b949e">TREND</text>
+<line x1="90" y1="288" x2="608" y2="288" stroke="#21262d" stroke-width="1"/>
+
+<polyline points="90,262 120,235 150,257 181,243 211,265 242,260 272,263 303,255 333,227 364,286 394,264 425,269 455,273 486,283 516,220 547,288 577,168 608,241" fill="none" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="90" y="306" font-size="12" fill="#8b949e">06-08</text>
+<text x="608" y="306" font-size="12" fill="#8b949e" text-anchor="end">07-07</text>
+<text x="82" y="172" font-size="12" fill="#8b949e" text-anchor="end">309.1M</text>
+<text x="82" y="288" font-size="12" fill="#8b949e" text-anchor="end">446,355</text>
+
+<text x="32" y="328" font-size="16" font-weight="600" fill="#c9d1d9">Streak: 2 days</text>
+<text x="32" y="360" font-size="12" font-weight="600" letter-spacing="1" fill="#8b949e">Breakdown (per model):</text>
+
+
+<text x="32" y="384" font-size="13" fill="#c9d1d9">claude-opus-4-8</text>
+<text x="420" y="384" font-size="13" fill="#8b949e" text-anchor="end">838.9M</text>
+<text x="608" y="384" font-size="13" fill="#8b949e" text-anchor="end">$777.18</text>
+
+<text x="32" y="406" font-size="13" fill="#c9d1d9">claude-sonnet-5</text>
+<text x="420" y="406" font-size="13" fill="#8b949e" text-anchor="end">606.7M</text>
+<text x="608" y="406" font-size="13" fill="#8b949e" text-anchor="end">$183.77</text>
+
+<text x="32" y="428" font-size="13" fill="#c9d1d9">claude-fable-5</text>
+<text x="420" y="428" font-size="13" fill="#8b949e" text-anchor="end">141.7M</text>
+<text x="608" y="428" font-size="13" fill="#8b949e" text-anchor="end">$209.17</text>
+
+
+<text x="32" y="450" font-size="13" fill="#8b949e">… 4 more — 50.8M tokens ($10.58)</text>
+
+
+
+<text x="32" y="504" font-size="11" fill="#8b949e">Last updated: 2026-07-07 06:03 UTC</text>
+</svg>
