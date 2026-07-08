@@ -18,7 +18,7 @@
 <text x="157" y="136" font-size="10" fill="#1a7f37" font-weight="600" >+155%</text>
 <rect x="230" y="68" width="180" height="76" rx="8" ry="8" fill="#f6f8fa" />
 <text x="242" y="88" font-size="11" fill="#656d76" font-weight="600" letter-spacing="1" >COST</text>
-<text x="242" y="114" font-size="22" fill="#1f2328" font-weight="700" >$1357.24</text>
+<text x="242" y="114" font-size="22" fill="#1f2328" font-weight="700" >$1357.39</text>
 <rect x="354" y="122" width="44" height="20" rx="10" ry="10" fill="#dafbe1" />
 <text x="362" y="136" font-size="10" fill="#1a7f37" font-weight="600" >+90%</text>
 <rect x="428" y="68" width="180" height="76" rx="8" ry="8" fill="#f6f8fa" />
@@ -42,8 +42,8 @@
 <text x="32" y="344" font-size="13" fill="#1f2328" >claude-sonnet-5</text>
 <rect x="200" y="335" width="160" height="8" rx="4" ry="4" fill="#eaeef2" />
 <rect x="200" y="335" width="160" height="8" rx="4" ry="4" fill="#0969da" />
-<text x="420" y="344" font-size="13" fill="#656d76" text-anchor="end" >976.4M</text>
-<text x="608" y="344" font-size="13" fill="#656d76" text-anchor="end" >$296.52</text>
+<text x="420" y="344" font-size="13" fill="#656d76" text-anchor="end" >976.8M</text>
+<text x="608" y="344" font-size="13" fill="#656d76" text-anchor="end" >$296.68</text>
 <text x="32" y="366" font-size="13" fill="#1f2328" >claude-opus-4-8</text>
 <rect x="200" y="357" width="160" height="8" rx="4" ry="4" fill="#eaeef2" />
 <rect x="200" y="357" width="151" height="8" rx="4" ry="4" fill="#8250df" />
@@ -55,5 +55,5 @@
 <text x="420" y="388" font-size="13" fill="#656d76" text-anchor="end" >141.7M</text>
 <text x="608" y="388" font-size="13" fill="#656d76" text-anchor="end" >$209.17</text>
 <text x="32" y="410" font-size="13" fill="#656d76" >… 4 more — 50.8M tokens ($10.75)</text>
-<text x="32" y="504" font-size="11" fill="#656d76" >Last updated: 2026-07-08 06:00 UTC</text>
+<text x="32" y="504" font-size="11" fill="#656d76" >Last updated: 2026-07-08 06:02 UTC</text>
 </svg>
