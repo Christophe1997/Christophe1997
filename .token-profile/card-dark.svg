@@ -13,17 +13,17 @@
 <line x1="32" y1="56" x2="608" y2="56" stroke="#30363d" stroke-width="1" />
 <rect x="32" y="68" width="180" height="76" rx="8" ry="8" fill="#161b22" />
 <text x="44" y="88" font-size="11" fill="#8b949e" font-weight="600" letter-spacing="1" >TOKENS</text>
-<text x="44" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >2.4B</text>
+<text x="44" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >2.6B</text>
 <rect x="149" y="122" width="51" height="20" rx="10" ry="10" fill="#0d2818" />
-<text x="157" y="136" font-size="10" fill="#3fb950" font-weight="600" >+194%</text>
+<text x="157" y="136" font-size="10" fill="#3fb950" font-weight="600" >+199%</text>
 <rect x="230" y="68" width="180" height="76" rx="8" ry="8" fill="#161b22" />
 <text x="242" y="88" font-size="11" fill="#8b949e" font-weight="600" letter-spacing="1" >COST</text>
-<text x="242" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >$1453.96</text>
-<rect x="347" y="122" width="51" height="20" rx="10" ry="10" fill="#0d2818" />
-<text x="355" y="136" font-size="10" fill="#3fb950" font-weight="600" >+104%</text>
+<text x="242" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >$1495.87</text>
+<rect x="354" y="122" width="44" height="20" rx="10" ry="10" fill="#0d2818" />
+<text x="362" y="136" font-size="10" fill="#3fb950" font-weight="600" >+97%</text>
 <rect x="428" y="68" width="180" height="76" rx="8" ry="8" fill="#161b22" />
 <text x="440" y="88" font-size="11" fill="#8b949e" font-weight="600" letter-spacing="1" >STREAK</text>
-<text x="440" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >3 days 🔥</text>
+<text x="440" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >4 days 🔥</text>
 <text x="32" y="158" font-size="12" fill="#8b949e" font-weight="600" letter-spacing="1" >TREND</text>
 <line x1="90" y1="288" x2="608" y2="288" stroke="#21262d" stroke-width="1" />
 <defs>
@@ -32,28 +32,28 @@
 <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.00"/>
 </linearGradient>
 </defs>
-<polygon points="90,271 118,253 147,268 176,258 205,273 233,269 262,271 291,266 320,247 349,287 377,272 406,275 435,278 464,285 492,243 521,288 550,208 579,168 608,176 608,288 90,288" fill="url(#areaFill)" />
-<polyline points="90,271 118,253 147,268 176,258 205,273 233,269 262,271 291,266 320,247 349,287 377,272 406,275 435,278 464,285 492,243 521,288 550,208 579,168 608,176" fill="none" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-<text x="90" y="306" font-size="12" fill="#8b949e" >06-08</text>
-<text x="608" y="306" font-size="12" fill="#8b949e" text-anchor="end" >07-08</text>
+<polygon points="90,253 118,268 147,258 176,273 205,269 233,271 262,266 291,247 320,287 349,272 377,275 406,278 435,285 464,243 492,288 521,208 550,168 579,176 608,213 608,288 90,288" fill="url(#areaFill)" />
+<polyline points="90,253 118,268 147,258 176,273 205,269 233,271 262,266 291,247 320,287 349,272 377,275 406,278 435,285 464,243 492,288 521,208 550,168 579,176 608,213" fill="none" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+<text x="90" y="306" font-size="12" fill="#8b949e" >06-09</text>
+<text x="608" y="306" font-size="12" fill="#8b949e" text-anchor="end" >07-09</text>
 <text x="82" y="172" font-size="12" fill="#8b949e" text-anchor="end" >461.2M</text>
 <text x="82" y="288" font-size="12" fill="#8b949e" text-anchor="end" >446,355</text>
 <text x="32" y="320" font-size="12" fill="#8b949e" font-weight="600" letter-spacing="1" >Breakdown (per model):</text>
 <text x="32" y="344" font-size="13" fill="#c9d1d9" >claude-sonnet-5</text>
 <rect x="200" y="335" width="160" height="8" rx="4" ry="4" fill="#21262d" />
 <rect x="200" y="335" width="160" height="8" rx="4" ry="4" fill="#58a6ff" />
-<text x="420" y="344" font-size="13" fill="#8b949e" text-anchor="end" >1.3B</text>
-<text x="608" y="344" font-size="13" fill="#8b949e" text-anchor="end" >$393.24</text>
+<text x="420" y="344" font-size="13" fill="#8b949e" text-anchor="end" >1.6B</text>
+<text x="608" y="344" font-size="13" fill="#8b949e" text-anchor="end" >$488.20</text>
 <text x="32" y="366" font-size="13" fill="#c9d1d9" >claude-opus-4-8</text>
 <rect x="200" y="357" width="160" height="8" rx="4" ry="4" fill="#21262d" />
-<rect x="200" y="357" width="114" height="8" rx="4" ry="4" fill="#a371f7" />
-<text x="420" y="366" font-size="13" fill="#8b949e" text-anchor="end" >925.9M</text>
-<text x="608" y="366" font-size="13" fill="#8b949e" text-anchor="end" >$840.80</text>
+<rect x="200" y="357" width="86" height="8" rx="4" ry="4" fill="#a371f7" />
+<text x="420" y="366" font-size="13" fill="#8b949e" text-anchor="end" >857.4M</text>
+<text x="608" y="366" font-size="13" fill="#8b949e" text-anchor="end" >$787.78</text>
 <text x="32" y="388" font-size="13" fill="#c9d1d9" >claude-fable-5</text>
 <rect x="200" y="379" width="160" height="8" rx="4" ry="4" fill="#21262d" />
-<rect x="200" y="379" width="17" height="8" rx="4" ry="4" fill="#39c5cf" />
+<rect x="200" y="379" width="14" height="8" rx="4" ry="4" fill="#39c5cf" />
 <text x="420" y="388" font-size="13" fill="#8b949e" text-anchor="end" >141.7M</text>
 <text x="608" y="388" font-size="13" fill="#8b949e" text-anchor="end" >$209.17</text>
-<text x="32" y="410" font-size="13" fill="#8b949e" >… 4 more — 50.8M tokens ($10.75)</text>
-<text x="32" y="504" font-size="11" fill="#8b949e" >Last updated: 2026-07-08 12:59 UTC</text>
+<text x="32" y="410" font-size="13" fill="#8b949e" >… 4 more — 50.7M tokens ($10.72)</text>
+<text x="32" y="504" font-size="11" fill="#8b949e" >Last updated: 2026-07-09 12:25 UTC</text>
 </svg>
