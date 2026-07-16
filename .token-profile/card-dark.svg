@@ -15,15 +15,15 @@
 <text x="44" y="88" font-size="11" fill="#8b949e" font-weight="600" letter-spacing="1" >TOKENS</text>
 <text x="44" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >3.5B</text>
 <rect x="149" y="122" width="51" height="20" rx="10" ry="10" fill="#0d2818" />
-<text x="157" y="136" font-size="10" fill="#3fb950" font-weight="600" >+191%</text>
+<text x="157" y="136" font-size="10" fill="#3fb950" font-weight="600" >+193%</text>
 <rect x="230" y="68" width="180" height="76" rx="8" ry="8" fill="#161b22" />
 <text x="242" y="88" font-size="11" fill="#8b949e" font-weight="600" letter-spacing="1" >COST</text>
-<text x="242" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >$1462.16</text>
+<text x="242" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >$1468.21</text>
 <rect x="354" y="122" width="44" height="20" rx="10" ry="10" fill="#0d2818" />
 <text x="362" y="136" font-size="10" fill="#3fb950" font-weight="600" >+34%</text>
 <rect x="428" y="68" width="180" height="76" rx="8" ry="8" fill="#161b22" />
 <text x="440" y="88" font-size="11" fill="#8b949e" font-weight="600" letter-spacing="1" >STREAK</text>
-<text x="440" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >3 days 🔥</text>
+<text x="440" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >4 days 🔥</text>
 <text x="32" y="158" font-size="12" fill="#8b949e" font-weight="600" letter-spacing="1" >TREND</text>
 <line x1="90" y1="288" x2="608" y2="288" stroke="#21262d" stroke-width="1" />
 <defs>
@@ -32,10 +32,10 @@
 <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.00"/>
 </linearGradient>
 </defs>
-<polygon points="90,269 118,271 147,266 176,247 205,287 233,272 262,275 291,278 320,285 349,243 377,288 406,208 435,168 464,176 492,201 521,224 550,207 579,183 608,228 608,288 90,288" fill="url(#areaFill)" />
-<polyline points="90,269 118,271 147,266 176,247 205,287 233,272 262,275 291,278 320,285 349,243 377,288 406,208 435,168 464,176 492,201 521,224 550,207 579,183 608,228" fill="none" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+<polygon points="90,269 117,271 144,266 171,247 199,287 226,272 253,275 280,278 308,285 335,243 362,288 389,208 417,168 444,176 471,201 498,224 526,207 553,183 580,225 608,286 608,288 90,288" fill="url(#areaFill)" />
+<polyline points="90,269 117,271 144,266 171,247 199,287 226,272 253,275 280,278 308,285 335,243 362,288 389,208 417,168 444,176 471,201 498,224 526,207 553,183 580,225 608,286" fill="none" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
 <text x="90" y="306" font-size="12" fill="#8b949e" >06-22</text>
-<text x="608" y="306" font-size="12" fill="#8b949e" text-anchor="end" >07-15</text>
+<text x="608" y="306" font-size="12" fill="#8b949e" text-anchor="end" >07-16</text>
 <text x="82" y="172" font-size="12" fill="#8b949e" text-anchor="end" >461.2M</text>
 <text x="82" y="288" font-size="12" fill="#8b949e" text-anchor="end" >446,355</text>
 <text x="32" y="320" font-size="12" fill="#8b949e" font-weight="600" letter-spacing="1" >Breakdown (per model):</text>
@@ -43,7 +43,7 @@
 <rect x="200" y="335" width="160" height="8" rx="4" ry="4" fill="#21262d" />
 <rect x="200" y="335" width="160" height="8" rx="4" ry="4" fill="#58a6ff" />
 <text x="420" y="344" font-size="13" fill="#8b949e" text-anchor="end" >2.8B</text>
-<text x="608" y="344" font-size="13" fill="#8b949e" text-anchor="end" >$869.87</text>
+<text x="608" y="344" font-size="13" fill="#8b949e" text-anchor="end" >$875.92</text>
 <text x="32" y="366" font-size="13" fill="#c9d1d9" >claude-opus-4-8</text>
 <rect x="200" y="357" width="160" height="8" rx="4" ry="4" fill="#21262d" />
 <rect x="200" y="357" width="35" height="8" rx="4" ry="4" fill="#a371f7" />
@@ -55,5 +55,5 @@
 <text x="420" y="388" font-size="13" fill="#8b949e" text-anchor="end" >23.7M</text>
 <text x="608" y="388" font-size="13" fill="#8b949e" text-anchor="end" >$5.17</text>
 <text x="32" y="410" font-size="13" fill="#8b949e" >… 3 more — 4.7M tokens ($4.68)</text>
-<text x="32" y="504" font-size="11" fill="#8b949e" >Last updated: 2026-07-15 10:35 UTC</text>
+<text x="32" y="504" font-size="11" fill="#8b949e" >Last updated: 2026-07-16 06:19 UTC</text>
 </svg>
