@@ -192,7 +192,7 @@
     "date": "2026-07-21",
     "agent": "claude",
     "model": "claude-sonnet-5",
-    "tokens": 93742448,
-    "cost": 49.28332289999987
+    "tokens": 169475180,
+    "cost": 69.60790269999988
   }
 ]
