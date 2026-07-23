@@ -213,7 +213,14 @@
     "date": "2026-07-23",
     "agent": "claude",
     "model": "claude-sonnet-5",
-    "tokens": 4038455,
-    "cost": 1.7084806000000001
+    "tokens": 257721387,
+    "cost": 71.6851359000001
+  },
+  {
+    "date": "2026-07-23",
+    "agent": "codex",
+    "model": "gpt-5.4",
+    "tokens": 1142390,
+    "cost": 1.1746964999999996
   }
 ]
