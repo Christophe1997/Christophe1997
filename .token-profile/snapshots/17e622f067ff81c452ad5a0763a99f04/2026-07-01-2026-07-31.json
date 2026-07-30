@@ -282,8 +282,15 @@
   {
     "date": "2026-07-29",
     "agent": "claude",
+    "model": "claude-haiku-4-5-20251001",
+    "tokens": 355752,
+    "cost": 0.14318545
+  },
+  {
+    "date": "2026-07-29",
+    "agent": "claude",
     "model": "claude-sonnet-5",
-    "tokens": 21776854,
-    "cost": 6.736602100000001
+    "tokens": 37641740,
+    "cost": 11.408612600000001
   }
 ]
