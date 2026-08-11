@@ -68,5 +68,19 @@
     "model": "gpt-5.6-luna",
     "tokens": 3833363,
     "cost": 0.7733806
+  },
+  {
+    "date": "2026-08-11",
+    "agent": "claude",
+    "model": "claude-sonnet-5",
+    "tokens": 113072503,
+    "cost": 37.60259109999998
+  },
+  {
+    "date": "2026-08-11",
+    "agent": "codex",
+    "model": "gpt-5.6-luna",
+    "tokens": 3338290,
+    "cost": 0.6712129999999997
   }
 ]
