@@ -74,7 +74,7 @@
     "agent": "claude",
     "model": "claude-sonnet-5",
     "tokens": 215648799,
-    "cost": 68.94654709999999
+    "cost": 68.94654709999998
   },
   {
     "date": "2026-08-11",
@@ -144,7 +144,7 @@
     "agent": "codex",
     "model": "gpt-5.6-luna",
     "tokens": 175830,
-    "cost": 0.040584999999999996
+    "cost": 0.040585
   },
   {
     "date": "2026-08-19",
@@ -206,14 +206,21 @@
     "date": "2026-08-25",
     "agent": "claude",
     "model": "claude-haiku-4-5-20251001",
-    "tokens": 198113,
-    "cost": 0.143008
+    "tokens": 849955,
+    "cost": 0.34017049999999993
   },
   {
     "date": "2026-08-25",
     "agent": "claude",
     "model": "claude-sonnet-5",
-    "tokens": 41672750,
-    "cost": 17.501482199999998
+    "tokens": 391900999,
+    "cost": 124.74964249999998
+  },
+  {
+    "date": "2026-08-25",
+    "agent": "codex",
+    "model": "gpt-5.6-luna",
+    "tokens": 1332512,
+    "cost": 0.2715734
   }
 ]
