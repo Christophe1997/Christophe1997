@@ -1,0 +1,9 @@
+[
+  {
+    "date": "2026-09-03",
+    "agent": "claude",
+    "model": "claude-sonnet-5",
+    "tokens": 13713376,
+    "cost": 4.496572
+  }
+]
