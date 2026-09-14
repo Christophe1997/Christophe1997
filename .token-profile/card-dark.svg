@@ -13,17 +13,17 @@
 <line x1="32" y1="56" x2="608" y2="56" stroke="#30363d" stroke-width="1" />
 <rect x="32" y="68" width="180" height="76" rx="8" ry="8" fill="#161b22" />
 <text x="44" y="88" font-size="11" fill="#8b949e" font-weight="600" letter-spacing="1" >TOKENS</text>
-<text x="44" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >2.6B</text>
+<text x="44" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >2.8B</text>
 <rect x="156" y="122" width="44" height="20" rx="10" ry="10" fill="#2d0f0d" />
-<text x="164" y="136" font-size="10" fill="#f85149" font-weight="600" >-35%</text>
+<text x="164" y="136" font-size="10" fill="#f85149" font-weight="600" >-27%</text>
 <rect x="230" y="68" width="180" height="76" rx="8" ry="8" fill="#161b22" />
 <text x="242" y="88" font-size="11" fill="#8b949e" font-weight="600" letter-spacing="1" >COST</text>
-<text x="242" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >$826.02</text>
+<text x="242" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >$876.54</text>
 <rect x="354" y="122" width="44" height="20" rx="10" ry="10" fill="#2d0f0d" />
-<text x="362" y="136" font-size="10" fill="#f85149" font-weight="600" >-36%</text>
+<text x="362" y="136" font-size="10" fill="#f85149" font-weight="600" >-28%</text>
 <rect x="428" y="68" width="180" height="76" rx="8" ry="8" fill="#161b22" />
 <text x="440" y="88" font-size="11" fill="#8b949e" font-weight="600" letter-spacing="1" >STREAK</text>
-<text x="440" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >0 days</text>
+<text x="440" y="114" font-size="22" fill="#c9d1d9" font-weight="700" >1 day 🔥</text>
 <text x="32" y="158" font-size="12" fill="#8b949e" font-weight="600" letter-spacing="1" >TREND</text>
 <line x1="90" y1="288" x2="608" y2="288" stroke="#21262d" stroke-width="1" />
 <defs>
@@ -32,18 +32,18 @@
 <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.00"/>
 </linearGradient>
 </defs>
-<polygon points="90,262 129,274 169,168 209,185 249,279 289,189 329,184 368,232 408,245 448,268 488,213 528,267 568,288 608,288 608,288 90,288" fill="url(#areaFill)" />
-<polyline points="90,262 129,274 169,168 209,185 249,279 289,189 329,184 368,232 408,245 448,268 488,213 528,267 568,288 608,288" fill="none" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+<polygon points="90,262 127,274 164,168 201,185 238,279 275,189 312,184 349,232 386,245 423,268 460,213 497,267 534,288 571,288 608,261 608,288 90,288" fill="url(#areaFill)" />
+<polyline points="90,262 127,274 164,168 201,185 238,279 275,189 312,184 349,232 386,245 423,268 460,213 497,267 534,288 571,288 608,261" fill="none" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
 <text x="90" y="306" font-size="12" fill="#8b949e" >08-17</text>
-<text x="608" y="306" font-size="12" fill="#8b949e" text-anchor="end" >09-10</text>
+<text x="608" y="306" font-size="12" fill="#8b949e" text-anchor="end" >09-14</text>
 <text x="82" y="172" font-size="12" fill="#8b949e" text-anchor="end" >457.1M</text>
 <text x="82" y="288" font-size="12" fill="#8b949e" text-anchor="end" >176,564</text>
 <text x="32" y="320" font-size="12" fill="#8b949e" font-weight="600" letter-spacing="1" >Breakdown (per model):</text>
 <text x="32" y="344" font-size="13" fill="#c9d1d9" >claude-sonnet-5</text>
 <rect x="200" y="335" width="160" height="8" rx="4" ry="4" fill="#21262d" />
 <rect x="200" y="335" width="160" height="8" rx="4" ry="4" fill="#58a6ff" />
-<text x="420" y="344" font-size="13" fill="#8b949e" text-anchor="end" >2.6B</text>
-<text x="608" y="344" font-size="13" fill="#8b949e" text-anchor="end" >$812.13</text>
+<text x="420" y="344" font-size="13" fill="#8b949e" text-anchor="end" >2.7B</text>
+<text x="608" y="344" font-size="13" fill="#8b949e" text-anchor="end" >$862.65</text>
 <text x="32" y="366" font-size="13" fill="#c9d1d9" >claude-opus-5</text>
 <rect x="200" y="357" width="160" height="8" rx="4" ry="4" fill="#21262d" />
 <text x="420" y="366" font-size="13" fill="#8b949e" text-anchor="end" >10.6M</text>
@@ -53,5 +53,5 @@
 <text x="420" y="388" font-size="13" fill="#8b949e" text-anchor="end" >5.8M</text>
 <text x="608" y="388" font-size="13" fill="#8b949e" text-anchor="end" >$1.13</text>
 <text x="32" y="410" font-size="13" fill="#8b949e" >… 2 more — 3.1M tokens ($3.19)</text>
-<text x="32" y="504" font-size="11" fill="#8b949e" >Last updated: 2026-09-13 16:42 UTC</text>
+<text x="32" y="504" font-size="11" fill="#8b949e" >Last updated: 2026-09-14 17:30 UTC</text>
 </svg>
