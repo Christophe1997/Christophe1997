@@ -42,6 +42,13 @@
     "cost": 1.192035
   },
   {
+    "date": "2026-09-15",
+    "agent": "codex",
+    "model": "gpt-6-astra",
+    "tokens": 31398,
+    "cost": 0.151164
+  },
+  {
     "date": "2026-09-16",
     "agent": "claude",
     "model": "claude-sonnet-5",
@@ -82,5 +89,19 @@
     "model": "claude-sonnet-5",
     "tokens": 131502744,
     "cost": 65.080619
+  },
+  {
+    "date": "2026-09-24",
+    "agent": "claude",
+    "model": "claude-sonnet-5",
+    "tokens": 37506335,
+    "cost": 13.770567
+  },
+  {
+    "date": "2026-09-24",
+    "agent": "codex",
+    "model": "gpt-6-astra",
+    "tokens": 129089,
+    "cost": 0.34869
   }
 ]
