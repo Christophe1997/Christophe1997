@@ -103,5 +103,12 @@
     "model": "gpt-6-astra",
     "tokens": 129089,
     "cost": 0.34869
+  },
+  {
+    "date": "2026-09-28",
+    "agent": "claude",
+    "model": "claude-sonnet-5",
+    "tokens": 24581457,
+    "cost": 10.386615
   }
 ]
