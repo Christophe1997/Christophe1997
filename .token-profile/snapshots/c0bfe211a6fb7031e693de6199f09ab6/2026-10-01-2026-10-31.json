@@ -24,7 +24,14 @@
     "date": "2026-10-13",
     "agent": "claude",
     "model": "claude-opus-5-5",
-    "tokens": 13248022,
-    "cost": 8.554853
+    "tokens": 14764139,
+    "cost": 9.064882
+  },
+  {
+    "date": "2026-10-14",
+    "agent": "claude",
+    "model": "claude-opus-5-5",
+    "tokens": 20188331,
+    "cost": 7.849445
   }
 ]
