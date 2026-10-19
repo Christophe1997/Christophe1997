@@ -40,5 +40,33 @@
     "model": "claude-opus-5-5",
     "tokens": 32832638,
     "cost": 17.001909
+  },
+  {
+    "date": "2026-10-16",
+    "agent": "claude",
+    "model": "claude-opus-5-5",
+    "tokens": 17666280,
+    "cost": 7.694027
+  },
+  {
+    "date": "2026-10-19",
+    "agent": "claude",
+    "model": "claude-haiku-5-5",
+    "tokens": 539355,
+    "cost": 0.019148
+  },
+  {
+    "date": "2026-10-19",
+    "agent": "claude",
+    "model": "claude-opus-5-5",
+    "tokens": 22168164,
+    "cost": 10.76401
+  },
+  {
+    "date": "2026-10-19",
+    "agent": "claude",
+    "model": "claude-sonnet-5-5",
+    "tokens": 260392,
+    "cost": 0.142468
   }
 ]
