@@ -52,21 +52,35 @@
     "date": "2026-10-19",
     "agent": "claude",
     "model": "claude-haiku-5-5",
-    "tokens": 539355,
-    "cost": 0.019148
+    "tokens": 927870,
+    "cost": 0.033995
   },
   {
     "date": "2026-10-19",
     "agent": "claude",
     "model": "claude-opus-5-5",
-    "tokens": 22168164,
-    "cost": 10.76401
+    "tokens": 120077353,
+    "cost": 55.145129
   },
   {
     "date": "2026-10-19",
     "agent": "claude",
     "model": "claude-sonnet-5-5",
-    "tokens": 260392,
-    "cost": 0.142468
+    "tokens": 3315433,
+    "cost": 1.902774
+  },
+  {
+    "date": "2026-10-19",
+    "agent": "codex",
+    "model": "codex-auto-review",
+    "tokens": 41698,
+    "cost": 0
+  },
+  {
+    "date": "2026-10-19",
+    "agent": "codex",
+    "model": "gpt-6.1-sol",
+    "tokens": 990914,
+    "cost": 0.270694
   }
 ]
