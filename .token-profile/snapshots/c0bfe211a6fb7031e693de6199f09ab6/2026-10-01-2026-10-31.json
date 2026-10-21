@@ -82,5 +82,12 @@
     "model": "gpt-6.1-sol",
     "tokens": 990914,
     "cost": 0.270694
+  },
+  {
+    "date": "2026-10-20",
+    "agent": "claude",
+    "model": "claude-opus-5-5",
+    "tokens": 1094986,
+    "cost": 1.193042
   }
 ]
