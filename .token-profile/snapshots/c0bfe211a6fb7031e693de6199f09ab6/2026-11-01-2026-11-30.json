@@ -1,0 +1,23 @@
+[
+  {
+    "date": "2026-11-01",
+    "agent": "claude",
+    "model": "claude-haiku-5-5",
+    "tokens": 733604,
+    "cost": 0.127793
+  },
+  {
+    "date": "2026-11-01",
+    "agent": "claude",
+    "model": "claude-opus-5-5",
+    "tokens": 24861045,
+    "cost": 15.150431
+  },
+  {
+    "date": "2026-11-01",
+    "agent": "claude",
+    "model": "claude-sonnet-5-5",
+    "tokens": 127715,
+    "cost": 0.250381
+  }
+]
