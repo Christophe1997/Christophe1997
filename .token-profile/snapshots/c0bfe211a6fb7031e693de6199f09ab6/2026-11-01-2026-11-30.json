@@ -19,5 +19,19 @@
     "model": "claude-sonnet-5-5",
     "tokens": 127715,
     "cost": 0.250381
+  },
+  {
+    "date": "2026-11-05",
+    "agent": "claude",
+    "model": "claude-opus-5-5",
+    "tokens": 22241492,
+    "cost": 9.898638
+  },
+  {
+    "date": "2026-11-05",
+    "agent": "claude",
+    "model": "claude-sonnet-5-5",
+    "tokens": 563808,
+    "cost": 0.655527
   }
 ]
